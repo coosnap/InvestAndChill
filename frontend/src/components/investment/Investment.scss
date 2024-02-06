@@ -1,0 +1,13 @@
+.card {
+  &--left {
+    transform: translateX(-125%) scale(0.8);
+    transition: 500ms;
+    opacity: 0.6;
+  }
+
+  &--right {
+    transform: translateX(125%) scale(0.8);
+    transition: 500ms;
+    opacity: 0.6;
+  }
+}
