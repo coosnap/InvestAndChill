@@ -1,4 +1,4 @@
-package com.starter.pojo;
+package com.starter.InvestAndChill.pojo;
 
 public class Product {
 	private String id;
