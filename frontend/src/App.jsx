@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import { useCookies } from 'react-cookie';
 import { Routes } from 'react-router';
-import { Route, BrowserRouter as Router } from 'react-router-dom';
+import { Route, HashRouter as Router } from 'react-router-dom';
 import './App.css';
 import Login from './components/common/Login';
 import NotFound from './components/common/NotFound';
@@ -54,7 +54,7 @@ function App() {
               </ProtectedRoute>
             }></Route>
           <Route
-            path='category'
+            path='/category'
             element={
               <ProtectedRoute
                 redirectPath='/'

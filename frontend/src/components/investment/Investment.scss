@@ -1,12 +1,27 @@
 .card {
   &--left {
-    transform: translateX(-125%) scale(0.8);
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: scale(1);
     transition: 500ms;
-    opacity: 0.6;
+    opacity: 1;
+  }
+
+  &--active {
+    position: absolute;
+    top: 0;
+    left: -50%;
+    transform: scale(0.8);
+    transition: 500ms;
+    opacity: 1;
   }
 
   &--right {
-    transform: translateX(125%) scale(0.8);
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: scale(0.8);
     transition: 500ms;
     opacity: 0.6;
   }

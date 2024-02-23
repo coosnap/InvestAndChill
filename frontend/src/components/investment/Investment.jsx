@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import './Investment.scss';
+import { useNavigate } from "react-router-dom";
 
 const investData = [
   {
@@ -17,9 +18,11 @@ const investData = [
 
 function Investment() {
   const [index, setIndex] = useState(0);
+  const navigate = useNavigate();
 
-  const handleClickCard = (id) => {
+  const handleClickCard = (id, path) => {
     setIndex(id);
+    if (id === index) navigate(path);
   }
 
   const mod = (n, m) => {
@@ -39,18 +42,18 @@ function Investment() {
             const indexRight = mod(index + 1, investData.length);
 
             let className = "";
-            if (i === index) {
-              className = "card card--active";
-            } else if (i === indexRight) {
+            if (i === indexRight) {
               className = "card card--right";
             } else if (i === indexLeft) {
-              className = "card card--left";
+              className = "card card--active";
             } else {
-              className = "card";
+              className = "card card--left";
             }
 
+            if (i === index) className = "card";
+
             return (
-              <article key={e.id} onClick={() => handleClickCard(e.id)} className={`${className} absolute top-0 right-0 left-0 bottom-0 m-auto w-[350px] h-[525px] max-w-sm flex items-center justify-center cursor-pointer min-h-[60vh] bg-white px-7 py-4 rounded-box shadow-2xl`}>
+              <article key={e.id} onClick={() => handleClickCard(e.id, e.href)} className={`${className} absolute top-0 right-0 left-0 bottom-0 m-auto w-[350px] h-[525px] max-w-sm flex items-center justify-center cursor-pointer min-h-[60vh] bg-white px-7 py-4 rounded-box shadow-2xl`}>
                 <div className="group relative flex flex-col items-center">
                   {e?.icon ?
                     <div>

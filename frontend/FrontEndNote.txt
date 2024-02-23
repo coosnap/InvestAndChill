@@ -1,1 +1,5 @@
 This is note for FE
+
+Start: npm run dev
+
+Deploy: npm run build
