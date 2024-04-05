@@ -31,5 +31,5 @@ public class TestController {
 	@PreAuthorize("hasRole('ADMIN')")
 	public String adminAccess() {
 		return "Admin Board.";
-	} 
+	}
 }
