@@ -1,7 +1,11 @@
 import { useNavigate } from "react-router-dom";
-import Dialog from "./ModalDialog";
 import { useState } from "react";
 import { useCookies } from "react-cookie";
+import { signIn } from "../../api/auth";
+import { useEffect } from "react";
+import Register from "../common/Register";
+import Modal from "../common/Modal";
+// import Loader from "../common/Loader";
 
 const news = [
   { id: '1', title: 'Chứng khoán VIX không còn là cổ đông lớn của HJS' },
@@ -12,34 +16,60 @@ const news = [
 
 function Login() {
   const navigate = useNavigate();
+  const [modal, setModal] = useState({});
+  const [messageDialog, setMessageDialog] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [showDialog, setShowDialog] = useState(false);
+  const [showRegister, setShowRegister] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [cookies, setCookies] = useCookies(['usrId']);
+  const [cookie, setCookie] = useCookies(['access_token', 'usrId']);
+  // const [isLoading, setIsLoading] = useState(false);
 
-  const handleClickDialog = () => setShowModal(false);
+  const handleClickDialog = () => setShowDialog(false);
+  const handleClickModal = () => {
+    setShowModal(false)
+    setShowRegister(false)
+  };
+  const handleClickRegister = () => setShowRegister(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
 
-  const handleSubmitLogin = (event) => {
+  const handleSubmitLogin = async (event) => {
     event.preventDefault();
+    // setIsLoading(true);
     try {
       const formData = new FormData(event.currentTarget);
       let object = {};
       formData.forEach((value, key) => (object[key] = value));
 
-      if (object.usrNm === 'admin' && object.usrPwd === 'admin') {
+      let infoSignIn = await signIn({ username: object.usrNm, password: object.usrPwd });
+      if (infoSignIn) {
         let d = new Date();
         d.setTime(d.getTime() + (d.getMinutes() * 60 * 1000));
-        setCookies("usrId", { id: '1', usrNm: 'admin' }, { path: "/", expires: d });
-        navigate('/invest');
+        setCookie("usrId", { id: infoSignIn.id, usrNm: infoSignIn.username }, { path: "/", expires: d });
+        setCookie("access_token", infoSignIn.token, { path: "/", expires: d });
+        // setIsLoading(false);
+        navigate("/invest");
       } else {
-        setShowModal(true);
+        setShowDialog(true);
       }
     } catch (error) {
       console.error(error);
+      setShowDialog(true);
     }
   }
+
+  useEffect(() => {
+    if (cookie.access_token && (location.pathname == "/" || location.pathname == "/login")) {
+      navigate("/invest");
+    }
+  }, [])
+
+  // if (isLoading) {
+  //   return <Loader />;
+  // }
+
   return (
-    <div className="flex items-center justify-center bg-gradient-to-r from-blue-500 to-white">
+    <div className="flex items-center justify-center bg-blue-300">
       <div className="container h-[100vh] py-10 flex gap-8">
         <div className="flex flex-col w-1/2 h-full gap-8">
           <div className="rounded-2xl bg-white h-2/3 flex flex-col justify-center pl-12">
@@ -55,28 +85,28 @@ function Login() {
         </div>
 
         <div className="flex flex-col w-1/2 h-full gap-8">
-          <div className="rounded-2xl bg-white shadow-2xl h-2/3 flex flex-col items-center justify-center">
-            <div className="pt-4 flex items-center justify-center text-4xl font-semibold text-gray-900">Login</div>
-            <form className="p-12 w-full" id="userForm" onSubmit={handleSubmitLogin}>
+          <div className="rounded-2xl bg-white shadow-2xl h-1/3 flex flex-col items-center justify-center">
+            <div className="flex items-center justify-center text-3xl font-semibold text-gray-900">Đăng nhập</div>
+            <form className="px-12 w-full" id="userForm" onSubmit={handleSubmitLogin}>
               <div>
                 <div className="flex flex-col">
-                  <label after=" *" class="after:content-[attr(after)] after:text-red-600 font-semibold text-gray-900">Username</label>
+                  <label after=" *" className="after:content-[attr(after)] after:text-red-600 font-semibold text-gray-900">Tên đăng nhập</label>
                   <input
                     type="text"
-                    placeholder="Enter your Email/Phone"
+                    placeholder="Vui lòng điền Email/Phone"
                     name='usrNm'
                     id='usrNm'
-                    className="mt-2 input input-bordered bg-white text-gray-900 w-full" />
+                    className="mt-1 input input-bordered input-primary bg-white text-gray-900 w-full h-10" />
                 </div>
-                <div className="flex flex-col mt-3">
-                  <label after=" *" class="after:content-[attr(after)] after:text-red-600 font-semibold text-gray-900">Password</label>
+                <div className="flex flex-col mt-2">
+                  <label after=" *" className="after:content-[attr(after)] after:text-red-600 font-semibold text-gray-900">Mật khẩu</label>
                   <div className="relative">
                     <input
                       type={showPassword ? 'text' : 'password'}
-                      placeholder="Enter your password"
+                      placeholder="Vui lòng điền mật khẩu"
                       name='usrPwd'
                       id='usrPwd'
-                      className="mt-2 input input-bordered bg-white text-gray-900 w-full" />
+                      className="mt-1 input input-bordered input-primary bg-white text-gray-900 w-full h-10" />
                     <div className="absolute top-1/3 right-3">
                       {showPassword ?
                         <button type="button" onClick={handleClickShowPassword}>
@@ -96,20 +126,23 @@ function Login() {
                   </div>
                 </div>
               </div>
-              <div className="mt-4 text-end">
-                <span className="font-semibold text-blue-500 underline">Đăng ký tài khoản</span>
-              </div>
-              <div className="text-center mt-4">
-                <button type="submit" className="px-10 py-3 rounded-full bg-blue-600">
-                  <span className="font-semibold text-white">Login</span>
-                </button>
+              <div className="mt-5 flex items-center">
+                <div className="w-7/12 text-end">
+                  <button type="submit" className="px-10 py-3 rounded-full bg-blue-600">
+                    <span className="font-semibold text-white">Đăng nhập</span>
+                  </button>
+                </div>
+                <div className="w-5/12 text-end">
+                  <span onClick={() => setShowRegister(true)} className="font-semibold text-blue-500 underline cursor-pointer">Đăng ký tài khoản</span>
+                </div>
               </div>
             </form>
           </div>
-          <div className="rounded-2xl bg-white h-1/3"></div>
         </div>
       </div>
-      {showModal && <Dialog handleClickDialog={handleClickDialog} />}
+      {showRegister && <Register setMessageDialog={setMessageDialog} setShowModal={setShowModal} handleClickRegister={handleClickRegister} />}
+      {showDialog && <Modal handleClickModal={handleClickDialog} message={"Invalid login Username or Password."} status="Error" />}
+      {showModal && <Modal handleClickModal={handleClickModal} message={messageDialog} status="Success" />}
     </div>
   );
 }

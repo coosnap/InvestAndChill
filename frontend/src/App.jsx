@@ -1,83 +1,57 @@
-import { Suspense } from 'react';
-import { useCookies } from 'react-cookie';
-import { Routes } from 'react-router';
-import { Route, HashRouter as Router } from 'react-router-dom';
-import './App.css';
-import Login from './components/common/Login';
-import NotFound from './components/common/NotFound';
-import ProtectedRoute from './components/common/ProtectedRoute';
-import Category from './components/investment/Category';
-import Detail from './components/investment/Detail';
-import Investment from './components/investment/Investment';
-import Product from './components/investment/Product';
-import Question from './components/investment/Question';
+import "./App.css";
+import { useRoutes } from 'react-router-dom';
+import Investment from "./components/pages/Investment.jsx";
+import Login from "./components/pages/Login.jsx";
+import Category from "./components/pages/Category.jsx";
+import Product from "./components/pages/Product.jsx";
+import Question from "./components/pages/Question.jsx";
+import PublicRoute from "./components/router/public-route";
+import PrivateRoute from "./components/router/private-route";
+import AdminRoute from "./components/router/admin-route";
+import Admin from './components/admin/Admin.jsx';
+
+const routes = [
+  {
+    path: "*",
+    element: <PublicRoute><Login /></PublicRoute>
+  },
+  {
+    path: "/login",
+    element: <PublicRoute><Login /></PublicRoute>
+  },
+  {
+    path: "/invest",
+    element: <PrivateRoute><Investment /></PrivateRoute>
+  },
+  {
+    path: "/category",
+    element: <PrivateRoute><Category /></PrivateRoute>
+  },
+  {
+    path: "/product",
+    element: <PrivateRoute><Product /></PrivateRoute>
+  },
+  {
+    path: "/question",
+    element: <PrivateRoute><Question /></PrivateRoute>
+  },
+  {
+    path: "/detail/:id",
+    element: <PrivateRoute><Product /></PrivateRoute>
+  },
+  {
+    path: "/admin",
+    element: <AdminRoute><Admin /></AdminRoute>
+  },
+]
 
 function App() {
-  const cookies = useCookies(['usrId']);
+  const routesElement = useRoutes(routes);
 
   return (
-    <Router>
-      <Suspense
-        fallback={<span className="loading loading-spinner text-primary"></span>}
-      >
-        <Routes>
-          <Route path='/' element={<Login />}></Route>
-          <Route path='/login' element={<Login />}></Route>
-          <Route
-            path='/invest'
-            element={
-              <ProtectedRoute
-                redirectPath='/'
-                usrId={cookies[0].usrId}
-              >
-                <Investment />
-              </ProtectedRoute>
-            }></Route>
-          <Route
-            path='/product'
-            element={
-              <ProtectedRoute
-                redirectPath='/'
-                usrId={cookies[0].usrId}
-              >
-                <Product />
-              </ProtectedRoute>
-            }></Route>
-          <Route
-            path='/question'
-            element={
-              <ProtectedRoute
-                redirectPath='/'
-                usrId={cookies[0].usrId}
-              >
-                <Question />
-              </ProtectedRoute>
-            }></Route>
-          <Route
-            path='/category'
-            element={
-              <ProtectedRoute
-                redirectPath='/'
-                usrId={cookies[0].usrId}
-              >
-                <Category />
-              </ProtectedRoute>
-            }></Route>
-          <Route
-            path='/detail/:id'
-            element={
-              <ProtectedRoute
-                redirectPath='/'
-                usrId={cookies[0].usrId}
-              >
-                <Detail />
-              </ProtectedRoute>
-            }></Route>
-          <Route path='*' element={<NotFound />}></Route>
-        </Routes>
-      </Suspense >
-    </Router>
+    <div className="App">
+      {routesElement}
+    </div>
   )
 }
-
 export default App

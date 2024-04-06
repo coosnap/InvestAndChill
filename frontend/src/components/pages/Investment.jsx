@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import './Investment.scss';
 import { useNavigate } from "react-router-dom";
+// import Loader from "../common/Loader";
 
 const investData = [
   {
@@ -17,8 +18,9 @@ const investData = [
 ]
 
 function Investment() {
-  const [index, setIndex] = useState(0);
   const navigate = useNavigate();
+  const [index, setIndex] = useState(0);
+  // const [isLoading, setIsLoading] = useState(true);
 
   const handleClickCard = (id, path) => {
     setIndex(id);
@@ -29,6 +31,10 @@ function Investment() {
     let result = n % m;
     return result >= 0 ? result : result + m;
   }
+
+  // if (isLoading) {
+  //   return <Loader />;
+  // }
 
   return (
     <div className="container relative mx-auto h-[100vh] bg-[#F5F9FC] py-8">
