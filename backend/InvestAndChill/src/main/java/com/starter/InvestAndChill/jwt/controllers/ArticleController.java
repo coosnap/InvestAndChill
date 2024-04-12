@@ -32,7 +32,7 @@ public class ArticleController {
 	@GetMapping("/{id}")
 	public ResponseEntity<Optional<Article>> getArticleById(@PathVariable String id) {
 	    Optional<Article> article = articleRepository.findById(Integer.valueOf(id));
-	    return ResponseEntity.ok(article);
+	    return ResponseEntity.ok(article); 
 	}
 	
 }
