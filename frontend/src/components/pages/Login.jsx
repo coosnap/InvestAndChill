@@ -1,31 +1,42 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useCookies } from "react-cookie";
 import { signIn } from "../../api/auth";
 import { useEffect } from "react";
 import Register from "../common/Register";
 import Modal from "../common/Modal";
-// import Loader from "../common/Loader";
-
-const news = [
-  { id: '1', title: 'Chứng khoán VIX không còn là cổ đông lớn của HJS' },
-  { id: '2', title: 'Những doanh nghiệp thực hiện chiến lược “nông nghiệp bền vững”, đón đầu dòng vốn xanh' },
-  { id: '3', title: 'Nếu được nâng hạng, 3-4 tỷ USD sẽ chảy vào chứng khoán Việt Nam' },
-  { id: '4', title: 'Sở Giao dịch Chứng khoán Việt Nam lãi gần 1,900 tỷ đồng năm 2023' },
-]
+import { getArticleAll } from "../../api/article";
+import Loader from "../common/Loader";
+import { InputWithLabel } from "../common/InputWithLabel";
+import { Button } from "../ui/button";
+import { useSetRecoilState } from "recoil";
+import { rolesAuth } from "@/store/authStore";
 
 function Login() {
   const navigate = useNavigate();
-  const [modal, setModal] = useState({});
   const [messageDialog, setMessageDialog] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [cookie, setCookie] = useCookies(['access_token', 'usrId']);
-  // const [isLoading, setIsLoading] = useState(false);
+  const [cookie, setCookie] = useCookies(['access_token', 'usrId', 'roles']);
+  const [isLoading, setIsLoading] = useState(false);
+  const [statusDialog, setStatusDialog] = useState("");
+  const [articleList, setArticleList] = useState([]);
+  const [loginInfo, setLoginInfo] = useState({ usrNm: "", usrPwd: "" });
+
+  const setRoles = useSetRecoilState(rolesAuth);
+
+  function handleChangeUsrNm(e) {
+    setLoginInfo(prev => ({ ...prev, usrNm: e.target.value }))
+  }
+
+  function handleChangePwd(e) {
+    setLoginInfo(prev => ({ ...prev, usrPwd: e.target.value }))
+  }
 
   const handleClickDialog = () => setShowDialog(false);
+
   const handleClickModal = () => {
     setShowModal(false)
     setShowRegister(false)
@@ -35,38 +46,66 @@ function Login() {
 
   const handleSubmitLogin = async (event) => {
     event.preventDefault();
-    // setIsLoading(true);
+    setIsLoading(true);
     try {
-      const formData = new FormData(event.currentTarget);
-      let object = {};
-      formData.forEach((value, key) => (object[key] = value));
-
-      let infoSignIn = await signIn({ username: object.usrNm, password: object.usrPwd });
+      let infoSignIn = await signIn({ username: loginInfo.usrNm, password: loginInfo.usrPwd });
+      console.log('infoSignIn', infoSignIn)
       if (infoSignIn) {
         let d = new Date();
         d.setTime(d.getTime() + (d.getMinutes() * 60 * 1000));
         setCookie("usrId", { id: infoSignIn.id, usrNm: infoSignIn.username }, { path: "/", expires: d });
         setCookie("access_token", infoSignIn.token, { path: "/", expires: d });
-        // setIsLoading(false);
-        navigate("/invest");
+        setCookie("roles", infoSignIn.roles, { path: "/", expires: d });
+        setIsLoading(false);
+        infoSignIn.roles.map(e => {
+          switch (e) {
+            case "ROLE_ADMIN":
+              setRoles(prev => ({ ...prev, isAdmin: true }));
+              break;
+            case "ROLE_MOD":
+              setRoles(prev => ({ ...prev, isMod: true }));
+              break;
+            case "ROLE_USER":
+              setRoles(prev => ({ ...prev, isUser: true }));
+              break;
+            default:
+              break;
+          }
+        })
+
+        if (infoSignIn.roles.includes('ROLE_ADMIN') || infoSignIn.roles.includes('ROLE_MOD')) {
+          navigate("/admin");
+        } else {
+          navigate("/invest");
+        }
       } else {
         setShowDialog(true);
+        setIsLoading(false);
       }
     } catch (error) {
       console.error(error);
       setShowDialog(true);
+      setIsLoading(false);
     }
   }
 
+  async function getData() {
+    setIsLoading(true);
+    const article = await getArticleAll();
+    setArticleList(article);
+    setIsLoading(false);
+  }
+
   useEffect(() => {
+    getData();
     if (cookie.access_token && (location.pathname == "/" || location.pathname == "/login")) {
       navigate("/invest");
     }
   }, [])
 
-  // if (isLoading) {
-  //   return <Loader />;
-  // }
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <div className="flex items-center justify-center bg-blue-300">
@@ -78,8 +117,8 @@ function Login() {
             <p className="text-xl text-gray-900">Chính xác - Cập nhật - Đầy đủ</p>
           </div>
           <div className="rounded-2xl bg-white h-1/3 flex flex-col justify-center px-12">
-            {news.map(e =>
-              <span className="text-gray-900 mb-3 cursor-pointer border-b pb-1" key={e.id}>{e.title}</span>
+            {articleList.map(e =>
+              <Link to={"/post/" + e.id} className="text-gray-900 mb-3 cursor-pointer border-b pb-1" key={e.id}>{e.title}</Link>
             )}
           </div>
         </div>
@@ -87,53 +126,18 @@ function Login() {
         <div className="flex flex-col w-1/2 h-full gap-8">
           <div className="rounded-2xl bg-white shadow-2xl h-1/3 flex flex-col items-center justify-center">
             <div className="flex items-center justify-center text-3xl font-semibold text-gray-900">Đăng nhập</div>
-            <form className="px-12 w-full" id="userForm" onSubmit={handleSubmitLogin}>
+            <form className="px-12 w-full" id="userForm">
               <div>
-                <div className="flex flex-col">
-                  <label after=" *" className="after:content-[attr(after)] after:text-red-600 font-semibold text-gray-900">Tên đăng nhập</label>
-                  <input
-                    type="text"
-                    placeholder="Vui lòng điền Email/Phone"
-                    name='usrNm'
-                    id='usrNm'
-                    className="mt-1 input input-bordered input-primary bg-white text-gray-900 w-full h-10" />
-                </div>
-                <div className="flex flex-col mt-2">
-                  <label after=" *" className="after:content-[attr(after)] after:text-red-600 font-semibold text-gray-900">Mật khẩu</label>
-                  <div className="relative">
-                    <input
-                      type={showPassword ? 'text' : 'password'}
-                      placeholder="Vui lòng điền mật khẩu"
-                      name='usrPwd'
-                      id='usrPwd'
-                      className="mt-1 input input-bordered input-primary bg-white text-gray-900 w-full h-10" />
-                    <div className="absolute top-1/3 right-3">
-                      {showPassword ?
-                        <button type="button" onClick={handleClickShowPassword}>
-                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                          </svg>
-                        </button>
-                        :
-                        <button type="button" onClick={handleClickShowPassword}>
-                          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88" />
-                          </svg>
-                        </button>
-                      }
-                    </div>
-                  </div>
-                </div>
+                <InputWithLabel label="Tên đăng nhập" placeholder="Vui lòng điền Email/Phone" type="text" id="usrNm" require handleChange={(e) => handleChangeUsrNm(e)} />
+                <div className="h-5"></div>
+                <InputWithLabel label="Mật khẩu" placeholder="Vui lòng điền mật khẩu" type={showPassword ? 'text' : 'password'} id="usrPwd" require handleChange={(e) => handleChangePwd(e)} handleClickShowPassword={handleClickShowPassword} />
               </div>
               <div className="mt-5 flex items-center">
                 <div className="w-7/12 text-end">
-                  <button type="submit" className="px-10 py-3 rounded-full bg-blue-600">
-                    <span className="font-semibold text-white">Đăng nhập</span>
-                  </button>
+                  <Button type="button" variant="default" onClick={handleSubmitLogin}>Đăng nhập</Button>
                 </div>
                 <div className="w-5/12 text-end">
-                  <span onClick={() => setShowRegister(true)} className="font-semibold text-blue-500 underline cursor-pointer">Đăng ký tài khoản</span>
+                  <span onClick={() => setShowRegister(true)} className="font-semibold text-blue-500 hover:text-blue-300 underline cursor-pointer">Đăng ký tài khoản</span>
                 </div>
               </div>
             </form>
@@ -142,7 +146,7 @@ function Login() {
       </div>
       {showRegister && <Register setMessageDialog={setMessageDialog} setShowModal={setShowModal} handleClickRegister={handleClickRegister} />}
       {showDialog && <Modal handleClickModal={handleClickDialog} message={"Invalid login Username or Password."} status="Error" />}
-      {showModal && <Modal handleClickModal={handleClickModal} message={messageDialog} status="Success" />}
+      {showModal && <Modal setStatusDialog={setStatusDialog} handleClickModal={handleClickModal} message={messageDialog} status={statusDialog} />}
     </div>
   );
 }

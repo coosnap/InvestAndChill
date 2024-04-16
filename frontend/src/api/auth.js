@@ -1,7 +1,7 @@
 import { backendServerAPI } from "../config/config";
 
 export const auth = {
-  isUser: false,
+  isUser: true,
   isMod: false,
   isAdmin: true
 }
@@ -24,7 +24,8 @@ export async function signIn(data) {
       token: responseBody.accessToken,
       id: responseBody.id,
       username: responseBody.username,
-      email: responseBody.email
+      email: responseBody.email,
+      roles: responseBody.roles
     }
     return infoSignIn;
   }
@@ -46,7 +47,7 @@ export async function signUp(data) {
     body: JSON.stringify(authData),
   });
   if (response.ok) {
-    response;
+    return response;
   }
   return;
 }

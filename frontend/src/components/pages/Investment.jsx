@@ -37,50 +37,48 @@ function Investment() {
   // }
 
   return (
-    <div className="container relative mx-auto h-[100vh] bg-[#F5F9FC] py-8">
-      <div className="mx-auto px-6 lg:px-8">
-        <div className="text-center">
-          <h1 className="text-5xl font-bold tracking-tight text-[#232A46]">Hạng mục</h1>
-        </div>
-        <div className="flex justify-center mt-4 border-t-2 border-gray-200 pt-10 sm:mt-8 sm:pt-8 lg:mx-0">
-          {investData.map((e, i) => {
-            const indexLeft = mod(index - 1, investData.length);
-            const indexRight = mod(index + 1, investData.length);
+    <div className="container relative mx-auto h-[calc(100vh-66px)] bg-[#F5F9FC] pt-8">
+      <div className="text-center">
+        <h1 className="text-5xl font-bold tracking-tight text-[#232A46]">Hạng mục</h1>
+      </div>
+      <div className="flex justify-center mt-4 border-t-2 border-gray-200">
+        {investData.map((e, i) => {
+          const indexLeft = mod(index - 1, investData.length);
+          const indexRight = mod(index + 1, investData.length);
 
-            let className = "";
-            if (i === indexRight) {
-              className = "card card--right";
-            } else if (i === indexLeft) {
-              className = "card card--active";
-            } else {
-              className = "card card--left";
-            }
+          let className = "";
+          if (i === indexRight) {
+            className = "card card--right";
+          } else if (i === indexLeft) {
+            className = "card card--active";
+          } else {
+            className = "card card--left";
+          }
 
-            if (i === index) className = "card";
+          if (i === index) className = "card";
 
-            return (
-              <article key={e.id} onClick={() => handleClickCard(e.id, e.href)} className={`${className} absolute top-0 right-0 left-0 bottom-0 m-auto w-[350px] h-[525px] max-w-sm flex items-center justify-center cursor-pointer min-h-[60vh] bg-white px-7 py-4 rounded-box shadow-2xl`}>
-                <div className="group relative flex flex-col items-center">
-                  {e?.icon ?
-                    <div>
-                      <svg
-                        height="96"
-                        width="96"
-                        dangerouslySetInnerHTML={{ __html: e.icon }}></svg>
-                    </div>
-                    :
-                    <img src={e?.image} alt="" />
-                  }
-                  <div className="mt-5 text-center">
-                    <h3 className="text-4xl font-semibold text-gray-900 group-hover:text-gray-600">
-                      {e.title}
-                    </h3>
+          return (
+            <article key={e.id} onClick={() => handleClickCard(e.id, e.href)} className={`${className} absolute top-0 right-0 left-0 bottom-0 m-auto w-[350px] h-[525px] max-w-sm flex items-center justify-center cursor-pointer min-h-[60vh] bg-white px-7 py-4 rounded-box shadow-2xl`}>
+              <div className="group relative flex flex-col items-center">
+                {e?.icon ?
+                  <div>
+                    <svg
+                      height="96"
+                      width="96"
+                      dangerouslySetInnerHTML={{ __html: e.icon }}></svg>
                   </div>
+                  :
+                  <img src={e?.image} alt="" />
+                }
+                <div className="mt-5 text-center">
+                  <h3 className="text-4xl font-semibold text-gray-900 group-hover:text-gray-600">
+                    {e.title}
+                  </h3>
                 </div>
-              </article>
-            )
-          })}
-        </div>
+              </div>
+            </article>
+          )
+        })}
       </div>
     </div>
   );

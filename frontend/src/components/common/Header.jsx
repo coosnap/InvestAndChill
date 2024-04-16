@@ -1,6 +1,6 @@
-import { MdAccountCircle } from "react-icons/md";
 import { useCookies } from "react-cookie";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { FcReading } from "react-icons/fc";
 
 function Header() {
   const [cookies, setCookie] = useCookies(['access_token', 'usrId']);
@@ -12,10 +12,29 @@ function Header() {
     navigate("/login");
   }
   return (
-    <div className="">
-      <button onClick={handlSignOut}>
-        <MdAccountCircle size={48} />
-      </button>
+    <div className="navbar bg-blue-100 px-8">
+      <div className="flex-1">
+        <Link to="#" className="flex items-center text-3xl tracking-tighter font-semibold text-[#DA5800]">
+          <img src="/logo.jpg" width={48} height={48} /><span className="ml-3">Invest Chill</span>
+        </Link>
+      </div>
+      <div className="flex-none gap-2">
+        <div className="dropdown dropdown-end">
+          <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+            <div className="w-10 rounded-full border-2 border-[#DA5800]">
+              <FcReading className="w-full h-full p-1" />
+            </div>
+          </div>
+          <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+            <li className="py-6 text-center font-semibold text-xl">
+              abc <br />
+              abc@gmail.com
+            </li>
+            <li><a className="text-lg">Settings</a></li>
+            <li><a className="text-lg" onClick={handlSignOut}>Logout</a></li>
+          </ul>
+        </div>
+      </div>
     </div>
   );
 }

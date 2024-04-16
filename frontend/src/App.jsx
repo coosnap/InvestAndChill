@@ -1,14 +1,17 @@
+import { Outlet, useLocation, useRoutes } from 'react-router-dom';
 import "./App.css";
-import { useRoutes } from 'react-router-dom';
+import Admin from './components/admin/Admin.jsx';
+import ReadFileDoc from "./components/admin/ReadFileDoc.jsx";
+import Header from './components/common/Header';
+import Category from "./components/pages/Category.jsx";
 import Investment from "./components/pages/Investment.jsx";
 import Login from "./components/pages/Login.jsx";
-import Category from "./components/pages/Category.jsx";
+import Post from "./components/pages/Post.jsx";
 import Product from "./components/pages/Product.jsx";
 import Question from "./components/pages/Question.jsx";
-import PublicRoute from "./components/router/public-route";
-import PrivateRoute from "./components/router/private-route";
 import AdminRoute from "./components/router/admin-route";
-import Admin from './components/admin/Admin.jsx';
+import PrivateRoute from "./components/router/private-route";
+import PublicRoute from "./components/router/public-route";
 
 const routes = [
   {
@@ -18,6 +21,14 @@ const routes = [
   {
     path: "/login",
     element: <PublicRoute><Login /></PublicRoute>
+  },
+  {
+    path: "/readfile",
+    element: <PublicRoute><ReadFileDoc /></PublicRoute>
+  },
+  {
+    path: "/post/:id",
+    element: <PublicRoute><Post /></PublicRoute>
   },
   {
     path: "/invest",
@@ -45,11 +56,24 @@ const routes = [
   },
 ]
 
+const Layout = ({ hideHeaderPaths = [] }) => {
+  const { pathname } = useLocation();
+
+  return (
+    <>
+      {!hideHeaderPaths.includes(pathname) && <Header />}
+      <Outlet />
+    </>
+  );
+}
+
 function App() {
   const routesElement = useRoutes(routes);
+  const { pathname } = useLocation();
 
   return (
     <div className="App">
+      {pathname.includes("/post") ? <></> : <Layout hideHeaderPaths={["/", "/login"]} />}
       {routesElement}
     </div>
   )

@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { signUp } from "../../api/auth";
+import { InputWithLabel } from "./InputWithLabel";
+import { Button } from "../ui/button";
 
 function Register(props) {
   const [register, setRegister] = useState({});
@@ -18,10 +20,15 @@ function Register(props) {
 
   async function handleSubmitRegister() {
     const response = await signUp(register);
-    console.log('reponse', reponse)
-    if (response) {
+    const responseBody = await response.json();
+    if (response.ok) {
+      setStatusDialog("Success");
       props.setShowModal(true);
-      props.setMessageDialog(response.message);
+      props.setMessageDialog(responseBody.message);
+    } else {
+      setStatusDialog("Error");
+      props.setShowModal(true);
+      props.setMessageDialog(responseBody.message);
     }
   }
 
@@ -33,32 +40,13 @@ function Register(props) {
           <div className="relative overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg px-8 py-4">
             <button onClick={handleCloseRegister} className="btn btn-sm btn-circle btn-ghost text-black absolute right-2 top-2 focus:border-none">✕</button>
             <h3 className="font-bold text-xl text-center text-black mb-4">Đăng ký tài khoản</h3>
-            <div>
-              <label className="form-control w-full">
-                <div className="label">
-                  <span className="label-text">Username</span>
-                </div>
-                <input onChange={handleChangeName} type="text" placeholder="Vui lòng điền Username!" className="input input-bordered w-full" />
-              </label>
-            </div>
-            <div className="">
-              <label className="form-control w-full">
-                <div className="label">
-                  <span className="label-text">Email</span>
-                </div>
-                <input onChange={handleChangeEmail} type="text" placeholder="Vui lòng điền Email!" className="input input-bordered w-full" />
-              </label>
-            </div>
-            <div>
-              <label className="form-control w-full">
-                <div className="label">
-                  <span className="label-text">Mật khẩu</span>
-                </div>
-                <input onChange={handleChangePassword} type="text" placeholder="Vui lòng điền mật khẩu!" className="input input-bordered w-full" />
-              </label>
-            </div>
+            <InputWithLabel label="Tên đăng nhập" placeholder="Vui lòng điền Username!" type="text" id="usrNmRe" require handleChange={handleChangeName} />
+            <div className="h-5"></div>
+            <InputWithLabel label="Email" placeholder="Vui lòng điền Email!" type="text" id="emailRe" require handleChange={handleChangeEmail} />
+            <div className="h-5"></div>
+            <InputWithLabel label="Mật khẩu" placeholder="Vui lòng điền Mật khẩu!" type="text" id="usrPwRe" require handleChange={handleChangePassword} />
             <div className="pt-4 text-center">
-              <button onClick={handleSubmitRegister} className="btn btn-primary text-white">Đăng ký</button>
+              <Button type="button" variant="default" onClick={handleSubmitRegister}>Đăng ký</Button>
             </div>
           </div>
         </div>

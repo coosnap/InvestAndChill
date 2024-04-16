@@ -2,13 +2,14 @@ import React, { useState } from "react";
 // import readXlsxFile from "read-excel-file";
 // import docx4js from "docx4js";
 import mammoth from "mammoth";
+import "./styles.css"
 
 // function extractEmails(text) {
 //   return text.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi);
 // }
 
 function Admin() {
-  const [value, setValue] = useState("")
+  const [file, setFile] = useState();
 
   function readFileInputEventAsArrayBuffer(file, callback) {
     var reader = new FileReader();
@@ -21,24 +22,28 @@ function Admin() {
     reader.readAsArrayBuffer(file);
   }
 
-  const handleFileInput = (event) => {
-    readFileInputEventAsArrayBuffer(event.target.files[0], function (
-      arrayBuffer
-    ) {
-      mammoth
-        .extractRawText({ arrayBuffer: arrayBuffer })
-        .then(function (result) {
-          var text = result.value;
-          console.log(text);
-          setValue(text);
-        })
-        .done();
+  function displayResult(result) {
+    console.log('result.value', result.value)
+    document.getElementById('output').innerHTML = result.value;
+  }
+
+  function handleSubmitFile() {
+    readFileInputEventAsArrayBuffer(file, function (arrayBuffer) {
+      mammoth.convertToHtml({ arrayBuffer: arrayBuffer }).then(displayResult).done();
     });
+  }
+
+  const handleFileInput = (event) => {
+    setFile(event.target.files[0]);
   };
+
   return (
-    <div className="container">
-      <input type="file" id="input" onChange={handleFileInput} />
-      <div>{value}</div>
+    <div className="container mx-auto pt-6">
+      <div className="mb-4 py-6 card-body max-w-sm border bg-blue-100">
+        <input type="file" id="file-input" accept=".doc,.docx" className="file-input file-input-primary" onChange={handleFileInput} />
+        <button type="button" className="mt-2 btn btn-primary text-white" onClick={handleSubmitFile}>Submit</button>
+      </div>
+      <div id="output"></div>
     </div>
   );
 }
