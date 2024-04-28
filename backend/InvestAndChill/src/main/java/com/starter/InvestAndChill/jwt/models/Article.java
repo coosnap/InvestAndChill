@@ -44,5 +44,16 @@ public class Article {
 		this.content = content;
 	}
 	
+	public Article() {
+		
+	}
+	
+	public Article(int id, String title, String content, String url) {
+		this.id = id;
+		this.title = title;
+		this.content = content;
+		this.url = url;
+	}
+	
 	
 }

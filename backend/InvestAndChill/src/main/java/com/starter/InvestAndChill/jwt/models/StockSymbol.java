@@ -53,6 +53,15 @@ public class StockSymbol {
 		this.note = note;
 	}
 	
+	public StockSymbol() {
+	}
+	
+	public StockSymbol(int id, String symbol, String companyName, String note) {
+		this.id = id;
+		this.symbol = symbol;
+		this.companyName = companyName;
+		this.note = note;
+	}
 	
 
 }

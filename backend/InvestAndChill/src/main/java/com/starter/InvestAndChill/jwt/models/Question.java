@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
+//Cau hoi thuong gap
 @Entity(name = "question")
 public class Question {
 	public int getId() {
@@ -41,4 +41,13 @@ public class Question {
 	
 	@Column(length = 5000)
 	private String answer;
+	
+	public Question() {
+	}
+	
+	public Question(int id, String questionContent, String answer) {
+		this.id = id;
+		this.questionContent = questionContent;
+		this.answer = answer;
+	}
 }
