@@ -1,11 +1,5 @@
 import { backendServerAPI } from "../config/config";
 
-export const auth = {
-  isUser: true,
-  isMod: false,
-  isAdmin: true
-}
-
 export async function signIn(data) {
   const authData = {
     username: data?.username,
@@ -49,5 +43,5 @@ export async function signUp(data) {
   if (response.ok) {
     return response;
   }
-  return;
+  return response.json();
 }

@@ -9,8 +9,6 @@ import { getArticleAll } from "../../api/article";
 import Loader from "../common/Loader";
 import { InputWithLabel } from "../common/InputWithLabel";
 import { Button } from "../ui/button";
-import { useSetRecoilState } from "recoil";
-import { rolesAuth } from "@/store/authStore";
 
 function Login() {
   const navigate = useNavigate();
@@ -25,8 +23,6 @@ function Login() {
   const [articleList, setArticleList] = useState([]);
   const [loginInfo, setLoginInfo] = useState({ usrNm: "", usrPwd: "" });
 
-  const setRoles = useSetRecoilState(rolesAuth);
-
   function handleChangeUsrNm(e) {
     setLoginInfo(prev => ({ ...prev, usrNm: e.target.value }))
   }
@@ -39,7 +35,9 @@ function Login() {
 
   const handleClickModal = () => {
     setShowModal(false)
-    setShowRegister(false)
+    if (statusDialog === "Success") {
+      setShowRegister(false)
+    }
   };
   const handleClickRegister = () => setShowRegister(false);
   const handleClickShowPassword = () => setShowPassword(!showPassword);
@@ -49,30 +47,13 @@ function Login() {
     setIsLoading(true);
     try {
       let infoSignIn = await signIn({ username: loginInfo.usrNm, password: loginInfo.usrPwd });
-      console.log('infoSignIn', infoSignIn)
       if (infoSignIn) {
         let d = new Date();
-        d.setTime(d.getTime() + (d.getMinutes() * 60 * 1000));
-        setCookie("usrId", { id: infoSignIn.id, usrNm: infoSignIn.username }, { path: "/", expires: d });
+        d.setTime(d.getTime() + (d.getMinutes() * 60 * 10000));
+        setCookie("usrId", { id: infoSignIn.id, usrNm: infoSignIn.username, email: infoSignIn.email }, { path: "/", expires: d });
         setCookie("access_token", infoSignIn.token, { path: "/", expires: d });
         setCookie("roles", infoSignIn.roles, { path: "/", expires: d });
         setIsLoading(false);
-        infoSignIn.roles.map(e => {
-          switch (e) {
-            case "ROLE_ADMIN":
-              setRoles(prev => ({ ...prev, isAdmin: true }));
-              break;
-            case "ROLE_MOD":
-              setRoles(prev => ({ ...prev, isMod: true }));
-              break;
-            case "ROLE_USER":
-              setRoles(prev => ({ ...prev, isUser: true }));
-              break;
-            default:
-              break;
-          }
-        })
-
         if (infoSignIn.roles.includes('ROLE_ADMIN') || infoSignIn.roles.includes('ROLE_MOD')) {
           navigate("/admin");
         } else {
@@ -83,9 +64,9 @@ function Login() {
         setIsLoading(false);
       }
     } catch (error) {
-      console.error(error);
       setShowDialog(true);
       setIsLoading(false);
+      console.error(error);
     }
   }
 
@@ -99,7 +80,8 @@ function Login() {
   useEffect(() => {
     getData();
     if (cookie.access_token && (location.pathname == "/" || location.pathname == "/login")) {
-      navigate("/invest");
+      if (cookie.roles.includes("ROLE_ADMIN") || cookie.roles.includes("ROLE_MOD")) navigate("/admin");
+      else navigate("/invest");
     }
   }, [])
 
@@ -128,9 +110,23 @@ function Login() {
             <div className="flex items-center justify-center text-3xl font-semibold text-gray-900">Đăng nhập</div>
             <form className="px-12 w-full" id="userForm">
               <div>
-                <InputWithLabel label="Tên đăng nhập" placeholder="Vui lòng điền Email/Phone" type="text" id="usrNm" require handleChange={(e) => handleChangeUsrNm(e)} />
+                <InputWithLabel
+                  label="Tên đăng nhập"
+                  placeholder="Vui lòng điền Email/Phone"
+                  type="text" id="usrNm"
+                  require
+                  handleChange={(e) => handleChangeUsrNm(e)}
+                />
                 <div className="h-5"></div>
-                <InputWithLabel label="Mật khẩu" placeholder="Vui lòng điền mật khẩu" type={showPassword ? 'text' : 'password'} id="usrPwd" require handleChange={(e) => handleChangePwd(e)} handleClickShowPassword={handleClickShowPassword} />
+                <InputWithLabel
+                  label="Mật khẩu"
+                  placeholder="Vui lòng điền mật khẩu"
+                  type={showPassword ? 'text' : 'password'} id="usrPwd"
+                  require
+                  handleChange={(e) => handleChangePwd(e)}
+                  handleClickShowPassword={handleClickShowPassword}
+                  handleKeyEnter={handleSubmitLogin}
+                />
               </div>
               <div className="mt-5 flex items-center">
                 <div className="w-7/12 text-end">
@@ -144,9 +140,9 @@ function Login() {
           </div>
         </div>
       </div>
-      {showRegister && <Register setMessageDialog={setMessageDialog} setShowModal={setShowModal} handleClickRegister={handleClickRegister} />}
+      {showRegister && <Register setMessageDialog={setMessageDialog} setStatusDialog={setStatusDialog} setShowModal={setShowModal} handleClickRegister={handleClickRegister} />}
       {showDialog && <Modal handleClickModal={handleClickDialog} message={"Invalid login Username or Password."} status="Error" />}
-      {showModal && <Modal setStatusDialog={setStatusDialog} handleClickModal={handleClickModal} message={messageDialog} status={statusDialog} />}
+      {showModal && <Modal handleClickModal={handleClickModal} message={messageDialog} status={statusDialog} />}
     </div>
   );
 }

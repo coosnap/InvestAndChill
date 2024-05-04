@@ -2,7 +2,12 @@ import React, { useState } from "react";
 // import readXlsxFile from "read-excel-file";
 // import docx4js from "docx4js";
 import mammoth from "mammoth";
-import "./styles.css"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import Editor from "./components/Editor";
+import ReadFileDoc from "./components/ReadFileDoc";
+import UploadFile from "./components/UploadFile";
+import TableQuestion from "./components/question/TableQuestion";
+import TableStoke from "./components/stoke/TableStoke";
 
 // function extractEmails(text) {
 //   return text.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi);
@@ -28,9 +33,12 @@ function Admin() {
   }
 
   function handleSubmitFile() {
-    readFileInputEventAsArrayBuffer(file, function (arrayBuffer) {
-      mammoth.convertToHtml({ arrayBuffer: arrayBuffer }).then(displayResult).done();
-    });
+    if (file) {
+      readFileInputEventAsArrayBuffer(file, function (arrayBuffer) {
+        mammoth.convertToHtml({ arrayBuffer: arrayBuffer }).then(displayResult).done();
+      });
+    }
+    return;
   }
 
   const handleFileInput = (event) => {
@@ -39,11 +47,38 @@ function Admin() {
 
   return (
     <div className="container mx-auto pt-6">
-      <div className="mb-4 py-6 card-body max-w-sm border bg-blue-100">
-        <input type="file" id="file-input" accept=".doc,.docx" className="file-input file-input-primary" onChange={handleFileInput} />
-        <button type="button" className="mt-2 btn btn-primary text-white" onClick={handleSubmitFile}>Submit</button>
-      </div>
-      <div id="output"></div>
+      <Tabs defaultValue="readfromfile" className="w-full">
+        <TabsList>
+          <TabsTrigger value="readfromfile">Read From File</TabsTrigger>
+          <TabsTrigger value="password">Question</TabsTrigger>
+          <TabsTrigger value="stoke">Stoke</TabsTrigger>
+          <TabsTrigger value="upload">Upload File</TabsTrigger>
+          <TabsTrigger value="editor">Editor</TabsTrigger>
+          <TabsTrigger value="readfile">File Viewer</TabsTrigger>
+        </TabsList>
+        <TabsContent value="readfromfile">
+          <div className="mb-4 py-6 card-body max-w-sm border bg-blue-100">
+            <input type="file" id="file-input" accept=".doc,.docx" className="file-input file-input-primary" onChange={handleFileInput} />
+            <button type="button" className="mt-2 btn btn-primary text-white" onClick={handleSubmitFile}>Submit</button>
+          </div>
+          <div id="output"></div>
+        </TabsContent>
+        <TabsContent value="password">
+          <TableQuestion />
+        </TabsContent>
+        <TabsContent value="stoke">
+          <TableStoke />
+        </TabsContent>
+        <TabsContent value="upload">
+          <UploadFile />
+        </TabsContent>
+        <TabsContent value="editor">
+          <Editor />
+        </TabsContent>
+        <TabsContent value="readfile">
+          <ReadFileDoc />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }

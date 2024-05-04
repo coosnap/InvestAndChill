@@ -14,7 +14,7 @@ function Question() {
   }, [])
 
   return (
-    <div className="h-[100vh] px-10 py-10 bg-[#FCFDFE]">
+    <div className="h-[calc(100vh-98px)] bg-[#FCFDFE]">
       <div className="mt-8 mb-12">
         <h2 className="text-3xl text-center text-[#232A46] font-semibold">FAQs - Câu hỏi thường gặp</h2>
       </div>

@@ -17,7 +17,16 @@ export function InputWithLabel(props) {
         <Label htmlFor={props.id}>{props.label}</Label>
       }
       <div className="relative">
-        <Input onChange={handleChangeInput} type={props.type} id={props.id} placeholder={props.placeholder} />
+        <Input
+          onKeyDown={(e) => {
+            if (e.key === "Enter")
+              props.handleKeyEnter(e);
+          }}
+          onChange={handleChangeInput}
+          type={props.type}
+          id={props.id}
+          placeholder={props.placeholder}
+        />
         {props.handleClickShowPassword &&
           <div className="absolute top-1/4 right-3">
             {props.text === "text" ?

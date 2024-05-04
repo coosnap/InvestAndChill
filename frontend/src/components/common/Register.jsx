@@ -20,15 +20,18 @@ function Register(props) {
 
   async function handleSubmitRegister() {
     const response = await signUp(register);
-    const responseBody = await response.json();
+    console.log('response', response)
     if (response.ok) {
-      setStatusDialog("Success");
-      props.setShowModal(true);
-      props.setMessageDialog(responseBody.message);
+      const responseBody = await response.json();
+      if (responseBody.message) {
+        props.setStatusDialog("Success");
+        props.setShowModal(true);
+        props.setMessageDialog(responseBody.message);
+      }
     } else {
-      setStatusDialog("Error");
+      props.setStatusDialog("Error");
       props.setShowModal(true);
-      props.setMessageDialog(responseBody.message);
+      props.setMessageDialog(response.message);
     }
   }
 

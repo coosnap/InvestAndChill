@@ -1,7 +1,7 @@
 import { backendServerAPI } from "../config/config";
 
-export async function getQuestionAll() {
-  const response = await fetch(`${backendServerAPI}/api/question/all`, {
+export async function getStockAll() {
+  const response = await fetch(`${backendServerAPI}/api/stock/all`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -14,8 +14,8 @@ export async function getQuestionAll() {
   return;
 }
 
-export async function getQuestionDetail(id) {
-  const response = await fetch(`${backendServerAPI}/api/question/${id}`, {
+export async function getStokeDetail(id) {
+  const response = await fetch(`${backendServerAPI}/api/stock/${id}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -28,8 +28,8 @@ export async function getQuestionDetail(id) {
   return;
 }
 
-export async function insertQuestion(data) {
-  const response = await fetch(`${backendServerAPI}/api/question/save`, {
+export async function insertStoke(data) {
+  const response = await fetch(`${backendServerAPI}/api/stock/save`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -43,8 +43,8 @@ export async function insertQuestion(data) {
   return;
 }
 
-export async function updateQuestion(data) {
-  const response = await fetch(`${backendServerAPI}/api/question/${data.id}`, {
+export async function updateStoke(data) {
+  const response = await fetch(`${backendServerAPI}/api/stock/${data.id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',

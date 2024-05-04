@@ -1,4 +1,5 @@
 import DocViewer, { DocViewerRenderers } from '@cyntler/react-doc-viewer';
+import './ReadFileDoc.scss';
 
 function ReadFileDoc() {
   const docs = [
@@ -13,8 +14,8 @@ function ReadFileDoc() {
   ]
 
   return (
-    <div className="">
-      <DocViewer documents={docs} pluginRenderers={DocViewerRenderers} style={{ height: 911 }} />
+    <div readOnly className="">
+      <DocViewer readOnly documents={docs} pluginRenderers={DocViewerRenderers} style={{ height: 755 }} />
     </div>
   );
 }

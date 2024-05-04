@@ -1,10 +1,10 @@
 import { Outlet, useLocation, useRoutes } from 'react-router-dom';
 import "./App.css";
+import { ThemeProvider } from './ThemeProvider';
 import Admin from './components/admin/Admin.jsx';
-import ReadFileDoc from "./components/admin/ReadFileDoc.jsx";
 import Header from './components/common/Header';
 import Category from "./components/pages/Category.jsx";
-import Investment from "./components/pages/Investment.jsx";
+import Investment from "./components/pages/Investment/index.jsx";
 import Login from "./components/pages/Login.jsx";
 import Post from "./components/pages/Post.jsx";
 import Product from "./components/pages/Product.jsx";
@@ -12,6 +12,7 @@ import Question from "./components/pages/Question.jsx";
 import AdminRoute from "./components/router/admin-route";
 import PrivateRoute from "./components/router/private-route";
 import PublicRoute from "./components/router/public-route";
+import Detail from './components/pages/Detail';
 
 const routes = [
   {
@@ -21,10 +22,6 @@ const routes = [
   {
     path: "/login",
     element: <PublicRoute><Login /></PublicRoute>
-  },
-  {
-    path: "/readfile",
-    element: <PublicRoute><ReadFileDoc /></PublicRoute>
   },
   {
     path: "/post/:id",
@@ -48,7 +45,7 @@ const routes = [
   },
   {
     path: "/detail/:id",
-    element: <PrivateRoute><Product /></PrivateRoute>
+    element: <PrivateRoute><Detail /></PrivateRoute>
   },
   {
     path: "/admin",
@@ -72,10 +69,12 @@ function App() {
   const { pathname } = useLocation();
 
   return (
-    <div className="App">
-      {pathname.includes("/post") ? <></> : <Layout hideHeaderPaths={["/", "/login"]} />}
-      {routesElement}
-    </div>
+    <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+      <div className="App">
+        {pathname.includes("/post") ? <></> : <Layout hideHeaderPaths={["/", "/login"]} />}
+        {routesElement}
+      </div>
+    </ThemeProvider>
   )
 }
 export default App
