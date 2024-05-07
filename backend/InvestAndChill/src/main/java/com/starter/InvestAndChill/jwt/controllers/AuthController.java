@@ -2,12 +2,14 @@ package com.starter.InvestAndChill.jwt.controllers;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,12 +17,15 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.starter.InvestAndChill.jwt.exception.TokenRefreshException;
+import com.starter.InvestAndChill.jwt.models.Article;
 import com.starter.InvestAndChill.jwt.models.ERole;
 import com.starter.InvestAndChill.jwt.models.RefreshToken;
 import com.starter.InvestAndChill.jwt.models.Role;
@@ -89,10 +94,14 @@ public class AuthController {
     if (userRepository.existsByEmail(signUpRequest.getEmail())) {
       return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
     }
+    
+    if (userRepository.existsByPhoneNumber(signUpRequest.getPhoneNumber())) {
+        return ResponseEntity.badRequest().body(new MessageResponse("Error: Phone Number is already in use!"));
+      }
 
     // Create new user's account
-    User user = new User(signUpRequest.getUsername(), signUpRequest.getEmail(),
-        encoder.encode(signUpRequest.getPassword()));
+    User user = new User(signUpRequest.getUsername(), signUpRequest.getEmail(), 
+        encoder.encode(signUpRequest.getPassword()),signUpRequest.getFirstName(), signUpRequest.getLastName(), signUpRequest.getPhoneNumber(), signUpRequest.getDateOfBirth());
 
     Set<String> strRoles = signUpRequest.getRole();
     Set<Role> roles = new HashSet<>();
@@ -152,5 +161,18 @@ public class AuthController {
     refreshTokenService.deleteByUserId(userId);
     return ResponseEntity.ok(new MessageResponse("Log out successful!"));
   }
+  
+  @GetMapping("/{id}")
+	public ResponseEntity<User> getUserById(@PathVariable String id) {
+		Optional<User> user = userRepository.findById(Long.valueOf(id));
+		user.get().setPassword(null);
+	    if (user.isPresent()) {
+	      return new ResponseEntity<>(user.get(), HttpStatus.OK);
+	    } else {
+	      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	    }
+	}
+  
+  
 
 }
