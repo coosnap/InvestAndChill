@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,6 +30,7 @@ import com.starter.InvestAndChill.jwt.models.Article;
 import com.starter.InvestAndChill.jwt.models.ERole;
 import com.starter.InvestAndChill.jwt.models.RefreshToken;
 import com.starter.InvestAndChill.jwt.models.Role;
+import com.starter.InvestAndChill.jwt.models.StockSymbol;
 import com.starter.InvestAndChill.jwt.models.User;
 import com.starter.InvestAndChill.jwt.payload.request.LoginRequest;
 import com.starter.InvestAndChill.jwt.payload.request.SignupRequest;
@@ -172,6 +174,35 @@ public class AuthController {
 	      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	    }
 	}
+  
+  @PutMapping("/{id}")
+  public ResponseEntity<?> updateUser(@PathVariable("id") Long id, @RequestBody SignupRequest user) {
+	  if (userRepository.existsByEmail(user.getEmail())) {
+	      return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
+	    }
+	    
+	    if (userRepository.existsByPhoneNumber(user.getPhoneNumber())) {
+	        return ResponseEntity.badRequest().body(new MessageResponse("Error: Phone Number is already in use!"));
+	      }
+	  
+	  
+	Optional<User> userData = userRepository.findById(id);
+
+    if (userData.isPresent()) {
+    	User _user = userData.get();
+    	_user.setFirstName(user.getFirstName());
+    	_user.setLastName(user.getLastName());
+    	_user.setEmail(user.getEmail());
+    	_user.setDateOfBirth(user.getDateOfBirth());
+    	_user.setPassword(user.getPassword());
+    	_user.setPhoneNumber(user.getPhoneNumber());
+    	User userPresent = userRepository.save(_user);
+    	userPresent.setPassword(null);
+      return new ResponseEntity<>(userPresent, HttpStatus.OK);
+    } else {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+  }
   
   
 
