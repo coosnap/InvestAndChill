@@ -1,0 +1,20 @@
+git push heroku main
+heroku git:remote -a agile-bayou-65029
+heroku buildpacks:set heroku/java
+heroku config:set PROJECT_PATH=backend/InvestAndChill
+heroku buildpacks:set https://github.com/coosnap/InvestAndChill
+heroku buildpacks:add heroku/java
+
+heroku apps:rename investAndChill
+heroku git:remote -a investAndChill
+heroku git:remote -a agile-bayou-65029
+git subtree push --prefix backend/InvestAndChill heroku master
+
+java.runtime.version=1.8.0_202
+
+
+pacific-oasis-83577
+git pass: Stingsting2802@ 
+add proxy: git config --global --add remote.origin.proxy ""
+heroku scale: heroku ps:scale web=1
+xem logs: heroku logs --tail
