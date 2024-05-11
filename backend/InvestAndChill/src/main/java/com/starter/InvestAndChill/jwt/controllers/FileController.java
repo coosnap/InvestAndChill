@@ -23,7 +23,7 @@ import com.starter.InvestAndChill.jwt.payload.response.ResponseFile;
 import com.starter.InvestAndChill.jwt.security.services.FileStorageService;
 
 @Controller
-@CrossOrigin("http://localhost:8081")
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/api/file")
 public class FileController {
 	@Autowired
