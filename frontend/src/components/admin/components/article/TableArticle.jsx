@@ -18,26 +18,26 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { useEffect, useState } from "react";
+import AddArticle from "./AddArticle";
 import Loader from "@/components/common/Loader";
-import { deleteStock, getStockAll } from "@/api/stock";
-import AddStoke from "./AddStoke";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { Button } from "@/components/ui/button";
+import { deleteArticle, getArticleAll } from "@/api/article";
 
-export default function TableStoke() {
-  const [stokes, setStokes] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+export default function TableArticle() {
+  const [articles, setArticles] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   async function getData() {
     setIsLoading(true);
-    const result = await getStockAll();
-    setStokes(result);
+    const result = await getArticleAll();
+    setArticles(result);
     setIsLoading(false);
   }
 
   async function handleDelete(id) {
     setIsLoading(true);
-    let result = await deleteStock(id);
+    let result = await deleteArticle(id);
     if (result) {
       getData();
     }
@@ -56,28 +56,26 @@ export default function TableStoke() {
   return (
     <>
       <div className="cursor-pointer my-8">
-        <AddStoke render={getData} action="Add" />
+        <AddArticle render={getData} action="Add" />
       </div>
       <Table>
         <TableHeader>
           <TableRow>
             <TableHead>Id</TableHead>
-            <TableHead>Symbol</TableHead>
-            <TableHead>Company Name</TableHead>
-            <TableHead>Note</TableHead>
+            <TableHead>Title</TableHead>
+            <TableHead>Content</TableHead>
             <TableHead>Action</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {stokes.map((stoke) => (
-            <TableRow key={stoke.id}>
-              <TableCell className="font-medium">{stoke.id}</TableCell>
-              <TableCell>{stoke.symbol}</TableCell>
-              <TableCell>{stoke.companyName}</TableCell>
-              <TableCell>{stoke.note}</TableCell>
+          {articles.map((article) => (
+            <TableRow key={article.id}>
+              <TableCell className="font-medium">{article.id}</TableCell>
+              <TableCell>{article.title}</TableCell>
+              <TableCell className="w-[50%]">{article.content}</TableCell>
               <TableCell className="flex">
                 <div className="cursor-pointer">
-                  <AddStoke render={getData} action="Edit" id={stoke.id} />
+                  <AddArticle render={getData} action="Edit" id={article.id} />
                 </div>
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
@@ -93,7 +91,7 @@ export default function TableStoke() {
                     </AlertDialogHeader>
                     <AlertDialogFooter>
                       <AlertDialogCancel>Cancel</AlertDialogCancel>
-                      <AlertDialogAction className="bg-red-500 hover:bg-red-400" onClick={() => handleDelete(stoke.id)}>Ok</AlertDialogAction>
+                      <AlertDialogAction className="bg-red-500 hover:bg-red-400" onClick={() => handleDelete(article.id)}>Ok</AlertDialogAction>
                     </AlertDialogFooter>
                   </AlertDialogContent>
                 </AlertDialog>

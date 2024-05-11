@@ -4,7 +4,7 @@ import './ReadFileDoc.scss';
 function ReadFileDoc() {
   const docs = [
     {
-      uri: "https://calibre-ebook.com/downloads/demos/demo.docx",
+      uri: "http://agile-bayou-65029-c59bb8376f70.herokuapp.com/api/file/3817d33c-0d53-48ae-a290-1d7039f4ffbf",
       fileType: "docx",
     },
     {
@@ -14,8 +14,9 @@ function ReadFileDoc() {
   ]
 
   return (
-    <div readOnly className="">
-      <DocViewer readOnly documents={docs} pluginRenderers={DocViewerRenderers} style={{ height: 755 }} />
+    <div>
+      {/* <div className='w-[1522px] h-[755px] absolute left-[192px] top-[134px] select-none bg-black-100'></div> */}
+      <DocViewer className='' documents={docs} pluginRenderers={DocViewerRenderers} style={{ height: 755 }} />
     </div>
   );
 }

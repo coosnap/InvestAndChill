@@ -1,16 +1,44 @@
 import { useCookies } from "react-cookie";
 import { Link, useNavigate } from "react-router-dom";
 import { FcReading } from "react-icons/fc";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { Label } from "../ui/label";
+import { Input } from "../ui/input";
+import { getUserDetail, updateUser } from "@/api/user";
+import { useState } from "react";
+import { Button } from "../ui/button";
 
 function Header() {
-  const [cookies, setCookie] = useCookies(['access_token', 'usrId']);
   const navigate = useNavigate();
+  const [cookies, setCookie] = useCookies(['access_token', 'usrId']);
+
+  const [userInfo, setUserInfo] = useState({});
+  const [showDialog, setShowDialog] = useState(false);
 
   function handlSignOut() {
     setCookie("access_token", "", {});
     setCookie("usrId", "", {});
     setCookie("roles", "", {});
     navigate("/login");
+  }
+
+  async function handleUpdateUser() {
+    const id = cookies.usrId.id;
+    const result = await getUserDetail(id);
+    if (result) setUserInfo(result);
+  }
+
+  async function handleClickSaveUser() {
+    await updateUser(userInfo);
   }
 
   return (
@@ -32,7 +60,111 @@ function Header() {
               {cookies.usrId.usrNm} <br />
               {cookies.usrId.email}
             </li>
-            <li><a className="text-lg">Settings</a></li>
+            <li>
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <a onClick={handleUpdateUser} className="text-lg">Settings</a>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle className="text-center mb-4">User Information</AlertDialogTitle>
+                    <div className="flex flex-col gap-3">
+                      <div className="flex">
+                        <div className="space-y-1 w-1/2 pr-2">
+                          <Label>Id</Label>
+                          <Input
+                            disabled
+                            defaultValue={userInfo?.id ?? ""}
+                          />
+                        </div>
+                        <div className="space-y-1 w-1/2 pr-2">
+                          <Label htmlFor="phoneNumber">Phone Number</Label>
+                          <Input
+                            id="phoneNumber"
+                            defaultValue={userInfo?.phoneNumber ?? ""}
+                            onChange={(e) => {
+                              setUserInfo((prev) => ({
+                                ...prev,
+                                phoneNumber: e.target.value,
+                              }));
+                            }} />
+                        </div>
+                      </div>
+                      <div className="flex">
+                        <div className="space-y-1 w-1/2 pr-2">
+                          <Label htmlFor="username">User Name</Label>
+                          <Input
+                            id="username"
+                            defaultValue={userInfo?.username ?? ""}
+                            onChange={(e) => {
+                              setUserInfo((prev) => ({
+                                ...prev,
+                                username: e.target.value,
+                              }));
+                            }} />
+                        </div>
+                        <div className="space-y-1 w-1/2 pr-2">
+                          <Label htmlFor="password">Password</Label>
+                          <Input
+                            id="password"
+                            defaultValue={userInfo?.password ?? ""}
+                            onChange={(e) => {
+                              setUserInfo((prev) => ({
+                                ...prev,
+                                password: e.target.value,
+                              }));
+                            }} />
+                        </div>
+                      </div>
+                      <div className="flex">
+                        <div className="space-y-1 w-1/2 pr-2">
+                          <Label htmlFor="firstname">First Name</Label>
+                          <Input
+                            id="firstname"
+                            defaultValue={userInfo?.firstName ?? ""}
+                            onChange={(e) => {
+                              setUserInfo((prev) => ({
+                                ...prev,
+                                firstName: e.target.value,
+                              }));
+                            }} />
+                        </div>
+                        <div className="space-y-1 w-1/2 pl-2">
+                          <Label htmlFor="lastname">Last Name</Label>
+                          <Input
+                            id="lastname"
+                            defaultValue={userInfo?.lastName ?? ""}
+                            onChange={(e) => {
+                              setUserInfo((prev) => ({
+                                ...prev,
+                                lastName: e.target.value,
+                              }));
+                            }} />
+                        </div>
+                      </div>
+                      <span className="space-y-1">
+                        <Label htmlFor="email">Email</Label>
+                        <Input
+                          id="email"
+                          defaultValue={userInfo?.email ?? ""}
+                          onChange={(e) => {
+                            setUserInfo((prev) => ({
+                              ...prev,
+                              email: e.target.value,
+                            }));
+                          }} />
+                      </span>
+                    </div>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction onClick={handleClickSaveUser}>
+                      Save
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            </li>
             <li><a className="text-lg" onClick={handlSignOut}>Logout</a></li>
           </ul>
         </div>

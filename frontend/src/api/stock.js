@@ -57,3 +57,16 @@ export async function updateStoke(data) {
   }
   return;
 }
+
+export async function deleteStock(id) {
+  const response = await fetch(`${backendServerAPI}/api/stock/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  if (response.ok) {
+    return true;
+  }
+  return false;
+}
