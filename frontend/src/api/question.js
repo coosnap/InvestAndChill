@@ -57,3 +57,16 @@ export async function updateQuestion(data) {
   }
   return;
 }
+
+export async function deleteQuestion(id) {
+  const response = await fetch(`${backendServerAPI}/api/question/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  if (response.ok) {
+    return true;
+  }
+  return false;
+}

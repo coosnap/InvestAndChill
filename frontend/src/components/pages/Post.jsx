@@ -27,7 +27,7 @@ function Post() {
     <div className="h-screen text-center bg-[#EBEDF4]">
       <div className="container mx-auto">
         <p className="text-4xl font-semibold py-6">{postDetail.title}</p>
-        <span className="text-xl">{postDetail.content}</span>
+        <span className="text-xl" dangerouslySetInnerHTML={{ __html: postDetail.content }} />
       </div>
     </div>
   );

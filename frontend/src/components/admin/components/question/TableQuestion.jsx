@@ -1,4 +1,4 @@
-import { getQuestionAll, getQuestionDetail } from "@/api/question";
+import { deleteQuestion, getQuestionAll } from "@/api/question";
 import {
   Table,
   TableBody,
@@ -7,9 +7,22 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 import { useEffect, useState } from "react";
 import AddQuestion from "./AddQuestion";
 import Loader from "@/components/common/Loader";
+import { RiDeleteBinLine } from "react-icons/ri";
+import { Button } from "@/components/ui/button";
 
 export default function TableQuestion() {
   const [questions, setQuestions] = useState([]);
@@ -20,6 +33,16 @@ export default function TableQuestion() {
     const result = await getQuestionAll();
     setQuestions(result);
     setIsLoading(false);
+  }
+
+  async function handleDelete(id) {
+    setIsLoading(true);
+    let result = await deleteQuestion(id);
+    if (result) {
+      getData();
+    }
+    setIsLoading(false);
+    return;
   }
 
   useEffect(() => {
@@ -33,7 +56,7 @@ export default function TableQuestion() {
   return (
     <>
       <div className="cursor-pointer my-8">
-        <AddQuestion action="Add" />
+        <AddQuestion render={getData} action="Add" />
       </div>
       <Table>
         <TableHeader>
@@ -50,10 +73,28 @@ export default function TableQuestion() {
               <TableCell className="font-medium">{question.id}</TableCell>
               <TableCell>{question.questionContent}</TableCell>
               <TableCell>{question.answer}</TableCell>
-              <TableCell>
+              <TableCell className="flex">
                 <div className="cursor-pointer">
-                  <AddQuestion action="Edit" id={question.id} />
+                  <AddQuestion render={getData} action="Edit" id={question.id} />
                 </div>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button variant="destructive" className="ml-2"><RiDeleteBinLine /></Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        This action cannot be undone. This will permanently delete your
+                        question and remove your data from our servers.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction className="bg-red-500 hover:bg-red-400" onClick={() => handleDelete(question.id)}>Ok</AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
               </TableCell>
             </TableRow>
           ))}

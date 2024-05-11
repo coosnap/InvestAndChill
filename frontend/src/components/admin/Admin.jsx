@@ -8,60 +8,59 @@ import ReadFileDoc from "./components/ReadFileDoc";
 import UploadFile from "./components/UploadFile";
 import TableQuestion from "./components/question/TableQuestion";
 import TableStoke from "./components/stoke/TableStoke";
+import TableArticle from "./components/article/TableArticle";
 
 // function extractEmails(text) {
 //   return text.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi);
 // }
 
 function Admin() {
-  const [file, setFile] = useState();
+  // const [file, setFile] = useState();
 
-  function readFileInputEventAsArrayBuffer(file, callback) {
-    var reader = new FileReader();
+  // function readFileInputEventAsArrayBuffer(file, callback) {
+  //   var reader = new FileReader();
 
-    reader.onload = function (loadEvent) {
-      var arrayBuffer = loadEvent.target.result;
-      callback(arrayBuffer);
-    };
+  //   reader.onload = function (loadEvent) {
+  //     var arrayBuffer = loadEvent.target.result;
+  //     callback(arrayBuffer);
+  //   };
 
-    reader.readAsArrayBuffer(file);
-  }
+  //   reader.readAsArrayBuffer(file);
+  // }
 
-  function displayResult(result) {
-    console.log('result.value', result.value)
-    document.getElementById('output').innerHTML = result.value;
-  }
+  // function displayResult(result) {
+  //   console.log('result.value', result.value)
+  //   document.getElementById('output').innerHTML = result.value;
+  // }
 
-  function handleSubmitFile() {
-    if (file) {
-      readFileInputEventAsArrayBuffer(file, function (arrayBuffer) {
-        mammoth.convertToHtml({ arrayBuffer: arrayBuffer }).then(displayResult).done();
-      });
-    }
-    return;
-  }
+  // function handleSubmitFile() {
+  //   if (file) {
+  //     readFileInputEventAsArrayBuffer(file, function (arrayBuffer) {
+  //       mammoth.convertToHtml({ arrayBuffer: arrayBuffer }).then(displayResult).done();
+  //     });
+  //   }
+  //   return;
+  // }
 
-  const handleFileInput = (event) => {
-    setFile(event.target.files[0]);
-  };
+  // const handleFileInput = (event) => {
+  //   setFile(event.target.files[0]);
+  // };
 
   return (
     <div className="container mx-auto pt-6">
-      <Tabs defaultValue="readfromfile" className="w-full">
+      <Tabs defaultValue="article" className="w-full">
         <TabsList>
-          <TabsTrigger value="readfromfile">Read From File</TabsTrigger>
+          <TabsTrigger value="article">Article</TabsTrigger>
           <TabsTrigger value="password">Question</TabsTrigger>
           <TabsTrigger value="stoke">Stoke</TabsTrigger>
           <TabsTrigger value="upload">Upload File</TabsTrigger>
           <TabsTrigger value="editor">Editor</TabsTrigger>
           <TabsTrigger value="readfile">File Viewer</TabsTrigger>
+          {/* <TabsTrigger value="readfromfile">Read From File</TabsTrigger> */}
         </TabsList>
-        <TabsContent value="readfromfile">
-          <div className="mb-4 py-6 card-body max-w-sm border bg-blue-100">
-            <input type="file" id="file-input" accept=".doc,.docx" className="file-input file-input-primary" onChange={handleFileInput} />
-            <button type="button" className="mt-2 btn btn-primary text-white" onClick={handleSubmitFile}>Submit</button>
-          </div>
-          <div id="output"></div>
+
+        <TabsContent value="article">
+          <TableArticle />
         </TabsContent>
         <TabsContent value="password">
           <TableQuestion />
@@ -78,6 +77,13 @@ function Admin() {
         <TabsContent value="readfile">
           <ReadFileDoc />
         </TabsContent>
+        {/* <TabsContent value="readfromfile">
+          <div className="mb-4 py-6 card-body max-w-sm border bg-blue-100">
+            <input type="file" id="file-input" accept=".doc,.docx" className="file-input file-input-primary" onChange={handleFileInput} />
+            <button type="button" className="mt-2 btn btn-primary text-white" onClick={handleSubmitFile}>Submit</button>
+          </div>
+          <div id="output"></div>
+        </TabsContent> */}
       </Tabs>
     </div>
   );

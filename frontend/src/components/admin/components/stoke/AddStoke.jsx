@@ -33,10 +33,12 @@ function AddStoke(props) {
     if (props.action === "Edit") {
       let temp = { ...stokeDetail };
       setStoke(prev => ({ ...prev, ...temp }));
-      updateStoke(stoke);
+      await updateStoke(stoke);
+      props.render();
     }
     if (props.action === "Add") {
-      insertStoke(stoke);
+      await insertStoke(stoke);
+      props.render();
     }
     return;
   }
@@ -57,27 +59,22 @@ function AddStoke(props) {
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle className="mb-4 text-center">{props.action === "Edit" ? "Edit" : "Add"} Stoke</AlertDialogTitle>
-          <AlertDialogDescription>
+          <AlertDialogDescription className="flex flex-col gap-4">
             {props.action === "Edit" &&
-              <div className="space-y-1">
+              <span className="space-y-1">
                 <Label htmlFor="name">Id</Label>
                 <Input
+                  disabled
                   defaultValue={stokeDetail?.id ?? ""}
                   onChange={(e) => {
-                    if (props.action === "Edit") {
-                      setStoke((prev) => ({
-                        ...prev,
-                        id: e.target.value,
-                      }));
-                    }
                     setStoke((prev) => ({
                       ...prev,
                       id: e.target.value,
                     }));
                   }} />
-              </div>
+              </span>
             }
-            <div className="space-y-1">
+            <span className="space-y-1">
               <Label htmlFor="name">Stoke Symbol</Label>
               <Input
                 defaultValue={stokeDetail?.symbol ?? ""}
@@ -87,8 +84,8 @@ function AddStoke(props) {
                     symbol: e.target.value,
                   }));
                 }} />
-            </div>
-            <div className="space-y-1">
+            </span>
+            <span className="space-y-1">
               <Label htmlFor="username">Company Name</Label>
               <Input
                 defaultValue={stokeDetail?.companyName ?? ""}
@@ -98,8 +95,8 @@ function AddStoke(props) {
                     companyName: e.target.value,
                   }));
                 }} />
-            </div>
-            <div className="space-y-1">
+            </span>
+            <span className="space-y-1">
               <Label htmlFor="username">Note</Label>
               <Input
                 defaultValue={stokeDetail?.note ?? ""}
@@ -109,7 +106,7 @@ function AddStoke(props) {
                     note: e.target.value,
                   }));
                 }} />
-            </div>
+            </span>
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
