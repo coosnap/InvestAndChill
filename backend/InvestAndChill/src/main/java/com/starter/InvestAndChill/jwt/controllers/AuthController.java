@@ -177,11 +177,11 @@ public class AuthController {
   
   @PutMapping("/{id}")
   public ResponseEntity<?> updateUser(@PathVariable("id") Long id, @RequestBody SignupRequest user) {
-	  if (userRepository.existsByEmail(user.getEmail())) {
+	  if (userRepository.existsByEmailForUpdate(user.getEmail(),id)) {
 	      return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
 	    }
 	    
-	    if (userRepository.existsByPhoneNumber(user.getPhoneNumber())) {
+	    if (userRepository.existsByPhoneNumberForUpdate(user.getPhoneNumber(),id)) {
 	        return ResponseEntity.badRequest().body(new MessageResponse("Error: Phone Number is already in use!"));
 	      }
 	  
@@ -194,7 +194,7 @@ public class AuthController {
     	_user.setLastName(user.getLastName());
     	_user.setEmail(user.getEmail());
     	_user.setDateOfBirth(user.getDateOfBirth());
-    	_user.setPassword(user.getPassword());
+    	_user.setPassword(encoder.encode(user.getPassword()));
     	_user.setPhoneNumber(user.getPhoneNumber());
     	User userPresent = userRepository.save(_user);
     	userPresent.setPassword(null);

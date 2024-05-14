@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.starter.InvestAndChill.jwt.models.Article;
+import com.starter.InvestAndChill.jwt.models.StockSymbol;
 import com.starter.InvestAndChill.jwt.repository.ArticleRepository;
+import com.starter.InvestAndChill.jwt.repository.StockSymbolRepository;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -27,6 +29,9 @@ public class ArticleController {
 	
 	@Autowired
 	ArticleRepository articleRepository;
+	
+	@Autowired
+	StockSymbolRepository stockRepository;
 	
 	@GetMapping("/all")
 	public ResponseEntity<List<Article>> allAccess() {
@@ -76,6 +81,20 @@ public class ArticleController {
 	    	_article.setTitle(article.getTitle());
 	    	_article.setContent(article.getContent());
 	    	_article.setUrl(article.getUrl());
+	      return new ResponseEntity<>(articleRepository.save(_article), HttpStatus.OK);
+	    } else {
+	      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	    }
+	  }
+	 
+	 @PutMapping("{id}/linkArticle/{stockId}")
+	  public ResponseEntity<Article> linkArticle(@PathVariable("id") int id, @PathVariable("stockId") int stockId) {
+	    Optional<Article> articleData = articleRepository.findById(id);
+	    Optional<StockSymbol> stockData = stockRepository.findById(stockId);
+	    if (articleData.isPresent() && stockData.isPresent()) {
+	    	Article _article = articleData.get();
+	    	StockSymbol _stock = stockData.get();
+	    	_article.setStockId(_stock);
 	      return new ResponseEntity<>(articleRepository.save(_article), HttpStatus.OK);
 	    } else {
 	      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
