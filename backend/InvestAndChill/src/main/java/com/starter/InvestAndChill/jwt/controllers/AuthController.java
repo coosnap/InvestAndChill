@@ -35,6 +35,7 @@ import com.starter.InvestAndChill.jwt.models.User;
 import com.starter.InvestAndChill.jwt.payload.request.LoginRequest;
 import com.starter.InvestAndChill.jwt.payload.request.SignupRequest;
 import com.starter.InvestAndChill.jwt.payload.request.TokenRefreshRequest;
+import com.starter.InvestAndChill.jwt.payload.request.UserUpAndDowngradeRequest;
 import com.starter.InvestAndChill.jwt.payload.response.JwtResponse;
 import com.starter.InvestAndChill.jwt.payload.response.MessageResponse;
 import com.starter.InvestAndChill.jwt.payload.response.TokenRefreshResponse;
@@ -103,7 +104,7 @@ public class AuthController {
 
     // Create new user's account
     User user = new User(signUpRequest.getUsername(), signUpRequest.getEmail(), 
-        encoder.encode(signUpRequest.getPassword()),signUpRequest.getFirstName(), signUpRequest.getLastName(), signUpRequest.getPhoneNumber(), signUpRequest.getDateOfBirth());
+        encoder.encode(signUpRequest.getPassword()),signUpRequest.getFirstName(), signUpRequest.getLastName(), signUpRequest.getPhoneNumber(), signUpRequest.getDateOfBirth(),0,null,null);
 
     Set<String> strRoles = signUpRequest.getRole();
     Set<Role> roles = new HashSet<>();
@@ -127,6 +128,18 @@ public class AuthController {
           roles.add(modRole);
 
           break;
+        case "mod_user":
+            Role modUserRole = roleRepository.findByName(ERole.ROLE_MODERATOR_USER)
+                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+            roles.add(modUserRole);
+
+            break;
+        case "mod_article":
+            Role modArticleRole = roleRepository.findByName(ERole.ROLE_MODERATOR_ARTICLE)
+                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+            roles.add(modArticleRole);
+
+            break;
         default:
           Role userRole = roleRepository.findByName(ERole.ROLE_USER)
               .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
@@ -203,6 +216,22 @@ public class AuthController {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
   }
+  
+  @PutMapping("/upgrade")
+	public ResponseEntity<User> upgradeUser(@RequestBody UserUpAndDowngradeRequest requestUser) {
+		Optional<User> userData = userRepository.findById(Long.valueOf(requestUser.getId()));
+	    if (userData.isPresent()) {
+	    	User user = userData.get();
+	    	user.setIsVip(requestUser.getIsVip());
+	    	user.setFromDate(requestUser.getFromDate());
+	    	user.setToDate(requestUser.getToDate());
+	    	User user2 = userRepository.save(user);
+	    	user2.setPassword(null);
+	      return new ResponseEntity<>( user2, HttpStatus.OK);
+	    } else {
+	      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	    }
+	}
   
   
 

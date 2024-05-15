@@ -1,10 +1,12 @@
-INSERT INTO roles(name) VALUES('ROLE_USER');
-INSERT INTO roles(name) VALUES('ROLE_MODERATOR');
 INSERT INTO roles(name) VALUES('ROLE_ADMIN');
+INSERT INTO roles(name) VALUES('ROLE_MODERATOR');
+INSERT INTO roles(name) VALUES('ROLE_USER');
+INSERT INTO roles(name) VALUES('ROLE_MODERATOR_USER');
+INSERT INTO roles(name) VALUES('ROLE_MODERATOR_ARTICLE');
 
-INSERT INTO article(id,content,title,url) VALUES(1,'ROLE_ADMIN','Giá vàng và dầu tăng cao đang nói lên điều gì?','https://cafef.vn/gia-vang-va-dau-tang-cao-dang-noi-len-dieu-gi-18824041106150055.chn');
-INSERT INTO article(id,content,title,url) VALUES(2,'ROLE_ADMIN','Tỷ phú Trần Đình Long: Tôi đang rút dần khỏi Hòa Phát','https://cafebiz.vn/ty-phu-tran-dinh-long-toi-dang-rut-dan-khoi-hoa-phat-176240411091458102.chn');
-INSERT INTO article(id,content,title,url) VALUES(3,'ROLE_ADMIN','Lần đầu tiên trong lịch sử, Apple sản xuất lượng iPhone trị giá tới 14 tỷ USD ở một quốc gia châu Á khác không phải Trung Quốc ','https://cafebiz.vn/lan-dau-tien-trong-lich-su-apple-san-xuat-luong-iphone-tri-gia-toi-14-ty-usd-o-mot-quoc-gia-chau-a-khac-khong-phai-trung-quoc-176240411094341019.chn');
+INSERT INTO article(id,content,title,url) VALUES(1,'abcd ','Giá vàng và dầu tăng cao đang nói lên điều gì?','https://cafef.vn/gia-vang-va-dau-tang-cao-dang-noi-len-dieu-gi-18824041106150055.chn');
+INSERT INTO article(id,content,title,url) VALUES(2,'abcd ','Tỷ phú Trần Đình Long: Tôi đang rút dần khỏi Hòa Phát','https://cafebiz.vn/ty-phu-tran-dinh-long-toi-dang-rut-dan-khoi-hoa-phat-176240411091458102.chn');
+INSERT INTO article(id,content,title,url) VALUES(3,'abcde','Lần đầu tiên trong lịch sử, Apple sản xuất lượng iPhone trị giá tới 14 tỷ USD ở một quốc gia châu Á khác không phải Trung Quốc ','https://cafebiz.vn/lan-dau-tien-trong-lich-su-apple-san-xuat-luong-iphone-tri-gia-toi-14-ty-usd-o-mot-quoc-gia-chau-a-khac-khong-phai-trung-quoc-176240411094341019.chn');
 
 
 insert into question values (1,'cau tra loi 1','cau hoi 1');

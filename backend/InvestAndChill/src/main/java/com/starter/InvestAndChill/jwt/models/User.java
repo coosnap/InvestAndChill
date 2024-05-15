@@ -1,6 +1,8 @@
 package com.starter.InvestAndChill.jwt.models;
 
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -48,6 +50,48 @@ public class User {
 	@Column(name = "date_Of_Birth")
 	private Date dateOfBirth;
 	
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(	name = "user_roles", 
+				joinColumns = @JoinColumn(name = "user_id"), 
+				inverseJoinColumns = @JoinColumn(name = "role_id"))
+	private Set<Role> roles = new HashSet<>();
+	
+	@Column(name = "is_Vip")
+	private Integer isVip;
+	
+	@Column(name = "from_date")
+	private Timestamp fromDate;
+	
+	@Column(name = "to_date")
+	private Timestamp toDate;
+	
+	
+
+	public String getFromDate() {
+		String s = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").format(fromDate);
+		return s;
+	}
+
+	public void setFromDate(Timestamp fromDate) {
+		this.fromDate = fromDate;
+	}
+
+	public Timestamp getToDate() {
+		return toDate;
+	}
+
+	public void setToDate(Timestamp toDate) {
+		this.toDate = toDate;
+	}
+
+	public Integer getIsVip() {
+		return isVip;
+	}
+
+	public void setIsVip(Integer isVip) {
+		this.isVip = isVip;
+	}
+
 	public String getFirstName() {
 		return firstName;
 	}
@@ -79,18 +123,11 @@ public class User {
 	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
-	
-	
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(	name = "user_roles", 
-				joinColumns = @JoinColumn(name = "user_id"), 
-				inverseJoinColumns = @JoinColumn(name = "role_id"))
-	private Set<Role> roles = new HashSet<>();
 
 	public User() {
 	}
 
-	public User(String username, String email, String password, String firstName, String lastName, String phoneNumber, Date dateOfBirth) {
+	public User(String username, String email, String password, String firstName, String lastName, String phoneNumber, Date dateOfBirth, int isVip, Timestamp fromDate, Timestamp toDate) {
 		this.username = username;
 		this.email = email;
 		this.password = password;
@@ -98,6 +135,9 @@ public class User {
 		this.lastName = lastName;
 		this.phoneNumber = phoneNumber;
 		this.dateOfBirth = dateOfBirth;
+		this.isVip = isVip;
+		this.fromDate = fromDate;
+		this.toDate = toDate;
 	}
 
 	public Long getId() {
