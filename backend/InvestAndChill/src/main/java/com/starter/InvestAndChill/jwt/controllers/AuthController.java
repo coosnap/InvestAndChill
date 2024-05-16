@@ -1,9 +1,11 @@
 package com.starter.InvestAndChill.jwt.controllers;
 
+import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.TimeZone;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -219,7 +221,10 @@ public class AuthController {
   
   @PutMapping("/upgrade")
 	public ResponseEntity<User> upgradeUser(@RequestBody UserUpAndDowngradeRequest requestUser) {
-		Optional<User> userData = userRepository.findById(Long.valueOf(requestUser.getId()));
+		//System.out.println(requestUser.getFromDate());
+		//System.out.println(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(requestUser.getFromDate()));
+		//System.out.println(TimeZone.getDefault());
+	  Optional<User> userData = userRepository.findById(Long.valueOf(requestUser.getId()));
 	    if (userData.isPresent()) {
 	    	User user = userData.get();
 	    	user.setIsVip(requestUser.getIsVip());
