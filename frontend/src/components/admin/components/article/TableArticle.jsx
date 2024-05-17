@@ -58,22 +58,20 @@ export default function TableArticle() {
       <div className="cursor-pointer my-8">
         <AddArticle render={getData} action="Add" />
       </div>
-      <Table>
+      <Table className="border">
         <TableHeader>
-          <TableRow>
-            <TableHead>Id</TableHead>
-            <TableHead>Title</TableHead>
-            <TableHead>Content</TableHead>
-            <TableHead>Action</TableHead>
+          <TableRow className="bg-blue-100">
+            <TableHead className="text-center border">Title</TableHead>
+            <TableHead className="text-center border">Content</TableHead>
+            <TableHead className="text-center border">Action</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {articles.map((article) => (
             <TableRow key={article.id}>
-              <TableCell className="font-medium">{article.id}</TableCell>
-              <TableCell>{article.title}</TableCell>
-              <TableCell className="w-[50%]">{article.content}</TableCell>
-              <TableCell className="flex">
+              <TableCell className="text-center border">{article.title}</TableCell>
+              <TableCell className="w-[60%] text-center border">{article.content}</TableCell>
+              <TableCell className="h-full flex">
                 <div className="cursor-pointer">
                   <AddArticle render={getData} action="Edit" id={article.id} />
                 </div>

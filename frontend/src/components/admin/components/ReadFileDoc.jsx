@@ -16,7 +16,13 @@ function ReadFileDoc() {
   return (
     <div>
       {/* <div className='w-[1522px] h-[755px] absolute left-[192px] top-[134px] select-none bg-black-100'></div> */}
-      <DocViewer className='' documents={docs} pluginRenderers={DocViewerRenderers} style={{ height: 755 }} />
+      <DocViewer
+        className=''
+        documents={docs}
+        pluginRenderers={DocViewerRenderers}
+        style={{ height: 755 }}
+        config={{ header: { disableHeader: true } }}
+      />
     </div>
   );
 }

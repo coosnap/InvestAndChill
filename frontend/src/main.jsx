@@ -5,7 +5,8 @@ import { CookiesProvider } from 'react-cookie'
 import { BrowserRouter } from 'react-router-dom'
 import { RecoilRoot } from 'recoil';
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
   <React.StrictMode>
     <CookiesProvider defaultSetOptions={{ path: '/' }}>
       <BrowserRouter>

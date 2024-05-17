@@ -13,10 +13,17 @@ import AdminRoute from "./components/router/admin-route";
 import PrivateRoute from "./components/router/private-route";
 import PublicRoute from "./components/router/public-route";
 import Detail from './components/pages/Detail';
+import Buy from './components/pages/Buy';
+import NotFound from './components/pages/NotFound';
+import ProductUpdate from './components/admin/components/product/ProductUpdate';
 
 const routes = [
   {
     path: "*",
+    element: <PublicRoute><NotFound /></PublicRoute>
+  },
+  {
+    path: "/",
     element: <PublicRoute><Login /></PublicRoute>
   },
   {
@@ -46,6 +53,10 @@ const routes = [
   {
     path: "/detail/:id",
     element: <PrivateRoute><Detail /></PrivateRoute>
+  },
+  {
+    path: "/buy/:id",
+    element: <PrivateRoute><Buy /></PrivateRoute>
   },
   {
     path: "/admin",

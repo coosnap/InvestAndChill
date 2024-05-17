@@ -58,21 +58,19 @@ export default function TableQuestion() {
       <div className="cursor-pointer my-8">
         <AddQuestion render={getData} action="Add" />
       </div>
-      <Table>
+      <Table className="border">
         <TableHeader>
-          <TableRow>
-            <TableHead>Id</TableHead>
-            <TableHead>Question Content</TableHead>
-            <TableHead>Answer</TableHead>
-            <TableHead>Action</TableHead>
+          <TableRow className="bg-blue-100">
+            <TableHead className="text-center border">Question Content</TableHead>
+            <TableHead className="text-center border">Answer</TableHead>
+            <TableHead className="text-center border">Action</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {questions.map((question) => (
             <TableRow key={question.id}>
-              <TableCell className="font-medium">{question.id}</TableCell>
-              <TableCell>{question.questionContent}</TableCell>
-              <TableCell>{question.answer}</TableCell>
+              <TableCell className="text-center border">{question.questionContent}</TableCell>
+              <TableCell className="text-center border">{question.answer}</TableCell>
               <TableCell className="flex">
                 <div className="cursor-pointer">
                   <AddQuestion render={getData} action="Edit" id={question.id} />

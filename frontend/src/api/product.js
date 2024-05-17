@@ -13,3 +13,18 @@ export async function getProductAll() {
   }
   return;
 }
+
+export async function updateProduct(id, data) {
+  const response = await fetch(`${backendServerAPI}/api/product/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data)
+  });
+  if (response.ok) {
+    const responseBody = await response.json();
+    return responseBody;
+  }
+  return;
+}

@@ -15,14 +15,12 @@ import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { getUserDetail, updateUser } from "@/api/user";
 import { useState } from "react";
-import { Button } from "../ui/button";
 
 function Header() {
   const navigate = useNavigate();
   const [cookies, setCookie] = useCookies(['access_token', 'usrId']);
 
   const [userInfo, setUserInfo] = useState({});
-  const [showDialog, setShowDialog] = useState(false);
 
   function handlSignOut() {
     setCookie("access_token", "", {});
@@ -32,7 +30,7 @@ function Header() {
   }
 
   async function handleUpdateUser() {
-    const id = cookies.usrId.id;
+    const id = cookies[0].usrId.id;
     const result = await getUserDetail(id);
     if (result) setUserInfo(result);
   }

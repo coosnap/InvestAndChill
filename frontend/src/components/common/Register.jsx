@@ -20,7 +20,6 @@ function Register(props) {
 
   async function handleSubmitRegister() {
     const response = await signUp(register);
-    console.log('response', response)
     if (response.ok) {
       const responseBody = await response.json();
       if (responseBody.message) {
