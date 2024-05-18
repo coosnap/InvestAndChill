@@ -15,7 +15,7 @@ public class Article {
 	private int id;
 	@Column(length = 500)
 	private String title;
-	@Column(length = 5000)
+	@Column
 	private String content;
 	@Column(length = 500)
 	private String url;

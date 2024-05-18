@@ -245,8 +245,7 @@ public class AuthController {
 	public ResponseEntity<?> allUser() {
 		try {
 			List<User> users = new ArrayList<User>();
-
-			userRepository.findAll().forEach(users::add);
+			users = userRepository.findListNormalUser("ROLE_USER");
 
 			if (users.isEmpty()) {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
