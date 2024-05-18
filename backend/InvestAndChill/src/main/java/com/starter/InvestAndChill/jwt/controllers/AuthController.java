@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.starter.InvestAndChill.jwt.exception.TokenRefreshException;
 import com.starter.InvestAndChill.jwt.models.ERole;
-import com.starter.InvestAndChill.jwt.models.Product;
 import com.starter.InvestAndChill.jwt.models.RefreshToken;
 import com.starter.InvestAndChill.jwt.models.Role;
 import com.starter.InvestAndChill.jwt.models.User;
@@ -248,7 +247,7 @@ public class AuthController {
 			}
 			
 			for (User user : users) {
-				user.setPassword(null);
+				user.setPassword(null); 
 			}
 			
 			return new ResponseEntity<>(users, HttpStatus.OK);
