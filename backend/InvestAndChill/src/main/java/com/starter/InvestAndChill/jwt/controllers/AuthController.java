@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import org.apache.commons.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -236,7 +237,7 @@ public class AuthController {
 	}
   
   @GetMapping("/all")
-	public ResponseEntity<List<User>> allUser() {
+	public ResponseEntity<?> allUser() {
 		try {
 			List<User> users = new ArrayList<User>();
 
@@ -252,8 +253,10 @@ public class AuthController {
 			
 			return new ResponseEntity<>(users, HttpStatus.OK);
 		} catch (Exception e) {
-			System.out.println(e.toString());
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			//return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return ResponseEntity
+            .status(HttpStatus.FORBIDDEN)
+            .body(e.toString());
 		}
 
 	}
