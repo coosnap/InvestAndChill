@@ -10,6 +10,8 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import org.apache.commons.logging.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,6 +51,9 @@ import com.starter.InvestAndChill.jwt.security.services.UserDetailsImpl;
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
+	
   @Autowired
   AuthenticationManager authenticationManager;
 
@@ -253,11 +258,8 @@ public class AuthController {
 			
 			return new ResponseEntity<>(users, HttpStatus.OK);
 		} catch (Exception e) {
+			 logger.error("Get All User has problem: {}", e.getMessage());
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-			/*
-			 * return ResponseEntity .status(HttpStatus.INTERNAL_SERVER_ERROR)
-			 * .body(e.toString());
-			 */
 		}
 
 	}
