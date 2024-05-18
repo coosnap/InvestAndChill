@@ -1,24 +1,50 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import readXlsxFile from "read-excel-file";
 // import docx4js from "docx4js";
 // import mammoth from "mammoth";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Editor from "./components/Editor";
 // import ReadFileDoc from "./components/ReadFileDoc";
 // import UploadFile from "./components/UploadFile";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import TableQuestion from "./components/question/TableQuestion";
 import TableStoke from "./components/stoke/TableStoke";
 import TableArticle from "./components/article/TableArticle";
 import ProductAdmin from "./components/product";
-import { useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { TabDefault } from "@/store/common";
+import Editor from "./components/editor/Editor";
+import { useCookies } from "react-cookie";
+import UserAdmin from "./components/user";
 
 // function extractEmails(text) {
 //   return text.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi);
 // }
 
+const tabList = [
+  {
+    path: "stoke",
+    element: <TableStoke />
+  },
+  {
+    path: "article",
+    element: <TableArticle />
+  },
+  {
+    path: "question",
+    element: <TableQuestion />
+  },
+  {
+    path: "editor",
+    element: <Editor />
+  },
+  {
+    path: "product",
+    element: <ProductAdmin />
+  },
+]
+
 function Admin() {
-  const tabDefault = useRecoilValue(TabDefault);
+  const [tabDefault, setTabDefault] = useRecoilState(TabDefault);
+  const cookie = useCookies(['roles']);
   // const [file, setFile] = useState();
 
   // function readFileInputEventAsArrayBuffer(file, callback) {
@@ -50,39 +76,41 @@ function Admin() {
   //   setFile(event.target.files[0]);
   // };
 
+  useEffect(() => {
+    (cookie[0].roles.includes("ROLE_MODERATOR_USER")) ? onTabChange('user') : onTabChange('stoke');
+  }, [tabDefault])
+
+  const onTabChange = (value) => {
+    setTabDefault(value);
+  }
+
   return (
     <div className="container mx-auto pt-6">
-      <Tabs defaultValue={tabDefault} className="w-full">
+      <Tabs value={tabDefault} onValueChange={onTabChange} className="w-full">
         <TabsList>
-          <TabsTrigger value="user">User</TabsTrigger>
-          <TabsTrigger value="stoke">Stoke</TabsTrigger>
-          <TabsTrigger value="article">Article</TabsTrigger>
-          <TabsTrigger value="question">Question</TabsTrigger>
-          <TabsTrigger value="editor">Editor</TabsTrigger>
-          <TabsTrigger value="product">Product</TabsTrigger>
+          {(cookie[0].roles.includes("ROLE_MODERATOR_USER") || cookie[0].roles.includes("ROLE_ADMIN")) &&
+            <TabsTrigger value="user">User</TabsTrigger>
+          }
+          {(cookie[0].roles.includes("ROLE_MODERATOR_ARTICLE") || cookie[0].roles.includes("ROLE_ADMIN")) &&
+            tabList.map(e => (
+              <TabsTrigger key={e.path} value={e.path}>{e.path.charAt(0).toUpperCase() + e.path.substring(1, e.path.length)}</TabsTrigger>
+            ))
+          }
+
           {/* <TabsTrigger value="upload">Upload File</TabsTrigger> */}
           {/* <TabsTrigger value="readfile">File Viewer</TabsTrigger> */}
           {/* <TabsTrigger value="readfromfile">Read From File</TabsTrigger> */}
         </TabsList>
 
-        <TabsContent value="user">
-          User
-        </TabsContent>
-        <TabsContent value="stoke">
-          <TableStoke />
-        </TabsContent>
-        <TabsContent value="article">
-          <TableArticle />
-        </TabsContent>
-        <TabsContent value="question">
-          <TableQuestion />
-        </TabsContent>
-        <TabsContent value="editor">
-          <Editor />
-        </TabsContent>
-        <TabsContent value="product">
-          <ProductAdmin />
-        </TabsContent>
+        {(cookie[0].roles.includes("ROLE_MODERATOR_USER") || cookie[0].roles.includes("ROLE_ADMIN")) &&
+          <TabsContent value="user"><UserAdmin /></TabsContent>
+        }
+
+        {(cookie[0].roles.includes("ROLE_MODERATOR_ARTICLE") || cookie[0].roles.includes("ROLE_ADMIN")) &&
+          tabList.map(e => (
+            <TabsContent key={e.path} value={e.path}>{e.element}</TabsContent>
+          ))
+        }
 
         {/* <TabsContent value="upload">
           <UploadFile />

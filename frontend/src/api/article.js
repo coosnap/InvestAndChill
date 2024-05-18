@@ -1,7 +1,5 @@
-import { backendServerAPI } from "../config/config";
-
 export async function getArticleAll() {
-  const response = await fetch(`${backendServerAPI}/api/article/all`, {
+  const response = await fetch(`/api/article/all`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -15,13 +13,14 @@ export async function getArticleAll() {
 }
 
 export async function getArticleDetail(id) {
-  const response = await fetch(`${backendServerAPI}/api/article/${id}`, {
+  const response = await fetch(`/api/article/${id}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
     },
   });
   if (response.ok) {
+    console.log('response', response)
     const responseBody = await response.json();
     return responseBody;
   }
@@ -30,7 +29,7 @@ export async function getArticleDetail(id) {
 
 
 export async function insertArticle(data) {
-  const response = await fetch(`${backendServerAPI}/api/article/save`, {
+  const response = await fetch(`/api/article/save`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -45,7 +44,7 @@ export async function insertArticle(data) {
 }
 
 export async function updateArticle(data) {
-  const response = await fetch(`${backendServerAPI}/api/article/${data.id}`, {
+  const response = await fetch(`/api/article/${data.id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -60,7 +59,7 @@ export async function updateArticle(data) {
 }
 
 export async function deleteArticle(id) {
-  const response = await fetch(`${backendServerAPI}/api/article/${id}`, {
+  const response = await fetch(`/api/article/${id}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',

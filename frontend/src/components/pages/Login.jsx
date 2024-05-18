@@ -72,15 +72,19 @@ function Login() {
 
   async function getData() {
     setIsLoading(true);
-    const article = await getArticleAll();
-    setArticleList(article);
+    try {
+      const article = await getArticleAll();
+      setArticleList(article);
+    } catch (error) {
+      setArticleList([]);
+    }
     setIsLoading(false);
   }
 
   useEffect(() => {
     getData();
     if (cookie.access_token && (location.pathname == "/" || location.pathname == "/login")) {
-      if (cookie.roles.includes("ROLE_ADMIN") || cookie.roles.includes("ROLE_MOD")) navigate("/admin");
+      if (cookie.roles.includes("ROLE_ADMIN") || cookie.roles.includes("ROLE_MODERATOR_USER") || cookie.roles.includes("ROLE_MODERATOR_ARTICLE")) navigate("/admin");
       else navigate("/invest");
     }
   }, [])

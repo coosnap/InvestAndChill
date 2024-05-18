@@ -1,11 +1,9 @@
-import { backendServerAPI } from "../config/config";
-
 export async function signIn(data) {
   const authData = {
     username: data?.username,
     password: data?.password,
   };
-  const response = await fetch(`${backendServerAPI}/api/auth/signin`, {
+  const response = await fetch(`/api/auth/signin`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -33,7 +31,7 @@ export async function signUp(data) {
     password: data.password,
     role: ["user"]
   };
-  const response = await fetch(`${backendServerAPI}/api/auth/signup`, {
+  const response = await fetch(`/api/auth/signup`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
