@@ -1,15 +1,5 @@
-import { backendServerAPI } from "../config/config";
-
-let headers = new Headers();
-headers.append('Content-Type', 'multipart/form-data');
-headers.append('Accept', 'multipart/form-data');
-headers.append('Access-Control-Allow-Origin', '*');
-headers.append('Access-Control-Allow-Credentials', 'true');
-headers.append('Access-Control-Request-Method', 'POST');
-headers.append('Origin', 'http://localhost:5173');
-
 export async function getFileAll() {
-  const response = await fetch(`${backendServerAPI}/api/file/all`, {
+  const response = await fetch(`/api/file/all`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -23,7 +13,7 @@ export async function getFileAll() {
 }
 
 export async function fileUpload(formData) {
-  const response = await fetch(`${backendServerAPI}/api/file/upload`, {
+  const response = await fetch(`/api/file/upload`, {
     mode: 'no-cors',
     method: 'POST',
     headers: headers,

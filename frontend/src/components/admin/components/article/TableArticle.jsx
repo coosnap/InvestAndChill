@@ -23,15 +23,21 @@ import Loader from "@/components/common/Loader";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { Button } from "@/components/ui/button";
 import { deleteArticle, getArticleAll } from "@/api/article";
+import { Input } from "@/components/ui/input";
 
 export default function TableArticle() {
   const [articles, setArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [inputValue, setInputValue] = useState("");
 
   async function getData() {
     setIsLoading(true);
-    const result = await getArticleAll();
-    setArticles(result);
+    try {
+      const result = await getArticleAll();
+      setArticles(result);
+    } catch (error) {
+      setArticles([]);
+    }
     setIsLoading(false);
   }
 
@@ -55,10 +61,15 @@ export default function TableArticle() {
 
   return (
     <>
-      <div className="cursor-pointer my-8">
+      {/* <div className="cursor-pointer my-8">
         <AddArticle render={getData} action="Add" />
+      </div> */}
+
+      <div className='w-1/4'>
+        <Input onInput={setInputValue} defaultValue={inputValue} placeholder="Stoke Id" />
       </div>
-      <Table className="border">
+
+      <Table className="border mt-4">
         <TableHeader>
           <TableRow className="bg-blue-100">
             <TableHead className="text-center border">Title</TableHead>
@@ -67,7 +78,7 @@ export default function TableArticle() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {articles.map((article) => (
+          {articles && articles.map((article) => (
             <TableRow key={article.id}>
               <TableCell className="text-center border">{article.title}</TableCell>
               <TableCell className="w-[60%] text-center border">{article.content}</TableCell>

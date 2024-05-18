@@ -1,7 +1,5 @@
-import { backendServerAPI } from "../config/config";
-
 export async function getQuestionAll() {
-  const response = await fetch(`${backendServerAPI}/api/question/all`, {
+  const response = await fetch(`/api/question/all`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -15,7 +13,7 @@ export async function getQuestionAll() {
 }
 
 export async function getQuestionDetail(id) {
-  const response = await fetch(`${backendServerAPI}/api/question/${id}`, {
+  const response = await fetch(`/api/question/${id}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -29,7 +27,7 @@ export async function getQuestionDetail(id) {
 }
 
 export async function insertQuestion(data) {
-  const response = await fetch(`${backendServerAPI}/api/question/save`, {
+  const response = await fetch(`/api/question/save`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -44,7 +42,7 @@ export async function insertQuestion(data) {
 }
 
 export async function updateQuestion(data) {
-  const response = await fetch(`${backendServerAPI}/api/question/${data.id}`, {
+  const response = await fetch(`/api/question/${data.id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -59,7 +57,7 @@ export async function updateQuestion(data) {
 }
 
 export async function deleteQuestion(id) {
-  const response = await fetch(`${backendServerAPI}/api/question/${id}`, {
+  const response = await fetch(`/api/question/${id}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',

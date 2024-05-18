@@ -1,7 +1,5 @@
-import { backendServerAPI } from "../config/config";
-
 export async function getProductAll() {
-  const response = await fetch(`${backendServerAPI}/api/product/all`, {
+  const response = await fetch(`/api/product/all`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -15,7 +13,7 @@ export async function getProductAll() {
 }
 
 export async function updateProduct(id, data) {
-  const response = await fetch(`${backendServerAPI}/api/product/${id}`, {
+  const response = await fetch(`/api/product/${id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',

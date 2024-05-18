@@ -1,7 +1,5 @@
-import { backendServerAPI } from "../config/config";
-
 export async function getUserDetail(id) {
-  const response = await fetch(`${backendServerAPI}/api/auth/${id}`, {
+  const response = await fetch(`/api/auth/${id}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -15,7 +13,7 @@ export async function getUserDetail(id) {
 }
 
 export async function updateUser(data) {
-  const response = await fetch(`${backendServerAPI}/api/auth/${data.id}`, {
+  const response = await fetch(`/api/auth/${data.id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',

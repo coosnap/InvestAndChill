@@ -1,7 +1,5 @@
-import { backendServerAPI } from "../config/config";
-
 export async function getStockAll() {
-  const response = await fetch(`${backendServerAPI}/api/stock/all`, {
+  const response = await fetch(`/api/stock/all`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -15,7 +13,7 @@ export async function getStockAll() {
 }
 
 export async function getStokeDetail(id) {
-  const response = await fetch(`${backendServerAPI}/api/stock/${id}`, {
+  const response = await fetch(`/api/stock/${id}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -29,7 +27,7 @@ export async function getStokeDetail(id) {
 }
 
 export async function insertStoke(data) {
-  const response = await fetch(`${backendServerAPI}/api/stock/save`, {
+  const response = await fetch(`/api/stock/save`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -44,7 +42,7 @@ export async function insertStoke(data) {
 }
 
 export async function updateStoke(data) {
-  const response = await fetch(`${backendServerAPI}/api/stock/${data.id}`, {
+  const response = await fetch(`/api/stock/${data.id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -59,7 +57,7 @@ export async function updateStoke(data) {
 }
 
 export async function deleteStock(id) {
-  const response = await fetch(`${backendServerAPI}/api/stock/${id}`, {
+  const response = await fetch(`/api/stock/${id}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',

@@ -30,19 +30,26 @@ export default function TableQuestion() {
 
   async function getData() {
     setIsLoading(true);
-    const result = await getQuestionAll();
-    setQuestions(result);
+    try {
+      const result = await getQuestionAll();
+      setQuestions(result);
+    } catch (error) {
+      setQuestions([]);
+    }
     setIsLoading(false);
   }
 
   async function handleDelete(id) {
     setIsLoading(true);
-    let result = await deleteQuestion(id);
-    if (result) {
-      getData();
+    try {
+      let result = await deleteQuestion(id);
+      if (result) {
+        getData();
+      }
+    } catch (error) {
+      return error;
     }
     setIsLoading(false);
-    return;
   }
 
   useEffect(() => {
@@ -67,7 +74,7 @@ export default function TableQuestion() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {questions.map((question) => (
+          {questions && questions.map((question) => (
             <TableRow key={question.id}>
               <TableCell className="text-center border">{question.questionContent}</TableCell>
               <TableCell className="text-center border">{question.answer}</TableCell>

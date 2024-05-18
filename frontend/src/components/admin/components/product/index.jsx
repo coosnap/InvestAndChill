@@ -37,8 +37,12 @@ export default function ProductAdmin() {
 
   async function getData() {
     setIsLoading(true);
-    const result = await getProductAll();
-    setProducts(result);
+    try {
+      const result = await getProductAll();
+      setProducts(result);
+    } catch (error) {
+      setProducts([]);
+    }
     setIsLoading(false);
   }
 
@@ -85,10 +89,10 @@ export default function ProductAdmin() {
                       <FaEdit />
                     </Button>
                   </AlertDialogTrigger>
-                  <AlertDialogContent className="max-w-screen w-[calc(100%-100px)]">
+                  <AlertDialogContent className="max-w-screen w-[80%]">
                     <AlertDialogHeader className="bg-slate-100">
                       <AlertDialogTitle className="text-center pt-6">
-                        <h2 className="text-[#232A46] font-semibold text-4xl">Các gói dịch vụ</h2>
+                        <h2 className="text-[#232A46] font-semibold text-4xl">Update Product</h2>
                       </AlertDialogTitle>
                       <div className="pb-4">
                         <ProductUpdate id={product.id} getData={() => getData()} />
