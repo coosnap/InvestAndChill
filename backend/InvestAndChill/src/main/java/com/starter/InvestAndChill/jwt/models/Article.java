@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.Type;
+
 @Entity(name = "Article")
 public class Article {
 	@Id
@@ -16,6 +18,7 @@ public class Article {
 	@Column(length = 500)
 	private String title;
 	@Column
+	@Type(type = "text")
 	private String content;
 	@Column(length = 500)
 	private String url;

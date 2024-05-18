@@ -65,7 +65,9 @@ public class ArticleController {
 	 @PostMapping("/save")
 	  public ResponseEntity<Article> createArticle(@RequestBody Article article) {
 	    try {
+	    	System.out.println(article.getContent());
 	    	Article _article = articleRepository.save(new Article(article.getId(),article.getTitle(),article.getContent(),article.getUrl()));
+	    	
 	      return new ResponseEntity<>(_article, HttpStatus.CREATED);
 	    } catch (Exception e) {
 	      return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
