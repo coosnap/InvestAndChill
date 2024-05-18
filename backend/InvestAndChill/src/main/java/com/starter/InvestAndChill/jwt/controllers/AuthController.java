@@ -1,11 +1,10 @@
 package com.starter.InvestAndChill.jwt.controllers;
 
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.TimeZone;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -28,11 +27,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.starter.InvestAndChill.jwt.exception.TokenRefreshException;
-import com.starter.InvestAndChill.jwt.models.Article;
 import com.starter.InvestAndChill.jwt.models.ERole;
+import com.starter.InvestAndChill.jwt.models.Product;
 import com.starter.InvestAndChill.jwt.models.RefreshToken;
 import com.starter.InvestAndChill.jwt.models.Role;
-import com.starter.InvestAndChill.jwt.models.StockSymbol;
 import com.starter.InvestAndChill.jwt.models.User;
 import com.starter.InvestAndChill.jwt.payload.request.LoginRequest;
 import com.starter.InvestAndChill.jwt.payload.request.SignupRequest;
@@ -236,6 +234,28 @@ public class AuthController {
 	    } else {
 	      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	    }
+	}
+  
+  @GetMapping("/all")
+	public ResponseEntity<List<User>> allUser() {
+		try {
+			List<User> users = new ArrayList<User>();
+
+			userRepository.findAll().forEach(users::add);
+
+			if (users.isEmpty()) {
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			}
+			
+			for (User user : users) {
+				user.setPassword(null);
+			}
+			
+			return new ResponseEntity<>(users, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
 	}
   
   
