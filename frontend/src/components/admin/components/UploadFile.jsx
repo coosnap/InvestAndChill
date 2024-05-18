@@ -17,8 +17,7 @@ export default function UploadFile() {
   async function handleUploadFile(e) {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("avatar", file);
-
+    formData.append("file", file);
     await fileUpload(formData);
   }
 

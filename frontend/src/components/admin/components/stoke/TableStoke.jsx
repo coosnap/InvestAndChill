@@ -58,24 +58,22 @@ export default function TableStoke() {
       <div className="cursor-pointer my-8">
         <AddStoke render={getData} action="Add" />
       </div>
-      <Table>
+      <Table className="border">
         <TableHeader>
-          <TableRow>
-            <TableHead>Id</TableHead>
-            <TableHead>Symbol</TableHead>
-            <TableHead>Company Name</TableHead>
-            <TableHead>Note</TableHead>
-            <TableHead>Action</TableHead>
+          <TableRow className="bg-blue-100">
+            <TableHead className="text-center">Symbol</TableHead>
+            <TableHead className="text-center">Company Name</TableHead>
+            <TableHead className="text-center">Note</TableHead>
+            <TableHead className="text-center">Action</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {stokes.map((stoke) => (
             <TableRow key={stoke.id}>
-              <TableCell className="font-medium">{stoke.id}</TableCell>
-              <TableCell>{stoke.symbol}</TableCell>
-              <TableCell>{stoke.companyName}</TableCell>
-              <TableCell>{stoke.note}</TableCell>
-              <TableCell className="flex">
+              <TableCell className="text-center">{stoke.symbol}</TableCell>
+              <TableCell className="text-center">{stoke.companyName}</TableCell>
+              <TableCell className="text-center">{stoke.note}</TableCell>
+              <TableCell className="flex justify-center">
                 <div className="cursor-pointer">
                   <AddStoke render={getData} action="Edit" id={stoke.id} />
                 </div>
