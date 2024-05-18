@@ -67,18 +67,18 @@ public class User {
 	
 	
 
-	public String getFromDate() {
-		String s = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(fromDate);
-		return s;
+	public Timestamp getFromDate() {
+		//String s = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(fromDate);
+		return fromDate;
 	}
 
 	public void setFromDate(Timestamp fromDate) {
 		this.fromDate = fromDate;
 	}
 
-	public String getToDate() {
-		String s = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(toDate);
-		return s;
+	public Timestamp getToDate() {
+		//String s = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(toDate);
+		return toDate;
 	}
 
 	public void setToDate(Timestamp toDate) {
