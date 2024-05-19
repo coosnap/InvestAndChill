@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.starter.InvestAndChill.jwt.models.Article;
 import com.starter.InvestAndChill.jwt.models.StockSymbol;
 import com.starter.InvestAndChill.jwt.repository.ArticleRepository;
@@ -65,7 +66,6 @@ public class ArticleController {
 	 @PostMapping("/save")
 	  public ResponseEntity<Article> createArticle(@RequestBody Article article) {
 	    try {
-	    	System.out.println(article.getContent());
 	    	Article _article = articleRepository.save(new Article(article.getId(),article.getTitle(),article.getContent(),article.getUrl()));
 	    	
 	      return new ResponseEntity<>(_article, HttpStatus.CREATED);
@@ -73,6 +73,24 @@ public class ArticleController {
 	      return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 	    }
 	  }
+	 
+	 @PostMapping("/save/linkWithStock/{id}")
+	  public ResponseEntity<Article> createArticleLinkWithStockId(@RequestBody Article article, @PathVariable("id") int id) {
+	    try {
+	    	Article _article = new Article(article.getId(),article.getTitle(),article.getContent(),article.getUrl());
+	    	
+	    	Optional<StockSymbol> stockData = stockRepository.findById(id);
+	    	if (stockData.isEmpty()) {
+	    		 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	    	} 
+	    	_article.setStockId(stockData.get());
+	    	
+	      return new ResponseEntity<>(articleRepository.save(_article), HttpStatus.CREATED);
+	    } catch (Exception e) {
+	      return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+	    }
+	  }
+	 
 	 
 	 @PutMapping("/{id}")
 	  public ResponseEntity<Article> updateArticle(@PathVariable("id") int id, @RequestBody Article article) {
@@ -83,6 +101,22 @@ public class ArticleController {
 	    	_article.setTitle(article.getTitle());
 	    	_article.setContent(article.getContent());
 	    	_article.setUrl(article.getUrl());
+	      return new ResponseEntity<>(articleRepository.save(_article), HttpStatus.OK);
+	    } else {
+	      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	    }
+	  }
+	 
+	 @PutMapping("/{id}/updateWithStock/{stockId}")
+	  public ResponseEntity<Article> updateArticleWithStockId(@PathVariable("id") int id, @RequestBody Article article,@PathVariable("stockId") int stockId) {
+	    Optional<Article> articleData = articleRepository.findById(id);
+	    Optional<StockSymbol> stockData = 	stockRepository.findById(stockId);
+	    if (articleData.isPresent() && stockData.isPresent() ) {
+	    	Article _article = articleData.get();
+	    	_article.setTitle(article.getTitle());
+	    	_article.setContent(article.getContent());
+	    	_article.setUrl(article.getUrl());
+	    	_article.setStockId(stockData.get());
 	      return new ResponseEntity<>(articleRepository.save(_article), HttpStatus.OK);
 	    } else {
 	      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
