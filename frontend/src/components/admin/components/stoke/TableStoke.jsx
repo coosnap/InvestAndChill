@@ -41,24 +41,25 @@ export default function TableStoke() {
 
   async function handleDelete(id) {
     setIsLoading(true);
-    let result = await deleteStock(id);
-    if (result) {
-      getData();
+    try {
+      let result = await deleteStock(id);
+      document.getElementById("stock-delete-cancel")?.click();
+      if (result) {
+        getData();
+        setIsLoading(false);
+      }
+    } catch (error) {
+      setIsLoading(false);
     }
-    setIsLoading(false);
-    return;
   }
 
   useEffect(() => {
     getData();
   }, [])
 
-  if (isLoading) {
-    return <Loader />;
-  }
-
   return (
     <>
+      {isLoading && <Loader />}
       <div className="cursor-pointer my-8">
         <AddStoke render={getData} action="Add" />
       </div>
@@ -94,8 +95,8 @@ export default function TableStoke() {
                       </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
-                      <AlertDialogCancel>Cancel</AlertDialogCancel>
-                      <AlertDialogAction className="bg-red-500 hover:bg-red-400" onClick={() => handleDelete(stoke.id)}>Ok</AlertDialogAction>
+                      <AlertDialogCancel id="stoke-delete-cancel">Cancel</AlertDialogCancel>
+                      <Button variant="destructive" onClick={() => handleDelete(stoke.id)}>Ok</Button>
                     </AlertDialogFooter>
                   </AlertDialogContent>
                 </AlertDialog>

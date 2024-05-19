@@ -50,12 +50,9 @@ export default function ProductAdmin() {
     getData();
   }, [])
 
-  if (isLoading) {
-    return <Loader />;
-  }
-
   return (
     <>
+      {isLoading && <Loader />}
       <Table className="border mt-6">
         <TableHeader>
           <TableRow className="bg-blue-100">
@@ -85,14 +82,14 @@ export default function ProductAdmin() {
               <TableCell className="text-center">
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
-                    <Button onClick={() => handleEditProduct(product.id)}>
+                    <Button variant="primary" onClick={() => handleEditProduct(product.id)}>
                       <FaEdit />
                     </Button>
                   </AlertDialogTrigger>
                   <AlertDialogContent className="max-w-screen w-[80%]">
                     <AlertDialogHeader className="bg-slate-100">
                       <AlertDialogTitle className="text-center pt-6">
-                        <h2 className="text-[#232A46] font-semibold text-4xl">Update Product</h2>
+                        <p className="text-[#232A46] font-semibold text-4xl">Update Product</p>
                       </AlertDialogTitle>
                       <div className="pb-4">
                         <ProductUpdate id={product.id} getData={() => getData()} />

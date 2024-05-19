@@ -49,7 +49,7 @@ function ProductUpdate(props) {
             <Textarea defaultValue={product[0].description} onInput={(e) => setProduct(prev => ([{ ...prev[0], description: e.target.value }]))} className="mt-6 bg-white h-[100px]" placeholder="Mô tả" />
           </div>
           <div className="text-end">
-            <Button onClick={handleSaveProduct} className="mt-8 w-[120px]" type="button">Save</Button>
+            <Button variant="primary" onClick={handleSaveProduct} className="mt-8 w-[120px]" type="button">Save</Button>
           </div>
         </div>
         <div className="ml-40 w-[500px]">
