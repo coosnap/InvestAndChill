@@ -1,5 +1,11 @@
 import { getQuestionAll } from "@/api/question";
 import { useEffect, useState } from "react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 
 function Question() {
   const [questionData, setQuestionData] = useState([]);
@@ -18,20 +24,20 @@ function Question() {
       <div className="mt-8 mb-12">
         <h2 className="text-3xl text-center text-[#232A46] font-semibold">FAQs - Câu hỏi thường gặp</h2>
       </div>
-      {questionData.map((e, index) =>
-        <div key={e.id} className="mb-8 flex justify-center">
-          <div className="w-1/2 p-4 border rounded-xl bg-[#232A46]">
-            <div tabIndex={index} className="collapse collapse-plus">
-              <div className="collapse-title text-white text-2xl font-semibold">
-                {e.questionContent}
-              </div>
-              <div className="collapse-content">
-                <p className="text-white text-lg">{e.answer}</p>
-              </div>
-            </div>
-          </div>
+      <div className="flex flex-col items-center">
+        <div className=" w-1/2 text-center">
+          <Accordion type="single" collapsible className="w-full">
+            {questionData.map((e, index) =>
+              <AccordionItem key={index + 1} value={index + 1} className="bg-blue-300 text-center px-6 rounded-lg mb-6">
+                <AccordionTrigger className="text-xl text-center">{e.questionContent}</AccordionTrigger>
+                <AccordionContent className="text-xl">
+                  {e.answer}
+                </AccordionContent>
+              </AccordionItem>
+            )}
+          </Accordion>
         </div>
-      )}
+      </div>
     </div>
   );
 }

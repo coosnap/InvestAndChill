@@ -13,6 +13,11 @@ import 'react-quill/dist/quill.snow.css';
 import './Editor.scss';
 import Loader from '@/components/common/Loader';
 import { getStockAll } from '@/api/stock';
+import { Input } from '@/components/ui/input';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { ArticalId } from '@/store/article';
+import { getArticleDetail, insertArticle, updateArticle } from '@/api/article';
+import { TabDefault } from '@/store/common';
 
 const frameworks = [
   {
@@ -39,9 +44,13 @@ const frameworks = [
 
 function Editor() {
   const reactQuillRef = useRef(null);
-  const [content, setContent] = useState('');
+  const [article, setArticle] = useState({ title: "", content: "", url: "" });
   const [stokes, setStokes] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [content, setContent] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [articalId, setArticleId] = useRecoilState(ArticalId)
+  const setTabDefault = useSetRecoilState(TabDefault)
 
   const modules = {
     toolbar: {
@@ -59,12 +68,27 @@ function Editor() {
     },
   };
 
-  const handleProcedureContentChange = (content, delta, source, editor) => {
-    setContent(content);
-  }
-
-  const handleSaveArtical = () => {
-    console.log("save")
+  const handleSaveArticle = async () => {
+    if (articalId) {
+      try {
+        let result = await updateArticle(article);
+        if (result) {
+          setArticleId("");
+          setTabDefault("article");
+        }
+      } catch (error) {
+        console.log('error', error)
+      }
+    } else {
+      try {
+        let result = await insertArticle(article);
+        if (result) {
+          setTabDefault("article");
+        }
+      } catch (error) {
+        console.log('error', error)
+      }
+    }
   }
 
   async function getData() {
@@ -78,33 +102,41 @@ function Editor() {
     setIsLoading(false);
   }
 
+  async function getArtical() {
+    const result = await getArticleDetail(articalId);
+    if (result) {
+      setContent(result.content);
+      setArticle(prev => ({ ...prev, id: articalId, content: result.content, stockId: result.stockId, url: result.url, title: result.title }))
+    };
+  }
+
   useEffect(() => {
+    if (articalId) {
+      getArtical();
+    }
     getData();
   }, []);
-
-  if (isLoading) {
-    return <Loader />
-  };
 
   return (
     <>
       <div className='mt-8 flex gap-x-8'>
+        {isLoading && <Loader />}
         <div className='w-1/2 h-1/2'>
           <div className='mb-4'>
-            <Select>
+            <Select onValueChange={value => setArticle(prev => ({ ...prev, stockId: value }))}>
               <SelectTrigger className="w-1/2 bg-white">
                 <SelectValue placeholder="Select a stoke id" />
               </SelectTrigger>
               <SelectContent className="bg-white">
                 <SelectGroup>
                   {stokes.map(e => (
-                    <SelectItem value={e.id}>{e.symbol}</SelectItem>
+                    <SelectItem key={e.id} value={e.symbol}>{e.symbol}</SelectItem>
                   ))}
                 </SelectGroup>
               </SelectContent>
             </Select>
           </div>
-          <div className='mb-4'>
+          {/* <div className='mb-4'>
             <Select>
               <SelectTrigger className="w-1/2 bg-white">
                 <SelectValue placeholder="Select a category" />
@@ -119,6 +151,12 @@ function Editor() {
                 </SelectGroup>
               </SelectContent>
             </Select>
+          </div> */}
+          <div className='mb-4'>
+            <Input value={article.title} placeholder="Title" onInput={e => setArticle(prev => ({ ...prev, title: e.target.value }))} />
+          </div>
+          <div className='mb-4'>
+            <Input value={article.url} placeholder="Url" onInput={e => setArticle(prev => ({ ...prev, url: e.target.value }))} />
           </div>
           <div className="text-editor">
             <ReactQuill
@@ -127,17 +165,16 @@ function Editor() {
               theme="snow"
               modules={modules}
               value={content}
-              onChange={handleProcedureContentChange} />
+              onChange={(value) => setContent(value)} />
           </div>
           <div className='mt-4 text-end'>
-            <Button onClick={handleSaveArtical} className="w-1/5">Save</Button>
+            <Button variant="primary" onClick={handleSaveArticle} className="w-1/5">Save</Button>
           </div>
-          <div>{content}</div>
         </div>
         <div className='w-1/2 h-[700px] border bg-white'>
           <div dangerouslySetInnerHTML={{ __html: content }} />
         </div>
-      </div>
+      </div >
     </>
   )
 }

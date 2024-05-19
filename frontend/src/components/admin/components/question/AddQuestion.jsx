@@ -34,10 +34,12 @@ function AddQuestion(props) {
       let temp = { ...questionDetail };
       setQuestion(prev => ({ ...prev, ...temp }));
       await updateQuestion(question);
+      document.getElementById("question-cancel")?.click();
       props.render();
     }
     if (props.action === "Add") {
       await insertQuestion(question);
+      document.getElementById("question-cancel")?.click();
       props.render();
     }
     return;
@@ -47,11 +49,11 @@ function AddQuestion(props) {
     <AlertDialog>
       <AlertDialogTrigger asChild>
         {props.action === "Edit" ?
-          <Button onClick={handleEditQuestion}>
+          <Button variant="primary" onClick={handleEditQuestion}>
             <FaEdit />
           </Button>
           :
-          <Button>
+          <Button variant="primary">
             Add Question
           </Button>
         }
@@ -94,8 +96,8 @@ function AddQuestion(props) {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={handleSubmitQuestion}>Save</AlertDialogAction>
+          <AlertDialogCancel id="question-cancel">Cancel</AlertDialogCancel>
+          <Button variant="primary" onClick={handleSubmitQuestion}>Save</Button>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

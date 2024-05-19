@@ -20,7 +20,6 @@ export async function getArticleDetail(id) {
     },
   });
   if (response.ok) {
-    console.log('response', response)
     const responseBody = await response.json();
     return responseBody;
   }

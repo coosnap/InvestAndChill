@@ -9,11 +9,13 @@ import TableQuestion from "./components/question/TableQuestion";
 import TableStoke from "./components/stoke/TableStoke";
 import TableArticle from "./components/article/TableArticle";
 import ProductAdmin from "./components/product";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { TabDefault } from "@/store/common";
 import Editor from "./components/editor/Editor";
 import { useCookies } from "react-cookie";
 import UserAdmin from "./components/user";
+import { getUserAll } from "@/api/user";
+import { UserAll } from "@/store/user";
 
 // function extractEmails(text) {
 //   return text.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi);
@@ -43,8 +45,12 @@ const tabList = [
 ]
 
 function Admin() {
-  const [tabDefault, setTabDefault] = useRecoilState(TabDefault);
   const cookie = useCookies(['roles']);
+
+  const [tabDefault, setTabDefault] = useRecoilState(TabDefault);
+  const setUserAll = useSetRecoilState(UserAll);
+
+  const [users, setUsers] = useState([]);
   // const [file, setFile] = useState();
 
   // function readFileInputEventAsArrayBuffer(file, callback) {
@@ -75,10 +81,20 @@ function Admin() {
   // const handleFileInput = (event) => {
   //   setFile(event.target.files[0]);
   // };
+  async function getData() {
+    const result = await getUserAll();
+    setUserAll(result);
+    try {
+      setUsers(result);
+    } catch (error) {
+      setUsers([]);
+    }
+  }
 
   useEffect(() => {
+    getData();
     (cookie[0].roles.includes("ROLE_MODERATOR_USER")) ? onTabChange('user') : onTabChange('stoke');
-  }, [tabDefault])
+  }, [])
 
   const onTabChange = (value) => {
     setTabDefault(value);

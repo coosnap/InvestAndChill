@@ -56,12 +56,9 @@ export default function TableQuestion() {
     getData();
   }, [])
 
-  if (isLoading) {
-    return <Loader />;
-  }
-
   return (
     <>
+      {isLoading && <Loader />}
       <div className="cursor-pointer my-8">
         <AddQuestion render={getData} action="Add" />
       </div>
