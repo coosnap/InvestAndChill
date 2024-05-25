@@ -1,66 +1,111 @@
+import React, { Suspense } from 'react';
 import { Outlet, useLocation, useRoutes } from 'react-router-dom';
 import "./App.css";
 import { ThemeProvider } from './ThemeProvider';
-import Admin from './components/admin/Admin.jsx';
-import Header from './components/common/Header';
-import Category from "./components/pages/Category.jsx";
-import Investment from "./components/pages/Investment/index.jsx";
-import Login from "./components/pages/Login.jsx";
-import Post from "./components/pages/Post.jsx";
-import Product from "./components/pages/Product.jsx";
-import Question from "./components/pages/Question.jsx";
 import AdminRoute from "./components/router/admin-route";
 import PrivateRoute from "./components/router/private-route";
 import PublicRoute from "./components/router/public-route";
-import Detail from './components/pages/Detail';
-import Buy from './components/pages/Buy';
-import NotFound from './components/pages/NotFound';
-import ProductUpdate from './components/admin/components/product/ProductUpdate';
+
+const Admin = React.lazy(() => import('./components/admin/Admin.jsx'));
+const Header = React.lazy(() => import('./components/common/Header'));
+const Buy = React.lazy(() => import('./components/pages/Buy'));
+const Category = React.lazy(() => import('./components/pages/Category.jsx'));
+const Detail = React.lazy(() => import('./components/pages/Detail.jsx'));
+const Investment = React.lazy(() => import('./components/pages/Investment/index.jsx'));
+const Login = React.lazy(() => import('./components/pages/Login.jsx'));
+const NotFound = React.lazy(() => import('./components/pages/NotFound'));
+const Post = React.lazy(() => import('./components/pages/Post.jsx'));
+const Product = React.lazy(() => import('./components/pages/Product.jsx'));
+const Question = React.lazy(() => import('./components/pages/Question.jsx'));
 
 const routes = [
   {
     path: "*",
-    element: <PublicRoute><NotFound /></PublicRoute>
+    element: <PublicRoute>
+      <Suspense>
+        <NotFound />
+      </Suspense>
+    </PublicRoute>
   },
   {
     path: "/",
-    element: <PublicRoute><Login /></PublicRoute>
+    element: <PublicRoute>
+      <Suspense>
+        <Login />
+      </Suspense>
+    </PublicRoute>
   },
   {
     path: "/login",
-    element: <PublicRoute><Login /></PublicRoute>
+    element: <PublicRoute>
+      <Suspense>
+        <Login />
+      </Suspense>
+    </PublicRoute>
   },
   {
     path: "/post/:id",
-    element: <PublicRoute><Post /></PublicRoute>
+    element: <PublicRoute>
+      <Suspense>
+        <Post />
+      </Suspense>
+    </PublicRoute>
   },
   {
     path: "/invest",
-    element: <PrivateRoute><Investment /></PrivateRoute>
+    element: <PrivateRoute>
+      <Suspense>
+        <Investment />
+      </Suspense>
+    </PrivateRoute>
   },
   {
     path: "/category",
-    element: <PrivateRoute><Category /></PrivateRoute>
+    element: <PrivateRoute>
+      <Suspense>
+        <Category />
+      </Suspense>
+    </PrivateRoute>
   },
   {
     path: "/product",
-    element: <PrivateRoute><Product /></PrivateRoute>
+    element: <PrivateRoute>
+      <Suspense>
+        <Product />
+      </Suspense>
+    </PrivateRoute>
   },
   {
     path: "/question",
-    element: <PrivateRoute><Question /></PrivateRoute>
+    element: <PrivateRoute>
+      <Suspense>
+        <Question />
+      </Suspense>
+    </PrivateRoute>
   },
   {
     path: "/detail/:id",
-    element: <PrivateRoute><Detail /></PrivateRoute>
+    element: <PrivateRoute>
+      <Suspense>
+        <Detail />
+      </Suspense>
+    </PrivateRoute>
   },
   {
     path: "/buy/:id",
-    element: <PrivateRoute><Buy /></PrivateRoute>
+    element: <PrivateRoute>
+      <Suspense>
+        <Buy />
+      </Suspense>
+    </PrivateRoute>
   },
   {
     path: "/admin",
-    element: <AdminRoute><Admin /></AdminRoute>
+    element: <AdminRoute>
+      <Suspense>
+        <Admin />
+      </Suspense>
+    </AdminRoute>
   },
 ]
 
@@ -69,7 +114,7 @@ const Layout = ({ hideHeaderPaths = [] }) => {
 
   return (
     <>
-      {!hideHeaderPaths.includes(pathname) && <Header />}
+      {!hideHeaderPaths.includes(pathname) && <Suspense><Header /></Suspense>}
       <Outlet />
     </>
   );

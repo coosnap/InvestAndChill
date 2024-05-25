@@ -28,6 +28,10 @@ export async function signUp(data) {
   const authData = {
     username: data.username,
     email: data.email,
+    firstName: data.firstName,
+    lastName: data.lastName,
+    dateOfBirth: data.dateOfBirth,
+    phoneNumber: data.phoneNumber,
     password: data.password,
     role: ["user"]
   };

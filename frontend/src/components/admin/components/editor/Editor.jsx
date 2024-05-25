@@ -1,4 +1,8 @@
+import { getArticleDetail, insertArticle, updateArticle } from '@/api/article';
+import { getStockAll } from '@/api/stock';
+import Loader from '@/components/common/Loader';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import {
   Select,
   SelectContent,
@@ -7,52 +11,64 @@ import {
   SelectTrigger,
   SelectValue
 } from "@/components/ui/select";
-import { useEffect, useRef, useState } from 'react';
+import { ArticalId } from '@/store/article';
+import { TabDefault } from '@/store/common';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import './Editor.scss';
-import Loader from '@/components/common/Loader';
-import { getStockAll } from '@/api/stock';
-import { Input } from '@/components/ui/input';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { ArticalId } from '@/store/article';
-import { getArticleDetail, insertArticle, updateArticle } from '@/api/article';
-import { TabDefault } from '@/store/common';
+import { fileUpload } from '@/api/file';
 
-const frameworks = [
-  {
-    value: "next.js",
-    label: "Next.js",
-  },
-  {
-    value: "sveltekit",
-    label: "SvelteKit",
-  },
-  {
-    value: "nuxt.js",
-    label: "Nuxt.js",
-  },
-  {
-    value: "remix",
-    label: "Remix",
-  },
-  {
-    value: "astro",
-    label: "Astro",
-  },
-]
+let groupCode = '';
 
 function Editor() {
-  const reactQuillRef = useRef(null);
+  const quillRef = useRef(null);
   const [article, setArticle] = useState({ title: "", content: "", url: "" });
   const [stokes, setStokes] = useState([]);
   const [content, setContent] = useState([]);
+  const [imageFiles, setImageFiles] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const [articalId, setArticleId] = useRecoilState(ArticalId)
   const setTabDefault = useSetRecoilState(TabDefault)
 
-  const modules = {
+  const imageHandler = () => {
+    const input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'image/*');
+    input.setAttribute('multiple', '');
+    input.click();
+
+    input.addEventListener('change', async () => {
+      const files = [...input.files];
+      let formData = new FormData();
+      formData.append('file', files[0]);
+      formData.append('fileName', files[0].name);
+
+      const res = await fileUpload(formData);
+      // if (res.data) {
+      // groupCode = res.data.fileGroupCode
+      // res.data.fileIds.forEach((fileId) => {
+      //   const editor = quillRef.current.getEditor()
+      //   const range = editor.getSelection()
+      //   const src = `http://yourUrl../${fileId}`
+      //   editor.insertEmbed(range.index, 'image', src)
+      //   setImageFiles((prev) => [...prev, { path: src, id: fileId }])
+      // })
+      // }
+    })
+  }
+
+  // const deleteImage = async (fileId) => {
+  //   const res = await $_lib_fetchData({
+  //     url: `/files/${fileId}`,
+  //     method: 'delete',
+  //     params: {}
+  //   })
+  // }
+
+  const modules = useMemo(() => ({
     toolbar: {
       container: [
         ["bold", "italic", "underline", "strike"],
@@ -65,8 +81,27 @@ function Editor() {
         [{ background: ["black", "red", "blue", "white", "green", "yellow", "brown"] }],
         ["clean"],
       ],
-    },
-  };
+      handlers: { image: imageHandler }
+    }
+  }), []);
+
+  // useEffect(() => {
+  //   if (
+  //     quillRef.current?.lastDeltaChangeSet?.ops[1]?.delete === 1 &&
+  //     imageFiles.length > 0
+  //   ) {
+  //     for (let index = 0; index < imageFiles.length; index++) {
+  //       if (!quillRef.current?.value.includes(imageFiles[index].path)) {
+  //         const tempImageFiles = structuredClone(imageFiles)
+  //         const filteredIamgeFiles = tempImageFiles.filter(
+  //           (image) => image.id !== imageFiles[index].id
+  //         )
+  //         deleteImage(imageFiles[index].id)
+  //         setImageFiles(filteredIamgeFiles)
+  //       }
+  //     }
+  //   }
+  // }, [quillRef.current?.lastDeltaChangeSet?.ops[1]?.delete])
 
   const handleSaveArticle = async () => {
     if (articalId) {
@@ -136,22 +171,6 @@ function Editor() {
               </SelectContent>
             </Select>
           </div>
-          {/* <div className='mb-4'>
-            <Select>
-              <SelectTrigger className="w-1/2 bg-white">
-                <SelectValue placeholder="Select a category" />
-              </SelectTrigger>
-              <SelectContent className="bg-white">
-                <SelectGroup>
-                  <SelectItem value="apple">Apple</SelectItem>
-                  <SelectItem value="banana">Banana</SelectItem>
-                  <SelectItem value="blueberry">Blueberry</SelectItem>
-                  <SelectItem value="grapes">Grapes</SelectItem>
-                  <SelectItem value="pineapple">Pineapple</SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-          </div> */}
           <div className='mb-4'>
             <Input value={article.title} placeholder="Title" onInput={e => setArticle(prev => ({ ...prev, title: e.target.value }))} />
           </div>
@@ -161,7 +180,7 @@ function Editor() {
           <div className="text-editor">
             <ReactQuill
               className='bg-white'
-              ref={reactQuillRef}
+              ref={quillRef}
               theme="snow"
               modules={modules}
               value={content}

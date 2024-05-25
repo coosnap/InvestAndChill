@@ -7,6 +7,15 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger
 } from "@/components/ui/alert-dialog";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
+import { format } from "date-fns";
+import { CalendarIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { Link, useNavigate } from "react-router-dom";
@@ -16,6 +25,7 @@ import { InputWithLabel } from "../common/InputWithLabel";
 import Loader from "../common/Loader";
 import Modal from "../common/Modal";
 import { Button } from "../ui/button";
+import { Label } from "../ui/label";
 
 function Login() {
   const navigate = useNavigate();
@@ -24,18 +34,24 @@ function Login() {
   const [showModal, setShowModal] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordRe, setShowPasswordRe] = useState(false);
   const [cookie, setCookie] = useCookies(['access_token', 'usrId', 'roles']);
   const [isLoading, setIsLoading] = useState(false);
   const [statusDialog, setStatusDialog] = useState("");
   const [articleList, setArticleList] = useState([]);
   const [loginInfo, setLoginInfo] = useState({ usrNm: "", usrPwd: "" });
   const [register, setRegister] = useState({});
+  const [validate, setValidate] = useState({});
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
+    setValidate({});
+    if (loginInfo.usrNm.length === 0) setValidate(prev => ({ ...prev, usrNmMessage: "Vui lòng điền tên đăng nhập" }));
+    if (loginInfo.usrPwd.length === 0) setValidate(prev => ({ ...prev, usrPwdMessage: "Vui lòng điền mật khẩu" }));
+    if (loginInfo.usrNm.length === 0 || loginInfo.usrPwd.length === 0) return;
     try {
       let infoSignIn = await signIn({ username: loginInfo.usrNm, password: loginInfo.usrPwd });
+      setIsLoading(true);
       if (infoSignIn) {
         let d = new Date();
         d.setTime(d.getTime() + (d.getMinutes() * 60 * 10000));
@@ -45,12 +61,11 @@ function Login() {
         setIsLoading(false);
         (infoSignIn.roles.includes('ROLE_ADMIN') || infoSignIn.roles.includes('ROLE_MODERATOR_ARTICLE') || infoSignIn.roles.includes('ROLE_MODERATOR_USER')) ? navigate("/admin") : navigate("/invest");
       } else {
-        setShowDialog(true);
         setIsLoading(false);
+        setValidate(prev => ({ ...prev, loginMessage: "Tên đăng nhập hoặc mật khẩu không đúng" }))
       }
     } catch (error) {
       setShowDialog(true);
-      setIsLoading(false);
       console.error(error);
     }
   }
@@ -112,7 +127,7 @@ function Login() {
         </div>
 
         <div className="flex flex-col w-1/2 h-full gap-8">
-          <div className="rounded-2xl bg-white shadow-2xl h-1/3 flex flex-col items-center justify-center">
+          <div className="rounded-2xl bg-white shadow-2xl h-2/5 flex flex-col items-center justify-center">
             <div className="flex items-center justify-center text-3xl font-semibold text-gray-900">Đăng nhập</div>
             <form className="px-12 w-full">
               <div>
@@ -123,6 +138,7 @@ function Login() {
                   require
                   handleChange={(e) => setLoginInfo(prev => ({ ...prev, usrNm: e.target.value }))}
                 />
+                {validate.usrNmMessage ? <Label className="text-red-500">{validate.usrNmMessage}</Label> : null}
                 <div className="h-5"></div>
                 <InputWithLabel
                   label="Mật khẩu"
@@ -134,8 +150,10 @@ function Login() {
                   handleKeyEnter={onSubmit}
                   showPassword={showPassword}
                 />
+                {validate.usrPwdMessage ? <Label className="text-red-500">{validate.usrPwdMessage}</Label> : null}
               </div>
-              <div className="mt-5 flex items-center">
+              {validate.loginMessage ? <div className="text-center mt-2"><Label className="text-red-500">{validate.loginMessage}</Label></div> : null}
+              <div className="mt-2 flex items-center">
                 <div className="w-7/12 text-end">
                   <Button variant="primary" onClick={(e) => onSubmit(e)}>Đăng nhập</Button>
                 </div>
@@ -150,11 +168,53 @@ function Login() {
                           <p className="font-bold text-xl text-center text-black mb-4">Đăng ký tài khoản</p>
                         </AlertDialogTitle>
                         <div>
-                          <InputWithLabel label="Tên đăng nhập" placeholder="Vui lòng điền Username!" type="text" id="usrNmRe" require handleChange={() => setRegister({ ...register, username: e.target.value })} />
+                          <InputWithLabel label="Tên đăng nhập" placeholder="Vui lòng điền Username!" type="text" require handleChange={(e) => setRegister({ ...register, username: e.target.value })} />
                           <div className="h-5"></div>
-                          <InputWithLabel label="Email" placeholder="Vui lòng điền Email!" type="text" id="emailRe" require handleChange={() => setRegister({ ...register, email: e.target.value })} />
+                          <div className="flex gap-4">
+                            <InputWithLabel label="Họ" placeholder="Vui lòng điền Họ!" type="text" require handleChange={(e) => setRegister({ ...register, lastName: e.target.value })} />
+                            <InputWithLabel label="Tên" placeholder="Vui lòng điền Tên!" type="text" require handleChange={(e) => setRegister({ ...register, firstName: e.target.value })} />
+                          </div>
                           <div className="h-5"></div>
-                          <InputWithLabel label="Mật khẩu" placeholder="Vui lòng điền Mật khẩu!" type="text" id="usrPwRe" require handleChange={() => setRegister({ ...register, password: e.target.value })} />
+                          <div className="flex gap-4">
+                            <Popover>
+                              <div>
+                                <Label after=" *" className="after:content-[attr(after)] after:text-red-600">Date Of Birth</Label>
+                                <PopoverTrigger asChild>
+                                  <Button
+                                    variant={"outline"}
+                                    className={cn(
+                                      "w-full justify-start text-left font-normal bg-white"
+                                    )}
+                                  >
+                                    <CalendarIcon className="mr-2 h-4 w-4" />
+                                    {register.dateOfBirth ? register.dateOfBirth : <span>Pick a date</span>}
+                                  </Button>
+                                </PopoverTrigger>
+                                <PopoverContent className="w-auto p-0">
+                                  <Calendar
+                                    mode="single"
+                                    selected={register.dateOfBirth}
+                                    onSelect={(value) => setRegister({ ...register, dateOfBirth: format(value, "dd-MM-yyyy") })}
+                                    initialFocus
+                                    className="bg-white"
+                                  />
+                                </PopoverContent>
+                              </div>
+                            </Popover>
+                            <InputWithLabel label="Phone" placeholder="Vui lòng điền Phone Number!" type="text" require handleChange={(e) => setRegister({ ...register, phoneNumber: e.target.value })} />
+                          </div>
+                          <div className="h-5"></div>
+                          <InputWithLabel label="Email" placeholder="Vui lòng điền Email!" type="text" require handleChange={(e) => setRegister({ ...register, email: e.target.value })} />
+                          <div className="h-5"></div>
+                          <InputWithLabel
+                            label="Mật khẩu"
+                            placeholder="Vui lòng điền mật khẩu"
+                            type={showPasswordRe ? 'text' : 'password'} name="usrPwd"
+                            require
+                            handleChange={(e) => setRegister({ ...register, password: e.target.value })}
+                            handleClickShowPassword={() => setShowPasswordRe(!showPasswordRe)}
+                            showPassword={showPasswordRe}
+                          />
                         </div>
                       </AlertDialogHeader>
                       <AlertDialogFooter>
@@ -168,10 +228,11 @@ function Login() {
             </form>
           </div>
         </div>
-      </div>
-      {showDialog && <Modal handleClickModal={() => setShowDialog(false)} message={"Invalid login Username or Password."} status="Error" />}
+      </div >
+      {showDialog && <Modal handleClickModal={() => setShowDialog(false)} message={"Invalid login Username or Password."} status="Error" />
+      }
       {showModal && <Modal handleClickModal={() => setShowModal(false)} message={messageDialog} status={statusDialog} />}
-    </div>
+    </div >
   );
 }
 

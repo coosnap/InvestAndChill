@@ -1,7 +1,7 @@
 import { getArticleDetail } from "@/api/article";
-import Loader from "../common/Loader";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import Loader from "../common/Loader";
 
 function Post() {
   const { id } = useParams();

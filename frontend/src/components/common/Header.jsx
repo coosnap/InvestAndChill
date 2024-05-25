@@ -1,26 +1,25 @@
-import { useCookies } from "react-cookie";
-import { Link, useNavigate } from "react-router-dom";
-import { FcReading } from "react-icons/fc";
+import { getUserDetail, updateUser } from "@/api/user";
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
+  AlertDialogTrigger
 } from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
-import { Label } from "../ui/label";
+} from "@/components/ui/popover";
+import { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
+import { FcReading } from "react-icons/fc";
+import { Link, useNavigate } from "react-router-dom";
 import { Input } from "../ui/input";
-import { getUserDetail, updateUser } from "@/api/user";
-import { useState } from "react";
-import { Button } from "@/components/ui/button"
+import { Label } from "../ui/label";
 import Modal from "./Modal";
 
 function Header() {
@@ -65,6 +64,10 @@ function Header() {
     }
   }
 
+  useEffect(() => {
+    if (!cookies?.usrId?.usrNm) window.location.href = "/login";
+  }, [])
+
   return (
     <div className="navbar flex justify-between items-center bg-blue-100 py-2 px-8">
       <div className="flex">
@@ -81,12 +84,12 @@ function Header() {
         <PopoverContent className="w-80 bg-white">
           <div className="grid gap-4">
             <div className="space-y-2 text-center">
-              <h4 className="font-semibold text-2xl">{cookies.usrId.usrNm}</h4>
+              <h4 className="font-semibold text-2xl">{cookies?.usrId?.usrNm ?? ""}</h4>
               <p className="text-xl text-muted-foreground">
-                {cookies.usrId.email}
+                {cookies?.usrId?.email ?? ""}
               </p>
             </div>
-            {(cookies.roles.includes("ROLE_MODERATOR_USER") || cookies.roles.includes("ROLE_ADMIN")) &&
+            {(cookies?.roles?.includes("ROLE_MODERATOR_USER") || cookies?.roles?.includes("ROLE_ADMIN")) &&
               <Link to="/admin">Admin</Link>
             }
             <AlertDialog>

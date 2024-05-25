@@ -1,3 +1,16 @@
+import { deleteStock, getStockAll } from "@/api/stock";
+import Loader from "@/components/common/Loader";
+import {
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -5,24 +18,10 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
+} from "@/components/ui/table";
 import { useEffect, useState } from "react";
-import Loader from "@/components/common/Loader";
-import { deleteStock, getStockAll } from "@/api/stock";
-import AddStoke from "./AddStoke";
 import { RiDeleteBinLine } from "react-icons/ri";
-import { Button } from "@/components/ui/button";
+import AddStoke from "./AddStoke";
 
 export default function TableStoke() {
   const [stokes, setStokes] = useState([]);

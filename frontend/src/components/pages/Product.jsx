@@ -1,7 +1,7 @@
-import Loader from "../common/Loader";
-import { useEffect, useState } from "react";
 import { getProductAll } from "@/api/product";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom/dist";
+import Loader from "../common/Loader";
 import ProductTemplate from "../common/ProductTemplate";
 
 function Product() {

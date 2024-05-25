@@ -1,17 +1,15 @@
-import { useCookies } from "react-cookie";
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
-import { useState } from "react";
-import { useEffect } from "react";
 import { getUserDetail } from "@/api/user";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+  CardTitle
+} from "@/components/ui/card";
+import { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
 
 export default function Buy() {
   const cookies = useCookies(['usrId']);
@@ -20,7 +18,6 @@ export default function Buy() {
   async function getData() {
     const id = cookies[0].usrId.id;
     const result = await getUserDetail(id);
-    console.log(result)
     if (result) setUserInfo(result);
   }
 

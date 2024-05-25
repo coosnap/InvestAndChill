@@ -1,11 +1,11 @@
 import { getQuestionAll } from "@/api/question";
-import { useEffect, useState } from "react";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion"
+} from "@/components/ui/accordion";
+import { useEffect, useState } from "react";
 
 function Question() {
   const [questionData, setQuestionData] = useState([]);

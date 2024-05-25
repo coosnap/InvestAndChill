@@ -1,14 +1,12 @@
 import { upgradeUser } from "@/api/user";
 import Modal from "@/components/common/Modal";
 import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from "@/components/ui/select";
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { Switch } from "@/components/ui/switch";
 import {
   Table,
@@ -18,15 +16,16 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { cn } from "@/lib/utils";
 import { UserAll } from "@/store/user";
-import moment from "moment";
-import { useEffect, useState } from "react";
+import { format } from "date-fns";
+import { Calendar as CalendarIcon } from "lucide-react";
+import { useState } from "react";
 import { useRecoilState } from "recoil";
 
 export default function UserAdmin() {
   const [users, setUsers] = useRecoilState(UserAll);
   const [showModal, setShowModal] = useState(false);
-  const [defaultSelect, setDefaultSelect] = useState("");
   const [messageDialog, setMessageDialog] = useState({ status: "", message: "" });
 
   function onCheckedChange(id) {
@@ -34,22 +33,6 @@ export default function UserAdmin() {
     users.map(e => {
       let data = { ...e };
       if (e.id === id) data.isVip = !data.isVip;
-      result.push(data);
-    });
-    setUsers(result);
-  }
-
-  function onValueSelectChange(value, id) {
-    let from = moment().format("YYYY-MM-DD HH:mm:ss");
-    let to = moment(from).add(value, 'M').format("YYYY-MM-DD HH:mm:ss");
-    console.log(to)
-    let result = [];
-    users.map(e => {
-      let data = { ...e };
-      if (e.id === id) {
-        data.fromDate = from;
-        data.toDate = to;
-      };
       result.push(data);
     });
     setUsers(result);
@@ -73,21 +56,15 @@ export default function UserAdmin() {
     }
   }
 
-  // function convertValue() {
-  //   let result = users.map(e => {
-  //     if (e.isVip) {
-  //       let from = moment(e.fromDate).format("YYYY-MM-DD HH:mm:ss");
-  //       let to = moment(e.toDate).format("YYYY-MM-DD HH:mm:ss");
-  //       // let diff = from.diff(to, 'month');
-  //       console.log(moment(e.fromDate).format("YYYY-MM-DD HH:mm:ss"), moment(e.toDate).format("YYYY-MM-DD HH:mm:ss"))
-  //     }
-  //   });
-
-  //   return result;
-  // }
-  // useEffect(() => {
-  //   convertValue();
-  // }, [])
+  function handleSelectDate(action, date, id) {
+    let dateFormat = format(date, "dd-MM-yyyy HH:mm:ss");
+    if (action === "to") {
+      setUsers(prev => prev.map(e => ((e.id === id) ? { ...e, toDate: dateFormat } : e)));
+    } else {
+      setUsers(prev => prev.map(e => ((e.id === id) ? { ...e, fromDate: dateFormat } : e)));
+    }
+    return;
+  }
 
   return (
     <>
@@ -96,6 +73,7 @@ export default function UserAdmin() {
           <TableRow className="bg-blue-100">
             <TableHead className="text-center">User Name</TableHead>
             <TableHead className="text-center">Email</TableHead>
+            <TableHead className="text-center">Phone Number</TableHead>
             <TableHead className="text-center">Status Vip</TableHead>
             <TableHead className="text-center">Duration</TableHead>
             <TableHead className="text-center">Action</TableHead>
@@ -106,6 +84,7 @@ export default function UserAdmin() {
             <TableRow key={user.id}>
               <TableCell className="text-center">{user.username}</TableCell>
               <TableCell className="text-center">{user.email}</TableCell>
+              <TableCell className="text-center">{user.phoneNumber}</TableCell>
               <TableCell className="text-center">
                 <Switch
                   checked={user.isVip}
@@ -113,19 +92,60 @@ export default function UserAdmin() {
                 />
               </TableCell>
               <TableCell className="flex justify-center">
-                <Select defaultValue={defaultSelect} disabled={user.isVip ? false : true} onValueChange={(value) => onValueSelectChange(value, user.id)}>
-                  <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Select a duration" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup className="bg-white">
-                      <SelectItem value="3">3 month</SelectItem>
-                      <SelectItem value="6">6 month</SelectItem>
-                      <SelectItem value="9">9 month</SelectItem>
-                      <SelectItem value="12">1 year</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
+                <div className="flex flex-col mr-4">
+                  <p className="mb-1">From</p>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant={"outline"}
+                        className={cn(
+                          "w-[280px] justify-start text-left font-normal bg-white",
+                          !user.fromDate && "text-muted-foreground"
+                        )}
+                        disabled={!user.isVip}
+                      >
+                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        {user.fromDate ? user.fromDate : <span>Pick a date</span>}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0">
+                      <Calendar
+                        mode="single"
+                        selected={user.fromDate}
+                        onSelect={(value) => handleSelectDate("from", value, user.id)}
+                        initialFocus
+                        className="bg-white"
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </div>
+                <div className="flex flex-col">
+                  <p className="mb-1">To</p>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant={"outline"}
+                        className={cn(
+                          "w-[280px] justify-start text-left font-normal bg-white",
+                          !user.toDate && "text-muted-foreground"
+                        )}
+                        disabled={!user.isVip}
+                      >
+                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        {user.toDate ? user.toDate : <span>Pick a date</span>}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0">
+                      <Calendar
+                        mode="single"
+                        selected={user.toDate}
+                        onSelect={(value) => handleSelectDate("to", value, user.id)}
+                        initialFocus
+                        className="bg-white"
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </div>
               </TableCell>
               <TableCell className="text-center">
                 <Button variant="primary" onClick={() => handleSaveUser(user.id)}>Save</Button>
