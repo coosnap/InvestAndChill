@@ -68,7 +68,6 @@ public class User {
 	
 
 	public Timestamp getFromDate() {
-		//String s = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(fromDate);
 		return fromDate;
 	}
 
@@ -77,7 +76,6 @@ public class User {
 	}
 
 	public Timestamp getToDate() {
-		//String s = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(toDate);
 		return toDate;
 	}
 

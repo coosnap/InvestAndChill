@@ -1,0 +1,105 @@
+package com.starter.InvestAndChill.jwt.payload.response;
+
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.HashSet;
+import java.util.Set;
+
+import com.starter.InvestAndChill.jwt.models.Role;
+
+public class UserResponse {
+	private String username;
+	private String email;
+	private String firstName;
+	private String lastName;
+	private String phoneNumber;
+	private Date dateOfBirth;
+	private Integer isVip;
+	private Timestamp fromDate;
+	private Timestamp toDate;
+	private Set<Role> roles = new HashSet<>();	
+	public Set<Role> getRoles() {
+		return roles;
+	}
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getFirstName() {
+		return firstName;
+	}
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	public String getLastName() {
+		return lastName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+	public Date getDateOfBirth() {
+		return dateOfBirth;
+	}
+	public void setDateOfBirth(Date dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
+	public Integer getIsVip() {
+		return isVip;
+	}
+	public void setIsVip(Integer isVip) {
+		this.isVip = isVip;
+	}
+	public String getFromDate() {
+		String s = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(fromDate);
+		return s;
+	}
+	public void setFromDate(Timestamp fromDate) {
+		this.fromDate = fromDate;
+	}
+	public String getToDate() {
+		String s = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(toDate);
+		return s;
+	}
+	public void setToDate(Timestamp toDate) {
+		this.toDate = toDate;
+	}
+	
+	public UserResponse() {
+	}
+	public UserResponse(String username, String email, String firstName, String lastName, String phoneNumber,
+			Date dateOfBirth, Integer isVip, Timestamp fromDate, Timestamp toDate, Set<Role> roles) {
+		super();
+		this.username = username;
+		this.email = email;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.phoneNumber = phoneNumber;
+		this.dateOfBirth = dateOfBirth;
+		this.isVip = isVip;
+		this.fromDate = fromDate;
+		this.toDate = toDate;
+		this.roles = roles;
+	}
+	
+
+
+
+}

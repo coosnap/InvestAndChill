@@ -41,6 +41,7 @@ import com.starter.InvestAndChill.jwt.payload.request.UserUpAndDowngradeRequest;
 import com.starter.InvestAndChill.jwt.payload.response.JwtResponse;
 import com.starter.InvestAndChill.jwt.payload.response.MessageResponse;
 import com.starter.InvestAndChill.jwt.payload.response.TokenRefreshResponse;
+import com.starter.InvestAndChill.jwt.payload.response.UserResponse;
 import com.starter.InvestAndChill.jwt.repository.RoleRepository;
 import com.starter.InvestAndChill.jwt.repository.UserRepository;
 import com.starter.InvestAndChill.jwt.security.jwt.JwtUtils;
@@ -223,10 +224,7 @@ public class AuthController {
   }
   
   @PutMapping("/upgrade")
-	public ResponseEntity<User> upgradeUser(@RequestBody UserUpAndDowngradeRequest requestUser) {
-		//System.out.println(requestUser.getFromDate());
-		//System.out.println(new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(requestUser.getFromDate()));
-		//System.out.println(TimeZone.getDefault());
+	public ResponseEntity<UserResponse> upgradeUser(@RequestBody UserUpAndDowngradeRequest requestUser) {
 	  Optional<User> userData = userRepository.findById(Long.valueOf(requestUser.getId()));
 	    if (userData.isPresent()) {
 	    	User user = userData.get();
@@ -234,8 +232,9 @@ public class AuthController {
 	    	user.setFromDate(requestUser.getFromDate());
 	    	user.setToDate(requestUser.getToDate());
 	    	User user2 = userRepository.save(user);
-	    	user2.setPassword(null);
-	      return new ResponseEntity<>( user2, HttpStatus.OK);
+	    	
+	    	UserResponse u = new UserResponse(user2.getUsername(), user2.getEmail(), user2.getFirstName(), user2.getLastName(), user2.getPhoneNumber(), user2.getDateOfBirth(), user2.getIsVip(), user2.getFromDate(), user2.getToDate(),user2.getRoles());
+	      return new ResponseEntity<>( u, HttpStatus.OK);
 	    } else {
 	      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	    }
