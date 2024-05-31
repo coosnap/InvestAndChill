@@ -2,13 +2,15 @@ package com.starter.InvestAndChill.jwt.payload.response;
 
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.starter.InvestAndChill.jwt.models.Role;
+import com.starter.InvestAndChill.jwt.models.User;
 
 public class UserResponse {
+	private Long id;
 	private String username;
 	private String email;
 	private String firstName;
@@ -16,7 +18,9 @@ public class UserResponse {
 	private String phoneNumber;
 	private Date dateOfBirth;
 	private Integer isVip;
+	@JsonFormat(pattern="dd-MM-yyyy HH:mm:ss")
 	private Timestamp fromDate;
+	@JsonFormat(pattern="dd-MM-yyyy HH:mm:ss")
 	private Timestamp toDate;
 	private Set<Role> roles = new HashSet<>();	
 	public Set<Role> getRoles() {
@@ -67,16 +71,25 @@ public class UserResponse {
 	public void setIsVip(Integer isVip) {
 		this.isVip = isVip;
 	}
-	public String getFromDate() {
-		String s = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(fromDate);
-		return s;
-	}
+	
 	public void setFromDate(Timestamp fromDate) {
 		this.fromDate = fromDate;
 	}
-	public String getToDate() {
-		String s = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(toDate);
-		return s;
+	
+	public Timestamp getFromDate() {
+		
+		return fromDate;
+	}
+	
+	public Timestamp getToDate() {
+		return toDate;
+	}
+
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
 	}
 	public void setToDate(Timestamp toDate) {
 		this.toDate = toDate;
@@ -85,7 +98,7 @@ public class UserResponse {
 	public UserResponse() {
 	}
 	public UserResponse(String username, String email, String firstName, String lastName, String phoneNumber,
-			Date dateOfBirth, Integer isVip, Timestamp fromDate, Timestamp toDate, Set<Role> roles) {
+			Date dateOfBirth, Integer isVip, Timestamp fromDate, Timestamp toDate, Set<Role> roles, Long id) {
 		super();
 		this.username = username;
 		this.email = email;
@@ -97,9 +110,6 @@ public class UserResponse {
 		this.fromDate = fromDate;
 		this.toDate = toDate;
 		this.roles = roles;
+		this.id = id;
 	}
-	
-
-
-
 }

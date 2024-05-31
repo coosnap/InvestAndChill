@@ -3,6 +3,7 @@ package com.starter.InvestAndChill.jwt.controllers;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -184,44 +185,50 @@ public class AuthController {
   }
   
   @GetMapping("/{id}")
-	public ResponseEntity<User> getUserById(@PathVariable String id) {
-		Optional<User> user = userRepository.findById(Long.valueOf(id));
-		user.get().setPassword(null);
-	    if (user.isPresent()) {
-	      return new ResponseEntity<>(user.get(), HttpStatus.OK);
+	public ResponseEntity<UserResponse> getUserById(@PathVariable String id) {
+		Optional<User> userOptional = userRepository.findById(Long.valueOf(id));
+	    if (userOptional.isPresent()) {
+	    	User user = userOptional.get();
+	    	UserResponse u = new UserResponse(user.getUsername(), user.getEmail(), user.getFirstName(), user.getLastName(), user.getPhoneNumber(), user.getDateOfBirth(), user.getIsVip(), user.getFromDate(), user.getToDate(),user.getRoles(),user.getId());
+	      return new ResponseEntity<>(u, HttpStatus.OK);
 	    } else {
 	      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	    }
 	}
   
-  @PutMapping("/{id}")
-  public ResponseEntity<?> updateUser(@PathVariable("id") Long id, @RequestBody SignupRequest user) {
-	  if (userRepository.existsByEmailForUpdate(user.getEmail(),id)) {
-	      return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
-	    }
-	    
-	    if (userRepository.existsByPhoneNumberForUpdate(user.getPhoneNumber(),id)) {
-	        return ResponseEntity.badRequest().body(new MessageResponse("Error: Phone Number is already in use!"));
-	      }
-	  
-	  
-	Optional<User> userData = userRepository.findById(id);
+	@PutMapping("/{id}")
+	public ResponseEntity<?> updateUser(@PathVariable("id") Long id, @RequestBody SignupRequest user) {
+		if (userRepository.existsByEmailForUpdate(user.getEmail(), id)) {
+			return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
+		}
 
-    if (userData.isPresent()) {
-    	User _user = userData.get();
-    	_user.setFirstName(user.getFirstName());
-    	_user.setLastName(user.getLastName());
-    	_user.setEmail(user.getEmail());
-    	_user.setDateOfBirth(user.getDateOfBirth());
-    	_user.setPassword(encoder.encode(user.getPassword()));
-    	_user.setPhoneNumber(user.getPhoneNumber());
-    	User userPresent = userRepository.save(_user);
-    	userPresent.setPassword(null);
-      return new ResponseEntity<>(userPresent, HttpStatus.OK);
-    } else {
-      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-  }
+		if (userRepository.existsByPhoneNumberForUpdate(user.getPhoneNumber(), id)) {
+			return ResponseEntity.badRequest().body(new MessageResponse("Error: Phone Number is already in use!"));
+		}
+
+		Optional<User> userData = userRepository.findById(id);
+
+		if (userData.isPresent()) {
+			User _user = userData.get();
+			
+			 Authentication authentication = authenticationManager
+				        .authenticate(new UsernamePasswordAuthenticationToken(_user.getUsername(), user.getPassword()));
+			_user.setUsername(user.getUsername());
+			_user.setFirstName(user.getFirstName());
+			_user.setLastName(user.getLastName());
+			_user.setEmail(user.getEmail());
+			_user.setDateOfBirth(user.getDateOfBirth());
+			_user.setPhoneNumber(user.getPhoneNumber());
+			User userPresent = userRepository.save(_user);
+			UserResponse u = new UserResponse(userPresent.getUsername(), userPresent.getEmail(),
+					userPresent.getFirstName(), userPresent.getLastName(), userPresent.getPhoneNumber(),
+					userPresent.getDateOfBirth(), userPresent.getIsVip(), userPresent.getFromDate(),
+					userPresent.getToDate(), userPresent.getRoles(), userPresent.getId());
+			return new ResponseEntity<>(u, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
   
   @PutMapping("/upgrade")
 	public ResponseEntity<UserResponse> upgradeUser(@RequestBody UserUpAndDowngradeRequest requestUser) {
@@ -233,7 +240,7 @@ public class AuthController {
 	    	user.setToDate(requestUser.getToDate());
 	    	User user2 = userRepository.save(user);
 	    	
-	    	UserResponse u = new UserResponse(user2.getUsername(), user2.getEmail(), user2.getFirstName(), user2.getLastName(), user2.getPhoneNumber(), user2.getDateOfBirth(), user2.getIsVip(), user2.getFromDate(), user2.getToDate(),user2.getRoles());
+	    	UserResponse u = new UserResponse(user2.getUsername(), user2.getEmail(), user2.getFirstName(), user2.getLastName(), user2.getPhoneNumber(), user2.getDateOfBirth(), user2.getIsVip(), user2.getFromDate(), user2.getToDate(),user2.getRoles(),user2.getId());
 	      return new ResponseEntity<>( u, HttpStatus.OK);
 	    } else {
 	      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -245,22 +252,49 @@ public class AuthController {
 		try {
 			List<User> users = new ArrayList<User>();
 			users = userRepository.findListNormalUser("ROLE_USER");
+			
 
 			if (users.isEmpty()) {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 			}
 			
+			List<UserResponse> userReponseList = new ArrayList<UserResponse>();
+			
 			for (User user : users) {
-				user.setPassword(null); 
+				UserResponse u = new UserResponse(user.getUsername(), user.getEmail(), user.getFirstName(), user.getLastName(), user.getPhoneNumber(), user.getDateOfBirth(), user.getIsVip(), user.getFromDate(), user.getToDate(),user.getRoles(),user.getId());
+				userReponseList.add(u);
 			}
 			
-			return new ResponseEntity<>(users, HttpStatus.OK);
+			return new ResponseEntity<>(userReponseList, HttpStatus.OK);
 		} catch (Exception e) {
+			System.out.println("e:" + e.toString());
 			 logger.error("Get All User has problem: {}", e.getMessage());
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 	}
+  
+  @PostMapping("/changePassword")
+ 	public ResponseEntity<?> changPassword(@RequestBody Map<String, Object> payload) {
+	  String userName = (String )payload.get("userName");
+	  String oldPassword = (String )payload.get("oldPassword");
+	  String newPassword = (String )payload.get("newPassword");
+	  
+	  Authentication authentication = authenticationManager
+		        .authenticate(new UsernamePasswordAuthenticationToken(userName, oldPassword));
+
+	  UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+	  Optional<User> userOptional = userRepository.findById(userDetails.getId());
+	  if (userOptional.isPresent()) {
+		  User user = userOptional.get();
+		  user.setPassword( encoder.encode(newPassword));
+		  userRepository.save(user);
+	  }
+	  
+	  return new ResponseEntity<>(new MessageResponse("Password has been updated"), HttpStatus.OK);
+
+ 	}
+  
   
   
 
