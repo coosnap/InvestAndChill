@@ -19,9 +19,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.starter.InvestAndChill.jwt.models.FileInfo;
 import com.starter.InvestAndChill.jwt.payload.response.MessageResponse;
+import com.starter.InvestAndChill.jwt.payload.response.ResponseFile;
+import com.starter.InvestAndChill.jwt.payload.response.ResponseFileStatic;
 import com.starter.InvestAndChill.jwt.security.services.FilesStorageServiceStatic;
 
 
@@ -33,16 +36,26 @@ public class FilesStaticController {
 	  FilesStorageServiceStatic storageService;
 
 	  @PostMapping("/upload")
-	  public ResponseEntity<MessageResponse> uploadFile(@RequestParam("file") MultipartFile file) {
+	  public ResponseEntity<ResponseFileStatic> uploadFile(@RequestParam("file") MultipartFile file) {
 	    String message = "";
 	    try {
 	      storageService.save(file);
-
 	      message = "Uploaded the file successfully: " + file.getOriginalFilename();
-	      return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse(message));
+	      String fileDownloadUri = ServletUriComponentsBuilder
+		          .fromCurrentContextPath()
+		          .path("/api/fileStatic/files/")
+		          .path(file.getOriginalFilename())
+		          .toUriString();
+	      ResponseFileStatic rs = new ResponseFileStatic(file.getOriginalFilename(), fileDownloadUri, message);
+	      return ResponseEntity.status(HttpStatus.OK).body(rs);
 	    } catch (Exception e) {
-	      message = "Could not upload the file: " + file.getOriginalFilename() + ". Error: " + e.getMessage();
-	      return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new MessageResponse(message));
+	    	ResponseFileStatic rs = new ResponseFileStatic();
+	    	message = "Could not upload the file: " + file.getOriginalFilename() + ". Error: " + e.getMessage();
+	    	rs.setName("");
+	    	rs.setPath("");
+	    	rs.setMessage(message);
+	      
+	      return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(rs);
 	    }
 	  }
 

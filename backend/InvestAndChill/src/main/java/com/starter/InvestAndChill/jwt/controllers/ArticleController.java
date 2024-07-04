@@ -1,6 +1,11 @@
 package com.starter.InvestAndChill.jwt.controllers;
 
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.starter.InvestAndChill.jwt.models.Article;
 import com.starter.InvestAndChill.jwt.models.StockSymbol;
+import com.starter.InvestAndChill.jwt.payload.response.MessageResponse;
 import com.starter.InvestAndChill.jwt.repository.ArticleRepository;
 import com.starter.InvestAndChill.jwt.repository.StockSymbolRepository;
 
@@ -33,6 +39,31 @@ public class ArticleController {
 	
 	@Autowired
 	StockSymbolRepository stockRepository;
+	
+	private final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+	
+	private java.sql.Timestamp parseTimestamp(String timestamp) {
+	    try {
+	        return new Timestamp(DATE_TIME_FORMAT.parse(timestamp).getTime());
+	    } catch (ParseException e) {
+	        throw new IllegalArgumentException(e);
+	    }
+	}
+	
+	public static long compareTwoTimeStamps(java.sql.Timestamp currentTime, java.sql.Timestamp oldTime){
+	if (oldTime == null)
+		return 0;
+	  long milliseconds1 = oldTime.getTime();
+	  long milliseconds2 = currentTime.getTime();
+
+	  long diff = milliseconds2 - milliseconds1;
+	  long diffSeconds = diff / 1000;
+	  long diffMinutes = diff / (60 * 1000);
+	  long diffHours = diff / (60 * 60 * 1000);
+	  long diffDays = diff / (24 * 60 * 60 * 1000);
+
+	    return diffDays;
+	}
 	
 	@GetMapping("/all")
 	public ResponseEntity<List<Article>> allAccess() {
@@ -57,6 +88,9 @@ public class ArticleController {
 		Optional<Article> article = articleRepository.findById(Integer.valueOf(id));
 		
 	    if (article.isPresent()) {
+	    	Article a = article.get();
+	    	a.setViews(a.getViews()+1);
+	    	articleRepository.save(a);
 	      return new ResponseEntity<>(article.get(), HttpStatus.OK);
 	    } else {
 	      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -66,7 +100,10 @@ public class ArticleController {
 	 @PostMapping("/save")
 	  public ResponseEntity<Article> createArticle(@RequestBody Article article) {
 	    try {
-	    	Article _article = articleRepository.save(new Article(article.getId(),article.getTitle(),article.getContent(),article.getUrl()));
+	    	Article newArtical = new Article(article.getId(),article.getTitle(),article.getContent(),article.getUrl(),0);
+	    	String now = DATE_TIME_FORMAT.format(new java.util.Date());
+	    	newArtical.setCreateDate(parseTimestamp(now));
+	    	Article _article = articleRepository.save(newArtical);
 	    	
 	      return new ResponseEntity<>(_article, HttpStatus.CREATED);
 	    } catch (Exception e) {
@@ -77,7 +114,7 @@ public class ArticleController {
 	 @PostMapping("/save/linkWithStock/{id}")
 	  public ResponseEntity<Article> createArticleLinkWithStockId(@RequestBody Article article, @PathVariable("id") int id) {
 	    try {
-	    	Article _article = new Article(article.getId(),article.getTitle(),article.getContent(),article.getUrl());
+	    	Article _article = new Article(article.getId(),article.getTitle(),article.getContent(),article.getUrl(),0);
 	    	
 	    	Optional<StockSymbol> stockData = stockRepository.findById(id);
 	    	if (stockData.isEmpty()) {
@@ -95,9 +132,17 @@ public class ArticleController {
 	 @PutMapping("/{id}")
 	  public ResponseEntity<Article> updateArticle(@PathVariable("id") int id, @RequestBody Article article) {
 	    Optional<Article> articleData = articleRepository.findById(id);
-
+	    
 	    if (articleData.isPresent()) {
 	    	Article _article = articleData.get();
+	    	
+	    	Timestamp createDate = _article.getCreateDate();
+	    	Date date = new Date();
+	    	Timestamp now = new Timestamp(date.getTime());
+	    	long dateDiff = compareTwoTimeStamps(now,createDate);
+	    	if (dateDiff > 7)
+	    		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+	    	
 	    	_article.setTitle(article.getTitle());
 	    	_article.setContent(article.getContent());
 	    	_article.setUrl(article.getUrl());

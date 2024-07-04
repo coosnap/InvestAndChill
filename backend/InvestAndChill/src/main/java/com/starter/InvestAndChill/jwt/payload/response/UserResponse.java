@@ -7,7 +7,6 @@ import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.starter.InvestAndChill.jwt.models.Role;
-import com.starter.InvestAndChill.jwt.models.User;
 
 public class UserResponse {
 	private Long id;
