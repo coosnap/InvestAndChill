@@ -100,7 +100,7 @@ public class ArticleController {
 	 @PostMapping("/save")
 	  public ResponseEntity<Article> createArticle(@RequestBody Article article) {
 	    try {
-	    	Article newArtical = new Article(article.getId(),article.getTitle(),article.getContent(),article.getUrl(),0);
+	    	Article newArtical = new Article(article.getId(),article.getTitle(),article.getContent(),article.getUrl(),0,0);
 	    	String now = DATE_TIME_FORMAT.format(new java.util.Date());
 	    	newArtical.setCreateDate(parseTimestamp(now));
 	    	Article _article = articleRepository.save(newArtical);
@@ -114,7 +114,7 @@ public class ArticleController {
 	 @PostMapping("/save/linkWithStock/{id}")
 	  public ResponseEntity<Article> createArticleLinkWithStockId(@RequestBody Article article, @PathVariable("id") int id) {
 	    try {
-	    	Article _article = new Article(article.getId(),article.getTitle(),article.getContent(),article.getUrl(),0);
+	    	Article _article = new Article(article.getId(),article.getTitle(),article.getContent(),article.getUrl(),0,0);
 	    	
 	    	Optional<StockSymbol> stockData = stockRepository.findById(id);
 	    	if (stockData.isEmpty()) {
@@ -176,6 +176,19 @@ public class ArticleController {
 	    	Article _article = articleData.get();
 	    	StockSymbol _stock = stockData.get();
 	    	_article.setStockId(_stock);
+	      return new ResponseEntity<>(articleRepository.save(_article), HttpStatus.OK);
+	    } else {
+	      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	    }
+	  }
+	 
+	 @PutMapping("{id}/setType/{type}")
+	  public ResponseEntity<Article> setType(@PathVariable("id") int id, @PathVariable("type") int type) {
+	    Optional<Article> articleData = articleRepository.findById(id);
+	   
+	    if (articleData.isPresent()) {
+	    	Article _article = articleData.get();
+	    	_article.setType(type);
 	      return new ResponseEntity<>(articleRepository.save(_article), HttpStatus.OK);
 	    } else {
 	      return new ResponseEntity<>(HttpStatus.NOT_FOUND);

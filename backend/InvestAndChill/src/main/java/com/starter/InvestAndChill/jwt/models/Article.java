@@ -45,6 +45,15 @@ public class Article {
 	@Column
 	private int views;
 	
+	@Column
+	private int type;//0: waiting, 1: phan tich co ban, 2: ki thuat giao dich
+	
+	public int getType() {
+		return type;
+	}
+	public void setType(int type) {
+		this.type = type;
+	}
 	public int getViews() {
 		return views;
 	}
@@ -87,12 +96,13 @@ public class Article {
 		
 	}
 	
-	public Article(int id, String title, String content, String url, int views) {
+	public Article(int id, String title, String content, String url, int views, int type) {
 		this.id = id;
 		this.title = title;
 		this.content = content;
 		this.url = url;
 		this.views = views;
+		this.type = type;
 	}
 	
 	
