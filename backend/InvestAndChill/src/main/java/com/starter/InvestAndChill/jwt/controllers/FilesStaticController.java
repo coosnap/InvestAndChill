@@ -29,7 +29,7 @@ import com.starter.InvestAndChill.jwt.security.services.FilesStorageServiceStati
 
 
 @Controller
-@CrossOrigin("http://localhost:8081")
+@CrossOrigin("*")
 @RequestMapping("/api/fileStatic")
 public class FilesStaticController {
 	@Autowired
