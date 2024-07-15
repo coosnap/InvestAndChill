@@ -53,7 +53,7 @@ function ProductUpdate(props) {
           </div>
         </div>
         <div className="ml-40 w-[500px]">
-          <ProductTemplate handleClickBuy={() => { }} />
+          <ProductTemplate products={product} handleClickBuy={() => { }} />
         </div>
       </div>
       {showModal && <Modal handleClickModal={handleCloseAll} message={infoDialog.message} status={infoDialog.status} />}

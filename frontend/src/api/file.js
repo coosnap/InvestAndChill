@@ -13,14 +13,13 @@ export async function getFileAll() {
 }
 
 export async function fileUpload(formData) {
-  const response = await fetch(`/api/file/upload`, {
+  const response = await fetch(`/api/fileStatic/upload`, {
     method: 'POST',
     headers: {
       'Content-Type': 'multipart/form-data',
     },
     body: formData
   });
-  console.log('response', response)
   if (response.ok) {
     const responseBody = await response.json();
     return responseBody;

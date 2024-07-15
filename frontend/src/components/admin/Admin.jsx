@@ -16,6 +16,7 @@ import { useCookies } from "react-cookie";
 import UserAdmin from "./components/user";
 import { getUserAll } from "@/api/user";
 import { UserAll } from "@/store/user";
+import { useNavigate } from "react-router-dom";
 
 // function extractEmails(text) {
 //   return text.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi);
@@ -46,6 +47,7 @@ const tabList = [
 
 function Admin() {
   const cookie = useCookies(['roles']);
+  const navigate = useNavigate();
 
   const [tabDefault, setTabDefault] = useRecoilState(TabDefault);
   const setUserAll = useSetRecoilState(UserAll);
@@ -98,6 +100,7 @@ function Admin() {
 
   const onTabChange = (value) => {
     setTabDefault(value);
+    navigate('/admin');
   }
 
   return (

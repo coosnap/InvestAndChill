@@ -7,27 +7,56 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger
 } from "@/components/ui/alert-dialog";
-import { Calendar } from "@/components/ui/calendar";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { cn } from "@/lib/utils";
-import { format } from "date-fns";
-import { CalendarIcon } from "lucide-react";
-import { useEffect, useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { IconButton, InputAdornment, TextField } from "@mui/material";
+import { useCallback, useEffect, useId, useState } from "react";
 import { useCookies } from "react-cookie";
+import { Controller, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
+import { z } from "zod";
 import { getArticleAll } from "../../api/article";
-import { signIn, signUp } from "../../api/auth";
-import { InputWithLabel } from "../common/InputWithLabel";
+import { signIn } from "../../api/auth";
 import Loader from "../common/Loader";
 import Modal from "../common/Modal";
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";
 
+const loginSchema = z.object({
+  username: z.string().min(1, { message: "Vui lòng điền tên đăng nhập" }),
+  password: z.string().min(1, { message: "Vui lòng điền mật khẩu" }),
+})
+
+const registerSchema = z.object({
+  username: z.string().min(1, { message: "Vui lòng điền tên đăng nhập" }),
+  password: z.string().min(1, { message: "Vui lòng điền mật khẩu" }),
+  passwordConfirm: z.string().min(1, { message: "Vui lòng xác nhận mật khẩu" }),
+  email: z.string().email({ message: "Vui lòng điền đúng định dạng email" }),
+  firstName: z.string().min(1, { message: "Vui lòng điền tên" }),
+  lastName: z.string().min(1, { message: "Vui lòng điền họ" }),
+  phoneNumber: z.string().min(1, { message: "Vui lòng điền số điện thoại" }),
+  dateOfBirth: z.string().transform((value) => new Date(value)),
+}).superRefine(({ passwordConfirm, password, dateOfBirth }, ctx) => {
+  if (passwordConfirm !== password) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: "Xác nhận mật khẩu không đúng",
+      path: ['passwordConfirm']
+    });
+  }
+  if (dateOfBirth) {
+    if (Number(isNaN(dateOfBirth.getTime()))) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Vui lòng điền ngày sinh",
+        path: ['dateOfBirth']
+      });
+    }
+  }
+});
+
 function Login() {
+  const id = useId();
   const navigate = useNavigate();
 
   const [messageDialog, setMessageDialog] = useState(false);
@@ -35,22 +64,59 @@ function Login() {
   const [showDialog, setShowDialog] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordRe, setShowPasswordRe] = useState(false);
+  const [showPasswordConf, setShowPasswordConf] = useState(false);
   const [cookie, setCookie] = useCookies(['access_token', 'usrId', 'roles']);
   const [isLoading, setIsLoading] = useState(false);
   const [statusDialog, setStatusDialog] = useState("");
   const [articleList, setArticleList] = useState([]);
-  const [loginInfo, setLoginInfo] = useState({ usrNm: "", usrPwd: "" });
-  const [register, setRegister] = useState({});
   const [validate, setValidate] = useState({});
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    setValidate({});
-    if (loginInfo.usrNm.length === 0) setValidate(prev => ({ ...prev, usrNmMessage: "Vui lòng điền tên đăng nhập" }));
-    if (loginInfo.usrPwd.length === 0) setValidate(prev => ({ ...prev, usrPwdMessage: "Vui lòng điền mật khẩu" }));
-    if (loginInfo.usrNm.length === 0 || loginInfo.usrPwd.length === 0) return;
+  const { handleSubmit, control, formState: { errors } } = useForm({
+    mode: 'all',
+    defaultValues: {
+      username: "",
+      password: ""
+    },
+    resolver: zodResolver(loginSchema)
+  });
+
+  const { handleSubmit: handleSubmitRegister, control: controlRegister, formState: { errors: errorsRegister } } = useForm({
+    mode: 'all',
+    defaultValues: {
+      username: "",
+      password: "",
+      passwordConfirm: "",
+      email: '',
+      firstName: '',
+      lastName: '',
+      phoneNumber: '',
+      dateOfBirth: ''
+    },
+    resolver: zodResolver(registerSchema)
+  });
+
+  const onSubmitRegister = useCallback(async (values) => {
     try {
-      let infoSignIn = await signIn({ username: loginInfo.usrNm, password: loginInfo.usrPwd });
+      let data = { ...values };
+      const response = await signUp(data);
+      const responseBody = await response.json();
+      if (responseBody.message) {
+        setStatusDialog("Success");
+        setShowModal(true);
+        setMessageDialog(responseBody.message);
+        document.getElementById('register-cancel')?.click();
+      }
+    } catch (error) {
+      setStatusDialog("Error");
+      setShowModal(true);
+      setMessageDialog(response.message);
+    }
+  }, [])
+
+  const onSubmit = useCallback(async (values) => {
+    setValidate({});
+    try {
+      let infoSignIn = await signIn(values);
       setIsLoading(true);
       if (infoSignIn) {
         let d = new Date();
@@ -68,24 +134,7 @@ function Login() {
       setShowDialog(true);
       console.error(error);
     }
-  }
-
-  async function handleSubmitRegister() {
-    const response = await signUp(register);
-    try {
-      const responseBody = await response.json();
-      if (responseBody.message) {
-        setStatusDialog("Success");
-        setShowModal(true);
-        setMessageDialog(responseBody.message);
-        document.getElementById('register-cancel')?.click();
-      }
-    } catch (error) {
-      setStatusDialog("Error");
-      setShowModal(true);
-      setMessageDialog(response.message);
-    }
-  }
+  }, [])
 
   async function getData() {
     setIsLoading(true);
@@ -106,12 +155,9 @@ function Login() {
     }
   }, [])
 
-  if (isLoading) {
-    return <Loader />;
-  }
-
   return (
     <div className="flex items-center justify-center bg-blue-300">
+      {isLoading ? <Loader /> : ""}
       <div className="container h-[100vh] py-10 flex gap-8">
         <div className="flex flex-col w-1/2 h-full gap-8">
           <div className="rounded-2xl bg-white h-2/3 flex flex-col justify-center pl-12">
@@ -129,103 +175,241 @@ function Login() {
         <div className="flex flex-col w-1/2 h-full gap-8">
           <div className="rounded-2xl bg-white shadow-2xl h-2/5 flex flex-col items-center justify-center">
             <div className="flex items-center justify-center text-3xl font-semibold text-gray-900">Đăng nhập</div>
-            <form className="px-12 w-full">
-              <div>
-                <InputWithLabel
-                  label="Tên đăng nhập"
-                  placeholder="Vui lòng điền Email/Phone"
-                  type="text" name="usrNm"
-                  require
-                  handleChange={(e) => setLoginInfo(prev => ({ ...prev, usrNm: e.target.value }))}
-                />
-                {validate.usrNmMessage ? <Label className="text-red-500">{validate.usrNmMessage}</Label> : null}
-                <div className="h-5"></div>
-                <InputWithLabel
-                  label="Mật khẩu"
-                  placeholder="Vui lòng điền mật khẩu"
-                  type={showPassword ? 'text' : 'password'} name="usrPwd"
-                  require
-                  handleChange={(e) => setLoginInfo(prev => ({ ...prev, usrPwd: e.target.value }))}
-                  handleClickShowPassword={() => setShowPassword(!showPassword)}
-                  handleKeyEnter={onSubmit}
-                  showPassword={showPassword}
-                />
-                {validate.usrPwdMessage ? <Label className="text-red-500">{validate.usrPwdMessage}</Label> : null}
-              </div>
+            <form key={id} onSubmit={handleSubmit(onSubmit)} className="px-12 w-full">
+              <div className="h-5"></div>
+              <Controller
+                name="username"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    required
+                    name="username"
+                    className="w-full"
+                    label="Tên đăng nhập"
+                    type="text"
+                    error={!!errors?.username}
+                    helperText={errors?.username?.message}
+                    {...field}
+                  />
+                )}
+              />
+              <div className="h-5"></div>
+              <Controller
+                name="password"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    required
+                    name="password"
+                    className="w-full"
+                    label="Mật khẩu"
+                    error={!!errors?.password}
+                    type={!showPassword ? 'password' : 'text'}
+                    helperText={errors?.password?.message}
+                    InputProps={{
+                      endAdornment:
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={() => setShowPassword(!showPassword)}
+                            edge="end"
+                          >
+                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                        </InputAdornment>
+
+                    }}
+                    {...field}
+                  />
+                )}
+              />
               {validate.loginMessage ? <div className="text-center mt-2"><Label className="text-red-500">{validate.loginMessage}</Label></div> : null}
-              <div className="mt-2 flex items-center">
-                <div className="w-7/12 text-end">
-                  <Button variant="primary" onClick={(e) => onSubmit(e)}>Đăng nhập</Button>
-                </div>
-                <div className="w-5/12 text-end">
-                  <AlertDialog>
-                    <AlertDialogTrigger asChild>
-                      <span className="font-semibold text-blue-500 hover:text-blue-300 underline cursor-pointer">Đăng ký tài khoản</span>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent>
-                      <AlertDialogHeader>
-                        <AlertDialogTitle>
-                          <p className="font-bold text-xl text-center text-black mb-4">Đăng ký tài khoản</p>
-                        </AlertDialogTitle>
-                        <div>
-                          <InputWithLabel label="Tên đăng nhập" placeholder="Vui lòng điền Username!" type="text" require handleChange={(e) => setRegister({ ...register, username: e.target.value })} />
-                          <div className="h-5"></div>
-                          <div className="flex gap-4">
-                            <InputWithLabel label="Họ" placeholder="Vui lòng điền Họ!" type="text" require handleChange={(e) => setRegister({ ...register, lastName: e.target.value })} />
-                            <InputWithLabel label="Tên" placeholder="Vui lòng điền Tên!" type="text" require handleChange={(e) => setRegister({ ...register, firstName: e.target.value })} />
-                          </div>
-                          <div className="h-5"></div>
-                          <div className="flex gap-4">
-                            <Popover>
-                              <div>
-                                <Label after=" *" className="after:content-[attr(after)] after:text-red-600">Date Of Birth</Label>
-                                <PopoverTrigger asChild>
-                                  <Button
-                                    variant={"outline"}
-                                    className={cn(
-                                      "w-full justify-start text-left font-normal bg-white"
-                                    )}
-                                  >
-                                    <CalendarIcon className="mr-2 h-4 w-4" />
-                                    {register.dateOfBirth ? register.dateOfBirth : <span>Pick a date</span>}
-                                  </Button>
-                                </PopoverTrigger>
-                                <PopoverContent className="w-auto p-0">
-                                  <Calendar
-                                    mode="single"
-                                    selected={register.dateOfBirth}
-                                    onSelect={(value) => setRegister({ ...register, dateOfBirth: format(value, "dd-MM-yyyy") })}
-                                    initialFocus
-                                    className="bg-white"
-                                  />
-                                </PopoverContent>
-                              </div>
-                            </Popover>
-                            <InputWithLabel label="Phone" placeholder="Vui lòng điền Phone Number!" type="text" require handleChange={(e) => setRegister({ ...register, phoneNumber: e.target.value })} />
-                          </div>
-                          <div className="h-5"></div>
-                          <InputWithLabel label="Email" placeholder="Vui lòng điền Email!" type="text" require handleChange={(e) => setRegister({ ...register, email: e.target.value })} />
-                          <div className="h-5"></div>
-                          <InputWithLabel
-                            label="Mật khẩu"
-                            placeholder="Vui lòng điền mật khẩu"
-                            type={showPasswordRe ? 'text' : 'password'} name="usrPwd"
-                            require
-                            handleChange={(e) => setRegister({ ...register, password: e.target.value })}
-                            handleClickShowPassword={() => setShowPasswordRe(!showPasswordRe)}
-                            showPassword={showPasswordRe}
-                          />
-                        </div>
-                      </AlertDialogHeader>
-                      <AlertDialogFooter>
-                        <AlertDialogCancel id="register-cancel">Cancel</AlertDialogCancel>
-                        <Button variant="destructive" className="bg-blue-500" onClick={handleSubmitRegister}>Đăng ký</Button>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialog>
-                </div>
+              <div className="mt-2 text-center">
+                <Button type="submit" variant="primary" className="mt-2">Đăng nhập</Button>
               </div>
             </form>
+            <div className="mt-4">
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <span className="font-semibold text-blue-500 hover:text-blue-300 underline cursor-pointer">Đăng ký tài khoản</span>
+                </AlertDialogTrigger>
+                <AlertDialogContent className="px-10">
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>
+                      <p className="font-bold text-xl text-center text-black mb-4">Đăng ký tài khoản</p>
+                    </AlertDialogTitle>
+                    <form key={id} onSubmit={handleSubmitRegister(onSubmitRegister)}>
+                      <Controller
+                        name="username"
+                        control={controlRegister}
+                        render={({ field }) => (
+                          <TextField
+                            required
+                            name="username"
+                            className="w-full"
+                            label="Tên đăng nhập"
+                            type="text"
+                            error={!!errorsRegister?.username}
+                            helperText={errorsRegister?.username?.message}
+                            {...field}
+                          />
+                        )}
+                      />
+                      <div className="h-5"></div>
+                      <div className="flex gap-4">
+                        <Controller
+                          name="lastName"
+                          control={controlRegister}
+                          render={({ field }) => (
+                            <TextField
+                              required
+                              name="lastName"
+                              className="w-1/2"
+                              label="Họ"
+                              type="text"
+                              error={!!errorsRegister?.lastName}
+                              helperText={errorsRegister?.lastName?.message}
+                              {...field}
+                            />
+                          )}
+                        />
+                        <Controller
+                          name="firstName"
+                          control={controlRegister}
+                          render={({ field }) => (
+                            <TextField
+                              required
+                              name="firstName"
+                              className="w-1/2"
+                              label="Tên"
+                              type="text"
+                              error={!!errorsRegister?.firstName}
+                              helperText={errorsRegister?.firstName?.message}
+                              {...field}
+                            />
+                          )}
+                        />
+                      </div>
+                      <div className="h-5"></div>
+                      <div className="flex gap-4">
+                        <Controller
+                          name="dateOfBirth"
+                          control={controlRegister}
+                          render={({ field }) => (
+                            <TextField
+                              required
+                              className="w-1/2"
+                              name="dateOfBirth"
+                              type="date"
+                              error={!!errorsRegister?.dateOfBirth}
+                              helperText={errorsRegister?.dateOfBirth?.message}
+                              {...field}
+                            />
+                          )}
+                        />
+                        <Controller
+                          name="phoneNumber"
+                          control={controlRegister}
+                          render={({ field }) => (
+                            <TextField
+                              required
+                              name="phoneNumber"
+                              className="w-1/2"
+                              label="Số điện thoại"
+                              type="text"
+                              error={!!errorsRegister?.phoneNumber}
+                              helperText={errorsRegister?.phoneNumber?.message}
+                              {...field}
+                            />
+                          )}
+                        />
+                      </div>
+                      <div className="h-5"></div>
+                      <Controller
+                        name="email"
+                        control={controlRegister}
+                        render={({ field }) => (
+                          <TextField
+                            required
+                            name="email"
+                            className="w-full"
+                            label="Email"
+                            type="text"
+                            error={!!errorsRegister?.email}
+                            helperText={errorsRegister?.email?.message}
+                            {...field}
+                          />
+                        )}
+                      />
+                      <div className="h-5"></div>
+                      <Controller
+                        name="password"
+                        control={controlRegister}
+                        render={({ field }) => (
+                          <TextField
+                            required
+                            name="password"
+                            className="w-full"
+                            label="Mật khẩu"
+                            error={!!errorsRegister?.password}
+                            type={!showPasswordRe ? 'password' : 'text'}
+                            helperText={errorsRegister?.password?.message}
+                            InputProps={{
+                              endAdornment:
+                                <InputAdornment position="end">
+                                  <IconButton
+                                    aria-label="toggle password visibility"
+                                    onClick={() => setShowPasswordRe(!showPasswordRe)}
+                                    edge="end"
+                                  >
+                                    {showPasswordRe ? <VisibilityOff /> : <Visibility />}
+                                  </IconButton>
+                                </InputAdornment>
+
+                            }}
+                            {...field}
+                          />
+                        )}
+                      />
+                      <div className="h-5"></div>
+                      <Controller
+                        name="passwordConfirm"
+                        control={controlRegister}
+                        render={({ field }) => (
+                          <TextField
+                            required
+                            name="passwordConfirm"
+                            className="w-full"
+                            label="Xác nhận mật khẩu"
+                            error={!!errorsRegister?.passwordConfirm}
+                            type={!showPasswordConf ? 'password' : 'text'}
+                            helperText={errorsRegister?.passwordConfirm?.message}
+                            InputProps={{
+                              endAdornment:
+                                <InputAdornment position="end">
+                                  <IconButton
+                                    aria-label="toggle password visibility"
+                                    onClick={() => setShowPasswordConf(!showPasswordConf)}
+                                    edge="end"
+                                  >
+                                    {showPasswordConf ? <VisibilityOff /> : <Visibility />}
+                                  </IconButton>
+                                </InputAdornment>
+
+                            }}
+                            {...field}
+                          />
+                        )}
+                      />
+                      <AlertDialogFooter className="mt-6">
+                        <AlertDialogCancel id="register-cancel">Cancel</AlertDialogCancel>
+                        <Button type="submit" variant="primary" className="bg-blue-500">Đăng ký</Button>
+                      </AlertDialogFooter>
+                    </form>
+                  </AlertDialogHeader>
+                </AlertDialogContent>
+              </AlertDialog>
+            </div>
           </div>
         </div>
       </div >

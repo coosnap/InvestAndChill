@@ -69,3 +69,29 @@ export async function deleteArticle(id) {
   }
   return false;
 }
+
+export async function articleLinkWithStock(id, stockId) {
+  const response = await fetch(`/api/article/${id}/linkArticle/${stockId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  if (response.ok) {
+    return true;
+  }
+  return false;
+}
+
+export async function articleSetType(id, type) {
+  const response = await fetch(`/api/article/${id}/setType/${type}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  if (response.ok) {
+    return true;
+  }
+  return false;
+}

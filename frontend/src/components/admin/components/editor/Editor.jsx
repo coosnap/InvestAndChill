@@ -1,36 +1,25 @@
-import { getArticleDetail, insertArticle, updateArticle } from '@/api/article';
+import { articleLinkWithStock, articleSetType, getArticleDetail, insertArticle, updateArticle } from '@/api/article';
 import { getStockAll } from '@/api/stock';
 import Loader from '@/components/common/Loader';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from "@/components/ui/select";
-import { ArticalId } from '@/store/article';
 import { TabDefault } from '@/store/common';
+import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import './Editor.scss';
-import { fileUpload } from '@/api/file';
-
-let groupCode = '';
 
 function Editor() {
   const quillRef = useRef(null);
-  const [article, setArticle] = useState({ title: "", content: "", url: "" });
+  const query = new URLSearchParams(window.location.search);
+  const articalId = query.get('articalId');
+
+  const [article, setArticle] = useState({});
   const [stokes, setStokes] = useState([]);
   const [content, setContent] = useState([]);
-  const [imageFiles, setImageFiles] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const [articalId, setArticleId] = useRecoilState(ArticalId)
   const setTabDefault = useSetRecoilState(TabDefault)
 
   const imageHandler = () => {
@@ -41,22 +30,32 @@ function Editor() {
     input.click();
 
     input.addEventListener('change', async () => {
-      const files = [...input.files];
+      const file = input.files[0];
       let formData = new FormData();
-      formData.append('file', files[0]);
-      formData.append('fileName', files[0].name);
-
-      const res = await fileUpload(formData);
-      // if (res.data) {
-      // groupCode = res.data.fileGroupCode
-      // res.data.fileIds.forEach((fileId) => {
-      //   const editor = quillRef.current.getEditor()
-      //   const range = editor.getSelection()
-      //   const src = `http://yourUrl../${fileId}`
-      //   editor.insertEmbed(range.index, 'image', src)
-      //   setImageFiles((prev) => [...prev, { path: src, id: fileId }])
-      // })
-      // }
+      if (file !== null) {
+        formData.append('file', file)
+        fetch('/api/fileStatic/upload', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+          },
+          body: formData
+        }).then((response) => {
+          if (response.ok) {
+            return response.json()
+          } else {
+            return { "error": true }
+          }
+        }).then((json) => {
+          const src = json.path;
+          const editor = quillRef.current.getEditor();
+          const range = editor.getSelection();
+          editor.insertEmbed(range.index, 'image', src);
+          return json;
+        }).catch(err => {
+          console.log("eror: ", err);
+        })
+      }
     })
   }
 
@@ -110,18 +109,26 @@ function Editor() {
         if (result) {
           setArticleId("");
           setTabDefault("article");
+          if (article.type) {
+            await articleSetType(article.id, article.type);
+          }
+          if (article.stockId) {
+            await articleLinkWithStock(article.id, article.stockId);
+          }
         }
       } catch (error) {
         console.log('error', error)
       }
     } else {
-      try {
-        let result = await insertArticle(article);
-        if (result) {
-          setTabDefault("article");
+      if (article.title && article.content) {
+        try {
+          let result = await insertArticle(article);
+          if (result) {
+            setTabDefault("article");
+          }
+        } catch (error) {
+          console.log('error', error)
         }
-      } catch (error) {
-        console.log('error', error)
       }
     }
   }
@@ -137,20 +144,26 @@ function Editor() {
     setIsLoading(false);
   }
 
-  async function getArtical() {
+  async function getArticle() {
     const result = await getArticleDetail(articalId);
     if (result) {
       setContent(result.content);
-      setArticle(prev => ({ ...prev, id: articalId, content: result.content, stockId: result.stockId, url: result.url, title: result.title }))
+      setArticle(prev => ({ ...prev, id: articalId, content: result?.content || '', stockId: result?.stockId?.id || '', type: result?.type || '', url: result?.url || '', title: result?.title || '' }))
     };
   }
 
   useEffect(() => {
     if (articalId) {
-      getArtical();
+      getArticle();
     }
     getData();
   }, []);
+
+  const typeData = [
+    { id: '0', symbol: 'Chờ xác nhận loại' },
+    { id: '1', symbol: 'Phân Tích Kỹ Thuật Cơ Bản' },
+    { id: '2', symbol: 'Phân Tích Kỹ Thuật Giao Dịch' },
+  ]
 
   return (
     <>
@@ -158,24 +171,60 @@ function Editor() {
         {isLoading && <Loader />}
         <div className='w-1/2 h-1/2'>
           <div className='mb-4'>
-            <Select onValueChange={value => setArticle(prev => ({ ...prev, stockId: value }))}>
-              <SelectTrigger className="w-1/2 bg-white">
-                <SelectValue placeholder="Select a stoke id" />
-              </SelectTrigger>
-              <SelectContent className="bg-white">
-                <SelectGroup>
-                  {stokes.map(e => (
-                    <SelectItem key={e.id} value={e.symbol}>{e.symbol}</SelectItem>
-                  ))}
-                </SelectGroup>
-              </SelectContent>
-            </Select>
+            <FormControl sx={{ width: '25%' }} size="small">
+              <InputLabel id="stoke-label">Stoke</InputLabel>
+              <Select
+                labelId="stoke-label"
+                id="stoke-label-small"
+                className='bg-white'
+                value={article.stockId || ""}
+                label="Stoke"
+                disabled={!articalId}
+                onChange={e => setArticle(prev => ({ ...prev, stockId: e.target.value }))}
+              >
+                {stokes.map(e => (
+                  <MenuItem key={e.id} value={e.id}>{e.symbol}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </div>
           <div className='mb-4'>
-            <Input value={article.title} placeholder="Title" onInput={e => setArticle(prev => ({ ...prev, title: e.target.value }))} />
+            <FormControl sx={{ width: '50%' }} size="small">
+              <InputLabel id="type-label">Type</InputLabel>
+              <Select
+                labelId="type-label"
+                id="type-label-small"
+                className='bg-white'
+                value={article.type || ""}
+                label="Type"
+                disabled={!articalId}
+                onChange={e => setArticle(prev => ({ ...prev, type: e.target.value }))}
+              >
+                {typeData.map(e => (
+                  <MenuItem key={e.id} value={e.id}>{e.symbol}</MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </div>
           <div className='mb-4'>
-            <Input value={article.url} placeholder="Url" onInput={e => setArticle(prev => ({ ...prev, url: e.target.value }))} />
+            <TextField
+              value={article.title || ""}
+              name="title"
+              className="w-full bg-white"
+              placeholder="Tiêu đề"
+              type="text"
+              onChange={e => setArticle(prev => ({ ...prev, title: e.target.value }))}
+            />
+          </div>
+          <div className='mb-4'>
+            <TextField
+              value={article.url || ""}
+              name="title"
+              className="w-full bg-white"
+              placeholder="Url"
+              type="text"
+              onChange={e => setArticle(prev => ({ ...prev, url: e.target.value }))}
+            />
           </div>
           <div className="text-editor">
             <ReactQuill
@@ -184,7 +233,7 @@ function Editor() {
               theme="snow"
               modules={modules}
               value={content}
-              onChange={(value) => setContent(value)} />
+              onChange={(value) => (setContent(value.replace(/"/g, "'")), console.log('content', value.replace(/"/g, "'")))} />
           </div>
           <div className='mt-4 text-end'>
             <Button variant="primary" onClick={handleSaveArticle} className="w-1/5">Save</Button>

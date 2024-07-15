@@ -12,7 +12,6 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -21,30 +20,35 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { ArticalId } from "@/store/article";
 import { TabDefault } from "@/store/common";
+import { TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import { RiDeleteBinLine } from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 
 export default function TableArticle() {
+  const navigate = useNavigate();
+
   const [articles, setArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [inputValue, setInputValue] = useState("");
 
-  const setArticleId = useSetRecoilState(ArticalId);
   const setTabDefault = useSetRecoilState(TabDefault);
 
   async function getData() {
     setIsLoading(true);
     try {
       const result = await getArticleAll();
-      setArticles(result);
+      if (result) {
+        setArticles(result);
+        setIsLoading(false);
+      }
     } catch (error) {
       setArticles([]);
+      setIsLoading(false);
     }
-    setIsLoading(false);
   }
 
   async function handleDelete(id) {
@@ -58,7 +62,7 @@ export default function TableArticle() {
   }
 
   async function handleEditArtical(id) {
-    setArticleId(id);
+    navigate(`/admin?articalId=${id}`)
     setTabDefault("editor");
   }
 
@@ -70,13 +74,20 @@ export default function TableArticle() {
     <>
       {isLoading && <Loader />}
       <div className='w-1/4 mt-4'>
-        <Input onInput={setInputValue} defaultValue={inputValue} placeholder="Stoke Id" />
+        <TextField
+          value={inputValue || ""}
+          name="title"
+          className="w-full bg-white"
+          placeholder="Stoke Id"
+          type="text"
+          onChange={e => setInputValue(e.target.value)}
+        />
       </div>
 
       <Table className="border mt-4">
         <TableHeader>
           <TableRow className="bg-blue-100">
-            <TableHead className="text-center border">Stoke Id</TableHead>
+            <TableHead className="text-center border">Stock Id</TableHead>
             <TableHead className="text-center border">Title</TableHead>
             <TableHead className="text-center border">Action</TableHead>
           </TableRow>
@@ -84,9 +95,9 @@ export default function TableArticle() {
         <TableBody>
           {articles && articles.map((article) => (
             <TableRow key={article.id}>
-              <TableCell className="text-center border">{article.stokeId}</TableCell>
-              <TableCell className="text-center border">{article.title}</TableCell>
-              <TableCell className="h-full flex">
+              <TableCell className="text-center border">{article?.stockId?.symbol || ''}</TableCell>
+              <TableCell className="text-center border">{article?.title || ''}</TableCell>
+              <TableCell className="h-full flex justify-center">
                 <Button variant="primary" onClick={() => handleEditArtical(article.id)}>
                   <FaEdit />
                 </Button>

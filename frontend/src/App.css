@@ -3,17 +3,19 @@
 @tailwind utilities;
 
 #root {
-  width: 100vw;
+  /* width: 100vw; */
   height: 100vh;
   background-color: #F5F9FC;
 }
 
 .ql-align-center {
-  text-align: center;
+  display: flex;
+  justify-content: center;
 }
 
 .ql-align-right {
-  text-align: right;
+  display: flex;
+  justify-content: right;
 }
 
 .ql-align-justify {
@@ -38,4 +40,8 @@
 
 .ql-size-small {
   font-size: 0.75em;
+}
+
+.quill-upload-progress {
+  opacity: 1;
 }

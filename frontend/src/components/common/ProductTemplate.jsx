@@ -1,18 +1,14 @@
-import { useRecoilValue } from "recoil";
 import { Button } from "../ui/button";
-import { ProductItem } from "@/store/product";
 
 function ProductTemplate(props) {
-  const product = useRecoilValue(ProductItem);
-
   const handleClick = (id) => {
     props.handleClickBuy(id);
   }
 
   return (
-    <div className="flex">
-      {product.map((e) =>
-        <div key={e.id} className={`${props.cls} h-full bg-white rounded-lg flex flex-col items-center gap-y-8 py-4 px-2`}>
+    <div className="flex gap-6">
+      {props.products.map((e) =>
+        <div key={e.id} className={`${props.cls} h-[696px] bg-white rounded-lg flex flex-col items-center gap-y-8 py-4 px-2`}>
           <p className="text-4xl text-center text-[rgb(84, 91, 102)] font-semibold">{e.name}</p>
           <p className="text-center text-2xl font-semibold text-[#098DFE]">Tối thiểu: {e.minimumBudget.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}</p>
           <p>Thời gian: {e.commitmentTime} tháng</p>
