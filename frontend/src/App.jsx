@@ -84,7 +84,7 @@ const routes = [
     </PrivateRoute>
   },
   {
-    path: "/detail/:id",
+    path: "/detail",
     element: <PrivateRoute>
       <Suspense>
         <Detail />

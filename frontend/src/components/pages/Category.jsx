@@ -40,7 +40,7 @@ function ListCompany() {
                 </div>
               </div>
               <div className="flex items-center">
-                <Link to={`/detail/${e.id}`} className="px-4 py-2 border rounded-full bg-blue-500">
+                <Link to={`/detail?stoke=${e.symbol}`} className="px-4 py-2 border rounded-full bg-blue-500">
                   <span className="text-white font-semibold">Detail</span>
                 </Link>
               </div>
