@@ -5,7 +5,7 @@ import Loader from "../common/Loader";
 
 function ListCompany() {
   const [categories, setCategories] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     async function getData() {

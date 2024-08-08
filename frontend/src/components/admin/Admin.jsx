@@ -1,22 +1,20 @@
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 // import readXlsxFile from "read-excel-file";
 // import docx4js from "docx4js";
 // import mammoth from "mammoth";
 // import ReadFileDoc from "./components/ReadFileDoc";
 // import UploadFile from "./components/UploadFile";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { TabDefault } from "@/store/common";
+import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import TableArticle from "./components/article/TableArticle";
+import Editor from "./components/editor/Editor";
+import ProductAdmin from "./components/product";
 import TableQuestion from "./components/question/TableQuestion";
 import TableStoke from "./components/stoke/TableStoke";
-import TableArticle from "./components/article/TableArticle";
-import ProductAdmin from "./components/product";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { TabDefault } from "@/store/common";
-import Editor from "./components/editor/Editor";
-import { useCookies } from "react-cookie";
 import UserAdmin from "./components/user";
-import { getUserAll } from "@/api/user";
-import { UserAll } from "@/store/user";
-import { useNavigate } from "react-router-dom";
 
 // function extractEmails(text) {
 //   return text.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi);
@@ -50,9 +48,7 @@ function Admin() {
   const navigate = useNavigate();
 
   const [tabDefault, setTabDefault] = useRecoilState(TabDefault);
-  const setUserAll = useSetRecoilState(UserAll);
 
-  const [users, setUsers] = useState([]);
   // const [file, setFile] = useState();
 
   // function readFileInputEventAsArrayBuffer(file, callback) {
@@ -83,18 +79,8 @@ function Admin() {
   // const handleFileInput = (event) => {
   //   setFile(event.target.files[0]);
   // };
-  async function getData() {
-    const result = await getUserAll();
-    setUserAll(result);
-    try {
-      setUsers(result);
-    } catch (error) {
-      setUsers([]);
-    }
-  }
 
   useEffect(() => {
-    getData();
     (cookie[0].roles.includes("ROLE_MODERATOR_USER")) ? onTabChange('user') : onTabChange('stoke');
   }, [])
 
