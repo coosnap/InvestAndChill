@@ -15,12 +15,17 @@ import { useCookies } from "react-cookie";
 import { Controller, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { z } from "zod";
-import { getArticleAll } from "../../api/article";
-import { signIn } from "../../api/auth";
-import Loader from "../common/Loader";
-import Modal from "../common/Modal";
-import { Button } from "../ui/button";
-import { Label } from "../ui/label";
+import { getArticleAll } from "../../../api/article";
+import { signIn } from "../../../api/auth";
+import Loader from "../../common/Loader";
+import Modal from "../../common/Modal";
+import { Button } from "../../ui/button";
+import { Label } from "../../ui/label";
+
+import './styles.scss';
+import dayjs from "dayjs";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 const loginSchema = z.object({
   username: z.string().min(1, { message: "Vui lòng điền tên đăng nhập" }),
@@ -59,7 +64,6 @@ function Login() {
   const id = useId();
   const navigate = useNavigate();
 
-  const [messageDialog, setMessageDialog] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -103,13 +107,11 @@ function Login() {
       if (responseBody.message) {
         setStatusDialog("Success");
         setShowModal(true);
-        setMessageDialog(responseBody.message);
         document.getElementById('register-cancel')?.click();
       }
     } catch (error) {
       setStatusDialog("Error");
       setShowModal(true);
-      setMessageDialog(response.message);
     }
   }, [])
 
@@ -166,7 +168,7 @@ function Login() {
             <p className="text-xl text-gray-900">Chính xác - Cập nhật - Đầy đủ</p>
           </div>
           <div className="rounded-2xl bg-white h-1/3 flex flex-col justify-center px-12">
-            {articleList.map(e =>
+            {articleList && articleList.length > 0 && articleList.map(e =>
               <Link to={"/post/" + e.id} className="text-gray-900 mb-3 cursor-pointer border-b pb-1" key={e.id}>{e.title}</Link>
             )}
           </div>
@@ -184,7 +186,7 @@ function Login() {
                   <TextField
                     required
                     name="username"
-                    className="w-full"
+                    className="w-full z-0"
                     label="Tên đăng nhập"
                     type="text"
                     error={!!errors?.username}
@@ -201,7 +203,7 @@ function Login() {
                   <TextField
                     required
                     name="password"
-                    className="w-full"
+                    className="w-full z-0"
                     label="Mật khẩu"
                     error={!!errors?.password}
                     type={!showPassword ? 'password' : 'text'}
@@ -214,7 +216,7 @@ function Login() {
                             onClick={() => setShowPassword(!showPassword)}
                             edge="end"
                           >
-                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                            {showPassword ? <Visibility /> : <VisibilityOff />}
                           </IconButton>
                         </InputAdornment>
 
@@ -295,17 +297,35 @@ function Login() {
                         <Controller
                           name="dateOfBirth"
                           control={controlRegister}
-                          render={({ field }) => (
-                            <TextField
-                              required
-                              className="w-1/2"
-                              name="dateOfBirth"
-                              type="date"
-                              error={!!errorsRegister?.dateOfBirth}
-                              helperText={errorsRegister?.dateOfBirth?.message}
-                              {...field}
-                            />
-                          )}
+                          render={({ field }) => {
+                            return (
+                              // <TextField
+                              //   required
+                              //   className="w-1/2"
+                              //   name="dateOfBirth"
+                              //   type="date"
+                              //   error={!!errorsRegister?.dateOfBirth}
+                              //   helperText={errorsRegister?.dateOfBirth?.message}
+                              //   {...field}
+                              // />
+
+                              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DatePicker
+                                  label={"Ngày sinh"}
+                                  format="DD/MM/YYYY"
+                                  className="w-1/2 z-50"
+                                  slotProps={{
+                                    textField: {
+                                      required: true,
+                                      error: !!errorsRegister?.dateOfBirth,
+                                      helperText: errorsRegister?.dateOfBirth?.message,
+                                      onBlur: field.onBlur
+                                    },
+                                  }}
+                                />
+                              </LocalizationProvider>
+                            )
+                          }}
                         />
                         <Controller
                           name="phoneNumber"
@@ -413,9 +433,9 @@ function Login() {
           </div>
         </div>
       </div >
-      {showDialog && <Modal handleClickModal={() => setShowDialog(false)} message={"Invalid login Username or Password."} status="Error" />
+      {showDialog && <Modal handleClickModal={() => setShowDialog(false)} message={"Tên người dùng hoặc Mật khẩu không đúng."} status="Error" />
       }
-      {showModal && <Modal handleClickModal={() => setShowModal(false)} message={messageDialog} status={statusDialog} />}
+      {showModal && <Modal handleClickModal={() => setShowModal(false)} message={"Đăng ký thất bại."} status={statusDialog} />}
     </div >
   );
 }

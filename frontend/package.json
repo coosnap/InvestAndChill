@@ -3,7 +3,6 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "proxy": "https://agile-bayou-65029-c59bb8376f70.herokuapp.com/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

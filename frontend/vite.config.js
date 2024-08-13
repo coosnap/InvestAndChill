@@ -10,9 +10,9 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  server: {
-    proxy: {
-      '/api': 'https://agile-bayou-65029-c59bb8376f70.herokuapp.com'
-    }
-  }
+  // server: {
+  //   proxy: {
+  //     '/api': 'https://agile-bayou-65029-c59bb8376f70.herokuapp.com'
+  //   }
+  // }
 })
