@@ -1,30 +1,34 @@
+import { insertQuestion, updateQuestion } from "@/api/question";
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
+  AlertDialogTrigger
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { QuestionAll } from "@/store/question";
 import { useState } from "react";
 import { FaEdit } from "react-icons/fa";
-import { getQuestionDetail, insertQuestion, updateQuestion } from "@/api/question";
+import { useRecoilValue } from "recoil";
 
 function AddQuestion(props) {
   const [question, setQuestion] = useState({});
   const [questionDetail, setQuestionDetail] = useState({});
 
+  const questions = useRecoilValue(QuestionAll);
+
   async function handleEditQuestion() {
-    const result = await getQuestionDetail(props.id);
-    if (result) {
-      setQuestionDetail(result);
-      setQuestion(result);
+    const result = questions.filter(e => e.id === props.id);
+    if (result && result.length > 0) {
+      setQuestionDetail(result[0]);
+      setQuestion(result[0]);
     };
   }
 
@@ -84,7 +88,8 @@ function AddQuestion(props) {
             </span>
             <span className="space-y-1">
               <Label htmlFor="username">Answer</Label>
-              <Input
+              <Textarea
+                className="min-h-[100px]"
                 defaultValue={questionDetail?.answer ?? ""}
                 onChange={(e) => {
                   setQuestion((prev) => ({

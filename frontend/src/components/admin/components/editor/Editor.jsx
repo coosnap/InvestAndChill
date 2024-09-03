@@ -233,7 +233,7 @@ function Editor() {
               theme="snow"
               modules={modules}
               value={content}
-              onChange={(value) => (setContent(value.replace(/"/g, "'")), console.log('content', value.replace(/"/g, "'")))} />
+              onChange={(value) => (setContent(value.replace(/"/g, "'")), setArticle(prev => ({ ...prev, content: value.replace(/"/g, "'") })), console.log('content', value.replace(/"/g, "'")))} />
           </div>
           <div className='mt-4 text-end'>
             <Button variant="primary" onClick={handleSaveArticle} className="w-1/5">Save</Button>

@@ -1,4 +1,4 @@
-import { getStokeDetail, insertStoke, updateStoke } from "@/api/stock";
+import { insertStoke, updateStoke } from "@/api/stock";
 import Modal from "@/components/common/Modal";
 import {
   AlertDialog,
@@ -13,8 +13,10 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { StokeAll } from "@/store/stoke";
 import { useState } from "react";
 import { FaEdit } from "react-icons/fa";
+import { useRecoilValue } from "recoil";
 
 function AddStoke(props) {
   const [stoke, setStoke] = useState({});
@@ -22,17 +24,19 @@ function AddStoke(props) {
   const [showModal, setShowModal] = useState(false);
   const [messageDialog, setMessageDialog] = useState({ status: "", message: "" });
 
+  const stokes = useRecoilValue(StokeAll);
+
   async function handleEditStoke() {
-    const result = await getStokeDetail(props.id);
-    if (result) {
-      setStokeDetail(result);
-      setStoke(result);
+    const result = stokes.filter((e) => e.id === props.id);
+    if (result && result.length > 0) {
+      setStokeDetail(result[0]);
+      setStoke(result[0]);
     };
   }
 
   const handleClose = () => {
     props.render();
-    setShowModal(false)
+    setShowModal(false);
   }
 
   async function handleSubmitStoke() {
