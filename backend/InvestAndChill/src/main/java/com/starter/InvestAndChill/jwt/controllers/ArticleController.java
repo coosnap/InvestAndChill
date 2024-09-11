@@ -3,7 +3,6 @@ package com.starter.InvestAndChill.jwt.controllers;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,12 +19,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
 import com.starter.InvestAndChill.jwt.models.Article;
 import com.starter.InvestAndChill.jwt.models.StockSymbol;
-import com.starter.InvestAndChill.jwt.payload.response.MessageResponse;
 import com.starter.InvestAndChill.jwt.repository.ArticleRepository;
 import com.starter.InvestAndChill.jwt.repository.StockSymbolRepository;
 
@@ -98,31 +96,29 @@ public class ArticleController {
 	}
 	
 	 @PostMapping("/save")
-	  public ResponseEntity<Article> createArticle(@RequestBody Article article) {
+	  public ResponseEntity<Article> createArticle(@RequestBody Article article, @RequestParam(required = false,name = "stockId") Integer stockId, @RequestParam(required = false,name = "type") Integer type) {
 	    try {
 	    	Article newArtical = new Article(article.getId(),article.getTitle(),article.getContent(),article.getUrl(),0,0);
 	    	String now = DATE_TIME_FORMAT.format(new java.util.Date());
 	    	newArtical.setCreateDate(parseTimestamp(now));
+	    	
+	    	if (type == null) {
+	    		type = 0;
+	    	}
+	    	newArtical.setType(type);
+	    	
+	    	if (stockId != null) {
+	    		Optional<StockSymbol> stockData = stockRepository.findById(stockId);
+		    	if (stockData.isEmpty()) {
+		    		 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		    	} else {
+		    		newArtical.setStockId(stockData.get());
+		    	}
+	    	}
+	    	
 	    	Article _article = articleRepository.save(newArtical);
-	    	
+	    	  	
 	      return new ResponseEntity<>(_article, HttpStatus.CREATED);
-	    } catch (Exception e) {
-	      return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-	    }
-	  }
-	 
-	 @PostMapping("/save/linkWithStock/{id}")
-	  public ResponseEntity<Article> createArticleLinkWithStockId(@RequestBody Article article, @PathVariable("id") int id) {
-	    try {
-	    	Article _article = new Article(article.getId(),article.getTitle(),article.getContent(),article.getUrl(),0,0);
-	    	
-	    	Optional<StockSymbol> stockData = stockRepository.findById(id);
-	    	if (stockData.isEmpty()) {
-	    		 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	    	} 
-	    	_article.setStockId(stockData.get());
-	    	
-	      return new ResponseEntity<>(articleRepository.save(_article), HttpStatus.CREATED);
 	    } catch (Exception e) {
 	      return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 	    }
