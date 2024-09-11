@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import './Investment.scss';
+import './styles.scss';
 import { useNavigate } from "react-router-dom";
 // import Loader from "../common/Loader";
 

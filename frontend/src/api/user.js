@@ -1,5 +1,5 @@
 export async function getUserDetail(id) {
-  const response = await fetch(`/api/auth/${id}`, {
+  const response = await fetch(`${import.meta.env.VITE_REACT_APP_API}/api/auth/${id}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -13,7 +13,7 @@ export async function getUserDetail(id) {
 }
 
 export async function updateUser(data) {
-  const response = await fetch(`/api/auth/${data.id}`, {
+  const response = await fetch(`${import.meta.env.VITE_REACT_APP_API}/api/auth/${data.id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -27,7 +27,7 @@ export async function updateUser(data) {
 }
 
 export async function getUserAll() {
-  const response = await fetch(`/api/auth/all`, {
+  const response = await fetch(`${import.meta.env.VITE_REACT_APP_API}/api/auth/all`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -41,7 +41,7 @@ export async function getUserAll() {
 }
 
 export async function upgradeUser(data) {
-  const response = await fetch(`/api/auth/upgrade`, {
+  const response = await fetch(`${import.meta.env.VITE_REACT_APP_API}/api/auth/upgrade`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',

@@ -23,10 +23,13 @@ import AddQuestion from "./AddQuestion";
 import Loader from "@/components/common/Loader";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { Button } from "@/components/ui/button";
+import { useRecoilState } from "recoil";
+import { QuestionAll } from "@/store/question";
 
 export default function TableQuestion() {
-  const [questions, setQuestions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  
+  const [questions, setQuestions] = useRecoilState(QuestionAll);
 
   async function getData() {
     setIsLoading(true);

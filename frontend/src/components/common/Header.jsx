@@ -15,13 +15,14 @@ import {
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { FcReading } from "react-icons/fc";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import Modal from "./Modal";
 
 function Header() {
+  const navigate = useNavigate();
   const [cookies, setCookie] = useCookies(['access_token', 'usrId']);
 
   const [userInfo, setUserInfo] = useState({});
@@ -35,7 +36,7 @@ function Header() {
     setCookie("access_token", "", {});
     setCookie("usrId", "", {});
     setCookie("roles", "", {});
-    window.location.href = "/login";
+    navigate("/login");
   }
 
   async function handleUpdateUser() {
@@ -65,7 +66,7 @@ function Header() {
   }
 
   useEffect(() => {
-    if (!cookies?.usrId?.usrNm) window.location.href = "/login";
+    if (!cookies?.usrId?.usrNm) navigate("/login");
   }, [])
 
   const onTabChange = (value) => {

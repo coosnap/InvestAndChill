@@ -1,5 +1,5 @@
 export async function getFileAll() {
-  const response = await fetch(`/api/file/all`, {
+  const response = await fetch(`${import.meta.env.VITE_REACT_APP_API}/api/file/all`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -13,7 +13,7 @@ export async function getFileAll() {
 }
 
 export async function fileUpload(formData) {
-  const response = await fetch(`/api/fileStatic/upload`, {
+  const response = await fetch(`${import.meta.env.VITE_REACT_APP_API}/api/fileStatic/upload`, {
     method: 'POST',
     headers: {
       'Content-Type': 'multipart/form-data',

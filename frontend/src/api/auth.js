@@ -3,7 +3,7 @@ export async function signIn(data) {
     username: data?.username,
     password: data?.password,
   };
-  const response = await fetch(`/api/auth/signin`, {
+  const response = await fetch(`${import.meta.env.VITE_REACT_APP_API}/api/auth/signin`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -35,7 +35,7 @@ export async function signUp(data) {
     password: data.password,
     role: ["user"]
   };
-  const response = await fetch(`/api/auth/signup`, {
+  const response = await fetch(`${import.meta.env.VITE_REACT_APP_API}/api/auth/signup`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

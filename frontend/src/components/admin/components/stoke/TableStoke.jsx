@@ -22,10 +22,12 @@ import {
 import { useEffect, useState } from "react";
 import { RiDeleteBinLine } from "react-icons/ri";
 import AddStoke from "./AddStoke";
+import { StokeAll } from "@/store/stoke";
+import { useRecoilState } from "recoil";
 
 export default function TableStoke() {
-  const [stokes, setStokes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [stokes, setStokes] = useRecoilState(StokeAll);
 
   async function getData() {
     setIsLoading(true);

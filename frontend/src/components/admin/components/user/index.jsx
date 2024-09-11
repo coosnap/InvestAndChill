@@ -1,4 +1,4 @@
-import { upgradeUser } from "@/api/user";
+import { getUserAll, upgradeUser } from "@/api/user";
 import Modal from "@/components/common/Modal";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -20,13 +20,22 @@ import { cn } from "@/lib/utils";
 import { UserAll } from "@/store/user";
 import { format } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 
 export default function UserAdmin() {
   const [users, setUsers] = useRecoilState(UserAll);
   const [showModal, setShowModal] = useState(false);
   const [messageDialog, setMessageDialog] = useState({ status: "", message: "" });
+
+  async function getData() {
+    let result = await getUserAll();
+    setUsers(result);
+  }
+
+  useEffect(() => {
+    getData();
+  }, [])
 
   function onCheckedChange(id) {
     let result = [];

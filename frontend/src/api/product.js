@@ -1,5 +1,5 @@
 export async function getProductAll() {
-  const response = await fetch(`/api/product/all`, {
+  const response = await fetch(`${import.meta.env.VITE_REACT_APP_API}/api/product/all`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -13,7 +13,7 @@ export async function getProductAll() {
 }
 
 export async function updateProduct(id, data) {
-  const response = await fetch(`/api/product/${id}`, {
+  const response = await fetch(`${import.meta.env.VITE_REACT_APP_API}/api/product/${id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
