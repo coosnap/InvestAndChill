@@ -1,35 +1,23 @@
-import {
-  articleLinkWithStock,
-  articleSetType,
-  getArticleDetail,
-  insertArticle,
-  updateArticle,
-} from "@/api/article";
-import { getStockAll } from "@/api/stock";
-import Loader from "@/components/common/Loader";
-import { Button } from "@/components/ui/button";
-import { TabDefault } from "@/store/common";
-import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
-} from "@mui/material";
-import { useEffect, useMemo, useRef, useState } from "react";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
-import { useSetRecoilState } from "recoil";
-import "./Editor.scss";
+import { articleLinkWithStock, articleSetType, getArticleDetail, insertArticle, updateArticle } from '@/api/article';
+import { getStockAll } from '@/api/stock';
+import Loader from '@/components/common/Loader';
+import { Button } from '@/components/ui/button';
+import { TabDefault } from '@/store/common';
+import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import { useSetRecoilState } from 'recoil';
+import './Editor.scss';
 
 function Editor() {
   const quillRef = useRef(null);
   const query = new URLSearchParams(window.location.search);
   const articalId = query.get("articalId");
 
+  const [content, setContent] = useState({});
   const [article, setArticle] = useState({});
   const [stokes, setStokes] = useState([]);
-  const [content, setContent] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const setTabDefault = useSetRecoilState(TabDefault);
@@ -45,9 +33,9 @@ function Editor() {
       const file = input.files[0];
       let formData = new FormData();
       if (file !== null) {
-        formData.append("file", file);
-        fetch("/api/fileStatic/upload", {
-          method: "POST",
+        formData.append('file', file)
+        fetch(`${import.meta.env.VITE_REACT_APP_API}/api/fileStatic/upload`, {
+          method: 'POST',
           headers: {
             Accept: "application/json",
           },
@@ -144,26 +132,34 @@ function Editor() {
   //   }
   // }, [quillRef.current?.lastDeltaChangeSet?.ops[1]?.delete])
 
+  const saveTypeAndStock = async (result) => {
+    if (result && result.id) {
+      try {
+        if (result.type) {
+          await articleSetType(result.id, result.type);
+        }
+        if (result.stockId) {
+          await articleLinkWithStock(result.id, result.stockId);
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setTabDefault("article");
+      }
+    }
+  }
+
   const handleSaveArticle = async () => {
-    setIsLoading(true);
+    let formData = {
+      title: article.title,
+      content: article.content,
+      url: article.url
+    }
     if (articalId) {
       try {
-        let data = {
-          id: article.id,
-          title: article.title,
-          content: article.content,
-          url: article.url,
-        };
-        let result = await updateArticle(data);
+        let result = await updateArticle({ ...formData, id: articalId });
         if (result) {
-          if (article.type) {
-            await articleSetType(article.id, article.type);
-          }
-          if (article.stockId) {
-            await articleLinkWithStock(article.id, article.stockId);
-          }
-          setTabDefault("article");
-          setIsLoading(false);
+          await saveTypeAndStock(article);
         }
       } catch (error) {
         console.log("error", error);
@@ -172,9 +168,9 @@ function Editor() {
     } else {
       if (article.title && article.content) {
         try {
-          let result = await insertArticle(article);
+          let result = await insertArticle(formData);
           if (result) {
-            setTabDefault("article");
+            await saveTypeAndStock(result);
           }
         } catch (error) {
           console.log("error", error);
@@ -197,17 +193,9 @@ function Editor() {
   async function getArticle() {
     const result = await getArticleDetail(articalId);
     if (result) {
-      setContent(result.content);
-      setArticle((prev) => ({
-        ...prev,
-        id: articalId,
-        content: result?.content || "",
-        stockId: result?.stockId?.id || "",
-        type: result?.type || "",
-        url: result?.url || "",
-        title: result?.title || "",
-      }));
-    }
+      setContent(result?.content);
+      setArticle(prev => ({ ...prev, id: articalId, content: result?.content || '', stockId: result?.stockId?.id || '', type: result?.type || '', url: result?.url || '', title: result?.title || '' }))
+    };
   }
 
   useEffect(() => {
@@ -218,10 +206,10 @@ function Editor() {
   }, []);
 
   const typeData = [
-    { id: "0", symbol: "Chờ xác nhận loại" },
-    { id: "1", symbol: "Phân Tích Kỹ Thuật Cơ Bản" },
-    { id: "2", symbol: "Phân Tích Kỹ Thuật Giao Dịch" },
-  ];
+    { id: '0', symbol: 'Chờ xác nhận loại' },
+    { id: '1', symbol: 'Phân Tích Cơ Bản Doanh Nghiệp' },
+    { id: '2', symbol: 'Phân Tích Kỹ Thuật Giao Dịch' },
+  ]
 
   return (
     <>
@@ -237,10 +225,7 @@ function Editor() {
                 className="bg-white"
                 value={article.stockId || ""}
                 label="Stoke"
-                disabled={!articalId}
-                onChange={(e) =>
-                  setArticle((prev) => ({ ...prev, stockId: e.target.value }))
-                }
+                onChange={e => setArticle(prev => ({ ...prev, stockId: e.target.value }))}
               >
                 {stokes.map((e) => (
                   <MenuItem key={e.id} value={e.id}>
@@ -259,10 +244,7 @@ function Editor() {
                 className="bg-white"
                 value={article.type || ""}
                 label="Type"
-                disabled={!articalId}
-                onChange={(e) =>
-                  setArticle((prev) => ({ ...prev, type: e.target.value }))
-                }
+                onChange={e => setArticle(prev => ({ ...prev, type: e.target.value }))}
               >
                 {typeData.map((e) => (
                   <MenuItem key={e.id} value={e.id}>
@@ -303,15 +285,7 @@ function Editor() {
               theme="snow"
               modules={modules}
               value={content}
-              onChange={(value) => (
-                setContent(value.replace(/"/g, "'")),
-                setArticle((prev) => ({
-                  ...prev,
-                  content: value.replace(/"/g, "'"),
-                })),
-                console.log("content", value.replace(/"/g, "'"))
-              )}
-            />
+              onChange={(value) => (setContent(value.replace(/"/g, "'")))} />
           </div>
           <div className="mt-4 text-end">
             <Button

@@ -15,6 +15,7 @@ import ProductAdmin from "./components/product";
 import TableQuestion from "./components/question/TableQuestion";
 import TableStoke from "./components/stoke/TableStoke";
 import UserAdmin from "./components/user";
+import { AddArticleEditor } from "./components/add-article";
 
 // function extractEmails(text) {
 //   return text.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi);
@@ -23,22 +24,27 @@ import UserAdmin from "./components/user";
 const tabList = [
   {
     path: "stoke",
+    title: "Stoke",
     element: <TableStoke />
   },
   {
     path: "article",
+    title: "Article",
     element: <TableArticle />
   },
   {
     path: "question",
+    title: "Question",
     element: <TableQuestion />
   },
   {
-    path: "editor",
-    element: <Editor />
+    path: "add-article",
+    title: "Add Article",
+    element: <AddArticleEditor />
   },
   {
     path: "product",
+    title: "Product",
     element: <ProductAdmin />
   },
 ]
@@ -98,7 +104,7 @@ function Admin() {
           }
           {(cookie[0].roles.includes("ROLE_MODERATOR_ARTICLE") || cookie[0].roles.includes("ROLE_ADMIN")) &&
             tabList.map(e => (
-              <TabsTrigger key={e.path} value={e.path}>{e.path.charAt(0).toUpperCase() + e.path.substring(1, e.path.length)}</TabsTrigger>
+              <TabsTrigger key={e.path} value={e.path}>{e.title}</TabsTrigger>
             ))
           }
 

@@ -142,8 +142,8 @@ function Login() {
         setCookie("roles", infoSignIn.roles, { path: "/", expires: d });
         setIsLoading(false);
         infoSignIn.roles.includes("ROLE_ADMIN") ||
-        infoSignIn.roles.includes("ROLE_MODERATOR_ARTICLE") ||
-        infoSignIn.roles.includes("ROLE_MODERATOR_USER")
+          infoSignIn.roles.includes("ROLE_MODERATOR_ARTICLE") ||
+          infoSignIn.roles.includes("ROLE_MODERATOR_USER")
           ? navigate("/admin")
           : navigate("/invest");
       } else {
@@ -203,8 +203,8 @@ function Login() {
           <div className="rounded-2xl bg-white h-1/3 flex flex-col justify-center px-12">
             {articleList &&
               articleList.length > 0 &&
-              articleList.map((e) => (
-                <Link
+              articleList.map((e, i) => (
+                i <= 4 && <Link
                   to={"/post/" + e.id}
                   className="text-gray-900 mb-3 cursor-pointer border-b pb-1"
                   key={e.id}
@@ -294,14 +294,12 @@ function Login() {
         </div>
 
         <div
-          className={`${
-            showRegisterDialog ? "" : "hidden"
-          } absolute top-0 left-0 w-full h-full opacity-50 bg-black`}
+          className={`${showRegisterDialog ? "" : "hidden"
+            } absolute top-0 left-0 w-full h-full opacity-50 bg-black`}
         ></div>
         <div
-          className={`${
-            showRegisterDialog ? "" : "hidden"
-          } absolute top-[15%] left-[40%]`}
+          className={`${showRegisterDialog ? "" : "hidden"
+            } absolute top-[15%] left-[40%]`}
         >
           <div className="w-[500px] py-10 bg-white rounded-lg shadow-2xl">
             <div className="px-10">

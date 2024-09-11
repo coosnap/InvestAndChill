@@ -63,7 +63,7 @@ export default function TableArticle() {
 
   async function handleEditArtical(id) {
     navigate(`/admin?articalId=${id}`)
-    setTabDefault("editor");
+    setTabDefault("add-article");
   }
 
   useEffect(() => {
