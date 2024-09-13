@@ -53,3 +53,17 @@ export async function upgradeUser(data) {
   }
   return false;
 }
+
+export async function changePassword(data) {
+  const response = await fetch(`${import.meta.env.VITE_REACT_APP_API}/api/auth/changePassword`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data)
+  });
+  if (response.ok) {
+    return true;
+  }
+  return false;
+}

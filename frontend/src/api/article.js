@@ -26,15 +26,24 @@ export async function getArticleDetail(id) {
   return;
 }
 
-
 export async function insertArticle(data) {
-  const response = await fetch(`${import.meta.env.VITE_REACT_APP_API}/api/article/save`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data)
-  });
+  const formData = {
+    title: data.title,
+    content: data.content,
+    url: data.url,
+  };
+  const response = await fetch(
+    `${import.meta.env.VITE_REACT_APP_API}/api/article/save?stockId=${data.stockId}&type=${
+      data.type
+    }`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    }
+  );
   if (response.ok) {
     const responseBody = await response.json();
     return responseBody;
@@ -48,7 +57,7 @@ export async function updateArticle(data) {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(data)
+    body: JSON.stringify(data),
   });
   if (response.ok) {
     const responseBody = await response.json();
@@ -71,12 +80,15 @@ export async function deleteArticle(id) {
 }
 
 export async function articleLinkWithStock(id, stockId) {
-  const response = await fetch(`${import.meta.env.VITE_REACT_APP_API}/api/article/${id}/linkArticle/${stockId}`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
+  const response = await fetch(
+    `${import.meta.env.VITE_REACT_APP_API}/api/article/${id}/linkArticle/${stockId}`,
+    {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+  );
   if (response.ok) {
     return true;
   }
@@ -84,12 +96,15 @@ export async function articleLinkWithStock(id, stockId) {
 }
 
 export async function articleSetType(id, type) {
-  const response = await fetch(`${import.meta.env.VITE_REACT_APP_API}/api/article/${id}/setType/${type}`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
+  const response = await fetch(
+    `${import.meta.env.VITE_REACT_APP_API}/api/article/${id}/setType/${type}`,
+    {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+  );
   if (response.ok) {
     return true;
   }
