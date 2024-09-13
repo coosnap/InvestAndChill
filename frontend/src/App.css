@@ -12,6 +12,10 @@ td {
   border-width: 1px;
 }
 
+.custom-td td {
+  border-width: 0;
+}
+
 p {
   display: flex;
 }

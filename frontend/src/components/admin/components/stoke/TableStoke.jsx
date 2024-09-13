@@ -1,5 +1,5 @@
-import { deleteStock, getStockAll } from "@/api/stock";
-import Loader from "@/components/common/Loader";
+import { deleteStock, getStockAll } from '@/api/stock';
+import Loader from '@/components/common/Loader';
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -8,9 +8,9 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger
-} from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
+import { Button } from '@/components/ui/button';
 import {
   Table,
   TableBody,
@@ -18,12 +18,12 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { useEffect, useState } from "react";
-import { RiDeleteBinLine } from "react-icons/ri";
-import AddStoke from "./AddStoke";
-import { StokeAll } from "@/store/stoke";
-import { useRecoilState } from "recoil";
+} from '@/components/ui/table';
+import { useEffect, useState } from 'react';
+import { RiDeleteBinLine } from 'react-icons/ri';
+import AddStoke from './AddStoke';
+import { StokeAll } from '@/store/stoke';
+import { useRecoilState } from 'recoil';
 
 export default function TableStoke() {
   const [isLoading, setIsLoading] = useState(true);
@@ -44,7 +44,7 @@ export default function TableStoke() {
     setIsLoading(true);
     try {
       let result = await deleteStock(id);
-      document.getElementById("stock-delete-cancel")?.click();
+      document.getElementById('stock-delete-cancel')?.click();
       if (result) {
         getData();
         setIsLoading(false);
@@ -56,7 +56,7 @@ export default function TableStoke() {
 
   useEffect(() => {
     getData();
-  }, [])
+  }, []);
 
   return (
     <>
@@ -64,7 +64,7 @@ export default function TableStoke() {
       <div className="cursor-pointer my-8">
         <AddStoke render={getData} action="Add" />
       </div>
-      <Table className="border">
+      <Table className="custom-td border">
         <TableHeader>
           <TableRow className="bg-blue-100">
             <TableHead className="text-center">Symbol</TableHead>
@@ -85,19 +85,23 @@ export default function TableStoke() {
                 </div>
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
-                    <Button variant="destructive" className="ml-2"><RiDeleteBinLine /></Button>
+                    <Button variant="destructive" className="ml-2">
+                      <RiDeleteBinLine />
+                    </Button>
                   </AlertDialogTrigger>
                   <AlertDialogContent>
                     <AlertDialogHeader>
                       <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                       <AlertDialogDescription>
-                        This action cannot be undone. This will permanently delete your
-                        question and remove your data from our servers.
+                        This action cannot be undone. This will permanently delete your question and
+                        remove your data from our servers.
                       </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
                       <AlertDialogCancel id="stoke-delete-cancel">Cancel</AlertDialogCancel>
-                      <Button variant="destructive" onClick={() => handleDelete(stoke.id)}>Ok</Button>
+                      <Button variant="destructive" onClick={() => handleDelete(stoke.id)}>
+                        Ok
+                      </Button>
                     </AlertDialogFooter>
                   </AlertDialogContent>
                 </AlertDialog>
@@ -107,5 +111,5 @@ export default function TableStoke() {
         </TableBody>
       </Table>
     </>
-  )
+  );
 }

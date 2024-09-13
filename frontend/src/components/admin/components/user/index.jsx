@@ -1,13 +1,9 @@
-import { getUserAll, upgradeUser } from "@/api/user";
-import Modal from "@/components/common/Modal";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { Switch } from "@/components/ui/switch";
+import { getUserAll, upgradeUser } from '@/api/user';
+import Modal from '@/components/common/Modal';
+import { Button } from '@/components/ui/button';
+import { Calendar } from '@/components/ui/calendar';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Switch } from '@/components/ui/switch';
 import {
   Table,
   TableBody,
@@ -15,18 +11,18 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { cn } from "@/lib/utils";
-import { UserAll } from "@/store/user";
-import { format } from "date-fns";
-import { Calendar as CalendarIcon } from "lucide-react";
-import { useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
+} from '@/components/ui/table';
+import { cn } from '@/lib/utils';
+import { UserAll } from '@/store/user';
+import { format } from 'date-fns';
+import { Calendar as CalendarIcon } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { useRecoilState } from 'recoil';
 
 export default function UserAdmin() {
   const [users, setUsers] = useRecoilState(UserAll);
   const [showModal, setShowModal] = useState(false);
-  const [messageDialog, setMessageDialog] = useState({ status: "", message: "" });
+  const [messageDialog, setMessageDialog] = useState({ status: '', message: '' });
 
   async function getData() {
     let result = await getUserAll();
@@ -35,11 +31,11 @@ export default function UserAdmin() {
 
   useEffect(() => {
     getData();
-  }, [])
+  }, []);
 
   function onCheckedChange(id) {
     let result = [];
-    users.map(e => {
+    users.map((e) => {
       let data = { ...e };
       if (e.id === id) data.isVip = !data.isVip;
       result.push(data);
@@ -48,36 +44,36 @@ export default function UserAdmin() {
   }
 
   async function handleSaveUser(id) {
-    let data = users.filter(e => e.id === id);
+    let data = users.filter((e) => e.id === id);
     let formData = {
       id: id,
       isVip: data[0].isVip,
       fromDate: data[0].fromDate,
-      toDate: data[0].toDate
-    }
+      toDate: data[0].toDate,
+    };
     try {
       await upgradeUser(formData);
-      setMessageDialog(prev => ({ ...prev, status: "Success", message: "Update Successfully!" }));
+      setMessageDialog((prev) => ({ ...prev, status: 'Success', message: 'Update Successfully!' }));
       setShowModal(true);
     } catch (error) {
-      setMessageDialog(prev => ({ ...prev, status: "Error", message: "Update Fail!" }));
+      setMessageDialog((prev) => ({ ...prev, status: 'Error', message: 'Update Fail!' }));
       setShowModal(true);
     }
   }
 
   function handleSelectDate(action, date, id) {
-    let dateFormat = format(date, "dd-MM-yyyy HH:mm:ss");
-    if (action === "to") {
-      setUsers(prev => prev.map(e => ((e.id === id) ? { ...e, toDate: dateFormat } : e)));
+    let dateFormat = format(date, 'dd-MM-yyyy HH:mm:ss');
+    if (action === 'to') {
+      setUsers((prev) => prev.map((e) => (e.id === id ? { ...e, toDate: dateFormat } : e)));
     } else {
-      setUsers(prev => prev.map(e => ((e.id === id) ? { ...e, fromDate: dateFormat } : e)));
+      setUsers((prev) => prev.map((e) => (e.id === id ? { ...e, fromDate: dateFormat } : e)));
     }
     return;
   }
 
   return (
     <>
-      <Table className="border mt-6">
+      <Table className="custom-td border mt-6">
         <TableHeader>
           <TableRow className="bg-blue-100">
             <TableHead className="text-center">User Name</TableHead>
@@ -95,10 +91,7 @@ export default function UserAdmin() {
               <TableCell className="text-center">{user.email}</TableCell>
               <TableCell className="text-center">{user.phoneNumber}</TableCell>
               <TableCell className="text-center">
-                <Switch
-                  checked={user.isVip}
-                  onCheckedChange={() => onCheckedChange(user.id)}
-                />
+                <Switch checked={user.isVip} onCheckedChange={() => onCheckedChange(user.id)} />
               </TableCell>
               <TableCell className="flex justify-center">
                 <div className="flex flex-col mr-4">
@@ -106,10 +99,10 @@ export default function UserAdmin() {
                   <Popover>
                     <PopoverTrigger asChild>
                       <Button
-                        variant={"outline"}
+                        variant={'outline'}
                         className={cn(
-                          "w-[280px] justify-start text-left font-normal bg-white",
-                          !user.fromDate && "text-muted-foreground"
+                          'w-[280px] justify-start text-left font-normal bg-white',
+                          !user.fromDate && 'text-muted-foreground'
                         )}
                         disabled={!user.isVip}
                       >
@@ -121,7 +114,7 @@ export default function UserAdmin() {
                       <Calendar
                         mode="single"
                         selected={user.fromDate}
-                        onSelect={(value) => handleSelectDate("from", value, user.id)}
+                        onSelect={(value) => handleSelectDate('from', value, user.id)}
                         initialFocus
                         className="bg-white"
                       />
@@ -133,10 +126,10 @@ export default function UserAdmin() {
                   <Popover>
                     <PopoverTrigger asChild>
                       <Button
-                        variant={"outline"}
+                        variant={'outline'}
                         className={cn(
-                          "w-[280px] justify-start text-left font-normal bg-white",
-                          !user.toDate && "text-muted-foreground"
+                          'w-[280px] justify-start text-left font-normal bg-white',
+                          !user.toDate && 'text-muted-foreground'
                         )}
                         disabled={!user.isVip}
                       >
@@ -148,7 +141,7 @@ export default function UserAdmin() {
                       <Calendar
                         mode="single"
                         selected={user.toDate}
-                        onSelect={(value) => handleSelectDate("to", value, user.id)}
+                        onSelect={(value) => handleSelectDate('to', value, user.id)}
                         initialFocus
                         className="bg-white"
                       />
@@ -157,13 +150,21 @@ export default function UserAdmin() {
                 </div>
               </TableCell>
               <TableCell className="text-center">
-                <Button variant="primary" onClick={() => handleSaveUser(user.id)}>Save</Button>
+                <Button variant="primary" onClick={() => handleSaveUser(user.id)}>
+                  Save
+                </Button>
               </TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
-      {showModal && <Modal handleClickModal={setShowModal(false)} message={messageDialog.message} status={messageDialog.status} />}
+      {showModal && (
+        <Modal
+          handleClickModal={setShowModal(false)}
+          message={messageDialog.message}
+          status={messageDialog.status}
+        />
+      )}
     </>
-  )
+  );
 }

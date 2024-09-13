@@ -1,5 +1,5 @@
-import { getProductAll } from "@/api/product";
-import Loader from "@/components/common/Loader";
+import { getProductAll } from '@/api/product';
+import Loader from '@/components/common/Loader';
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -7,9 +7,9 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger
-} from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
+import { Button } from '@/components/ui/button';
 import {
   Table,
   TableBody,
@@ -17,12 +17,12 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { ProductItem } from "@/store/product";
-import { useEffect, useState } from "react";
-import { FaEdit } from "react-icons/fa";
-import { useSetRecoilState } from "recoil";
-import ProductUpdate from "./ProductUpdate";
+} from '@/components/ui/table';
+import { ProductItem } from '@/store/product';
+import { useEffect, useState } from 'react';
+import { FaEdit } from 'react-icons/fa';
+import { useSetRecoilState } from 'recoil';
+import ProductUpdate from './ProductUpdate';
 
 export default function ProductAdmin() {
   const [products, setProducts] = useState([]);
@@ -31,7 +31,7 @@ export default function ProductAdmin() {
   const setProduct = useSetRecoilState(ProductItem);
 
   function handleEditProduct(id) {
-    let temp = products.filter(e => e.id === id);
+    let temp = products.filter((e) => e.id === id);
     setProduct(temp);
   }
 
@@ -48,12 +48,12 @@ export default function ProductAdmin() {
 
   useEffect(() => {
     getData();
-  }, [])
+  }, []);
 
   return (
     <>
       {isLoading && <Loader />}
-      <Table className="border mt-6">
+      <Table className="custom-td border mt-6">
         <TableHeader>
           <TableRow className="bg-blue-100">
             <TableHead className="text-center">Name</TableHead>
@@ -106,5 +106,5 @@ export default function ProductAdmin() {
         </TableBody>
       </Table>
     </>
-  )
+  );
 }

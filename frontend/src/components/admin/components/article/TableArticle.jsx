@@ -1,5 +1,5 @@
-import { deleteArticle, getArticleAll } from "@/api/article";
-import Loader from "@/components/common/Loader";
+import { deleteArticle, getArticleAll } from '@/api/article';
+import Loader from '@/components/common/Loader';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -10,8 +10,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
+} from '@/components/ui/alert-dialog';
+import { Button } from '@/components/ui/button';
 import {
   Table,
   TableBody,
@@ -19,21 +19,21 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { TabDefault } from "@/store/common";
-import { TextField } from "@mui/material";
-import { useEffect, useState } from "react";
-import { FaEdit } from "react-icons/fa";
-import { RiDeleteBinLine } from "react-icons/ri";
-import { useNavigate } from "react-router-dom";
-import { useSetRecoilState } from "recoil";
+} from '@/components/ui/table';
+import { TabDefault } from '@/store/common';
+import { TextField } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { FaEdit } from 'react-icons/fa';
+import { RiDeleteBinLine } from 'react-icons/ri';
+import { useNavigate } from 'react-router-dom';
+import { useSetRecoilState } from 'recoil';
 
 export default function TableArticle() {
   const navigate = useNavigate();
 
   const [articles, setArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState('');
 
   const setTabDefault = useSetRecoilState(TabDefault);
 
@@ -62,29 +62,29 @@ export default function TableArticle() {
   }
 
   async function handleEditArtical(id) {
-    navigate(`/admin?articalId=${id}`)
-    setTabDefault("add-article");
+    navigate(`/admin?articalId=${id}`);
+    setTabDefault('add-article');
   }
 
   useEffect(() => {
     getData();
-  }, [])
+  }, []);
 
   return (
     <>
       {isLoading && <Loader />}
-      <div className='w-1/4 mt-4'>
+      <div className="w-1/4 mt-4">
         <TextField
-          value={inputValue || ""}
+          value={inputValue || ''}
           name="title"
           className="w-full bg-white"
           placeholder="Stoke Id"
           type="text"
-          onChange={e => setInputValue(e.target.value)}
+          onChange={(e) => setInputValue(e.target.value)}
         />
       </div>
 
-      <Table className="border mt-4">
+      <Table className="custom-td border mt-4">
         <TableHeader>
           <TableRow className="bg-blue-100">
             <TableHead className="text-center border">Stock Id</TableHead>
@@ -93,37 +93,47 @@ export default function TableArticle() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {articles && articles.map((article) => (
-            <TableRow key={article.id}>
-              <TableCell className="text-center border">{article?.stockId?.symbol || ''}</TableCell>
-              <TableCell className="text-center border">{article?.title || ''}</TableCell>
-              <TableCell className="h-full flex justify-center">
-                <Button variant="primary" onClick={() => handleEditArtical(article.id)}>
-                  <FaEdit />
-                </Button>
-                <AlertDialog>
-                  <AlertDialogTrigger asChild>
-                    <Button variant="destructive" className="ml-2"><RiDeleteBinLine /></Button>
-                  </AlertDialogTrigger>
-                  <AlertDialogContent>
-                    <AlertDialogHeader>
-                      <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                      <AlertDialogDescription>
-                        This action cannot be undone. This will permanently delete your
-                        question and remove your data from our servers.
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                      <AlertDialogCancel>Cancel</AlertDialogCancel>
-                      <AlertDialogAction className="bg-red-500 hover:bg-red-400" onClick={() => handleDelete(article.id)}>Ok</AlertDialogAction>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
-                </AlertDialog>
-              </TableCell>
-            </TableRow>
-          ))}
+          {articles &&
+            articles.map((article) => (
+              <TableRow key={article.id}>
+                <TableCell className="text-center border">
+                  {article?.stockId?.symbol || ''}
+                </TableCell>
+                <TableCell className="text-center border">{article?.title || ''}</TableCell>
+                <TableCell className="h-full flex justify-center">
+                  <Button variant="primary" onClick={() => handleEditArtical(article.id)}>
+                    <FaEdit />
+                  </Button>
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button variant="destructive" className="ml-2">
+                        <RiDeleteBinLine />
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                        <AlertDialogDescription>
+                          This action cannot be undone. This will permanently delete your question
+                          and remove your data from our servers.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction
+                          className="bg-red-500 hover:bg-red-400"
+                          onClick={() => handleDelete(article.id)}
+                        >
+                          Ok
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                </TableCell>
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
     </>
-  )
+  );
 }

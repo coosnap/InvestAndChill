@@ -1,4 +1,4 @@
-import { deleteQuestion, getQuestionAll } from "@/api/question";
+import { deleteQuestion, getQuestionAll } from '@/api/question';
 import {
   Table,
   TableBody,
@@ -6,7 +6,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
+} from '@/components/ui/table';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -17,18 +17,18 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
-import { useEffect, useState } from "react";
-import AddQuestion from "./AddQuestion";
-import Loader from "@/components/common/Loader";
-import { RiDeleteBinLine } from "react-icons/ri";
-import { Button } from "@/components/ui/button";
-import { useRecoilState } from "recoil";
-import { QuestionAll } from "@/store/question";
+} from '@/components/ui/alert-dialog';
+import { useEffect, useState } from 'react';
+import AddQuestion from './AddQuestion';
+import Loader from '@/components/common/Loader';
+import { RiDeleteBinLine } from 'react-icons/ri';
+import { Button } from '@/components/ui/button';
+import { useRecoilState } from 'recoil';
+import { QuestionAll } from '@/store/question';
 
 export default function TableQuestion() {
   const [isLoading, setIsLoading] = useState(true);
-  
+
   const [questions, setQuestions] = useRecoilState(QuestionAll);
 
   async function getData() {
@@ -57,7 +57,7 @@ export default function TableQuestion() {
 
   useEffect(() => {
     getData();
-  }, [])
+  }, []);
 
   return (
     <>
@@ -65,7 +65,7 @@ export default function TableQuestion() {
       <div className="cursor-pointer my-8">
         <AddQuestion render={getData} action="Add" />
       </div>
-      <Table className="border">
+      <Table className="custom-td border">
         <TableHeader>
           <TableRow className="bg-blue-100">
             <TableHead className="text-center border">Question Content</TableHead>
@@ -74,37 +74,45 @@ export default function TableQuestion() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {questions && questions.map((question) => (
-            <TableRow key={question.id}>
-              <TableCell className="text-center border">{question.questionContent}</TableCell>
-              <TableCell className="text-center border">{question.answer}</TableCell>
-              <TableCell className="flex">
-                <div className="cursor-pointer">
-                  <AddQuestion render={getData} action="Edit" id={question.id} />
-                </div>
-                <AlertDialog>
-                  <AlertDialogTrigger asChild>
-                    <Button variant="destructive" className="ml-2"><RiDeleteBinLine /></Button>
-                  </AlertDialogTrigger>
-                  <AlertDialogContent>
-                    <AlertDialogHeader>
-                      <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                      <AlertDialogDescription>
-                        This action cannot be undone. This will permanently delete your
-                        question and remove your data from our servers.
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                      <AlertDialogCancel>Cancel</AlertDialogCancel>
-                      <AlertDialogAction className="bg-red-500 hover:bg-red-400" onClick={() => handleDelete(question.id)}>Ok</AlertDialogAction>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
-                </AlertDialog>
-              </TableCell>
-            </TableRow>
-          ))}
+          {questions &&
+            questions.map((question) => (
+              <TableRow key={question.id}>
+                <TableCell className="text-center border">{question.questionContent}</TableCell>
+                <TableCell className="text-center border">{question.answer}</TableCell>
+                <TableCell className="flex">
+                  <div className="cursor-pointer">
+                    <AddQuestion render={getData} action="Edit" id={question.id} />
+                  </div>
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button variant="destructive" className="ml-2">
+                        <RiDeleteBinLine />
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                        <AlertDialogDescription>
+                          This action cannot be undone. This will permanently delete your question
+                          and remove your data from our servers.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction
+                          className="bg-red-500 hover:bg-red-400"
+                          onClick={() => handleDelete(question.id)}
+                        >
+                          Ok
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                </TableCell>
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
     </>
-  )
+  );
 }
