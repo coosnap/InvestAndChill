@@ -82,7 +82,7 @@ export const AddArticleEditor = () => {
       insertImageAsBase64URI: false,
     },
     // width: 800,
-    height: 450,
+    // height: 450,
   };
 
   const saveTypeAndStock = async (result) => {
@@ -204,7 +204,7 @@ export const AddArticleEditor = () => {
   return (
     <div className="mt-8 flex gap-x-8">
       {isLoading && <Loader />}
-      <div className="w-1/2 h-1/2">
+      <div className="flex-1 h-1/2">
         <div className="flex gap-4 mb-4">
           <div>
             <FormControl size="small">
@@ -255,11 +255,13 @@ export const AddArticleEditor = () => {
             className="w-full bg-white"
             placeholder="Tiêu đề"
             type="text"
+            size="small"
             onChange={(e) => setArticle((prev) => ({ ...prev, title: e.target.value }))}
           />
           <Button
             variant="contained"
             sx={{ width: '190px' }}
+            size="small"
             onClick={() => setOpenUploadFile(true)}
           >
             Upload Image
@@ -272,6 +274,7 @@ export const AddArticleEditor = () => {
             className="w-full bg-white"
             placeholder="Url"
             type="text"
+            size="small"
             onChange={(e) => setArticle((prev) => ({ ...prev, url: e.target.value }))}
           />
         </div>
@@ -293,8 +296,8 @@ export const AddArticleEditor = () => {
           </Button>
         </div>
       </div>
-      <div className="w-1/2 h-[700px] px-6 py-4 border bg-white overflow-y-scroll">
-        <div dangerouslySetInnerHTML={{ __html: content }} />
+      <div className="w-[770px] h-[calc(100vh-196px)] border bg-white overflow-y-scroll">
+        <div className="px-6 py-4" dangerouslySetInnerHTML={{ __html: content }} />
       </div>
       {openUploadFile && (
         <>

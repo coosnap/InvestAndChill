@@ -187,14 +187,14 @@ function Login() {
       {isLoading ? <Loader /> : ''}
       <div className="container w-[80%] h-screen py-10 flex gap-8">
         <div className="flex flex-col w-[752px] h-full gap-8">
-          <div className="rounded-2xl bg-white h-[532px] flex flex-col justify-center pl-12">
+          <div className="rounded-2xl bg-white flex flex-col h-[600px] justify-center pl-12">
             <h1 className="text-6xl md:text-4xl lg:text-6xl  text-gray-900 mb-5">
               Tiết kiệm thời gian
             </h1>
             <h4 className="text-3xl text-gray-900 mb-4">Tiếp cận hệ thống dữ liệu tài chính</h4>
             <p className="text-xl text-gray-900">Chính xác - Cập nhật - Đầy đủ</p>
           </div>
-          <div className="rounded-2xl bg-white h-[274px] flex flex-col justify-center px-12">
+          <div className="rounded-2xl bg-white h-[210px] flex flex-col justify-center px-12 py-2">
             {articleList &&
               articleList.length > 0 &&
               articleList.map(
@@ -204,7 +204,7 @@ function Login() {
                       to={'/post/' + e.id}
                       className={`${
                         i <= 3 ? 'border-b' : ''
-                      } text-gray-900 mb-3 cursor-pointer pb-1`}
+                      } text-gray-900 mb-1 cursor-pointer pb-1`}
                       key={e.id}
                     >
                       {e.title}
@@ -214,7 +214,7 @@ function Login() {
           </div>
         </div>
         <div className="flex flex-col w-[752px] h-full gap-8">
-          <div className="rounded-2xl bg-white shadow-2xl h-[332px] flex flex-col items-center justify-center">
+          <div className="rounded-2xl bg-white shadow-2xl flex flex-col items-center justify-center py-4">
             <div className="flex items-center justify-center text-3xl lg:text-2xl font-semibold text-gray-900">
               Đăng nhập
             </div>
@@ -228,7 +228,7 @@ function Login() {
                     required
                     name="username"
                     className="w-full z-0"
-                    size={`${lg ? 'medium' : 'small'}`}
+                    size="small"
                     label="Tên đăng nhập"
                     type="text"
                     error={!!errors?.username}
@@ -247,7 +247,7 @@ function Login() {
                     name="password"
                     className="w-full z-0"
                     label="Mật khẩu"
-                    size={`${lg ? 'medium' : 'small'}`}
+                    size="small"
                     error={!!errors?.password}
                     type={!showPassword ? 'password' : 'text'}
                     helperText={errors?.password?.message}
@@ -273,15 +273,19 @@ function Login() {
                   <Label className="text-red-500">{validate.loginMessage}</Label>
                 </div>
               ) : null}
-              <div className="mt-2 text-center">
-                <Button type="submit" variant="primary" className="mt-2">
-                  Đăng nhập
-                </Button>
-                <div
-                  className="mt-4 lg:mt-2 font-semibold text-blue-500 hover:text-blue-300 underline cursor-pointer"
-                  onClick={() => setShowRegisterDialog(true)}
-                >
-                  Đăng ký tài khoản
+              <div className="flex items-center">
+                <div className="w-1/2 text-end">
+                  <Button type="submit" variant="primary" className="mt-2">
+                    Đăng nhập
+                  </Button>
+                </div>
+                <div className="w-1/2 text-end">
+                  <span
+                    className="mt-4 lg:mt-2 font-semibold text-blue-500 hover:text-blue-300 underline cursor-pointer"
+                    onClick={() => setShowRegisterDialog(true)}
+                  >
+                    Đăng ký tài khoản
+                  </span>
                 </div>
               </div>
             </form>
@@ -293,7 +297,7 @@ function Login() {
             showRegisterDialog ? '' : 'hidden'
           } absolute top-0 left-0 w-full h-full opacity-50 bg-black`}
         ></div>
-        <div className={`${showRegisterDialog ? '' : 'hidden'} absolute top-[15%] left-[40%]`}>
+        <div className={`${showRegisterDialog ? '' : 'hidden'} absolute top-[5%] left-[40%]`}>
           <div className="w-[500px] py-10 bg-white rounded-lg shadow-2xl">
             <div className="px-10">
               <div>
@@ -311,6 +315,7 @@ function Login() {
                         className="w-full"
                         label="Tên đăng nhập"
                         type="text"
+                        size="small"
                         error={!!errorsRegister?.username}
                         helperText={errorsRegister?.username?.message}
                         {...field}
@@ -329,6 +334,7 @@ function Login() {
                           className="w-1/2"
                           label="Họ"
                           type="text"
+                          size="small"
                           error={!!errorsRegister?.lastName}
                           helperText={errorsRegister?.lastName?.message}
                           {...field}
@@ -345,6 +351,7 @@ function Login() {
                           className="w-1/2"
                           label="Tên"
                           type="text"
+                          size="small"
                           error={!!errorsRegister?.firstName}
                           helperText={errorsRegister?.firstName?.message}
                           {...field}
@@ -365,6 +372,7 @@ function Login() {
                             className="w-1/2"
                             name="dateOfBirth"
                             type="date"
+                            size="small"
                             error={!!errorsRegister?.dateOfBirth}
                             helperText={errorsRegister?.dateOfBirth?.message}
                             {...field}
@@ -399,6 +407,7 @@ function Login() {
                           className="w-1/2"
                           label="Số điện thoại"
                           type="text"
+                          size="small"
                           error={!!errorsRegister?.phoneNumber}
                           helperText={errorsRegister?.phoneNumber?.message}
                           {...field}
@@ -417,6 +426,7 @@ function Login() {
                         className="w-full"
                         label="Email"
                         type="text"
+                        size="small"
                         error={!!errorsRegister?.email}
                         helperText={errorsRegister?.email?.message}
                         {...field}
@@ -433,6 +443,7 @@ function Login() {
                         name="password"
                         className="w-full"
                         label="Mật khẩu"
+                        size="small"
                         error={!!errorsRegister?.password}
                         type={!showPasswordRe ? 'password' : 'text'}
                         helperText={errorsRegister?.password?.message}
@@ -463,6 +474,7 @@ function Login() {
                         name="passwordConfirm"
                         className="w-full"
                         label="Xác nhận mật khẩu"
+                        size="small"
                         error={!!errorsRegister?.passwordConfirm}
                         type={!showPasswordConf ? 'password' : 'text'}
                         helperText={errorsRegister?.passwordConfirm?.message}

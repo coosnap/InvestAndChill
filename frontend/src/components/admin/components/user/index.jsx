@@ -19,6 +19,8 @@ import { Calendar as CalendarIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 
+import './style.scss';
+
 export default function UserAdmin() {
   const [users, setUsers] = useRecoilState(UserAll);
   const [showModal, setShowModal] = useState(false);
@@ -72,8 +74,8 @@ export default function UserAdmin() {
   }
 
   return (
-    <>
-      <Table className="custom-td border mt-6">
+    <div className="h-[calc(100vh-190px)] overflow-y-scroll mt-6">
+      <Table className="custom-td border">
         <TableHeader>
           <TableRow className="bg-blue-100">
             <TableHead className="text-center">User Name</TableHead>
@@ -165,6 +167,6 @@ export default function UserAdmin() {
           status={messageDialog.status}
         />
       )}
-    </>
+    </div>
   );
 }

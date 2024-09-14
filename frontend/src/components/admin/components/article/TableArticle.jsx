@@ -77,8 +77,9 @@ export default function TableArticle() {
         <TextField
           value={inputValue || ''}
           name="title"
+          size="small"
           className="w-full bg-white"
-          placeholder="Stoke Id"
+          label="Stoke Id"
           type="text"
           onChange={(e) => setInputValue(e.target.value)}
         />
