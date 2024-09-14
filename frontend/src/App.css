@@ -17,5 +17,5 @@ td {
 }
 
 p {
-  display: flex;
+  line-height: normal;
 }

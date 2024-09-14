@@ -1,26 +1,27 @@
-import React, { Suspense } from "react";
-import { Outlet, useLocation, useRoutes } from "react-router-dom";
-import "./App.css";
-import { ThemeProvider } from "./ThemeProvider";
-import AdminRoute from "./components/router/admin-route";
-import PrivateRoute from "./components/router/private-route";
-import PublicRoute from "./components/router/public-route";
+import React, { Suspense } from 'react';
+import { Outlet, useLocation, useRoutes } from 'react-router-dom';
+import './App.css';
+import { ThemeProvider } from './ThemeProvider';
+import AdminRoute from './components/router/admin-route';
+import PrivateRoute from './components/router/private-route';
+import PublicRoute from './components/router/public-route';
+import { createTheme } from '@mui/material';
 
-const Admin = React.lazy(() => import("./components/admin/Admin.jsx"));
-const Header = React.lazy(() => import("./components/common/Header"));
-const Buy = React.lazy(() => import("./components/pages/Buy"));
-const Category = React.lazy(() => import("./components/pages/Category.jsx"));
-const Detail = React.lazy(() => import("./components/pages/Detail.jsx"));
-const Investment = React.lazy(() => import("./components/pages/Investment"));
-const Login = React.lazy(() => import("./components/pages/login"));
-const NotFound = React.lazy(() => import("./components/pages/NotFound"));
-const Post = React.lazy(() => import("./components/pages/Post.jsx"));
-const Product = React.lazy(() => import("./components/pages/Product.jsx"));
-const Question = React.lazy(() => import("./components/pages/Question.jsx"));
+const Admin = React.lazy(() => import('./components/admin/Admin.jsx'));
+const Header = React.lazy(() => import('./components/common/Header'));
+const Buy = React.lazy(() => import('./components/pages/Buy'));
+const Category = React.lazy(() => import('./components/pages/Category.jsx'));
+const Detail = React.lazy(() => import('./components/pages/Detail.jsx'));
+const Investment = React.lazy(() => import('./components/pages/Investment'));
+const Login = React.lazy(() => import('./components/pages/login'));
+const NotFound = React.lazy(() => import('./components/pages/NotFound'));
+const Post = React.lazy(() => import('./components/pages/Post.jsx'));
+const Product = React.lazy(() => import('./components/pages/Product.jsx'));
+const Question = React.lazy(() => import('./components/pages/Question.jsx'));
 
 const routes = [
   {
-    path: "*",
+    path: '*',
     element: (
       <PublicRoute>
         <Suspense>
@@ -30,7 +31,7 @@ const routes = [
     ),
   },
   {
-    path: "/",
+    path: '/',
     element: (
       <PublicRoute>
         <Suspense>
@@ -40,7 +41,7 @@ const routes = [
     ),
   },
   {
-    path: "/login",
+    path: '/login',
     element: (
       <PublicRoute>
         <Suspense>
@@ -50,7 +51,7 @@ const routes = [
     ),
   },
   {
-    path: "/post/:id",
+    path: '/post/:id',
     element: (
       <PublicRoute>
         <Suspense>
@@ -60,7 +61,7 @@ const routes = [
     ),
   },
   {
-    path: "/invest",
+    path: '/invest',
     element: (
       <PrivateRoute>
         <Suspense>
@@ -70,7 +71,7 @@ const routes = [
     ),
   },
   {
-    path: "/category",
+    path: '/category',
     element: (
       <PrivateRoute>
         <Suspense>
@@ -80,7 +81,7 @@ const routes = [
     ),
   },
   {
-    path: "/product",
+    path: '/product',
     element: (
       <PrivateRoute>
         <Suspense>
@@ -90,7 +91,7 @@ const routes = [
     ),
   },
   {
-    path: "/question",
+    path: '/question',
     element: (
       <PrivateRoute>
         <Suspense>
@@ -100,7 +101,7 @@ const routes = [
     ),
   },
   {
-    path: "/detail",
+    path: '/detail',
     element: (
       <PrivateRoute>
         <Suspense>
@@ -110,7 +111,7 @@ const routes = [
     ),
   },
   {
-    path: "/buy/:id",
+    path: '/buy/:id',
     element: (
       <PrivateRoute>
         <Suspense>
@@ -120,7 +121,7 @@ const routes = [
     ),
   },
   {
-    path: "/admin",
+    path: '/admin',
     element: (
       <AdminRoute>
         <Suspense>
@@ -149,15 +150,12 @@ const Layout = ({ hideHeaderPaths = [] }) => {
 function App() {
   const routesElement = useRoutes(routes);
   const { pathname } = useLocation();
+  const theme = createTheme();
 
   return (
-    <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+    <ThemeProvider defaultTheme="light" theme={theme} storageKey="vite-ui-theme">
       <div className="App">
-        {pathname.includes("/post") ? (
-          <></>
-        ) : (
-          <Layout hideHeaderPaths={["/", "/login"]} />
-        )}
+        {pathname.includes('/post') ? <></> : <Layout hideHeaderPaths={['/', '/login']} />}
         {routesElement}
       </div>
     </ThemeProvider>

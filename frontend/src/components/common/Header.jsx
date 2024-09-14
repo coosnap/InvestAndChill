@@ -1,42 +1,76 @@
-import { getUserDetail, updateUser } from "@/api/user";
+import { changePassword, getUserDetail, updateUser } from '@/api/user';
 import {
   AlertDialog,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogFooter,
-  AlertDialogTrigger
-} from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { useEffect, useState } from "react";
-import { useCookies } from "react-cookie";
-import { FcReading } from "react-icons/fc";
-import { Link, useNavigate } from "react-router-dom";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
-import Modal from "./Modal";
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
+import { Button } from '@/components/ui/button';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { TextField } from '@mui/material';
+import { useCallback, useEffect, useId, useRef, useState } from 'react';
+import { useCookies } from 'react-cookie';
+import { Controller, useForm } from 'react-hook-form';
+import { FcReading } from 'react-icons/fc';
+import { Link, useNavigate } from 'react-router-dom';
+import { z } from 'zod';
+import { Input } from '../ui/input';
+import { Label } from '../ui/label';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
+import Modal from './Modal';
+
+const passwordSchema = z
+  .object({
+    oldPassword: z.string().min(1, { message: 'Vui lòng điền mật khẩu' }),
+    newPassword: z.string().min(1, { message: 'Vui lòng điền mật khẩu mới' }),
+    confirmPassword: z.string().min(1, { message: 'Vui lòng điền mật khẩu xác nhận' }),
+  })
+  .superRefine(({ newPassword, confirmPassword }, ctx) => {
+    if (newPassword !== confirmPassword) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'Xác nhận mật khẩu không đúng',
+        path: ['confirmPassword'],
+      });
+    }
+  });
 
 function Header() {
   const navigate = useNavigate();
+  const id = useId();
+  const ref = useRef();
   const [cookies, setCookie] = useCookies(['access_token', 'usrId']);
 
   const [userInfo, setUserInfo] = useState({});
-  const [passwordInfo, setPasswordInfo] = useState({});
   const [showModal, setShowModal] = useState(false);
   const [showPop, setShowPop] = useState(false);
-  const [messageDialog, setMessageDialog] = useState({ status: "", message: "" });
-  const [tabDefault, setTabDefault] = useState("user");
+  const [messageDialog, setMessageDialog] = useState({
+    status: '',
+    message: '',
+  });
+  const [tabDefault, setTabDefault] = useState('user');
+
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm({
+    mode: 'all',
+    defaultValues: {
+      oldPassword: '',
+      newPassword: '',
+      confirmPassword: '',
+    },
+    resolver: zodResolver(passwordSchema),
+  });
 
   function handlSignOut() {
-    setCookie("access_token", "", {});
-    setCookie("usrId", "", {});
-    setCookie("roles", "", {});
-    navigate("/login");
+    setCookie('access_token', '', {});
+    setCookie('usrId', '', {});
+    setCookie('roles', '', {});
+    navigate('/login');
   }
 
   async function handleUpdateUser() {
@@ -49,35 +83,81 @@ function Header() {
     }
   }
 
-  async function handleClickSaveUser() {
+  const onSubmit = useCallback(async (values) => {
+    let data = {
+      userName: cookies?.usrId?.usrNm,
+      oldPassword: values?.oldPassword,
+      newPassword: values?.newPassword,
+    };
     try {
-      let responseBody = await updateUser(userInfo);
-      if (responseBody) {
+      const response = await changePassword(data);
+      console.log('response', response);
+      if (response) {
         setShowPop(false);
-        setMessageDialog(prev => ({ ...prev, status: "Success", message: "Update Successfully!" }));
+        setMessageDialog((prev) => ({
+          ...prev,
+          status: 'Success',
+          message: 'Update Successfully!',
+        }));
         setShowModal(true);
+        ref.current.reset();
         document.getElementById('user-info-cancel')?.click();
       }
     } catch (error) {
+      console.log('error', error);
       setShowPop(false);
-      setMessageDialog(prev => ({ ...prev, status: "Error", message: "Update Fail!" }));
+      setMessageDialog((prev) => ({
+        ...prev,
+        status: 'Error',
+        message: 'Update Fail!',
+      }));
       setShowModal(true);
     }
-  }
+  }, []);
+
+  // async function handleClickSaveUser() {
+  //   if (tabDefault === "user") {
+  //     try {
+  //       let responseBody = await updateUser(userInfo);
+  //       if (responseBody) {
+  //         setShowPop(false);
+  //         setMessageDialog((prev) => ({
+  //           ...prev,
+  //           status: "Success",
+  //           message: "Update Successfully!",
+  //         }));
+  //         setShowModal(true);
+  //         document.getElementById("user-info-cancel")?.click();
+  //       }
+  //     } catch (error) {
+  //       setShowPop(false);
+  //       setMessageDialog((prev) => ({
+  //         ...prev,
+  //         status: "Error",
+  //         message: "Update Fail!",
+  //       }));
+  //       setShowModal(true);
+  //     }
+  //   }
+  // }
 
   useEffect(() => {
-    if (!cookies?.usrId?.usrNm) navigate("/login");
-  }, [])
+    if (!cookies?.usrId?.usrNm) navigate('/login');
+  }, []);
 
   const onTabChange = (value) => {
     setTabDefault(value);
-  }
+  };
 
   return (
     <div className="navbar flex justify-between items-center bg-blue-100 py-2 px-8">
       <div className="flex">
-        <Link to="/invest" className="flex items-center text-3xl tracking-tighter font-semibold text-[#DA5800]">
-          <img src="/logo.jpg" width={48} height={48} /><span className="ml-3">Invest Chill</span>
+        <Link
+          to="/invest"
+          className="flex items-center text-3xl tracking-tighter font-semibold text-[#DA5800]"
+        >
+          <img src="/logo.jpg" width={48} height={48} />
+          <span className="ml-3">InvestnChill</span>
         </Link>
       </div>
       <Popover open={showPop} onOpenChange={setShowPop}>
@@ -89,27 +169,28 @@ function Header() {
         <PopoverContent className="w-80 bg-white">
           <div className="grid gap-4">
             <div className="space-y-2 text-center">
-              <h4 className="font-semibold text-2xl">{cookies?.usrId?.usrNm ?? ""}</h4>
-              <p className="text-xl text-muted-foreground">
-                {cookies?.usrId?.email ?? ""}
-              </p>
+              <h4 className="font-semibold text-2xl">{cookies?.usrId?.usrNm ?? ''}</h4>
+              <p className="text-xl text-muted-foreground">{cookies?.usrId?.email ?? ''}</p>
             </div>
-            {(cookies?.roles?.includes("ROLE_MODERATOR_USER") || cookies?.roles?.includes("ROLE_ADMIN")) &&
-              <Link to="/admin">Đi tới Admin</Link>
-            }
+            {(cookies?.roles?.includes('ROLE_MODERATOR_USER') ||
+              cookies?.roles?.includes('ROLE_ADMIN')) && <Link to="/admin">Đi tới Admin</Link>}
             <AlertDialog>
               <AlertDialogTrigger asChild>
                 <button className="text-lg text-start" onClick={handleUpdateUser}>
                   Cập nhật thông tin
                 </button>
               </AlertDialogTrigger>
-              <AlertDialogContent className="h-[550px]">
+              <AlertDialogContent className="h-[600px]">
                 <div>
                   <Tabs value={tabDefault} onValueChange={onTabChange} className="w-full">
                     <TabsList className="flex flex-col items-start h-full pt-8 pb-4 px-4 border-none">
                       <div className="w-full mb-6 border p-2 rounded-lg">
-                        <TabsTrigger className="w-1/2" value="user">Thông tin người dùng</TabsTrigger>
-                        <TabsTrigger className="w-1/2" value="password">Mật khẩu</TabsTrigger>
+                        <TabsTrigger className="w-1/2" value="user">
+                          Thông tin người dùng
+                        </TabsTrigger>
+                        <TabsTrigger className="w-1/2" value="password">
+                          Mật khẩu
+                        </TabsTrigger>
                       </div>
 
                       <TabsContent value="user" className="flex w-full">
@@ -119,25 +200,27 @@ function Header() {
                               <Label htmlFor="phoneNumber">Phone Number</Label>
                               <Input
                                 id="phoneNumber"
-                                defaultValue={userInfo?.phoneNumber ?? ""}
+                                defaultValue={userInfo?.phoneNumber ?? ''}
                                 onChange={(e) => {
                                   setUserInfo((prev) => ({
                                     ...prev,
                                     phoneNumber: e.target.value,
                                   }));
-                                }} />
+                                }}
+                              />
                             </div>
                             <div className="space-y-1 w-1/2 pl-2">
                               <Label htmlFor="username">User Name</Label>
                               <Input
                                 id="username"
-                                defaultValue={userInfo?.username ?? ""}
+                                defaultValue={userInfo?.username ?? ''}
                                 onChange={(e) => {
                                   setUserInfo((prev) => ({
                                     ...prev,
                                     username: e.target.value,
                                   }));
-                                }} />
+                                }}
+                              />
                             </div>
                           </div>
                           <div className="flex">
@@ -145,113 +228,150 @@ function Header() {
                               <Label htmlFor="firstname">First Name</Label>
                               <Input
                                 id="firstname"
-                                defaultValue={userInfo?.firstName ?? ""}
+                                defaultValue={userInfo?.firstName ?? ''}
                                 onChange={(e) => {
                                   setUserInfo((prev) => ({
                                     ...prev,
                                     firstName: e.target.value,
                                   }));
-                                }} />
+                                }}
+                              />
                             </div>
                             <div className="space-y-1 w-1/2 pl-2">
                               <Label htmlFor="lastname">Last Name</Label>
                               <Input
                                 id="lastname"
-                                defaultValue={userInfo?.lastName ?? ""}
+                                defaultValue={userInfo?.lastName ?? ''}
                                 onChange={(e) => {
                                   setUserInfo((prev) => ({
                                     ...prev,
                                     lastName: e.target.value,
                                   }));
-                                }} />
+                                }}
+                              />
                             </div>
                           </div>
                           <span className="space-y-1">
                             <Label htmlFor="email">Email</Label>
                             <Input
                               id="email"
-                              defaultValue={userInfo?.email ?? ""}
+                              defaultValue={userInfo?.email ?? ''}
                               onChange={(e) => {
                                 setUserInfo((prev) => ({
                                   ...prev,
                                   email: e.target.value,
                                 }));
-                              }} />
+                              }}
+                            />
                           </span>
                           <div className="space-y-1 w-full">
                             <Label htmlFor="password">Password</Label>
                             <Input
                               id="password"
-                              defaultValue={userInfo?.password ?? ""}
+                              defaultValue={userInfo?.password ?? ''}
                               placeholder="Vui lòng nhập mật khẩu xác nhận"
+                              type="password"
                               onChange={(e) => {
                                 setUserInfo((prev) => ({
                                   ...prev,
                                   password: e.target.value,
                                 }));
-                              }} />
+                              }}
+                            />
                           </div>
                         </div>
                       </TabsContent>
                       <TabsContent value="password" className="flex flex-col w-full">
-                        <div className="w-full">
-                          <Label htmlFor="password">Mật khẩu cũ</Label>
-                          <Input
-                            id="password"
-                            defaultValue={""}
-                            placeholder="Vui lòng nhập mật khẩu"
-                            onChange={(e) => {
-                              setPasswordInfo((prev) => ({
-                                ...prev,
-                                password: e.target.value,
-                              }));
-                            }} />
-                        </div>
-                        <div className="h-5"></div>
-                        <div className="w-full">
-                          <Label htmlFor="password">Mật khẩu mới</Label>
-                          <Input
-                            id="password"
-                            defaultValue={""}
-                            placeholder="Vui lòng nhập mật khẩu mới"
-                            onChange={(e) => {
-                              setPasswordInfo((prev) => ({
-                                ...prev,
-                                passwordNew: e.target.value,
-                              }));
-                            }} />
-                        </div>
-                        <div className="h-5"></div>
-                        <div className="w-full">
-                          <Label htmlFor="password">Nhập lại mật khẩu</Label>
-                          <Input
-                            id="password"
-                            defaultValue={""}
-                            placeholder="Vui lòng nhập mật khẩu xác nhận"
-                            onChange={(e) => {
-                              setPasswordInfo((prev) => ({
-                                ...prev,
-                                passwordCon: e.target.value,
-                              }));
-                            }} />
-                        </div>
+                        <form key={id} ref={ref} onSubmit={handleSubmit(onSubmit)}>
+                          <div className="w-full">
+                            <Label htmlFor="oldPassword">Mật khẩu cũ</Label>
+                            <Controller
+                              name="oldPassword"
+                              control={control}
+                              render={({ field }) => (
+                                <TextField
+                                  required
+                                  name="oldPassword"
+                                  className="w-full"
+                                  placeholder="Vui lòng nhập mật khẩu"
+                                  label=""
+                                  type="password"
+                                  error={!!errors?.oldPassword}
+                                  helperText={errors?.oldPassword?.message}
+                                  {...field}
+                                />
+                              )}
+                            />
+                          </div>
+                          <div className="h-5"></div>
+                          <div className="w-full">
+                            <Label htmlFor="newPassword">Mật khẩu mới</Label>
+                            <Controller
+                              name="newPassword"
+                              control={control}
+                              render={({ field }) => (
+                                <TextField
+                                  required
+                                  name="newPassword"
+                                  className="w-full"
+                                  placeholder="Vui lòng nhập mật khẩu mới"
+                                  label=""
+                                  type="password"
+                                  error={!!errors?.newPassword}
+                                  helperText={errors?.newPassword?.message}
+                                  {...field}
+                                />
+                              )}
+                            />
+                          </div>
+                          <div className="h-5"></div>
+                          <div className="w-full">
+                            <Label htmlFor="confirmPassword">Nhập lại mật khẩu</Label>
+                            <Controller
+                              name="confirmPassword"
+                              control={control}
+                              render={({ field }) => (
+                                <TextField
+                                  required
+                                  name="confirmPassword"
+                                  className="w-full"
+                                  placeholder="Vui lòng nhập mật khẩu xác nhận"
+                                  label=""
+                                  type="password"
+                                  error={!!errors?.confirmPassword}
+                                  helperText={errors?.confirmPassword?.message}
+                                  {...field}
+                                />
+                              )}
+                            />
+                          </div>
+
+                          <AlertDialogFooter className="mt-6">
+                            <AlertDialogCancel id="user-info-cancel">Cancel</AlertDialogCancel>
+                            <Button variant="primary" type="submit">
+                              Save
+                            </Button>
+                          </AlertDialogFooter>
+                        </form>
                       </TabsContent>
                     </TabsList>
                   </Tabs>
                 </div>
-                <AlertDialogFooter>
-                  <AlertDialogCancel id="user-info-cancel">Cancel</AlertDialogCancel>
-                  <Button variant="primary" onClick={handleClickSaveUser}>
-                    Save
-                  </Button>
-                </AlertDialogFooter>
               </AlertDialogContent>
             </AlertDialog>
-            <Button variant="primary" onClick={handlSignOut}>Logout</Button>
+            <Button variant="primary" onClick={handlSignOut}>
+              Logout
+            </Button>
           </div>
         </PopoverContent>
       </Popover>
-      {showModal && <Modal handleClickModal={() => setShowModal(false)} message={messageDialog.message} status={messageDialog.status} />}
+      {showModal && (
+        <Modal
+          handleClickModal={() => setShowModal(false)}
+          message={messageDialog.message}
+          status={messageDialog.status}
+        />
+      )}
     </div>
   );
 }

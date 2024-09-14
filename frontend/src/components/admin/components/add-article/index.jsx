@@ -293,7 +293,7 @@ export const AddArticleEditor = () => {
           </Button>
         </div>
       </div>
-      <div className="w-1/2 h-[700px] p-4 border bg-white overflow-y-auto">
+      <div className="w-1/2 h-[700px] px-6 py-4 border bg-white overflow-y-scroll">
         <div dangerouslySetInnerHTML={{ __html: content }} />
       </div>
       {openUploadFile && (
