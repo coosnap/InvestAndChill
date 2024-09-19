@@ -1,4 +1,5 @@
 import { getArticleAll } from '@/api/article';
+import StickyNote2Icon from '@mui/icons-material/StickyNote2';
 import {
   Accordion,
   AccordionDetails,
@@ -10,7 +11,6 @@ import {
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import Loader from '../common/Loader';
-import StickyNote2Icon from '@mui/icons-material/StickyNote2';
 
 function Detail() {
   const [openBusiness, setOpenBusiness] = useState(false);
@@ -138,7 +138,7 @@ function Detail() {
         }}
       >
         <DialogTitle>
-          <div>{detail.title}</div>
+          <div className="flex justify-center mb-4 text-2xl font-bold">{detail.title}</div>
           <div dangerouslySetInnerHTML={{ __html: detail.content }} />
         </DialogTitle>
         <DialogActions

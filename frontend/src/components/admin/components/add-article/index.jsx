@@ -81,6 +81,10 @@ export const AddArticleEditor = () => {
     uploader: {
       insertImageAsBase64URI: false,
     },
+    wrapNodes: {
+      emptyBlockAfterInit: true,
+    },
+    enter: 'br',
     // width: 800,
     // height: 450,
   };

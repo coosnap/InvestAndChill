@@ -1,6 +1,8 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import StickyNote2Icon from '@mui/icons-material/StickyNote2';
 import { IconButton, InputAdornment, TextField, useMediaQuery, useTheme } from '@mui/material';
+import { format } from 'date-fns';
 import { useCallback, useEffect, useId, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { Controller, useForm } from 'react-hook-form';
@@ -12,7 +14,6 @@ import Loader from '../../common/Loader';
 import Modal from '../../common/Modal';
 import { Button } from '../../ui/button';
 import { Label } from '../../ui/label';
-import { format } from 'date-fns';
 
 import './styles.scss';
 
@@ -187,14 +188,14 @@ function Login() {
       {isLoading ? <Loader /> : ''}
       <div className="container w-[80%] h-screen py-10 flex gap-8">
         <div className="flex flex-col w-[752px] h-full gap-8">
-          <div className="rounded-2xl bg-white flex flex-col h-[600px] justify-center pl-12">
+          <div className="rounded-2xl bg-white flex flex-col h-[580px] justify-center pl-12">
             <h1 className="text-6xl md:text-4xl lg:text-6xl  text-gray-900 mb-5">
               Tiết kiệm thời gian
             </h1>
             <h4 className="text-3xl text-gray-900 mb-4">Tiếp cận hệ thống dữ liệu tài chính</h4>
             <p className="text-xl text-gray-900">Chính xác - Cập nhật - Đầy đủ</p>
           </div>
-          <div className="rounded-2xl bg-white h-[210px] flex flex-col justify-center px-12 py-2">
+          <div className="rounded-2xl bg-white h-[230px] flex flex-col justify-center px-12 overflow-y-auto">
             {articleList &&
               articleList.length > 0 &&
               articleList.map(
@@ -207,6 +208,7 @@ function Login() {
                       } text-gray-900 mb-1 cursor-pointer pb-1`}
                       key={e.id}
                     >
+                      <StickyNote2Icon color="primary" sx={{ marginRight: '8px' }} />
                       {e.title}
                     </Link>
                   )
