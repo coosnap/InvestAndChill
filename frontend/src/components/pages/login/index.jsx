@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import StickyNote2Icon from '@mui/icons-material/StickyNote2';
-import { IconButton, InputAdornment, TextField, useMediaQuery, useTheme } from '@mui/material';
+import { IconButton, InputAdornment, TextField } from '@mui/material';
 import { format } from 'date-fns';
 import { useCallback, useEffect, useId, useState } from 'react';
 import { useCookies } from 'react-cookie';
@@ -55,8 +55,6 @@ const registerSchema = z
 function Login() {
   const id = useId();
   const navigate = useNavigate();
-  const theme = useTheme();
-  const lg = useMediaQuery(theme.breakpoints.up('lg'));
 
   const [showModal, setShowModal] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
@@ -142,8 +140,8 @@ function Login() {
         setCookie('roles', infoSignIn.roles, { path: '/', expires: d });
         setIsLoading(false);
         infoSignIn.roles.includes('ROLE_ADMIN') ||
-        infoSignIn.roles.includes('ROLE_MODERATOR_ARTICLE') ||
-        infoSignIn.roles.includes('ROLE_MODERATOR_USER')
+          infoSignIn.roles.includes('ROLE_MODERATOR_ARTICLE') ||
+          infoSignIn.roles.includes('ROLE_MODERATOR_USER')
           ? navigate('/admin')
           : navigate('/invest');
       } else {
@@ -203,9 +201,8 @@ function Login() {
                   i <= 4 && (
                     <Link
                       to={'/post/' + e.id}
-                      className={`${
-                        i <= 3 ? 'border-b' : ''
-                      } text-gray-900 mb-1 cursor-pointer pb-1`}
+                      className={`${i <= 3 ? 'border-b' : ''
+                        } text-gray-900 mb-1 cursor-pointer pb-1`}
                       key={e.id}
                     >
                       <StickyNote2Icon color="primary" sx={{ marginRight: '8px' }} />
@@ -295,9 +292,8 @@ function Login() {
         </div>
 
         <div
-          className={`${
-            showRegisterDialog ? '' : 'hidden'
-          } absolute top-0 left-0 w-full h-full opacity-50 bg-black`}
+          className={`${showRegisterDialog ? '' : 'hidden'
+            } absolute top-0 left-0 w-full h-full opacity-50 bg-black`}
         ></div>
         <div className={`${showRegisterDialog ? '' : 'hidden'} absolute top-[5%] left-[40%]`}>
           <div className="w-[500px] py-10 bg-white rounded-lg shadow-2xl">

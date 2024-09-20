@@ -1,3 +1,4 @@
+import { createTheme } from '@mui/material';
 import React, { Suspense } from 'react';
 import { Outlet, useLocation, useRoutes } from 'react-router-dom';
 import './App.css';
@@ -5,14 +6,13 @@ import { ThemeProvider } from './ThemeProvider';
 import AdminRoute from './components/router/admin-route';
 import PrivateRoute from './components/router/private-route';
 import PublicRoute from './components/router/public-route';
-import { createTheme } from '@mui/material';
 
 const Admin = React.lazy(() => import('./components/admin/Admin.jsx'));
 const Header = React.lazy(() => import('./components/common/Header'));
 const Buy = React.lazy(() => import('./components/pages/Buy'));
 const Category = React.lazy(() => import('./components/pages/Category.jsx'));
-const Detail = React.lazy(() => import('./components/pages/Detail.jsx'));
-const Investment = React.lazy(() => import('./components/pages/Investment'));
+const Detail = React.lazy(() => import('./components/pages/detail'));
+const Investment = React.lazy(() => import('./components/pages/investment'));
 const Login = React.lazy(() => import('./components/pages/login'));
 const NotFound = React.lazy(() => import('./components/pages/NotFound'));
 const Post = React.lazy(() => import('./components/pages/Post.jsx'));

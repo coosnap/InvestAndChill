@@ -10,13 +10,12 @@ import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { TextField } from '@mui/material';
-import { useCallback, useEffect, useId, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { Controller, useForm } from 'react-hook-form';
 import { FcReading } from 'react-icons/fc';
 import { Link, useNavigate } from 'react-router-dom';
 import { z } from 'zod';
-import { Input } from '../ui/input';
 import { Label } from '../ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 import Modal from './Modal';
@@ -37,9 +36,21 @@ const passwordSchema = z
     }
   });
 
+const phoneRegex = new RegExp(
+  /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/
+);
+const infoSchema = z
+  .object({
+    phoneNumber: z.string().min(1, { message: 'Vui lòng điền số điện thoại' }).regex(phoneRegex, 'Chưa đúng định dạng số điện thoại'),
+    username: z.string().min(1, { message: 'Vui lòng điền tên người dùng' }),
+    firstName: z.string().min(1, { message: 'Vui lòng điền Tên' }),
+    lastName: z.string().min(1, { message: 'Vui lòng điền Họ' }),
+    email: z.string().min(1, { message: 'Vui lòng điền Email' }).email("Chưa đúng định dạng Email"),
+    password: z.string().min(1, { message: 'Vui lòng điền mật khẩu' }),
+  });
+
 function Header() {
   const navigate = useNavigate();
-  const id = useId();
   const ref = useRef();
   const [cookies, setCookie] = useCookies(['access_token', 'usrId']);
 
@@ -66,6 +77,23 @@ function Header() {
     resolver: zodResolver(passwordSchema),
   });
 
+  const {
+    handleSubmit: handleSubmitInfo,
+    control: controlInfo,
+    formState: { errors: errorInfo },
+    reset
+  } = useForm({
+    mode: 'all',
+    defaultValues: {
+      phoneNumber: '',
+      username: '',
+      firstName: '',
+      lastName: '',
+      email: ''
+    },
+    resolver: zodResolver(infoSchema),
+  });
+
   function handlSignOut() {
     setCookie('access_token', '', {});
     setCookie('usrId', '', {});
@@ -73,73 +101,98 @@ function Header() {
     navigate('/login');
   }
 
-  async function handleUpdateUser() {
+  const handleUpdateUser = async () => {
     const id = cookies.usrId.id;
     try {
       const result = await getUserDetail(id);
-      setUserInfo(result);
+      if (result) {
+        setUserInfo(result);
+        if (userInfo) {
+          let defaultValues = {
+            phoneNumber: result.phoneNumber,
+            username: result.username,
+            firstName: result.firstName,
+            lastName: result.lastName,
+            email: result.email
+          };
+          reset({ ...defaultValues });
+        }
+      }
     } catch (error) {
       setUserInfo({});
     }
-  }
+  };
 
   const onSubmit = useCallback(async (values) => {
-    let data = {
-      userName: cookies?.usrId?.usrNm,
-      oldPassword: values?.oldPassword,
-      newPassword: values?.newPassword,
-    };
-    try {
-      const response = await changePassword(data);
-      console.log('response', response);
-      if (response) {
+    const id = cookies.usrId.id;
+    if (tabDefault === "user") {
+      let data = {
+        id: id,
+        phoneNumber: values?.phoneNumber,
+        username: values?.username,
+        firstName: values?.firstName,
+        lastName: values?.lastName,
+        email: values?.email,
+        password: values?.password
+      };
+      try {
+        const response = await updateUser(data);
+        if (response) {
+          setShowPop(false);
+          setMessageDialog((prev) => ({
+            ...prev,
+            status: 'Success',
+            message: 'Update Successfully!',
+          }));
+          setShowModal(true);
+          document.getElementById('user-info-cancel')?.click();
+        } else {
+          setShowPop(false);
+          setMessageDialog((prev) => ({
+            ...prev,
+            status: 'Error',
+            message: 'Mật khẩu xác nhận không đúng!',
+          }));
+          setShowModal(true);
+        }
+      } catch (error) {
+        setMessageDialog((prev) => ({
+          ...prev,
+          status: 'Error',
+          message: 'Update Fail!',
+        }));
+        setShowModal(true);
+      }
+    }
+    if (tabDefault === "password") {
+      let data = {
+        userName: cookies?.usrId?.usrNm,
+        oldPassword: values?.oldPassword,
+        newPassword: values?.newPassword,
+      };
+      try {
+        const response = await changePassword(data);
+        if (response) {
+          setShowPop(false);
+          setMessageDialog((prev) => ({
+            ...prev,
+            status: 'Success',
+            message: 'Update Successfully!',
+          }));
+          setShowModal(true);
+          document.getElementById('user-info-cancel')?.click();
+        }
+      } catch (error) {
         setShowPop(false);
         setMessageDialog((prev) => ({
           ...prev,
-          status: 'Success',
-          message: 'Update Successfully!',
+          status: 'Error',
+          message: 'Update Fail!',
         }));
         setShowModal(true);
-        ref.current.reset();
-        document.getElementById('user-info-cancel')?.click();
       }
-    } catch (error) {
-      console.log('error', error);
-      setShowPop(false);
-      setMessageDialog((prev) => ({
-        ...prev,
-        status: 'Error',
-        message: 'Update Fail!',
-      }));
-      setShowModal(true);
     }
   }, []);
-
-  // async function handleClickSaveUser() {
-  //   if (tabDefault === "user") {
-  //     try {
-  //       let responseBody = await updateUser(userInfo);
-  //       if (responseBody) {
-  //         setShowPop(false);
-  //         setMessageDialog((prev) => ({
-  //           ...prev,
-  //           status: "Success",
-  //           message: "Update Successfully!",
-  //         }));
-  //         setShowModal(true);
-  //         document.getElementById("user-info-cancel")?.click();
-  //       }
-  //     } catch (error) {
-  //       setShowPop(false);
-  //       setMessageDialog((prev) => ({
-  //         ...prev,
-  //         status: "Error",
-  //         message: "Update Fail!",
-  //       }));
-  //       setShowModal(true);
-  //     }
-  //   }
-  // }
 
   useEffect(() => {
     if (!cookies?.usrId?.usrNm) navigate('/login');
@@ -173,14 +226,14 @@ function Header() {
               <p className="text-xl text-muted-foreground">{cookies?.usrId?.email ?? ''}</p>
             </div>
             {(cookies?.roles?.includes('ROLE_MODERATOR_USER') ||
-              cookies?.roles?.includes('ROLE_ADMIN')) && <Link to="/admin">Đi tới Admin</Link>}
+              cookies?.roles?.includes('ROLE_ADMIN')) && <Link to="/admin" className='text-lg'>Đi tới Admin</Link>}
             <AlertDialog>
               <AlertDialogTrigger asChild>
-                <button className="text-lg text-start" onClick={handleUpdateUser}>
+                <button id="update-info" className="text-lg text-start" onClick={handleUpdateUser}>
                   Cập nhật thông tin
                 </button>
               </AlertDialogTrigger>
-              <AlertDialogContent className="h-[600px]">
+              <AlertDialogContent className="min-h-[550px]">
                 <div>
                   <Tabs value={tabDefault} onValueChange={onTabChange} className="w-full">
                     <TabsList className="flex flex-col items-start h-full pt-8 pb-4 px-4 border-none">
@@ -194,97 +247,169 @@ function Header() {
                       </div>
 
                       <TabsContent value="user" className="flex w-full">
-                        <div className="flex flex-col gap-3 w-full">
-                          <div className="flex">
-                            <div className="space-y-1 w-1/2 pr-2">
-                              <Label htmlFor="phoneNumber">Phone Number</Label>
-                              <Input
-                                id="phoneNumber"
-                                defaultValue={userInfo?.phoneNumber ?? ''}
-                                onChange={(e) => {
-                                  setUserInfo((prev) => ({
-                                    ...prev,
-                                    phoneNumber: e.target.value,
-                                  }));
-                                }}
+                        <form onSubmit={handleSubmitInfo((data) => onSubmit(data))}>
+                          <div className="flex flex-col gap-3 w-full">
+                            <div className="flex">
+                              <div className="space-y-1 w-1/2 pr-2">
+                                <div className='mb-1'>
+                                  <Label htmlFor="phoneNumber">Số điện thoại</Label>
+                                </div>
+                                <Controller
+                                  name="phoneNumber"
+                                  control={controlInfo}
+                                  render={({ field: { onChange, value } }) => (
+                                    <TextField
+                                      required
+                                      name="phoneNumber"
+                                      className="w-full"
+                                      size='small'
+                                      label=""
+                                      type="text"
+                                      onChange={onChange}
+                                      value={value}
+                                      error={!!errorInfo?.phoneNumber}
+                                      helperText={errorInfo?.phoneNumber?.message}
+                                    />
+                                  )}
+                                />
+                              </div>
+                              <div className="space-y-1 w-1/2 pl-2">
+                                <div className='mb-1'>
+                                  <Label htmlFor="username">Tên người dùng</Label>
+                                </div>
+                                <Controller
+                                  name="username"
+                                  control={controlInfo}
+                                  render={({ field: { onChange, value } }) => (
+                                    <TextField
+                                      required
+                                      name="username"
+                                      className="w-full"
+                                      size='small'
+                                      label=""
+                                      type="text"
+                                      onChange={onChange}
+                                      value={value}
+                                      error={!!errorInfo?.username}
+                                      helperText={errorInfo?.username?.message}
+                                    />
+                                  )}
+                                />
+                              </div>
+                            </div>
+                            <div className="flex gap-4">
+                              <div className="space-y-1 w-1/2">
+                                <div className='mb-1'>
+                                  <Label htmlFor="lastName">Họ</Label>
+                                </div>
+                                <Controller
+                                  name="lastName"
+                                  control={controlInfo}
+                                  defaultValue={userInfo.lastName}
+                                  render={({ field: { onChange, value } }) => (
+                                    <TextField
+                                      required
+                                      name="lastName"
+                                      className="w-full"
+                                      size='small'
+                                      label=""
+                                      type="text"
+                                      onChange={onChange}
+                                      value={value}
+                                      error={!!errorInfo?.lastName}
+                                      helperText={errorInfo?.lastName?.message}
+                                    />
+                                  )}
+                                />
+                              </div>
+                              <div className="space-y-1 w-1/2">
+                                <div className='mb-1'>
+                                  <Label htmlFor="firstName">Tên</Label>
+                                </div>
+                                <Controller
+                                  name="firstName"
+                                  control={controlInfo}
+                                  defaultValue={userInfo.firstName}
+                                  render={({ field: { onChange, value } }) => (
+                                    <TextField
+                                      required
+                                      name="firstName"
+                                      className="w-full"
+                                      size='small'
+                                      label=""
+                                      type="text"
+                                      onChange={onChange}
+                                      value={value}
+                                      error={!!errorInfo?.firstName}
+                                      helperText={errorInfo?.firstName?.message}
+                                    />
+                                  )}
+                                />
+                              </div>
+                            </div>
+                            <span className="space-y-1">
+                              <div className='mb-1'>
+                                <Label htmlFor="email">Email</Label>
+                              </div>
+                              <Controller
+                                name="email"
+                                control={controlInfo}
+                                defaultValue={userInfo.email}
+                                render={({ field: { onChange, value } }) => (
+                                  <TextField
+                                    required
+                                    name="email"
+                                    className="w-full"
+                                    size='small'
+                                    label=""
+                                    type="text"
+                                    onChange={onChange}
+                                    value={value}
+                                    error={!!errorInfo?.email}
+                                    helperText={errorInfo?.email?.message}
+                                  />
+                                )}
+                              />
+                            </span>
+                            <div className="space-y-1 w-full">
+                              <div className='mb-1'>
+                                <Label htmlFor="password">Mật khẩu</Label>
+                              </div>
+                              <Controller
+                                name="password"
+                                control={controlInfo}
+                                render={({ field: { onChange, value } }) => (
+                                  <TextField
+                                    required
+                                    name="password"
+                                    className="w-full"
+                                    size='small'
+                                    label=""
+                                    type="password"
+                                    onChange={onChange}
+                                    value={value}
+                                    error={!!errorInfo?.password}
+                                    helperText={errorInfo?.password?.message}
+                                  />
+                                )}
                               />
                             </div>
-                            <div className="space-y-1 w-1/2 pl-2">
-                              <Label htmlFor="username">User Name</Label>
-                              <Input
-                                id="username"
-                                defaultValue={userInfo?.username ?? ''}
-                                onChange={(e) => {
-                                  setUserInfo((prev) => ({
-                                    ...prev,
-                                    username: e.target.value,
-                                  }));
-                                }}
-                              />
-                            </div>
+
+                            <AlertDialogFooter className="mt-6">
+                              <AlertDialogCancel id="user-info-cancel">Cancel</AlertDialogCancel>
+                              <Button variant="primary" type="submit">
+                                Save
+                              </Button>
+                            </AlertDialogFooter>
                           </div>
-                          <div className="flex">
-                            <div className="space-y-1 w-1/2 pr-2">
-                              <Label htmlFor="firstname">First Name</Label>
-                              <Input
-                                id="firstname"
-                                defaultValue={userInfo?.firstName ?? ''}
-                                onChange={(e) => {
-                                  setUserInfo((prev) => ({
-                                    ...prev,
-                                    firstName: e.target.value,
-                                  }));
-                                }}
-                              />
-                            </div>
-                            <div className="space-y-1 w-1/2 pl-2">
-                              <Label htmlFor="lastname">Last Name</Label>
-                              <Input
-                                id="lastname"
-                                defaultValue={userInfo?.lastName ?? ''}
-                                onChange={(e) => {
-                                  setUserInfo((prev) => ({
-                                    ...prev,
-                                    lastName: e.target.value,
-                                  }));
-                                }}
-                              />
-                            </div>
-                          </div>
-                          <span className="space-y-1">
-                            <Label htmlFor="email">Email</Label>
-                            <Input
-                              id="email"
-                              defaultValue={userInfo?.email ?? ''}
-                              onChange={(e) => {
-                                setUserInfo((prev) => ({
-                                  ...prev,
-                                  email: e.target.value,
-                                }));
-                              }}
-                            />
-                          </span>
-                          <div className="space-y-1 w-full">
-                            <Label htmlFor="password">Password</Label>
-                            <Input
-                              id="password"
-                              defaultValue={userInfo?.password ?? ''}
-                              placeholder="Vui lòng nhập mật khẩu xác nhận"
-                              type="password"
-                              onChange={(e) => {
-                                setUserInfo((prev) => ({
-                                  ...prev,
-                                  password: e.target.value,
-                                }));
-                              }}
-                            />
-                          </div>
-                        </div>
+                        </form>
                       </TabsContent>
                       <TabsContent value="password" className="flex flex-col w-full">
-                        <form key={id} ref={ref} onSubmit={handleSubmit(onSubmit)}>
+                        <form onSubmit={handleSubmit(onSubmit)}>
                           <div className="w-full">
-                            <Label htmlFor="oldPassword">Mật khẩu cũ</Label>
+                            <div className='mb-1'>
+                              <Label htmlFor="oldPassword">Mật khẩu cũ</Label>
+                            </div>
                             <Controller
                               name="oldPassword"
                               control={control}
@@ -305,7 +430,9 @@ function Header() {
                           </div>
                           <div className="h-5"></div>
                           <div className="w-full">
-                            <Label htmlFor="newPassword">Mật khẩu mới</Label>
+                            <div className='mb-1'>
+                              <Label htmlFor="newPassword" className='mb-2'>Mật khẩu mới</Label>
+                            </div>
                             <Controller
                               name="newPassword"
                               control={control}
@@ -326,7 +453,9 @@ function Header() {
                           </div>
                           <div className="h-5"></div>
                           <div className="w-full">
-                            <Label htmlFor="confirmPassword">Nhập lại mật khẩu</Label>
+                            <div className='mb-1'>
+                              <Label htmlFor="confirmPassword">Nhập lại mật khẩu</Label>
+                            </div>
                             <Controller
                               name="confirmPassword"
                               control={control}
@@ -367,7 +496,7 @@ function Header() {
       </Popover>
       {showModal && (
         <Modal
-          handleClickModal={() => setShowModal(false)}
+          handleClickModal={() => { messageDialog.status !== 'Error' ? setShowModal(false) : setShowModal(false); setShowPop(true); }}
           message={messageDialog.message}
           status={messageDialog.status}
         />

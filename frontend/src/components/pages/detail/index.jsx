@@ -10,7 +10,9 @@ import {
   DialogTitle,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
-import Loader from '../common/Loader';
+import Loader from '../../common/Loader';
+
+import './style.scss';
 
 function Detail() {
   const [openBusiness, setOpenBusiness] = useState(false);
@@ -76,6 +78,7 @@ function Detail() {
           >
             {businessData.map((e) => (
               <div
+                key={e.id}
                 className="underline cursor-pointer"
                 variant="outlined"
                 onClick={() => (setDetail(e), setOpenBusiness(true))}
@@ -138,37 +141,31 @@ function Detail() {
         }}
       >
         <DialogTitle>
-          <div className="flex justify-center mb-4 text-2xl font-bold">{detail.title}</div>
-          <div dangerouslySetInnerHTML={{ __html: detail.content }} />
-        </DialogTitle>
-        <DialogActions
-          sx={{
-            '.MuiDialogActions-root': {
-              position: 'absolute',
-              bottom: 0,
-              right: 0,
-            },
-          }}
-        >
-          <div className="absolute bottom-2 right-2">
-            <Button
-              sx={{ marginBottom: '8px', marginRight: '8px' }}
-              variant="contained"
-              onClick={() => handleClose()}
-            >
-              Close
-            </Button>
+          <div className='min-h-[652px]'>
+            <div className="flex justify-center mb-4 text-2xl font-bold">{detail.title}</div>
+            <div dangerouslySetInnerHTML={{ __html: detail.content }} />
           </div>
+        </DialogTitle>
+        <DialogActions>
+          <Button
+            sx={{ marginBottom: '8px', marginRight: '8px', position: 'absolute', bottom: '8px', right: '8px' }}
+            variant="contained"
+            onClick={() => handleClose()}
+          >
+            Close
+          </Button>
         </DialogActions>
       </Dialog>
       <Dialog open={openTrade}>
         <DialogTitle>
-          <div>{detail.title}</div>
-          <div dangerouslySetInnerHTML={{ __html: detail.content }} />
+          <div className='min-h-[652px]'>
+            <div className="flex justify-center mb-4 text-2xl font-bold">{detail.title}</div>
+            <div dangerouslySetInnerHTML={{ __html: detail.content }} />
+          </div>
         </DialogTitle>
         <DialogActions>
           <Button
-            sx={{ marginBottom: '8px', marginRight: '8px' }}
+            sx={{ marginBottom: '8px', marginRight: '8px', position: 'absolute', bottom: '8px', right: '8px' }}
             variant="contained"
             onClick={() => handleClose()}
           >
