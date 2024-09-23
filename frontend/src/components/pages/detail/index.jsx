@@ -1,10 +1,6 @@
 import { getArticleAll } from '@/api/article';
 import StickyNote2Icon from '@mui/icons-material/StickyNote2';
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary
-} from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
 import { useEffect, useState } from 'react';
 import Loader from '../../common/Loader';
 
@@ -40,7 +36,7 @@ function Detail() {
 
   return (
     <div className="max-w-sreen h-[calc(100vh-66px)] bg-white flex gap-14 px-16">
-      <div className="flex-1 mt-16">
+      <div className="flex-1 mt-12 max-w-[620px]">
         <Accordion sx={{ border: '1px solid #198ADE', boxShadow: 'none' }}>
           <AccordionSummary
             aria-controls="panel1-content"
@@ -66,7 +62,7 @@ function Detail() {
             {businessData.map((e) => (
               <div
                 key={e.id}
-                className='w-full flex text-sm cursor-pointer'
+                className="w-full flex text-sm cursor-pointer"
                 variant="outlined"
                 onClick={() => (setDetail(e), setOpenBusiness(true))}
               >
@@ -74,16 +70,18 @@ function Detail() {
                   <StickyNote2Icon color="primary" />
                   <span className="ml-2">{e.title}</span>
                 </div>
-                <div className='flex-1 border-b border-dotted border-black mx-1 mb-2'></div>
+                <div className="flex-1 border-b border-dotted border-black mx-1 mb-2"></div>
                 <div>{e.createDate.split(' ')[0]}</div>
               </div>
             ))}
           </AccordionDetails>
         </Accordion>
       </div>
-      <div className='w-[785px] max-h-[100vh-100px] mt-14'>
-        <div className="flex justify-center mb-4 text-2xl font-bold">{detail.title}</div>
-        <div dangerouslySetInnerHTML={{ __html: detail.content }} />
+      <div className="w-[724px] max-h-[420px] box-border overflow-y-auto border mt-12">
+        <div className="p-6">
+          <div className="flex justify-center mb-4 text-2xl font-bold">{detail.title}</div>
+          <div dangerouslySetInnerHTML={{ __html: detail.content }} />
+        </div>
       </div>
     </div>
   );

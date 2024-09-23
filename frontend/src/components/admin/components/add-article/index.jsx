@@ -62,7 +62,7 @@ export const AddArticleEditor = () => {
     'selectall',
     '|',
     'source',
-    'line-height',
+    'lineHeight',
   ];
 
   const editorConfig = {
@@ -83,13 +83,8 @@ export const AddArticleEditor = () => {
     wrapNodes: {
       emptyBlockAfterInit: true,
     },
-    controls: {
-      lineHeight: {
-        list: [1, 2, 3, 3.5]
-      },
-    },
-    enter: 'br',
-    editorClassName: 'editor-container'
+    enter: 'p',
+    editorClassName: 'editor-container',
     // width: 800,
     // height: 450,
   };
@@ -296,7 +291,7 @@ export const AddArticleEditor = () => {
             onBlur={(newContent) => {
               setContent(newContent);
             }}
-          // onChange={newContent => (setContent(newContent), console.log('newContent', newContent))}
+            // onChange={newContent => (setContent(newContent), console.log('newContent', newContent))}
           />
         </div>
         <div className="mt-4 text-end">
