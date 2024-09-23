@@ -3,11 +3,7 @@ import StickyNote2Icon from '@mui/icons-material/StickyNote2';
 import {
   Accordion,
   AccordionDetails,
-  AccordionSummary,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogTitle,
+  AccordionSummary
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import Loader from '../../common/Loader';
@@ -15,21 +11,12 @@ import Loader from '../../common/Loader';
 import './style.scss';
 
 function Detail() {
-  const [openBusiness, setOpenBusiness] = useState(false);
-  const [openTrade, setOpenTrade] = useState(false);
   const [businessData, setBusinessData] = useState([]);
-  const [tradeData, setTradeData] = useState([]);
   const [detail, setDetail] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const query = new URLSearchParams(window.location.search);
   const stokeParam = query.get('stoke');
-
-  const handleClose = (event, reason) => {
-    if (reason && reason === 'backdropClick') return;
-    setOpenBusiness(false);
-    setOpenTrade(false);
-  };
 
   useEffect(() => {
     const loadData = async () => {
@@ -38,9 +25,9 @@ function Detail() {
       if (data) {
         let result = data.filter((e) => e.stockId.symbol === stokeParam);
         let business = result.filter((e) => e.type === 1);
-        let trade = result.filter((e) => e.type === 2);
         setBusinessData(business);
-        setTradeData(trade);
+        setIsLoading(false);
+      } else {
         setIsLoading(false);
       }
     };
@@ -52,15 +39,15 @@ function Detail() {
   }
 
   return (
-    <div className="max-w-sreen h-[calc(100vh-66px)] bg-white flex justify-center items-center gap-16 px-16">
-      <div className="w-1/2 text-center">
+    <div className="max-w-sreen h-[calc(100vh-66px)] bg-white flex gap-14 px-16">
+      <div className="flex-1 mt-16">
         <Accordion sx={{ border: '1px solid #198ADE', boxShadow: 'none' }}>
           <AccordionSummary
             aria-controls="panel1-content"
             id="panel1-header"
             sx={{
               width: '100%',
-              height: '200px',
+              height: '100px',
               textTransform: 'uppercase',
               color: '#198ADE',
               fontWeight: '600',
@@ -79,100 +66,25 @@ function Detail() {
             {businessData.map((e) => (
               <div
                 key={e.id}
-                className="underline cursor-pointer"
+                className='w-full flex text-sm cursor-pointer'
                 variant="outlined"
                 onClick={() => (setDetail(e), setOpenBusiness(true))}
               >
-                <StickyNote2Icon color="primary" />
-                <span className="ml-2">{e.title}</span>
+                <div>
+                  <StickyNote2Icon color="primary" />
+                  <span className="ml-2">{e.title}</span>
+                </div>
+                <div className='flex-1 border-b border-dotted border-black mx-1 mb-2'></div>
+                <div>{e.createDate.split(' ')[0]}</div>
               </div>
             ))}
           </AccordionDetails>
         </Accordion>
       </div>
-      <div className="w-1/2 text-center">
-        <Accordion sx={{ border: '1px solid #198ADE', boxShadow: 'none' }}>
-          <AccordionSummary
-            aria-controls="panel1-content"
-            id="panel1-header"
-            sx={{
-              width: '100%',
-              height: '200px',
-              textTransform: 'uppercase',
-              color: '#198ADE',
-              fontWeight: '600',
-              textAlign: 'center',
-              '& > .MuiAccordionSummary-content': {
-                display: 'flex',
-                justifyContent: 'center',
-              },
-            }}
-          >
-            Phân tích Kỹ thuật Giao dịch
-          </AccordionSummary>
-          <AccordionDetails
-            sx={{ display: 'flex', alignItems: 'self-start', flexDirection: 'column' }}
-          >
-            {tradeData.map((e) => (
-              <div
-                key={e.id}
-                className="underline cursor-pointer"
-                variant="outlined"
-                onClick={() => (setDetail(e), setOpenBusiness(true))}
-              >
-                <StickyNote2Icon />
-                {e.title}
-              </div>
-            ))}
-          </AccordionDetails>
-        </Accordion>
+      <div className='w-[785px] max-h-[100vh-100px] mt-14'>
+        <div className="flex justify-center mb-4 text-2xl font-bold">{detail.title}</div>
+        <div dangerouslySetInnerHTML={{ __html: detail.content }} />
       </div>
-      <Dialog
-        open={openBusiness}
-        sx={{
-          '.MuiPaper-root': {
-            width: '785px',
-            maxWidth: '785px',
-            height: '700px',
-            maxHeight: 'calc(100vh - 100px)',
-            position: 'relative',
-            overflowY: 'scroll',
-          },
-        }}
-      >
-        <DialogTitle>
-          <div className='min-h-[652px]'>
-            <div className="flex justify-center mb-4 text-2xl font-bold">{detail.title}</div>
-            <div dangerouslySetInnerHTML={{ __html: detail.content }} />
-          </div>
-        </DialogTitle>
-        <DialogActions>
-          <Button
-            sx={{ marginBottom: '8px', marginRight: '8px', position: 'absolute', bottom: '8px', right: '8px' }}
-            variant="contained"
-            onClick={() => handleClose()}
-          >
-            Close
-          </Button>
-        </DialogActions>
-      </Dialog>
-      <Dialog open={openTrade}>
-        <DialogTitle>
-          <div className='min-h-[652px]'>
-            <div className="flex justify-center mb-4 text-2xl font-bold">{detail.title}</div>
-            <div dangerouslySetInnerHTML={{ __html: detail.content }} />
-          </div>
-        </DialogTitle>
-        <DialogActions>
-          <Button
-            sx={{ marginBottom: '8px', marginRight: '8px', position: 'absolute', bottom: '8px', right: '8px' }}
-            variant="contained"
-            onClick={() => handleClose()}
-          >
-            Close
-          </Button>
-        </DialogActions>
-      </Dialog>
     </div>
   );
 }

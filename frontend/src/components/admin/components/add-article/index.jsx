@@ -62,21 +62,20 @@ export const AddArticleEditor = () => {
     'selectall',
     '|',
     'source',
+    'line-height',
   ];
 
   const editorConfig = {
     readonly: false,
     toolbar: true,
     spellcheck: false,
-    language: 'vi',
-    toolbarButtonSize: 'medium',
+    toolbarButtonSize: 'small',
     toolbarAdaptive: false,
     showCharsCounter: true,
     showWordsCounter: true,
     showXPathInStatusbar: false,
     askBeforePasteHTML: true,
     askBeforePasteFromWord: true,
-    //defaultActionOnPaste: "insert_clear_html",
     buttons: buttons,
     uploader: {
       insertImageAsBase64URI: false,
@@ -84,7 +83,13 @@ export const AddArticleEditor = () => {
     wrapNodes: {
       emptyBlockAfterInit: true,
     },
+    controls: {
+      lineHeight: {
+        list: [1, 2, 3, 3.5]
+      },
+    },
     enter: 'br',
+    editorClassName: 'editor-container'
     // width: 800,
     // height: 450,
   };
@@ -291,7 +296,7 @@ export const AddArticleEditor = () => {
             onBlur={(newContent) => {
               setContent(newContent);
             }}
-            // onChange={newContent => (setContent(newContent), console.log('newContent', newContent))}
+          // onChange={newContent => (setContent(newContent), console.log('newContent', newContent))}
           />
         </div>
         <div className="mt-4 text-end">

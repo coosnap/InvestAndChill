@@ -7,7 +7,7 @@ import { useRecoilState } from 'recoil';
 import { AddArticleEditor } from './components/add-article';
 import TableArticle from './components/article/TableArticle';
 import ProductAdmin from './components/product';
-import TableQuestion from './components/question/TableQuestion';
+// import TableQuestion from './components/question/TableQuestion';
 import TableStoke from './components/stoke/TableStoke';
 import UserAdmin from './components/user';
 
@@ -26,11 +26,11 @@ const tabList = [
     title: 'Article',
     element: <TableArticle />,
   },
-  {
-    path: 'question',
-    title: 'Question',
-    element: <TableQuestion />,
-  },
+  // {
+  //   path: 'question',
+  //   title: 'Question',
+  //   element: <TableQuestion />,
+  // },
   {
     path: 'add-article',
     title: 'Add Article',
@@ -75,10 +75,10 @@ function Admin() {
 
         {(cookie[0].roles.includes('ROLE_MODERATOR_USER') ||
           cookie[0].roles.includes('ROLE_ADMIN')) && (
-          <TabsContent value="user">
-            <UserAdmin />
-          </TabsContent>
-        )}
+            <TabsContent value="user">
+              <UserAdmin />
+            </TabsContent>
+          )}
 
         {(cookie[0].roles.includes('ROLE_MODERATOR_ARTICLE') ||
           cookie[0].roles.includes('ROLE_ADMIN')) &&

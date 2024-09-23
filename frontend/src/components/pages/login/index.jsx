@@ -24,16 +24,11 @@ const loginSchema = z.object({
 
 const registerSchema = z
   .object({
-    username: z.string().min(1, { message: 'Vui lòng điền tên đăng nhập' }),
+    username: z.string().email({ message: 'Vui lòng điền đúng định dạng email' }),
     password: z.string().min(1, { message: 'Vui lòng điền mật khẩu' }),
-    passwordConfirm: z.string().min(1, { message: 'Vui lòng xác nhận mật khẩu' }),
-    email: z.string().email({ message: 'Vui lòng điền đúng định dạng email' }),
-    firstName: z.string().min(1, { message: 'Vui lòng điền tên' }),
-    lastName: z.string().min(1, { message: 'Vui lòng điền họ' }),
-    phoneNumber: z.string().min(1, { message: 'Vui lòng điền số điện thoại' }),
-    dateOfBirth: z.string().transform((value) => new Date(value)),
+    passwordConfirm: z.string().min(1, { message: 'Vui lòng xác nhận mật khẩu' })
   })
-  .superRefine(({ passwordConfirm, password, dateOfBirth }, ctx) => {
+  .superRefine(({ passwordConfirm, password }, ctx) => {
     if (passwordConfirm !== password) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
@@ -41,15 +36,15 @@ const registerSchema = z
         path: ['passwordConfirm'],
       });
     }
-    if (dateOfBirth) {
-      if (Number(isNaN(dateOfBirth.getTime()))) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: 'Vui lòng điền ngày sinh',
-          path: ['dateOfBirth'],
-        });
-      }
-    }
+    // if (dateOfBirth) {
+    //   if (Number(isNaN(dateOfBirth.getTime()))) {
+    //     ctx.addIssue({
+    //       code: z.ZodIssueCode.custom,
+    //       message: 'Vui lòng điền ngày sinh',
+    //       path: ['dateOfBirth'],
+    //     });
+    //   }
+    // }
   });
 
 function Login() {
@@ -91,11 +86,7 @@ function Login() {
       username: '',
       password: '',
       passwordConfirm: '',
-      email: '',
-      firstName: '',
-      lastName: '',
-      phoneNumber: '',
-      dateOfBirth: '',
+      fullName: '',
     },
     resolver: zodResolver(registerSchema),
   });
@@ -193,23 +184,30 @@ function Login() {
             <h4 className="text-3xl text-gray-900 mb-4">Tiếp cận hệ thống dữ liệu tài chính</h4>
             <p className="text-xl text-gray-900">Chính xác - Cập nhật - Đầy đủ</p>
           </div>
-          <div className="rounded-2xl bg-white h-[230px] flex flex-col justify-center px-12 overflow-y-auto">
-            {articleList &&
-              articleList.length > 0 &&
-              articleList.map(
-                (e, i) =>
-                  i <= 4 && (
-                    <Link
-                      to={'/post/' + e.id}
-                      className={`${i <= 3 ? 'border-b' : ''
-                        } text-gray-900 mb-1 cursor-pointer pb-1`}
-                      key={e.id}
-                    >
-                      <StickyNote2Icon color="primary" sx={{ marginRight: '8px' }} />
-                      {e.title}
-                    </Link>
-                  )
-              )}
+          <div className="rounded-2xl bg-white h-[230px] flex flex-col justify-center px-12">
+            <div className='py-4 overflow-y-auto'>
+              {articleList &&
+                articleList.length > 0 &&
+                articleList.map(
+                  (e, i) =>
+                    i <= 4 && (
+                      <Link
+                        to={'/post/' + e.id}
+                        className={`flex justify-between text-gray-900 text-sm mb-1 cursor-pointer pb-1`}
+                        key={e.id}
+                      >
+                        <div>
+                          <StickyNote2Icon color="primary" sx={{ marginRight: '8px' }} />
+                          <span>
+                            {e.title.length > 50 ? e.title.substring(1, 50) + '...' : e.title}
+                          </span>
+                        </div>
+                        <div className='flex-1 border-b border-dotted border-black mx-1 mb-2'></div>
+                        <div>{e.createDate.split(' ')[0]}</div>
+                      </Link>
+                    )
+                )}
+            </div>
           </div>
         </div>
         <div className="flex flex-col w-[752px] h-full gap-8">
@@ -218,7 +216,7 @@ function Login() {
               Đăng nhập
             </div>
             <form key={id} onSubmit={handleSubmit(onSubmit)} className="px-12 w-full">
-              <div className="h-1 2xl:h-3"></div>
+              <div className="h-3"></div>
               <Controller
                 name="username"
                 control={control}
@@ -236,7 +234,7 @@ function Login() {
                   />
                 )}
               />
-              <div className="h-1 2xl:h-3"></div>
+              <div className="h-5"></div>
               <Controller
                 name="password"
                 control={control}
@@ -272,13 +270,16 @@ function Login() {
                   <Label className="text-red-500">{validate.loginMessage}</Label>
                 </div>
               ) : null}
-              <div className="flex items-center">
-                <div className="w-1/2 text-end">
-                  <Button type="submit" variant="primary" className="mt-2">
-                    Đăng nhập
-                  </Button>
+              <div className="flex items-center justify-between mt-2">
+                <div>
+                  <span
+                    className="mt-4 lg:mt-2 font-semibold text-blue-500 hover:text-blue-300 underline cursor-pointer"
+                    onClick={() => setShowRegisterDialog(true)}
+                  >
+                    Quên mật khẩu
+                  </span>
                 </div>
-                <div className="w-1/2 text-end">
+                <div>
                   <span
                     className="mt-4 lg:mt-2 font-semibold text-blue-500 hover:text-blue-300 underline cursor-pointer"
                     onClick={() => setShowRegisterDialog(true)}
@@ -286,6 +287,11 @@ function Login() {
                     Đăng ký tài khoản
                   </span>
                 </div>
+              </div>
+              <div className="w-full text-center">
+                <Button type="submit" variant="primary" className="mt-2">
+                  Đăng nhập
+                </Button>
               </div>
             </form>
           </div>
@@ -295,7 +301,7 @@ function Login() {
           className={`${showRegisterDialog ? '' : 'hidden'
             } absolute top-0 left-0 w-full h-full opacity-50 bg-black`}
         ></div>
-        <div className={`${showRegisterDialog ? '' : 'hidden'} absolute top-[5%] left-[40%]`}>
+        <div className={`${showRegisterDialog ? '' : 'hidden'} absolute top-[10%] left-[35%]`}>
           <div className="w-[500px] py-10 bg-white rounded-lg shadow-2xl">
             <div className="px-10">
               <div>
@@ -321,44 +327,23 @@ function Login() {
                     )}
                   />
                   <div className="h-5"></div>
-                  <div className="flex gap-4">
-                    <Controller
-                      name="lastName"
-                      control={controlRegister}
-                      render={({ field }) => (
-                        <TextField
-                          required
-                          name="lastName"
-                          className="w-1/2"
-                          label="Họ"
-                          type="text"
-                          size="small"
-                          error={!!errorsRegister?.lastName}
-                          helperText={errorsRegister?.lastName?.message}
-                          {...field}
-                        />
-                      )}
-                    />
-                    <Controller
-                      name="firstName"
-                      control={controlRegister}
-                      render={({ field }) => (
-                        <TextField
-                          required
-                          name="firstName"
-                          className="w-1/2"
-                          label="Tên"
-                          type="text"
-                          size="small"
-                          error={!!errorsRegister?.firstName}
-                          helperText={errorsRegister?.firstName?.message}
-                          {...field}
-                        />
-                      )}
-                    />
-                  </div>
-                  <div className="h-5"></div>
-                  <div className="flex gap-4">
+                  <Controller
+                    name="fullName"
+                    control={controlRegister}
+                    render={({ field }) => (
+                      <TextField
+                        name="fullName"
+                        className="w-full"
+                        label="Họ và Tên"
+                        type="text"
+                        size="small"
+                        error={!!errorsRegister?.fullName}
+                        helperText={errorsRegister?.fullName?.message}
+                        {...field}
+                      />
+                    )}
+                  />
+                  {/* <div className="flex gap-4">
                     <Controller
                       name="dateOfBirth"
                       control={controlRegister}
@@ -375,62 +360,10 @@ function Login() {
                             helperText={errorsRegister?.dateOfBirth?.message}
                             {...field}
                           />
-
-                          // <LocalizationProvider dateAdapter={AdapterDayjs}>
-                          //   <DatePicker
-                          //     label={"Ngày sinh"}
-                          //     format="DD/MM/YYYY"
-                          //     className="w-1/2 z-50"
-                          //     slotProps={{
-                          //       textField: {
-                          //         required: true,
-                          //         error: !!errorsRegister?.dateOfBirth,
-                          //         helperText:
-                          //           errorsRegister?.dateOfBirth?.message,
-                          //         onBlur: field.onBlur,
-                          //       },
-                          //     }}
-                          //   />
-                          // </LocalizationProvider>
                         );
                       }}
                     />
-                    <Controller
-                      name="phoneNumber"
-                      control={controlRegister}
-                      render={({ field }) => (
-                        <TextField
-                          required
-                          name="phoneNumber"
-                          className="w-1/2"
-                          label="Số điện thoại"
-                          type="text"
-                          size="small"
-                          error={!!errorsRegister?.phoneNumber}
-                          helperText={errorsRegister?.phoneNumber?.message}
-                          {...field}
-                        />
-                      )}
-                    />
-                  </div>
-                  <div className="h-5"></div>
-                  <Controller
-                    name="email"
-                    control={controlRegister}
-                    render={({ field }) => (
-                      <TextField
-                        required
-                        name="email"
-                        className="w-full"
-                        label="Email"
-                        type="text"
-                        size="small"
-                        error={!!errorsRegister?.email}
-                        helperText={errorsRegister?.email?.message}
-                        {...field}
-                      />
-                    )}
-                  />
+                  </div> */}
                   <div className="h-5"></div>
                   <Controller
                     name="password"
