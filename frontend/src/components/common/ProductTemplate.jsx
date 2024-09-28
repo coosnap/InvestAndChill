@@ -10,7 +10,7 @@ function ProductTemplate(props) {
       {props.products.map((e) => (
         <div
           key={e.id}
-          className={`${props.cls} max-h-[540px] overflow-y-auto bg-white rounded-lg flex flex-col items-center gap-y-8 py-4 px-2`}
+          className={`${props.cls} bg-white rounded-lg flex flex-col items-center gap-y-8 py-4 px-2`}
         >
           <p className="text-4xl text-center text-[rgb(84, 91, 102)] font-semibold">{e.name}</p>
           <p className="text-center text-2xl font-semibold text-[#098DFE]">

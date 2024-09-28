@@ -23,7 +23,7 @@ function ListCompany() {
 
   return (
     <div className="flex justify-center">
-      <div className="container">
+      <div className="container w-[80%]">
         <div className="pt-8 text-center">
           <h1 className="text-4xl font-semibold">Danh mục</h1>
         </div>

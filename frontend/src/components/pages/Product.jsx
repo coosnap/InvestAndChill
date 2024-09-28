@@ -29,8 +29,8 @@ function Product() {
   }
 
   return (
-    <div className="flex justify-center">
-      <div className="container max-h-[calc(100vh-66px)] pt-6">
+    <div className="h-full flex justify-center">
+      <div className="container w-[80%] py-6">
         <div className="text-center mb-8">
           <h2 className="text-[#232A46] font-semibold text-4xl">Các gói dịch vụ</h2>
         </div>
