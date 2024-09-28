@@ -61,7 +61,7 @@ function Admin() {
   return (
     <div className="container w-[80%] mx-auto pt-6">
       <Tabs value={tabDefault} onValueChange={onTabChange} className="w-full">
-        <TabsList>
+        <TabsList className="bg-white">
           {(cookie[0].roles.includes('ROLE_MODERATOR_USER') ||
             cookie[0].roles.includes('ROLE_ADMIN')) && <TabsTrigger value="user">User</TabsTrigger>}
           {(cookie[0].roles.includes('ROLE_MODERATOR_ARTICLE') ||
@@ -75,10 +75,10 @@ function Admin() {
 
         {(cookie[0].roles.includes('ROLE_MODERATOR_USER') ||
           cookie[0].roles.includes('ROLE_ADMIN')) && (
-            <TabsContent value="user">
-              <UserAdmin />
-            </TabsContent>
-          )}
+          <TabsContent value="user">
+            <UserAdmin />
+          </TabsContent>
+        )}
 
         {(cookie[0].roles.includes('ROLE_MODERATOR_ARTICLE') ||
           cookie[0].roles.includes('ROLE_ADMIN')) &&

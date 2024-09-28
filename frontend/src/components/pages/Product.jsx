@@ -1,8 +1,8 @@
-import { getProductAll } from "@/api/product";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom/dist";
-import Loader from "../common/Loader";
-import ProductTemplate from "../common/ProductTemplate";
+import { getProductAll } from '@/api/product';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom/dist';
+import Loader from '../common/Loader';
+import ProductTemplate from '../common/ProductTemplate';
 
 function Product() {
   const navigate = useNavigate();
@@ -29,8 +29,8 @@ function Product() {
   }
 
   return (
-    <div className="flex justify-center bg-[#EBEDF4]">
-      <div className="container h-[calc(100vh-66px)] pt-6">
+    <div className="flex justify-center">
+      <div className="container max-h-[calc(100vh-66px)] pt-6">
         <div className="text-center mb-8">
           <h2 className="text-[#232A46] font-semibold text-4xl">Các gói dịch vụ</h2>
         </div>

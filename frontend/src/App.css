@@ -3,10 +3,14 @@
 @tailwind utilities;
 
 #root {
-  /* width: 100vw; */
-  min-height: 100vh;
-  background-color: #F5F9FC;
+  height: 100vh;
+  background-color: #FFF4C7;
+  font-size: 16px;
 }
+
+/* .App {
+  height: 100vh;
+} */
 
 td {
   border-width: 1px;
@@ -18,4 +22,22 @@ td {
 
 p {
   line-height: normal;
+}
+
+h1 {
+  font-size: clamp(3rem, 6vw, 4rem);
+}
+
+h3 {
+  font-size: clamp(2rem, 4vw, 3rem);
+}
+
+h5 {
+  font-size: clamp(1rem, 2vw, 2rem);
+}
+
+.truncate-single-line {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }

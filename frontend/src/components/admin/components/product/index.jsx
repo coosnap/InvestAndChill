@@ -53,7 +53,7 @@ export default function ProductAdmin() {
   return (
     <>
       {isLoading && <Loader />}
-      <Table className="custom-td border mt-6">
+      <Table className="custom-td border mt-6 bg-white">
         <TableHeader>
           <TableRow className="bg-blue-100">
             <TableHead className="text-center">Name</TableHead>

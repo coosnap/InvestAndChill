@@ -61,10 +61,10 @@ export default function TableStoke() {
   return (
     <>
       {isLoading && <Loader />}
-      <div className="cursor-pointer my-8">
+      <div className="my-8">
         <AddStoke render={getData} action="Add" />
       </div>
-      <Table className="custom-td border">
+      <Table className="custom-td border bg-white">
         <TableHeader>
           <TableRow className="bg-blue-100">
             <TableHead className="text-center">Symbol</TableHead>

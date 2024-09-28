@@ -1,5 +1,5 @@
-import { insertStoke, updateStoke } from "@/api/stock";
-import Modal from "@/components/common/Modal";
+import { insertStoke, updateStoke } from '@/api/stock';
+import Modal from '@/components/common/Modal';
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -8,21 +8,21 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger
-} from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { StokeAll } from "@/store/stoke";
-import { useState } from "react";
-import { FaEdit } from "react-icons/fa";
-import { useRecoilValue } from "recoil";
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { StokeAll } from '@/store/stoke';
+import { useState } from 'react';
+import { FaEdit } from 'react-icons/fa';
+import { useRecoilValue } from 'recoil';
 
 function AddStoke(props) {
   const [stoke, setStoke] = useState({});
   const [stokeDetail, setStokeDetail] = useState({});
   const [showModal, setShowModal] = useState(false);
-  const [messageDialog, setMessageDialog] = useState({ status: "", message: "" });
+  const [messageDialog, setMessageDialog] = useState({ status: '', message: '' });
 
   const stokes = useRecoilValue(StokeAll);
 
@@ -31,37 +31,45 @@ function AddStoke(props) {
     if (result && result.length > 0) {
       setStokeDetail(result[0]);
       setStoke(result[0]);
-    };
+    }
   }
 
   const handleClose = () => {
     props.render();
     setShowModal(false);
-  }
+  };
 
   async function handleSubmitStoke() {
     if (!stoke) return;
-    if (props.action === "Edit") {
+    if (props.action === 'Edit') {
       try {
         let temp = { ...stokeDetail };
-        setStoke(prev => ({ ...prev, ...temp }));
+        setStoke((prev) => ({ ...prev, ...temp }));
         await updateStoke(stoke);
         document.getElementById('stoke-cancel')?.click();
-        setMessageDialog(prev => ({ ...prev, status: "Success", message: "Update Successfully!" }));
+        setMessageDialog((prev) => ({
+          ...prev,
+          status: 'Success',
+          message: 'Update Successfully!',
+        }));
         setShowModal(true);
       } catch (error) {
-        setMessageDialog(prev => ({ ...prev, status: "Error", message: "Update Fail!" }));
+        setMessageDialog((prev) => ({ ...prev, status: 'Error', message: 'Update Fail!' }));
         setShowModal(true);
       }
     }
-    if (props.action === "Add") {
+    if (props.action === 'Add') {
       try {
         await insertStoke(stoke);
         document.getElementById('stoke-cancel')?.click();
-        setMessageDialog(prev => ({ ...prev, status: "Success", message: "Update Successfully!" }));
+        setMessageDialog((prev) => ({
+          ...prev,
+          status: 'Success',
+          message: 'Update Successfully!',
+        }));
         setShowModal(true);
       } catch (error) {
-        setMessageDialog(prev => ({ ...prev, status: "Error", message: "Update Fail!" }));
+        setMessageDialog((prev) => ({ ...prev, status: 'Error', message: 'Update Fail!' }));
         setShowModal(true);
       }
     }
@@ -72,76 +80,90 @@ function AddStoke(props) {
     <div>
       <AlertDialog>
         <AlertDialogTrigger asChild>
-          {props.action === "Edit" ?
-            <Button variant="primary" onClick={handleEditStoke}>
+          {props.action === 'Edit' ? (
+            <Button variant="primary" className="cursor-pointer" onClick={handleEditStoke}>
               <FaEdit />
             </Button>
-            :
-            <Button variant="primary">
+          ) : (
+            <Button variant="primary" className="cursor-pointer">
               Add Stoke
             </Button>
-          }
+          )}
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle className="mb-4 text-center">{props.action === "Edit" ? "Edit" : "Add"} Stoke</AlertDialogTitle>
+            <AlertDialogTitle className="mb-4 text-center">
+              {props.action === 'Edit' ? 'Edit' : 'Add'} Stoke
+            </AlertDialogTitle>
             <AlertDialogDescription className="flex flex-col gap-4">
-              {props.action === "Edit" &&
-                <span className="space-y-1">
+              {props.action === 'Edit' && (
+                <div className="space-y-1 flex flex-col items-start gap-1">
                   <Label htmlFor="name">Id</Label>
                   <Input
                     disabled
-                    defaultValue={stokeDetail?.id ?? ""}
+                    defaultValue={stokeDetail?.id ?? ''}
                     onChange={(e) => {
                       setStoke((prev) => ({
                         ...prev,
                         id: e.target.value,
                       }));
-                    }} />
-                </span>
-              }
-              <span className="space-y-1">
+                    }}
+                  />
+                </div>
+              )}
+              <div className="space-y-1 flex flex-col items-start gap-1">
                 <Label htmlFor="name">Stoke Symbol</Label>
                 <Input
-                  defaultValue={stokeDetail?.symbol ?? ""}
+                  defaultValue={stokeDetail?.symbol ?? ''}
                   onChange={(e) => {
                     setStoke((prev) => ({
                       ...prev,
                       symbol: e.target.value,
                     }));
-                  }} />
-              </span>
-              <span className="space-y-1">
+                  }}
+                />
+              </div>
+              <div className="space-y-1 flex flex-col items-start gap-1">
                 <Label htmlFor="username">Company Name</Label>
                 <Input
-                  defaultValue={stokeDetail?.companyName ?? ""}
+                  defaultValue={stokeDetail?.companyName ?? ''}
                   onChange={(e) => {
                     setStoke((prev) => ({
                       ...prev,
                       companyName: e.target.value,
                     }));
-                  }} />
-              </span>
-              <span className="space-y-1">
+                  }}
+                />
+              </div>
+              <div className="space-y-1 flex flex-col items-start gap-1">
                 <Label htmlFor="username">Note</Label>
                 <Input
-                  defaultValue={stokeDetail?.note ?? ""}
+                  defaultValue={stokeDetail?.note ?? ''}
                   onChange={(e) => {
                     setStoke((prev) => ({
                       ...prev,
                       note: e.target.value,
                     }));
-                  }} />
-              </span>
+                  }}
+                />
+              </div>
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel id="stoke-cancel">Cancel</AlertDialogCancel>
-            <Button variant="primary" onClick={handleSubmitStoke}>Save</Button>
+            <Button variant="primary" onClick={handleSubmitStoke}>
+              Save
+            </Button>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-      {showModal && <Modal handleClickModal={handleClose} message={messageDialog.message} status={messageDialog.status} />}
+      {showModal && (
+        <Modal
+          handleClickModal={handleClose}
+          message={messageDialog.message}
+          status={messageDialog.status}
+        />
+      )}
     </div>
   );
 }

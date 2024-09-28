@@ -137,10 +137,12 @@ const Layout = ({ hideHeaderPaths = [] }) => {
 
   return (
     <>
-      {!hideHeaderPaths.includes(pathname) && (
+      {!hideHeaderPaths.includes(pathname) ? (
         <Suspense>
           <Header />
         </Suspense>
+      ) : (
+        <div className="h-16"></div>
       )}
       <Outlet />
     </>

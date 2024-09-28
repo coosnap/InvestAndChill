@@ -45,19 +45,23 @@ function Investment() {
   // }
 
   return (
-    <div className="flex justify-center items-center relative mx-auto h-[calc(100vh-66px)] bg-[#F5F9FC]">
+    <div className="flex justify-center items-center relative mx-auto h-[calc(100vh-66px)] bg-primary">
       <div className="flex justify-center gap-8">
         {investData.map((e) => {
           return (
             <article
               key={e.id}
               onClick={() => handleClickCard(e.id, e.href)}
-              className={`w-1/4 flex items-center justify-center cursor-pointer bg-white px-7 py-4 rounded-box`}
+              className={`w-1/4 flex items-center justify-center cursor-pointer bg-white px-7 py-4 rounded-box opacity-75`}
             >
               <div className="group relative flex flex-col items-center">
                 {e?.icon ? (
                   <div>
-                    <svg height="auto" width="auto" dangerouslySetInnerHTML={{ __html: e.icon }}></svg>
+                    <svg
+                      height="auto"
+                      width="auto"
+                      dangerouslySetInnerHTML={{ __html: e.icon }}
+                    ></svg>
                   </div>
                 ) : (
                   <img src={e?.image} alt="" />
