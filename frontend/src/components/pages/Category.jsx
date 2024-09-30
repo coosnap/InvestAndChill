@@ -23,17 +23,17 @@ function ListCompany() {
 
   return (
     <div className="flex justify-center">
-      <div className="container">
+      <div className="container w-[80%]">
         <div className="pt-8 text-center">
           <h1 className="text-4xl font-semibold">Danh mục</h1>
         </div>
         <div className="flex flex-col items-center w-full px-8 py-8 gap-y-4">
           {categories.map((e) => (
-            <Link
-              to={`/detail?stoke=${e.symbol}`}
-              className='w-full'
-            >
-              <div key={e.id} className="flex justify-between max-w-[1200px] px-4 py-4 border rounded-lg">
+            <Link to={`/detail?stoke=${e.symbol}`} className="w-full">
+              <div
+                key={e.id}
+                className="flex justify-between max-w-[1200px] px-4 py-4 border rounded-lg bg-white"
+              >
                 <div className="flex items-center">
                   <div className="">
                     <svg

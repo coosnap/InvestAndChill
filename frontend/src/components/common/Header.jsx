@@ -36,18 +36,18 @@ const passwordSchema = z
     }
   });
 
-const phoneRegex = new RegExp(
-  /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/
-);
-const infoSchema = z
-  .object({
-    phoneNumber: z.string().min(1, { message: 'Vui lòng điền số điện thoại' }).regex(phoneRegex, 'Chưa đúng định dạng số điện thoại'),
-    username: z.string().min(1, { message: 'Vui lòng điền tên người dùng' }),
-    firstName: z.string().min(1, { message: 'Vui lòng điền Tên' }),
-    lastName: z.string().min(1, { message: 'Vui lòng điền Họ' }),
-    email: z.string().min(1, { message: 'Vui lòng điền Email' }).email("Chưa đúng định dạng Email"),
-    password: z.string().min(1, { message: 'Vui lòng điền mật khẩu' }),
-  });
+const phoneRegex = new RegExp(/^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/);
+const infoSchema = z.object({
+  phoneNumber: z
+    .string()
+    .min(1, { message: 'Vui lòng điền số điện thoại' })
+    .regex(phoneRegex, 'Chưa đúng định dạng số điện thoại'),
+  username: z.string().min(1, { message: 'Vui lòng điền tên người dùng' }),
+  firstName: z.string().min(1, { message: 'Vui lòng điền Tên' }),
+  lastName: z.string().min(1, { message: 'Vui lòng điền Họ' }),
+  email: z.string().min(1, { message: 'Vui lòng điền Email' }).email('Chưa đúng định dạng Email'),
+  password: z.string().min(1, { message: 'Vui lòng điền mật khẩu' }),
+});
 
 function Header() {
   const navigate = useNavigate();
@@ -81,7 +81,7 @@ function Header() {
     handleSubmit: handleSubmitInfo,
     control: controlInfo,
     formState: { errors: errorInfo },
-    reset
+    reset,
   } = useForm({
     mode: 'all',
     defaultValues: {
@@ -89,7 +89,7 @@ function Header() {
       username: '',
       firstName: '',
       lastName: '',
-      email: ''
+      email: '',
     },
     resolver: zodResolver(infoSchema),
   });
@@ -113,7 +113,7 @@ function Header() {
             username: result.username,
             firstName: result.firstName,
             lastName: result.lastName,
-            email: result.email
+            email: result.email,
           };
           reset({ ...defaultValues });
         }
@@ -125,7 +125,7 @@ function Header() {
 
   const onSubmit = useCallback(async (values) => {
     const id = cookies.usrId.id;
-    if (tabDefault === "user") {
+    if (tabDefault === 'user') {
       let data = {
         id: id,
         phoneNumber: values?.phoneNumber,
@@ -133,7 +133,7 @@ function Header() {
         firstName: values?.firstName,
         lastName: values?.lastName,
         email: values?.email,
-        password: values?.password
+        password: values?.password,
       };
       try {
         const response = await updateUser(data);
@@ -164,7 +164,7 @@ function Header() {
         setShowModal(true);
       }
     }
-    if (tabDefault === "password") {
+    if (tabDefault === 'password') {
       let data = {
         userName: cookies?.usrId?.usrNm,
         oldPassword: values?.oldPassword,
@@ -203,14 +203,14 @@ function Header() {
   };
 
   return (
-    <div className="navbar flex justify-between items-center bg-blue-100 py-2 px-8">
+    <div className="navbar flex justify-between items-center bg-fourth py-2 px-8">
       <div className="flex">
         <Link
           to="/invest"
           className="flex items-center text-3xl tracking-tighter font-semibold text-[#DA5800]"
         >
           <img src="/logo.jpg" width={48} height={48} />
-          <span className="ml-3">InvestnChill</span>
+          <span className="ml-3 text-4xl">InvestnChill</span>
         </Link>
       </div>
       <Popover open={showPop} onOpenChange={setShowPop}>
@@ -226,7 +226,11 @@ function Header() {
               <p className="text-xl text-muted-foreground">{cookies?.usrId?.email ?? ''}</p>
             </div>
             {(cookies?.roles?.includes('ROLE_MODERATOR_USER') ||
-              cookies?.roles?.includes('ROLE_ADMIN')) && <Link to="/admin" className='text-lg'>Đi tới Admin</Link>}
+              cookies?.roles?.includes('ROLE_ADMIN')) && (
+              <Link to="/admin" className="text-lg">
+                Đi tới Admin
+              </Link>
+            )}
             <AlertDialog>
               <AlertDialogTrigger asChild>
                 <button id="update-info" className="text-lg text-start" onClick={handleUpdateUser}>
@@ -251,7 +255,7 @@ function Header() {
                           <div className="flex flex-col gap-3 w-full">
                             <div className="flex">
                               <div className="space-y-1 w-1/2 pr-2">
-                                <div className='mb-1'>
+                                <div className="mb-1">
                                   <Label htmlFor="phoneNumber">Số điện thoại</Label>
                                 </div>
                                 <Controller
@@ -262,7 +266,7 @@ function Header() {
                                       required
                                       name="phoneNumber"
                                       className="w-full"
-                                      size='small'
+                                      size="small"
                                       label=""
                                       type="text"
                                       onChange={onChange}
@@ -274,7 +278,7 @@ function Header() {
                                 />
                               </div>
                               <div className="space-y-1 w-1/2 pl-2">
-                                <div className='mb-1'>
+                                <div className="mb-1">
                                   <Label htmlFor="username">Tên người dùng</Label>
                                 </div>
                                 <Controller
@@ -285,7 +289,7 @@ function Header() {
                                       required
                                       name="username"
                                       className="w-full"
-                                      size='small'
+                                      size="small"
                                       label=""
                                       type="text"
                                       onChange={onChange}
@@ -299,7 +303,7 @@ function Header() {
                             </div>
                             <div className="flex gap-4">
                               <div className="space-y-1 w-1/2">
-                                <div className='mb-1'>
+                                <div className="mb-1">
                                   <Label htmlFor="lastName">Họ</Label>
                                 </div>
                                 <Controller
@@ -311,7 +315,7 @@ function Header() {
                                       required
                                       name="lastName"
                                       className="w-full"
-                                      size='small'
+                                      size="small"
                                       label=""
                                       type="text"
                                       onChange={onChange}
@@ -323,7 +327,7 @@ function Header() {
                                 />
                               </div>
                               <div className="space-y-1 w-1/2">
-                                <div className='mb-1'>
+                                <div className="mb-1">
                                   <Label htmlFor="firstName">Tên</Label>
                                 </div>
                                 <Controller
@@ -335,7 +339,7 @@ function Header() {
                                       required
                                       name="firstName"
                                       className="w-full"
-                                      size='small'
+                                      size="small"
                                       label=""
                                       type="text"
                                       onChange={onChange}
@@ -348,7 +352,7 @@ function Header() {
                               </div>
                             </div>
                             <span className="space-y-1">
-                              <div className='mb-1'>
+                              <div className="mb-1">
                                 <Label htmlFor="email">Email</Label>
                               </div>
                               <Controller
@@ -360,7 +364,7 @@ function Header() {
                                     required
                                     name="email"
                                     className="w-full"
-                                    size='small'
+                                    size="small"
                                     label=""
                                     type="text"
                                     onChange={onChange}
@@ -372,7 +376,7 @@ function Header() {
                               />
                             </span>
                             <div className="space-y-1 w-full">
-                              <div className='mb-1'>
+                              <div className="mb-1">
                                 <Label htmlFor="password">Mật khẩu</Label>
                               </div>
                               <Controller
@@ -383,7 +387,7 @@ function Header() {
                                     required
                                     name="password"
                                     className="w-full"
-                                    size='small'
+                                    size="small"
                                     label=""
                                     type="password"
                                     onChange={onChange}
@@ -407,7 +411,7 @@ function Header() {
                       <TabsContent value="password" className="flex flex-col w-full">
                         <form onSubmit={handleSubmit(onSubmit)}>
                           <div className="w-full">
-                            <div className='mb-1'>
+                            <div className="mb-1">
                               <Label htmlFor="oldPassword">Mật khẩu cũ</Label>
                             </div>
                             <Controller
@@ -430,8 +434,10 @@ function Header() {
                           </div>
                           <div className="h-5"></div>
                           <div className="w-full">
-                            <div className='mb-1'>
-                              <Label htmlFor="newPassword" className='mb-2'>Mật khẩu mới</Label>
+                            <div className="mb-1">
+                              <Label htmlFor="newPassword" className="mb-2">
+                                Mật khẩu mới
+                              </Label>
                             </div>
                             <Controller
                               name="newPassword"
@@ -453,7 +459,7 @@ function Header() {
                           </div>
                           <div className="h-5"></div>
                           <div className="w-full">
-                            <div className='mb-1'>
+                            <div className="mb-1">
                               <Label htmlFor="confirmPassword">Nhập lại mật khẩu</Label>
                             </div>
                             <Controller
@@ -496,7 +502,10 @@ function Header() {
       </Popover>
       {showModal && (
         <Modal
-          handleClickModal={() => { messageDialog.status !== 'Error' ? setShowModal(false) : setShowModal(false); setShowPop(true); }}
+          handleClickModal={() => {
+            messageDialog.status !== 'Error' ? setShowModal(false) : setShowModal(false);
+            setShowPop(true);
+          }}
           message={messageDialog.message}
           status={messageDialog.status}
         />

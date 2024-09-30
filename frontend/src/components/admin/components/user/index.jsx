@@ -74,8 +74,8 @@ export default function UserAdmin() {
   }
 
   return (
-    <div className="h-[calc(100vh-190px)] overflow-y-scroll mt-6">
-      <Table className="custom-td border">
+    <div className="h-[calc(100vh-190px)] overflow-y-auto mt-6">
+      <Table className="custom-td border bg-white">
         <TableHeader>
           <TableRow className="bg-blue-100">
             <TableHead className="text-center">User Name</TableHead>

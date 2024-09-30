@@ -35,7 +35,7 @@ function Detail() {
   }
 
   return (
-    <div className="max-w-sreen h-[calc(100vh-66px)] bg-white flex gap-14 px-16">
+    <div className="max-w-sreen h-[calc(100vh-66px)] bg-primary flex gap-14 px-16">
       <div className="flex-1 mt-12 max-w-[620px]">
         <Accordion sx={{ border: '1px solid #198ADE', boxShadow: 'none' }}>
           <AccordionSummary
@@ -77,7 +77,7 @@ function Detail() {
           </AccordionDetails>
         </Accordion>
       </div>
-      <div className="w-[724px] max-h-[420px] box-border overflow-y-auto border mt-12">
+      <div className="w-[724px] mx-auto max-h-[calc(100vh-150px)] box-border overflow-y-auto border mt-12 bg-second">
         <div className="p-6">
           <div className="flex justify-center mb-4 text-2xl font-bold">{detail.title}</div>
           <div dangerouslySetInnerHTML={{ __html: detail.content }} />

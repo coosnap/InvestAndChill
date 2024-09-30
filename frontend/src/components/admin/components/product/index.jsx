@@ -53,7 +53,7 @@ export default function ProductAdmin() {
   return (
     <>
       {isLoading && <Loader />}
-      <Table className="custom-td border mt-6">
+      <Table className="custom-td border mt-6 bg-white">
         <TableHeader>
           <TableRow className="bg-blue-100">
             <TableHead className="text-center">Name</TableHead>
@@ -86,10 +86,10 @@ export default function ProductAdmin() {
                       <FaEdit />
                     </Button>
                   </AlertDialogTrigger>
-                  <AlertDialogContent className="max-w-screen w-[80%]">
+                  <AlertDialogContent className="max-w-screen w-[90%] h-[90%] overflow-y-auto">
                     <AlertDialogHeader className="bg-slate-100">
                       <AlertDialogTitle className="text-center pt-6">
-                        <p className="text-[#232A46] font-semibold text-4xl">Update Product</p>
+                        <h5 className="text-[#232A46] font-semibold">Update Product</h5>
                       </AlertDialogTitle>
                       <div className="pb-4">
                         <ProductUpdate id={product.id} getData={() => getData()} />

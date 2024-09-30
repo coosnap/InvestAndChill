@@ -52,12 +52,17 @@ export async function insertArticle(data) {
 }
 
 export async function updateArticle(data) {
+  let formData = {
+    title: data.title,
+    content: data.content,
+    url: data.url,
+  };
   const response = await fetch(`${import.meta.env.VITE_REACT_APP_API}/api/article/${data.id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify(formData),
   });
   if (response.ok) {
     const responseBody = await response.json();

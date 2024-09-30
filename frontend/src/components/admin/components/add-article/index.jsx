@@ -300,7 +300,7 @@ export const AddArticleEditor = () => {
           </Button>
         </div>
       </div>
-      <div className="w-[770px] h-[calc(100vh-196px)] border bg-white overflow-y-scroll">
+      <div className="w-[770px] h-[calc(100vh-196px)] border bg-second overflow-y-scroll">
         <div className="px-6 py-4" dangerouslySetInnerHTML={{ __html: content }} />
       </div>
       {openUploadFile && (

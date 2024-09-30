@@ -26,7 +26,7 @@ const registerSchema = z
   .object({
     username: z.string().email({ message: 'Vui lòng điền đúng định dạng email' }),
     password: z.string().min(1, { message: 'Vui lòng điền mật khẩu' }),
-    passwordConfirm: z.string().min(1, { message: 'Vui lòng xác nhận mật khẩu' })
+    passwordConfirm: z.string().min(1, { message: 'Vui lòng xác nhận mật khẩu' }),
   })
   .superRefine(({ passwordConfirm, password }, ctx) => {
     if (passwordConfirm !== password) {
@@ -131,8 +131,8 @@ function Login() {
         setCookie('roles', infoSignIn.roles, { path: '/', expires: d });
         setIsLoading(false);
         infoSignIn.roles.includes('ROLE_ADMIN') ||
-          infoSignIn.roles.includes('ROLE_MODERATOR_ARTICLE') ||
-          infoSignIn.roles.includes('ROLE_MODERATOR_USER')
+        infoSignIn.roles.includes('ROLE_MODERATOR_ARTICLE') ||
+        infoSignIn.roles.includes('ROLE_MODERATOR_USER')
           ? navigate('/admin')
           : navigate('/invest');
       } else {
@@ -173,49 +173,43 @@ function Login() {
   }, []);
 
   return (
-    <div className="flex items-center justify-center bg-blue-300">
+    <div className="h-full bg-primary">
       {isLoading ? <Loader /> : ''}
-      <div className="container w-[80%] h-screen py-10 flex gap-8">
-        <div className="flex flex-col w-[752px] h-full gap-8">
-          <div className="rounded-2xl bg-white flex flex-col h-[580px] justify-center pl-12">
-            <h1 className="text-6xl md:text-4xl lg:text-6xl  text-gray-900 mb-5">
-              Tiết kiệm thời gian
-            </h1>
-            <h4 className="text-3xl text-gray-900 mb-4">Tiếp cận hệ thống dữ liệu tài chính</h4>
-            <p className="text-xl text-gray-900">Chính xác - Cập nhật - Đầy đủ</p>
+      <div className="sm:w-[80%] vm:w-[90%] flex sm:flex-row vm:flex-col mx-auto gap-4">
+        <div className="sm:w-1/2 vm:w-full flex flex-col gap-4">
+          <div className="rounded-2xl bg-white gap-4 px-8 py-4">
+            <h3 className="text-gray-900">Tiết kiệm thời gian</h3>
+            <h5 className="text-gray-900">Tiếp cận hệ thống dữ liệu tài chính</h5>
+            <p className="text-gray-900">Chính xác - Cập nhật - Đầy đủ</p>
           </div>
-          <div className="rounded-2xl bg-white h-[230px] flex flex-col justify-center px-12">
-            <div className='py-4 overflow-y-auto'>
-              {articleList &&
-                articleList.length > 0 &&
-                articleList.map(
-                  (e, i) =>
-                    i <= 4 && (
-                      <Link
-                        to={'/post/' + e.id}
-                        className={`flex justify-between text-gray-900 text-sm mb-1 cursor-pointer pb-1`}
-                        key={e.id}
-                      >
-                        <div>
-                          <StickyNote2Icon color="primary" sx={{ marginRight: '8px' }} />
-                          <span>
-                            {e.title.length > 50 ? e.title.substring(1, 50) + '...' : e.title}
-                          </span>
-                        </div>
-                        <div className='flex-1 border-b border-dotted border-black mx-1 mb-2'></div>
-                        <div>{e.createDate.split(' ')[0]}</div>
-                      </Link>
-                    )
-                )}
-            </div>
+          <div className="py-4 px-8 bg-white rounded-2xl">
+            {articleList &&
+              articleList.length > 0 &&
+              articleList.map(
+                (e, i) =>
+                  i <= 4 && (
+                    <Link
+                      to={'/post/' + e.id}
+                      className={`flex justify-between text-gray-900 text-sm mb-1 cursor-pointer pb-1`}
+                      key={e.id}
+                    >
+                      <div className="truncate-single-line">
+                        <StickyNote2Icon color="primary" sx={{ marginRight: '8px' }} />
+                        <span>{e.title}</span>
+                      </div>
+                      <div className="flex-1 border-b border-dotted border-black mx-1 mb-2"></div>
+                      <div className="w-[72px] whitespace-nowrap">{e.createDate.split(' ')[0]}</div>
+                    </Link>
+                  )
+              )}
           </div>
         </div>
-        <div className="flex flex-col w-[752px] h-full gap-8">
+        <div className="sm:w-1/2 vm:w-full gap-8">
           <div className="rounded-2xl bg-white shadow-2xl flex flex-col items-center justify-center py-4">
             <div className="flex items-center justify-center text-3xl lg:text-2xl font-semibold text-gray-900">
               Đăng nhập
             </div>
-            <form key={id} onSubmit={handleSubmit(onSubmit)} className="px-12 w-full">
+            <form key={id} onSubmit={handleSubmit(onSubmit)} className="px-8 w-full">
               <div className="h-3"></div>
               <Controller
                 name="username"
@@ -279,7 +273,7 @@ function Login() {
                     Quên mật khẩu
                   </span>
                 </div>
-                <div>
+                <div className="text-end">
                   <span
                     className="mt-4 lg:mt-2 font-semibold text-blue-500 hover:text-blue-300 underline cursor-pointer"
                     onClick={() => setShowRegisterDialog(true)}
@@ -298,8 +292,9 @@ function Login() {
         </div>
 
         <div
-          className={`${showRegisterDialog ? '' : 'hidden'
-            } absolute top-0 left-0 w-full h-full opacity-50 bg-black`}
+          className={`${
+            showRegisterDialog ? '' : 'hidden'
+          } absolute top-0 left-0 w-full h-full opacity-50 bg-black`}
         ></div>
         <div className={`${showRegisterDialog ? '' : 'hidden'} absolute top-[10%] left-[35%]`}>
           <div className="w-[500px] py-10 bg-white rounded-lg shadow-2xl">

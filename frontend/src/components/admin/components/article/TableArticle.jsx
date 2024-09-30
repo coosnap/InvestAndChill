@@ -85,56 +85,58 @@ export default function TableArticle() {
         />
       </div>
 
-      <Table className="custom-td border mt-4">
-        <TableHeader>
-          <TableRow className="bg-blue-100">
-            <TableHead className="text-center border">Stock Id</TableHead>
-            <TableHead className="text-center border">Title</TableHead>
-            <TableHead className="text-center border">Action</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {articles &&
-            articles.map((article) => (
-              <TableRow key={article.id}>
-                <TableCell className="text-center border">
-                  {article?.stockId?.symbol || ''}
-                </TableCell>
-                <TableCell className="text-center border">{article?.title || ''}</TableCell>
-                <TableCell className="h-full flex justify-center">
-                  <Button variant="primary" onClick={() => handleEditArtical(article.id)}>
-                    <FaEdit />
-                  </Button>
-                  <AlertDialog>
-                    <AlertDialogTrigger asChild>
-                      <Button variant="destructive" className="ml-2">
-                        <RiDeleteBinLine />
-                      </Button>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent>
-                      <AlertDialogHeader>
-                        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                        <AlertDialogDescription>
-                          This action cannot be undone. This will permanently delete your question
-                          and remove your data from our servers.
-                        </AlertDialogDescription>
-                      </AlertDialogHeader>
-                      <AlertDialogFooter>
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction
-                          className="bg-red-500 hover:bg-red-400"
-                          onClick={() => handleDelete(article.id)}
-                        >
-                          Ok
-                        </AlertDialogAction>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialog>
-                </TableCell>
-              </TableRow>
-            ))}
-        </TableBody>
-      </Table>
+      <div className="h-[calc(100vh-220px)] overflow-y-scroll">
+        <Table className="custom-td border mt-4 bg-white">
+          <TableHeader>
+            <TableRow className="bg-blue-100">
+              <TableHead className="text-center border">Stock Id</TableHead>
+              <TableHead className="text-center border">Title</TableHead>
+              <TableHead className="text-center border">Action</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {articles &&
+              articles.map((article) => (
+                <TableRow key={article.id}>
+                  <TableCell className="text-center border">
+                    {article?.stockId?.symbol || ''}
+                  </TableCell>
+                  <TableCell className="text-center border">{article?.title || ''}</TableCell>
+                  <TableCell className="h-full flex justify-center">
+                    <Button variant="primary" onClick={() => handleEditArtical(article.id)}>
+                      <FaEdit />
+                    </Button>
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button variant="destructive" className="ml-2">
+                          <RiDeleteBinLine />
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                          <AlertDialogDescription>
+                            This action cannot be undone. This will permanently delete your question
+                            and remove your data from our servers.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                          <AlertDialogAction
+                            className="bg-red-500 hover:bg-red-400"
+                            onClick={() => handleDelete(article.id)}
+                          >
+                            Ok
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                  </TableCell>
+                </TableRow>
+              ))}
+          </TableBody>
+        </Table>
+      </div>
     </>
   );
 }
