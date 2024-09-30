@@ -22,8 +22,6 @@ import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBui
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.starter.InvestAndChill.jwt.models.FileInfo;
-import com.starter.InvestAndChill.jwt.payload.response.MessageResponse;
-import com.starter.InvestAndChill.jwt.payload.response.ResponseFile;
 import com.starter.InvestAndChill.jwt.payload.response.ResponseFileStatic;
 import com.starter.InvestAndChill.jwt.security.services.FilesStorageServiceStatic;
 

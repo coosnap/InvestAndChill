@@ -46,13 +46,13 @@ public class Article {
 	private int views;
 	
 	@Column
-	private int type;//0: waiting, 1: phan tich co ban, 2: ki thuat giao dich
+	private String label;
 	
-	public int getType() {
-		return type;
+	public String getLabel() {
+		return label;
 	}
-	public void setType(int type) {
-		this.type = type;
+	public void setLabel(String label) {
+		this.label = label;
 	}
 	public int getViews() {
 		return views;
@@ -96,13 +96,13 @@ public class Article {
 		
 	}
 	
-	public Article(int id, String title, String content, String url, int views, int type) {
+	public Article(int id, String title, String content, String url, int views, String label) {
 		this.id = id;
 		this.title = title;
 		this.content = content;
 		this.url = url;
 		this.views = views;
-		this.type = type;
+		this.label = label;
 	}
 	
 	

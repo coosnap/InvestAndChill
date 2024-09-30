@@ -1,6 +1,5 @@
 package com.starter.InvestAndChill.jwt.payload.response;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
@@ -11,11 +10,9 @@ import com.starter.InvestAndChill.jwt.models.Role;
 public class UserResponse {
 	private Long id;
 	private String username;
-	private String email;
-	private String firstName;
-	private String lastName;
+	private String fullName;
 	private String phoneNumber;
-	private Date dateOfBirth;
+	//private Date dateOfBirth;
 	private Integer isVip;
 	@JsonFormat(pattern="dd-MM-yyyy HH:mm:ss")
 	private Timestamp fromDate;
@@ -34,23 +31,12 @@ public class UserResponse {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	public String getEmail() {
-		return email;
+	
+	public String getFullName() {
+		return fullName;
 	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	public String getFirstName() {
-		return firstName;
-	}
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-	public String getLastName() {
-		return lastName;
-	}
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
 	}
 	public String getPhoneNumber() {
 		return phoneNumber;
@@ -58,12 +44,12 @@ public class UserResponse {
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
-	public Date getDateOfBirth() {
-		return dateOfBirth;
-	}
-	public void setDateOfBirth(Date dateOfBirth) {
-		this.dateOfBirth = dateOfBirth;
-	}
+//	public Date getDateOfBirth() {
+//		return dateOfBirth;
+//	}
+//	public void setDateOfBirth(Date dateOfBirth) {
+//		this.dateOfBirth = dateOfBirth;
+//	}
 	public Integer getIsVip() {
 		return isVip;
 	}
@@ -96,15 +82,12 @@ public class UserResponse {
 	
 	public UserResponse() {
 	}
-	public UserResponse(String username, String email, String firstName, String lastName, String phoneNumber,
-			Date dateOfBirth, Integer isVip, Timestamp fromDate, Timestamp toDate, Set<Role> roles, Long id) {
+	public UserResponse(String username, String fullName, String phoneNumber,
+			Integer isVip, Timestamp fromDate, Timestamp toDate, Set<Role> roles, Long id) {
 		super();
 		this.username = username;
-		this.email = email;
-		this.firstName = firstName;
-		this.lastName = lastName;
+		this.fullName = fullName;
 		this.phoneNumber = phoneNumber;
-		this.dateOfBirth = dateOfBirth;
 		this.isVip = isVip;
 		this.fromDate = fromDate;
 		this.toDate = toDate;

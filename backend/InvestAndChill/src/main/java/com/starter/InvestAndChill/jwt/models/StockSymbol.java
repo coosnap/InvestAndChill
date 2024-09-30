@@ -20,6 +20,18 @@ public class StockSymbol {
 	
 	@Column(length = 500)
 	private String note;
+	
+	@Column
+	private Integer sizeOfCompany;
+
+	public Integer getSizeOfCompany() {
+		return sizeOfCompany;
+	}
+	
+	//0: chua phan loa, 1 big, 2 middle, 3 small
+	public void setSizeOfCompany(int sizeOfCompany) {
+		this.sizeOfCompany = sizeOfCompany;
+	}
 
 	public int getId() {
 		return id;
@@ -56,11 +68,12 @@ public class StockSymbol {
 	public StockSymbol() {
 	}
 	
-	public StockSymbol(int id, String symbol, String companyName, String note) {
+	public StockSymbol(int id, String symbol, String companyName, String note, Integer sizeOfCompany) {
 		this.id = id;
 		this.symbol = symbol;
 		this.companyName = companyName;
 		this.note = note;
+		this.sizeOfCompany = sizeOfCompany;
 	}
 	
 

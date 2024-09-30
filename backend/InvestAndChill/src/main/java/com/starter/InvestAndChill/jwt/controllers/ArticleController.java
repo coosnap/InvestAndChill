@@ -81,6 +81,33 @@ public class ArticleController {
 
 	}
 	
+	@GetMapping("/search")
+	public ResponseEntity<List<Article>> searchArticelByLabelAndCompany(@RequestParam(required = false,name = "stockId") Integer stockId,@RequestParam(required = false,name = "label") String label) {
+		try {
+			List<Article> articles = new ArrayList<Article>();
+			if ((stockId == null) && (label == null)) {
+				articleRepository.findAll().forEach(articles::add);
+			} else if (stockId == null) {
+				articleRepository.findByLabel(label).forEach(articles::add);
+			} else if (label == null) {
+				Optional<StockSymbol> stockData = 	stockRepository.findById(stockId);
+				articleRepository.findByStockId(stockData.get()).forEach(articles::add);
+			} else {
+				Optional<StockSymbol> stockData = 	stockRepository.findById(stockId);
+				articleRepository.findByLabelAndStockId(label,stockData.get()).forEach(articles::add);
+			}
+
+			if (articles.isEmpty()) {
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			}
+
+			return new ResponseEntity<>(articles, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+	}
+	
 	@GetMapping("/{id}")
 	public ResponseEntity<Article> getArticleById(@PathVariable String id) {
 		Optional<Article> article = articleRepository.findById(Integer.valueOf(id));
@@ -96,16 +123,11 @@ public class ArticleController {
 	}
 	
 	 @PostMapping("/save")
-	  public ResponseEntity<Article> createArticle(@RequestBody Article article, @RequestParam(required = false,name = "stockId") Integer stockId, @RequestParam(required = false,name = "type") Integer type) {
+	  public ResponseEntity<Article> createArticle(@RequestBody Article article, @RequestParam(required = false,name = "stockId") Integer stockId) {
 	    try {
-	    	Article newArtical = new Article(article.getId(),article.getTitle(),article.getContent(),article.getUrl(),0,0);
+	    	Article newArtical = new Article(article.getId(),article.getTitle(),article.getContent(),article.getUrl(),0,article.getLabel());
 	    	String now = DATE_TIME_FORMAT.format(new java.util.Date());
 	    	newArtical.setCreateDate(parseTimestamp(now));
-	    	
-	    	if (type == null) {
-	    		type = 0;
-	    	}
-	    	newArtical.setType(type);
 	    	
 	    	if (stockId != null) {
 	    		Optional<StockSymbol> stockData = stockRepository.findById(stockId);
@@ -142,6 +164,7 @@ public class ArticleController {
 	    	_article.setTitle(article.getTitle());
 	    	_article.setContent(article.getContent());
 	    	_article.setUrl(article.getUrl());
+	    	_article.setLabel(article.getLabel());
 	      return new ResponseEntity<>(articleRepository.save(_article), HttpStatus.OK);
 	    } else {
 	      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -172,19 +195,6 @@ public class ArticleController {
 	    	Article _article = articleData.get();
 	    	StockSymbol _stock = stockData.get();
 	    	_article.setStockId(_stock);
-	      return new ResponseEntity<>(articleRepository.save(_article), HttpStatus.OK);
-	    } else {
-	      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	    }
-	  }
-	 
-	 @PutMapping("{id}/setType/{type}")
-	  public ResponseEntity<Article> setType(@PathVariable("id") int id, @PathVariable("type") int type) {
-	    Optional<Article> articleData = articleRepository.findById(id);
-	   
-	    if (articleData.isPresent()) {
-	    	Article _article = articleData.get();
-	    	_article.setType(type);
 	      return new ResponseEntity<>(articleRepository.save(_article), HttpStatus.OK);
 	    } else {
 	      return new ResponseEntity<>(HttpStatus.NOT_FOUND);

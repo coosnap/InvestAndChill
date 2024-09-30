@@ -2,47 +2,59 @@ package com.starter.InvestAndChill.jwt.models;
 
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.*;
-import javax.validation.constraints.Email;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Entity
 @Table(	name = "users", 
 		uniqueConstraints = { 
-			@UniqueConstraint(columnNames = "username"),
-			@UniqueConstraint(columnNames = "email") 
+			@UniqueConstraint(columnNames = "username")
+		//	@UniqueConstraint(columnNames = "email") 
 		})
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@NotBlank
-	@Size(max = 20)
+	@Column
 	private String username;
 
-	@NotBlank
-	@Size(max = 50)
-	@Email
-	private String email;
+//	@NotBlank
+//	@Size(max = 50)
+//	@Email
+//	private String email;
 
 	@NotBlank
 	@Size(max = 120)
 	private String password;
 	
-	@Column(name = "first_name")
+	@Column(name = "full_name")
 	@Size(max = 100)
-	private String firstName;
+	private String fullName;
 	
-	@Column(name = "last_name")
-	@Size(max = 100)
-	private String lastName;
 	
+	public String getFullName() {
+		return fullName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+
 	@Column(name = "phone_number")
 	@Size(max = 20)
 	private String phoneNumber;
@@ -91,22 +103,6 @@ public class User {
 		this.isVip = isVip;
 	}
 
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
@@ -126,17 +122,22 @@ public class User {
 	public User() {
 	}
 
-	public User(String username, String email, String password, String firstName, String lastName, String phoneNumber, Date dateOfBirth, int isVip, Timestamp fromDate, Timestamp toDate) {
+	public User(String username, String password, String fullName, String lastName, String phoneNumber, Date dateOfBirth, int isVip, Timestamp fromDate, Timestamp toDate) {
 		this.username = username;
-		this.email = email;
 		this.password = password;
-		this.firstName = firstName;
-		this.lastName = lastName;
+		this.fullName = fullName;
 		this.phoneNumber = phoneNumber;
 		this.dateOfBirth = dateOfBirth;
 		this.isVip = isVip;
 		this.fromDate = fromDate;
 		this.toDate = toDate;
+	}
+	
+	
+	public User(String userName, String fullName, String password) {
+		this.username = userName;
+		this.fullName = fullName;
+		this.password = password;
 	}
 
 	public Long getId() {
@@ -153,14 +154,6 @@ public class User {
 
 	public void setUsername(String username) {
 		this.username = username;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
 	}
 
 	public String getPassword() {
