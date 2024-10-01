@@ -1,6 +1,6 @@
-import { atom } from "recoil";
+import { atom } from 'recoil';
 
 export const TabDefault = atom({
-  key: "TabDefault",
-  default: "stoke",
+  key: 'TabDefault',
+  default: 'stoke',
 });

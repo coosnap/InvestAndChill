@@ -85,7 +85,7 @@ export default function TableArticle() {
         />
       </div>
 
-      <div className="h-[calc(100vh-220px)] overflow-y-scroll">
+      <div className="h-[calc(100vh-220px)] overflow-y-auto">
         <Table className="custom-td border mt-4 bg-white">
           <TableHeader>
             <TableRow className="bg-blue-100">

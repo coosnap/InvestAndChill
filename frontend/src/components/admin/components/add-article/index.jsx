@@ -224,11 +224,12 @@ export const AddArticleEditor = () => {
                   console.log('e.target.value', e.target.value)
                 )}
               >
-                {stokes.map((e) => (
-                  <MenuItem key={e.id} value={e.id}>
-                    {e.symbol}
-                  </MenuItem>
-                ))}
+                {stokes &&
+                  stokes.map((e) => (
+                    <MenuItem key={e.id} value={e.id}>
+                      {e.symbol}
+                    </MenuItem>
+                  ))}
               </Select>
             </FormControl>
           </div>

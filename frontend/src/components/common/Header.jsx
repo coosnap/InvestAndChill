@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { TextField } from '@mui/material';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { Controller, useForm } from 'react-hook-form';
 import { FcReading } from 'react-icons/fc';
@@ -51,7 +51,6 @@ const infoSchema = z.object({
 
 function Header() {
   const navigate = useNavigate();
-  const ref = useRef();
   const [cookies, setCookie] = useCookies(['access_token', 'usrId']);
 
   const [userInfo, setUserInfo] = useState({});
