@@ -95,6 +95,7 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
         .antMatchers("/api/file/**").permitAll()
         .antMatchers("/api/fileStatic/**").permitAll()
         .antMatchers("/api/product/**").permitAll()
+        .antMatchers("/api/dropbox/**").permitAll()
         .anyRequest().authenticated();
     
     http.authenticationProvider(authenticationProvider());
