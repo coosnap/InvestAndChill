@@ -24,3 +24,12 @@ INSERT INTO product (acount_fee_for_website, bonus, commitment_time, description
 INSERT INTO product (acount_fee_for_website, bonus, commitment_time, description, minimum_budget, name, nav_fee, profit_rate_commitment) VALUES ('0', 'Vượt 90% chia 20% trên phần vượt', '36', 'Khách hàng sau khi được tư vấn về thu nhập và chi tiêu sẽ quyết định đầu tư vào một lượng vốn. Duy trì trong 36 tháng.', '100000000', 'InvastNChill', '2', '90');
 
 
+
+drop  table public.refreshtoken;
+drop  table public.user_roles ;
+drop table public.users;
+drop table public.article; 
+drop table public.stocksymbol; 
+commit;
+
+

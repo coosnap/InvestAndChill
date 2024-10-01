@@ -1,5 +1,6 @@
 package com.starter.InvestAndChill.jwt.controllers;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -35,6 +37,7 @@ import com.starter.InvestAndChill.jwt.models.User;
 import com.starter.InvestAndChill.jwt.payload.request.LoginRequest;
 import com.starter.InvestAndChill.jwt.payload.request.SignupRequest;
 import com.starter.InvestAndChill.jwt.payload.request.TokenRefreshRequest;
+import com.starter.InvestAndChill.jwt.payload.request.UserUpAndDowngradeRequest;
 import com.starter.InvestAndChill.jwt.payload.response.JwtResponse;
 import com.starter.InvestAndChill.jwt.payload.response.MessageResponse;
 import com.starter.InvestAndChill.jwt.payload.response.TokenRefreshResponse;
@@ -170,17 +173,17 @@ public class AuthController {
     return ResponseEntity.ok(new MessageResponse("Log out successful!"));
   }
   
-//  @GetMapping("/{id}")
-//	public ResponseEntity<UserResponse> getUserById(@PathVariable String id) {
-//		Optional<User> userOptional = userRepository.findById(Long.valueOf(id));
-//	    if (userOptional.isPresent()) {
-//	    	User user = userOptional.get();
-//	    	UserResponse u = new UserResponse(user.getUsername(), user.getEmail(), user.getFirstName(), user.getLastName(), user.getPhoneNumber(), user.getDateOfBirth(), user.getIsVip(), user.getFromDate(), user.getToDate(),user.getRoles(),user.getId());
-//	      return new ResponseEntity<>(u, HttpStatus.OK);
-//	    } else {
-//	      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//	    }
-//	}
+  @GetMapping("/{id}")
+	public ResponseEntity<UserResponse> getUserById(@PathVariable String id) {
+		Optional<User> userOptional = userRepository.findById(Long.valueOf(id));
+	    if (userOptional.isPresent()) {
+	    	User user = userOptional.get();
+	    	UserResponse u = new UserResponse(user.getUsername(),user.getFullName(),user.getPhoneNumber(),user.getIsVip(),user.getFromDate(),user.getToDate(),user.getRoles(),user.getId());
+	      return new ResponseEntity<>(u, HttpStatus.OK);
+	    } else {
+	      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	    }
+	}
   
 	@PutMapping("/{id}")
 	public ResponseEntity<?> updateUser(@PathVariable("id") Long id, @RequestBody SignupRequest user) {
@@ -205,49 +208,49 @@ public class AuthController {
 		}
 	}
   
-//  @PutMapping("/upgrade")
-//	public ResponseEntity<UserResponse> upgradeUser(@RequestBody UserUpAndDowngradeRequest requestUser) {
-//	  Optional<User> userData = userRepository.findById(Long.valueOf(requestUser.getId()));
-//	    if (userData.isPresent()) {
-//	    	User user = userData.get();
-//	    	user.setIsVip(requestUser.getIsVip());
-//	    	user.setFromDate(requestUser.getFromDate());
-//	    	user.setToDate(requestUser.getToDate());
-//	    	User user2 = userRepository.save(user);
-//	    	
-//	    	UserResponse u = new UserResponse(user2.getUsername(), user2.getEmail(), user2.getFirstName(), user2.getLastName(), user2.getPhoneNumber(), user2.getDateOfBirth(), user2.getIsVip(), user2.getFromDate(), user2.getToDate(),user2.getRoles(),user2.getId());
-//	      return new ResponseEntity<>( u, HttpStatus.OK);
-//	    } else {
-//	      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//	    }
-//	}
+  @PutMapping("/upgrade")
+	public ResponseEntity<UserResponse> upgradeUser(@RequestBody UserUpAndDowngradeRequest requestUser) {
+	  Optional<User> userData = userRepository.findById(Long.valueOf(requestUser.getId()));
+	    if (userData.isPresent()) {
+	    	User user = userData.get();
+	    	user.setIsVip(requestUser.getIsVip());
+	    	user.setFromDate(requestUser.getFromDate());
+	    	user.setToDate(requestUser.getToDate());
+	    	User user2 = userRepository.save(user);
+	    	
+	    	UserResponse u = new UserResponse(user2.getUsername(),user2.getFullName(),user2.getPhoneNumber(),user2.getIsVip(),user2.getFromDate(),user2.getToDate(),user2.getRoles(),user2.getId());
+	      return new ResponseEntity<>( u, HttpStatus.OK);
+	    } else {
+	      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	    }
+	}
   
-//  @GetMapping("/all")
-//	public ResponseEntity<?> allUser() {
-//		try {
-//			List<User> users = new ArrayList<User>();
-//			users = userRepository.findListNormalUser("ROLE_USER");
-//			
-//
-//			if (users.isEmpty()) {
-//				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//			}
-//			
-//			List<UserResponse> userReponseList = new ArrayList<UserResponse>();
-//			
-//			for (User user : users) {
-//				UserResponse u = new UserResponse(user.getUsername(), user.getEmail(), user.getFirstName(), user.getLastName(), user.getPhoneNumber(), user.getDateOfBirth(), user.getIsVip(), user.getFromDate(), user.getToDate(),user.getRoles(),user.getId());
-//				userReponseList.add(u);
-//			}
-//			
-//			return new ResponseEntity<>(userReponseList, HttpStatus.OK);
-//		} catch (Exception e) {
-//			System.out.println("e:" + e.toString());
-//			 logger.error("Get All User has problem: {}", e.getMessage());
-//			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//		}
-//
-//	}
+  @GetMapping("/all")
+	public ResponseEntity<?> allUser() {
+		try {
+			List<User> users = new ArrayList<User>();
+			users = userRepository.findListNormalUser("ROLE_USER");
+			
+
+			if (users.isEmpty()) {
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			}
+			
+			List<UserResponse> userReponseList = new ArrayList<UserResponse>();
+			
+			for (User user : users) {
+				UserResponse u = new UserResponse(user.getUsername(),user.getFullName(),user.getPhoneNumber(),user.getIsVip(),user.getFromDate(),user.getToDate(),user.getRoles(),user.getId());
+				userReponseList.add(u);
+			}
+			
+			return new ResponseEntity<>(userReponseList, HttpStatus.OK);
+		} catch (Exception e) {
+			System.out.println("e:" + e.toString());
+			 logger.error("Get All User has problem: {}", e.getMessage());
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+	}
   
   @PostMapping("/changePassword")
  	public ResponseEntity<?> changPassword(@RequestBody Map<String, Object> payload) {
