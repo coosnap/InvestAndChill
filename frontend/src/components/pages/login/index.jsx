@@ -2,8 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import StickyNote2Icon from '@mui/icons-material/StickyNote2';
 import { IconButton, InputAdornment, TextField } from '@mui/material';
-import { format } from 'date-fns';
-import { useCallback, useEffect, useId, useState } from 'react';
+import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { Controller, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
@@ -15,17 +14,33 @@ import Modal from '../../common/Modal';
 import { Button } from '../../ui/button';
 import { Label } from '../../ui/label';
 
+import { Card, CardContent } from '@/components/ui/card';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/components/ui/carousel';
+import Autoplay from 'embla-carousel-autoplay';
 import './styles.scss';
+import { jwtDecode } from 'jwt-decode';
 
 const loginSchema = z.object({
   username: z.string().min(1, { message: 'Vui lòng điền tên đăng nhập' }),
   password: z.string().min(1, { message: 'Vui lòng điền mật khẩu' }),
 });
 
+const passwordValidation = new RegExp(
+  /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/
+);
+
 const registerSchema = z
   .object({
     username: z.string().email({ message: 'Vui lòng điền đúng định dạng email' }),
-    password: z.string().min(1, { message: 'Vui lòng điền mật khẩu' }),
+    password: z.string().min(1, { message: 'Vui lòng điền mật khẩu' }).regex(passwordValidation, {
+      message: 'Password phải bao gồm 8 ký tự, ký tự viết hoa và ký tự đặc biệt (#?!@$%^&*-)',
+    }),
     passwordConfirm: z.string().min(1, { message: 'Vui lòng xác nhận mật khẩu' }),
   })
   .superRefine(({ passwordConfirm, password }, ctx) => {
@@ -59,7 +74,7 @@ function Login() {
   const [showPasswordConf, setShowPasswordConf] = useState(false);
   const [cookie, setCookie] = useCookies(['access_token', 'usrId', 'roles']);
   const [isLoading, setIsLoading] = useState(false);
-  const [statusDialog, setStatusDialog] = useState('');
+  const [statusDialog, setStatusDialog] = useState({ status: '', message: '' });
   const [articleList, setArticleList] = useState([]);
   const [validate, setValidate] = useState({});
 
@@ -93,19 +108,18 @@ function Login() {
 
   const onSubmitRegister = useCallback(async (values) => {
     try {
-      let data = {
-        ...values,
-        dateOfBirth: format(values.dateOfBirth, 'dd-MM-yyyy'),
-      };
-      const response = await signUp(data);
+      // let data = {
+      //   ...values,
+      //   dateOfBirth: format(values.dateOfBirth, 'dd-MM-yyyy'),
+      // };
+      const response = await signUp(values);
       const responseBody = await response.json();
       if (responseBody.message) {
-        setStatusDialog('Success');
+        setStatusDialog({ status: 'Success', message: 'Đăng ký thành công' });
         setShowModal(true);
       }
     } catch (error) {
-      console.log('error', error);
-      setStatusDialog('Error');
+      setStatusDialog({ status: 'Error', message: 'Đăng ký thất bại' });
       setShowModal(true);
     }
   }, []);
@@ -116,18 +130,18 @@ function Login() {
       let infoSignIn = await signIn(values);
       setIsLoading(true);
       if (infoSignIn) {
-        let d = new Date();
-        d.setTime(d.getTime() + d.getMinutes() * 60 * 10000);
+        let exp = jwtDecode(infoSignIn?.accessToken)?.exp;
+        let d = new Date(exp * 1000);
         setCookie(
           'usrId',
           {
             id: infoSignIn.id,
             usrNm: infoSignIn.username,
-            email: infoSignIn.email,
           },
           { path: '/', expires: d }
         );
-        setCookie('access_token', infoSignIn.token, { path: '/', expires: d });
+        setCookie('refresh_token', infoSignIn.refreshToken, { path: '/', expires: d });
+        setCookie('access_token', infoSignIn.accessToken, { path: '/', expires: d });
         setCookie('roles', infoSignIn.roles, { path: '/', expires: d });
         setIsLoading(false);
         infoSignIn.roles.includes('ROLE_ADMIN') ||
@@ -144,7 +158,6 @@ function Login() {
       }
     } catch (error) {
       setShowDialog(true);
-      console.error(error);
     }
   }, []);
 
@@ -172,15 +185,38 @@ function Login() {
     }
   }, []);
 
+  const plugin = useRef(Autoplay({ delay: 15000, stopOnInteraction: true }));
+
   return (
     <div className="h-full bg-primary">
       {isLoading ? <Loader /> : ''}
-      <div className="sm:w-[80%] vm:w-[90%] flex sm:flex-row vm:flex-col mx-auto gap-4">
+      <div className="sm:w-[80%] vm:w-[90%] flex sm:flex-row vm:flex-col mx-auto gap-4 pb-8">
         <div className="sm:w-1/2 vm:w-full flex flex-col gap-4">
-          <div className="rounded-2xl bg-white gap-4 px-8 py-4">
-            <h3 className="text-gray-900">Tiết kiệm thời gian</h3>
-            <h5 className="text-gray-900">Tiếp cận hệ thống dữ liệu tài chính</h5>
-            <p className="text-gray-900">Chính xác - Cập nhật - Đầy đủ</p>
+          <div className="flex justify-center rounded-2xl bg-white gap-4 px-8 py-4">
+            <Carousel
+              plugins={[plugin.current]}
+              opts={{
+                align: 'start',
+                loop: true,
+              }}
+              className="w-full"
+            >
+              <CarouselContent>
+                {Array.from({ length: 5 }).map((_, index) => (
+                  <CarouselItem key={index}>
+                    <div className="p-1">
+                      <Card>
+                        <CardContent className="h-[350px] flex items-center justify-center p-6">
+                          <span className="text-3xl font-semibold">{index + 1}</span>
+                        </CardContent>
+                      </Card>
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="left-4" />
+              <CarouselNext className="right-4" />
+            </Carousel>
           </div>
           <div className="py-4 px-8 bg-white rounded-2xl">
             {articleList &&
@@ -204,7 +240,7 @@ function Login() {
               )}
           </div>
         </div>
-        <div className="sm:w-1/2 vm:w-full gap-8">
+        <div className="sm:w-1/2 vm:w-full flex flex-col gap-4">
           <div className="rounded-2xl bg-white shadow-2xl flex flex-col items-center justify-center py-4">
             <div className="flex items-center justify-center text-3xl lg:text-2xl font-semibold text-gray-900">
               Đăng nhập
@@ -288,6 +324,9 @@ function Login() {
                 </Button>
               </div>
             </form>
+          </div>
+          <div className="flex-1">
+            <img style={{ width: '100%' }} src="/adv.jpg" alt="Advert" />
           </div>
         </div>
 
@@ -450,8 +489,8 @@ function Login() {
       {showModal && (
         <Modal
           handleClickModal={() => setShowModal(false)}
-          message={'Đăng ký thất bại.'}
-          status={statusDialog}
+          message={statusDialog.message}
+          status={statusDialog.status}
         />
       )}
     </div>

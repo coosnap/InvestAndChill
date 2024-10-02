@@ -1,8 +1,11 @@
 import { createTheme } from '@mui/material';
-import React, { Suspense } from 'react';
+import { jwtDecode } from 'jwt-decode';
+import React, { Suspense, useEffect } from 'react';
+import { useCookies } from 'react-cookie';
 import { Outlet, useLocation, useRoutes } from 'react-router-dom';
 import './App.css';
 import { ThemeProvider } from './ThemeProvider';
+import Login from './components/pages/login';
 import AdminRoute from './components/router/admin-route';
 import PrivateRoute from './components/router/private-route';
 import PublicRoute from './components/router/public-route';
@@ -13,7 +16,6 @@ const Buy = React.lazy(() => import('./components/pages/Buy'));
 const Category = React.lazy(() => import('./components/pages/Category.jsx'));
 const Detail = React.lazy(() => import('./components/pages/detail'));
 const Investment = React.lazy(() => import('./components/pages/investment'));
-const Login = React.lazy(() => import('./components/pages/login'));
 const NotFound = React.lazy(() => import('./components/pages/NotFound'));
 const Post = React.lazy(() => import('./components/pages/Post.jsx'));
 const Product = React.lazy(() => import('./components/pages/Product.jsx'));
@@ -34,9 +36,7 @@ const routes = [
     path: '/',
     element: (
       <PublicRoute>
-        <Suspense>
-          <Login />
-        </Suspense>
+        <Login />
       </PublicRoute>
     ),
   },
@@ -44,9 +44,7 @@ const routes = [
     path: '/login',
     element: (
       <PublicRoute>
-        <Suspense>
-          <Login />
-        </Suspense>
+        <Login />
       </PublicRoute>
     ),
   },
@@ -142,7 +140,7 @@ const Layout = ({ hideHeaderPaths = [] }) => {
           <Header />
         </Suspense>
       ) : (
-        <div className="h-16"></div>
+        <div className="h-8"></div>
       )}
       <Outlet />
     </>
@@ -153,6 +151,14 @@ function App() {
   const routesElement = useRoutes(routes);
   const { pathname } = useLocation();
   const theme = createTheme();
+  const [cookies, setCookie] = useCookies('access_token');
+
+  useEffect(() => {
+    if (cookies?.access_token && jwtDecode(cookies?.access_token).exp < Date.now() / 1000) {
+      setCookie('access_token', '', {});
+      window.location.href = '/login';
+    }
+  }, [cookies]);
 
   return (
     <ThemeProvider defaultTheme="light" theme={theme} storageKey="vite-ui-theme">
