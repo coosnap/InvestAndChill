@@ -10,11 +10,20 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class DropboxConfig {
 
-	 @Value("${dropbox.access.token}")
+
 	 private String accessToken;
+	 
+	 public DropboxConfig(@Value("${DROPBOX_ACCESS_TOKEN}") String accessToken) {
+	        this.accessToken = accessToken;
+	    }
+
+	    public String getAccessToken() {
+	        return accessToken;
+	    }
 
     @Bean
     public DbxClientV2 dropboxClient() {
+    	System.out.println("accesstoken: " + accessToken);
         DbxRequestConfig config = DbxRequestConfig.newBuilder("dropbox/spring-boot-app").build();
         return new DbxClientV2(config, accessToken);
     }
