@@ -169,10 +169,27 @@ export const AddArticleEditor = () => {
     getData();
   }, []);
 
-  const typeData = [
-    { id: '0', symbol: 'Chờ xác nhận loại' },
-    { id: '1', symbol: 'Phân Tích Cơ Bản Doanh Nghiệp' },
-    { id: '2', symbol: 'Phân Tích Kỹ Thuật Giao Dịch' },
+  const sizeData = [
+    { id: 'A', symbol: 'A. Overview' },
+    { id: 'A1', symbol: '1. Biz Model' },
+    { id: 'A1a', symbol: 'a. Biz Model' },
+    { id: 'A1b', symbol: 'b. Market Size n Position' },
+    { id: 'A2', symbol: '2. Industry View' },
+    { id: 'A2a', symbol: 'a. Đặc tính' },
+    { id: 'A2b', symbol: 'b. Mức độ cạnh tranh' },
+    { id: 'A2c', symbol: 'c. Wining Model' },
+    { id: 'A3', symbol: '3. Competitive Analysis' },
+    { id: 'A3a', symbol: 'a. Phân tích - Chứng minh' },
+    { id: 'A3b', symbol: 'b. Company Adventure' },
+    { id: 'A3c', symbol: 'c. View Fact' },
+    { id: 'A4', symbol: '4. Expand Scale' },
+    { id: 'A4a', symbol: 'a. Tập trung lợi thế/knowhow sẵn có' },
+    { id: 'A4b', symbol: 'b. Mở rộng chuỗi giá trị' },
+    { id: 'A5', symbol: '5. Governance Analysis' },
+    { id: 'A6', symbol: '6. Đánh giá triển vọng' },
+    { id: 'A7', symbol: '7. Rủi ro' },
+    { id: 'B', symbol: 'B. Cập nhật Đánh giá DN' },
+    { id: 'C', symbol: 'C. Cập nhật Đánh giá Ngành' },
   ];
 
   const imageHandler = (e) => {
@@ -219,10 +236,7 @@ export const AddArticleEditor = () => {
                 className="bg-white min-w-[150px]"
                 value={article.stockId || ''}
                 label="Stoke"
-                onChange={(e) => (
-                  setArticle((prev) => ({ ...prev, stockId: e.target.value })),
-                  console.log('e.target.value', e.target.value)
-                )}
+                onChange={(e) => setArticle((prev) => ({ ...prev, stockId: e.target.value }))}
               >
                 {stokes &&
                   stokes.map((e) => (
@@ -235,17 +249,23 @@ export const AddArticleEditor = () => {
           </div>
           <div>
             <FormControl size="small">
-              <InputLabel id="type-label">Type</InputLabel>
+              <InputLabel id="type-label">Label</InputLabel>
               <Select
                 labelId="type-label"
                 id="type-label-small"
                 className="bg-white min-w-[250px]"
                 value={article.type || ''}
-                label="Type"
+                label="Label"
                 onChange={(e) => setArticle((prev) => ({ ...prev, type: e.target.value }))}
               >
-                {typeData.map((e) => (
-                  <MenuItem key={e.id} value={e.id}>
+                {sizeData.map((e) => (
+                  <MenuItem
+                    key={e.id}
+                    value={e.id}
+                    sx={{
+                      paddingLeft: e.id.length === 2 ? '32px' : e.id.length === 3 ? '48px' : '',
+                    }}
+                  >
                     {e.symbol}
                   </MenuItem>
                 ))}

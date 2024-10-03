@@ -19,6 +19,7 @@ import { z } from 'zod';
 import { Label } from '../ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 import Modal from './Modal';
+import { AlertDialogTitle } from '@radix-ui/react-alert-dialog';
 
 const passwordSchema = z
   .object({
@@ -108,11 +109,9 @@ function Header() {
         setUserInfo(result);
         if (userInfo) {
           let defaultValues = {
-            phoneNumber: result.phoneNumber,
+            phoneNumber: result.phoneNumber || '',
             username: result.username,
-            firstName: result.firstName,
-            lastName: result.lastName,
-            email: result.email,
+            fullName: result.fullName,
           };
           reset({ ...defaultValues });
         }
@@ -127,11 +126,9 @@ function Header() {
     if (tabDefault === 'user') {
       let data = {
         id: id,
-        phoneNumber: values?.phoneNumber,
-        username: values?.username,
-        firstName: values?.firstName,
-        lastName: values?.lastName,
-        email: values?.email,
+        phoneNumber: values?.phoneNumber || '',
+        username: values?.username || '',
+        fullName: values?.fullName || '',
         password: values?.password,
       };
       try {
@@ -236,7 +233,8 @@ function Header() {
                   Cập nhật thông tin
                 </button>
               </AlertDialogTrigger>
-              <AlertDialogContent className="min-h-[550px]">
+              <AlertDialogContent aria-describedby="update-user" className="min-h-[550px]">
+                <AlertDialogTitle></AlertDialogTitle>
                 <div>
                   <Tabs value={tabDefault} onValueChange={onTabChange} className="w-full">
                     <TabsList className="flex flex-col items-start h-full pt-8 pb-4 px-4 border-none">
@@ -249,131 +247,79 @@ function Header() {
                         </TabsTrigger>
                       </div>
 
-                      <TabsContent value="user" className="flex w-full">
+                      <TabsContent value="user" className="w-full">
                         <form onSubmit={handleSubmitInfo((data) => onSubmit(data))}>
                           <div className="flex flex-col gap-3 w-full">
-                            <div className="flex">
-                              <div className="space-y-1 w-1/2 pr-2">
-                                <div className="mb-1">
-                                  <Label htmlFor="phoneNumber">Số điện thoại</Label>
-                                </div>
-                                <Controller
-                                  name="phoneNumber"
-                                  control={controlInfo}
-                                  render={({ field: { onChange, value } }) => (
-                                    <TextField
-                                      required
-                                      name="phoneNumber"
-                                      className="w-full"
-                                      size="small"
-                                      label=""
-                                      type="text"
-                                      onChange={onChange}
-                                      value={value}
-                                      error={!!errorInfo?.phoneNumber}
-                                      helperText={errorInfo?.phoneNumber?.message}
-                                    />
-                                  )}
-                                />
-                              </div>
-                              <div className="space-y-1 w-1/2 pl-2">
-                                <div className="mb-1">
-                                  <Label htmlFor="username">Tên người dùng</Label>
-                                </div>
-                                <Controller
-                                  name="username"
-                                  control={controlInfo}
-                                  render={({ field: { onChange, value } }) => (
-                                    <TextField
-                                      required
-                                      name="username"
-                                      className="w-full"
-                                      size="small"
-                                      label=""
-                                      type="text"
-                                      onChange={onChange}
-                                      value={value}
-                                      error={!!errorInfo?.username}
-                                      helperText={errorInfo?.username?.message}
-                                    />
-                                  )}
-                                />
-                              </div>
-                            </div>
-                            <div className="flex gap-4">
-                              <div className="space-y-1 w-1/2">
-                                <div className="mb-1">
-                                  <Label htmlFor="lastName">Họ</Label>
-                                </div>
-                                <Controller
-                                  name="lastName"
-                                  control={controlInfo}
-                                  defaultValue={userInfo.lastName}
-                                  render={({ field: { onChange, value } }) => (
-                                    <TextField
-                                      required
-                                      name="lastName"
-                                      className="w-full"
-                                      size="small"
-                                      label=""
-                                      type="text"
-                                      onChange={onChange}
-                                      value={value}
-                                      error={!!errorInfo?.lastName}
-                                      helperText={errorInfo?.lastName?.message}
-                                    />
-                                  )}
-                                />
-                              </div>
-                              <div className="space-y-1 w-1/2">
-                                <div className="mb-1">
-                                  <Label htmlFor="firstName">Tên</Label>
-                                </div>
-                                <Controller
-                                  name="firstName"
-                                  control={controlInfo}
-                                  defaultValue={userInfo.firstName}
-                                  render={({ field: { onChange, value } }) => (
-                                    <TextField
-                                      required
-                                      name="firstName"
-                                      className="w-full"
-                                      size="small"
-                                      label=""
-                                      type="text"
-                                      onChange={onChange}
-                                      value={value}
-                                      error={!!errorInfo?.firstName}
-                                      helperText={errorInfo?.firstName?.message}
-                                    />
-                                  )}
-                                />
-                              </div>
-                            </div>
-                            <span className="space-y-1">
+                            <div className="space-y-1">
                               <div className="mb-1">
-                                <Label htmlFor="email">Email</Label>
+                                <Label htmlFor="phoneNumber">Số điện thoại</Label>
                               </div>
                               <Controller
-                                name="email"
+                                name="phoneNumber"
                                 control={controlInfo}
-                                defaultValue={userInfo.email}
                                 render={({ field: { onChange, value } }) => (
                                   <TextField
                                     required
-                                    name="email"
+                                    name="phoneNumber"
                                     className="w-full"
                                     size="small"
                                     label=""
                                     type="text"
                                     onChange={onChange}
                                     value={value}
-                                    error={!!errorInfo?.email}
-                                    helperText={errorInfo?.email?.message}
+                                    error={!!errorInfo?.phoneNumber}
+                                    helperText={errorInfo?.phoneNumber?.message}
                                   />
                                 )}
                               />
-                            </span>
+                            </div>
+                            <div className="space-y-1">
+                              <div className="mb-1">
+                                <Label htmlFor="username">Tên người dùng</Label>
+                              </div>
+                              <Controller
+                                name="username"
+                                control={controlInfo}
+                                render={({ field: { onChange, value } }) => (
+                                  <TextField
+                                    required
+                                    name="username"
+                                    className="w-full"
+                                    size="small"
+                                    label=""
+                                    type="text"
+                                    onChange={onChange}
+                                    value={value}
+                                    error={!!errorInfo?.username}
+                                    helperText={errorInfo?.username?.message}
+                                  />
+                                )}
+                              />
+                            </div>
+                            <div className="space-y-1">
+                              <div className="mb-1">
+                                <Label htmlFor="fullName">Họ và Tên</Label>
+                              </div>
+                              <Controller
+                                name="fullName"
+                                control={controlInfo}
+                                defaultValue={userInfo.fullName}
+                                render={({ field: { onChange, value } }) => (
+                                  <TextField
+                                    required
+                                    name="fullName"
+                                    className="w-full"
+                                    size="small"
+                                    label=""
+                                    type="text"
+                                    onChange={onChange}
+                                    value={value}
+                                    error={!!errorInfo?.fullName}
+                                    helperText={errorInfo?.fullName?.message}
+                                  />
+                                )}
+                              />
+                            </div>
                             <div className="space-y-1 w-full">
                               <div className="mb-1">
                                 <Label htmlFor="password">Mật khẩu</Label>
@@ -398,12 +344,14 @@ function Header() {
                               />
                             </div>
 
-                            <AlertDialogFooter className="mt-6">
-                              <AlertDialogCancel id="user-info-cancel">Cancel</AlertDialogCancel>
+                            <div className="flex justify-end gap-2 mt-6">
+                              <Button id="user-info-cancel" variant="outline" type="submit">
+                                Cancel
+                              </Button>
                               <Button variant="primary" type="submit">
                                 Save
                               </Button>
-                            </AlertDialogFooter>
+                            </div>
                           </div>
                         </form>
                       </TabsContent>

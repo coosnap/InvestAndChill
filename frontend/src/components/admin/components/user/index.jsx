@@ -79,8 +79,6 @@ export default function UserAdmin() {
         <TableHeader>
           <TableRow className="bg-blue-100">
             <TableHead className="text-center">User Name</TableHead>
-            <TableHead className="text-center">Email</TableHead>
-            <TableHead className="text-center">Phone Number</TableHead>
             <TableHead className="text-center">Status Vip</TableHead>
             <TableHead className="text-center">Duration</TableHead>
             <TableHead className="text-center">Action</TableHead>
@@ -90,8 +88,6 @@ export default function UserAdmin() {
           {users.map((user) => (
             <TableRow key={user.id}>
               <TableCell className="text-center">{user.username}</TableCell>
-              <TableCell className="text-center">{user.email}</TableCell>
-              <TableCell className="text-center">{user.phoneNumber}</TableCell>
               <TableCell className="text-center">
                 <Switch checked={user.isVip} onCheckedChange={() => onCheckedChange(user.id)} />
               </TableCell>

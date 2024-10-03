@@ -1,3 +1,5 @@
+import axiosInstance from './axiosInstance';
+
 export async function signIn(data) {
   const authData = {
     username: data?.username,
@@ -12,14 +14,7 @@ export async function signIn(data) {
   });
   if (response.ok) {
     const responseBody = await response.json();
-    const infoSignIn = {
-      token: responseBody.accessToken,
-      id: responseBody.id,
-      username: responseBody.username,
-      email: responseBody.email,
-      roles: responseBody.roles
-    }
-    return infoSignIn;
+    return responseBody;
   }
   return;
 }
@@ -27,13 +22,9 @@ export async function signIn(data) {
 export async function signUp(data) {
   const authData = {
     username: data.username,
-    email: data.email,
-    firstName: data.firstName,
-    lastName: data.lastName,
-    dateOfBirth: data.dateOfBirth,
-    phoneNumber: data.phoneNumber,
+    fullName: data.fullName || '',
     password: data.password,
-    role: ["user"]
+    role: ['user'],
   };
   const response = await fetch(`${import.meta.env.VITE_REACT_APP_API}/api/auth/signup`, {
     method: 'POST',
@@ -43,7 +34,15 @@ export async function signUp(data) {
     body: JSON.stringify(authData),
   });
   if (response.ok) {
+    return response.json();
+  }
+  return;
+}
+
+export async function refreshTokenAPI({ refreshToken }) {
+  const response = await axiosInstance.post('/api/auth/refreshtoken', refreshToken);
+  if (response.status === 200) {
     return response;
   }
-  return response.json();
+  return;
 }

@@ -19,14 +19,15 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { StokeAll } from '@/store/stoke';
 import { useEffect, useState } from 'react';
 import { RiDeleteBinLine } from 'react-icons/ri';
-import AddStoke from './AddStoke';
-import { StokeAll } from '@/store/stoke';
 import { useRecoilState } from 'recoil';
+import AddStoke from './AddStoke';
 
 export default function TableStoke() {
   const [isLoading, setIsLoading] = useState(true);
+
   const [stokes, setStokes] = useRecoilState(StokeAll);
 
   async function getData() {
@@ -43,7 +44,7 @@ export default function TableStoke() {
   async function handleDelete(id) {
     setIsLoading(true);
     try {
-      let result = await deleteStock(id);
+      let result = await deleteStock({ id });
       document.getElementById('stock-delete-cancel')?.click();
       if (result) {
         getData();
@@ -62,7 +63,7 @@ export default function TableStoke() {
     <>
       {isLoading && <Loader />}
       <div className="my-8">
-        <AddStoke render={getData} action="Add" />
+        <AddStoke render={() => getData()} action="Add" />
       </div>
       <Table className="custom-td border bg-white">
         <TableHeader>
@@ -74,40 +75,40 @@ export default function TableStoke() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {stokes.map((stoke) => (
-            <TableRow key={stoke.id}>
-              <TableCell className="text-center">{stoke.symbol}</TableCell>
-              <TableCell className="text-center">{stoke.companyName}</TableCell>
-              <TableCell className="text-center">{stoke.note}</TableCell>
-              <TableCell className="flex justify-center">
-                <div className="cursor-pointer">
-                  <AddStoke render={getData} action="Edit" id={stoke.id} />
-                </div>
-                <AlertDialog>
-                  <AlertDialogTrigger asChild>
-                    <Button variant="destructive" className="ml-2">
-                      <RiDeleteBinLine />
-                    </Button>
-                  </AlertDialogTrigger>
-                  <AlertDialogContent>
-                    <AlertDialogHeader>
-                      <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                      <AlertDialogDescription>
-                        This action cannot be undone. This will permanently delete your question and
-                        remove your data from our servers.
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                      <AlertDialogCancel id="stoke-delete-cancel">Cancel</AlertDialogCancel>
-                      <Button variant="destructive" onClick={() => handleDelete(stoke.id)}>
-                        Ok
+          {stokes &&
+            stokes.map((stoke) => (
+              <TableRow key={stoke.id}>
+                <TableCell className="text-center">{stoke.symbol}</TableCell>
+                <TableCell className="text-center">{stoke.companyName}</TableCell>
+                <TableCell className="text-center">{stoke.note}</TableCell>
+                <TableCell className="flex justify-center">
+                  <div className="cursor-pointer flex">
+                    <AddStoke render={getData} action="Edit" id={stoke.id} />
+                  </div>
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button variant="destructive" className="ml-2">
+                        <RiDeleteBinLine />
                       </Button>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
-                </AlertDialog>
-              </TableCell>
-            </TableRow>
-          ))}
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>Cảnh báo</AlertDialogTitle>
+                        <AlertDialogDescription>
+                          Bạn có muốn xóa công ty này không?
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel id="stoke-delete-cancel">Cancel</AlertDialogCancel>
+                        <Button variant="destructive" onClick={() => handleDelete(stoke.id)}>
+                          Ok
+                        </Button>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                </TableCell>
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
     </>

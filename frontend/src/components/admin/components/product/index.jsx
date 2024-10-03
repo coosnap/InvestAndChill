@@ -69,40 +69,41 @@ export default function ProductAdmin() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {products.map((product) => (
-            <TableRow key={product.id}>
-              <TableCell className="text-center">{product.name}</TableCell>
-              <TableCell className="text-center">{product.minimumBudget}</TableCell>
-              <TableCell className="text-center">{product.commitmentTime}</TableCell>
-              <TableCell className="text-center">{product.navFee}</TableCell>
-              <TableCell className="text-center">{product.acountFeeForWebsite}</TableCell>
-              <TableCell className="text-center">{product.profitRateCommitment}</TableCell>
-              <TableCell className="text-center">{product.bonus}</TableCell>
-              <TableCell className="text-center">{product.description}</TableCell>
-              <TableCell className="text-center">
-                <AlertDialog>
-                  <AlertDialogTrigger asChild>
-                    <Button variant="primary" onClick={() => handleEditProduct(product.id)}>
-                      <FaEdit />
-                    </Button>
-                  </AlertDialogTrigger>
-                  <AlertDialogContent className="max-w-screen w-[90%] h-[90%] overflow-y-auto">
-                    <AlertDialogHeader className="bg-slate-100">
-                      <AlertDialogTitle className="text-center pt-6">
-                        <h5 className="text-[#232A46] font-semibold">Update Product</h5>
-                      </AlertDialogTitle>
-                      <div className="pb-4">
-                        <ProductUpdate id={product.id} getData={() => getData()} />
-                      </div>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                      <AlertDialogCancel id="product-update">Cancel</AlertDialogCancel>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
-                </AlertDialog>
-              </TableCell>
-            </TableRow>
-          ))}
+          {products &&
+            products.map((product) => (
+              <TableRow key={product.id}>
+                <TableCell className="text-center">{product.name}</TableCell>
+                <TableCell className="text-center">{product.minimumBudget}</TableCell>
+                <TableCell className="text-center">{product.commitmentTime}</TableCell>
+                <TableCell className="text-center">{product.navFee}</TableCell>
+                <TableCell className="text-center">{product.acountFeeForWebsite}</TableCell>
+                <TableCell className="text-center">{product.profitRateCommitment}</TableCell>
+                <TableCell className="text-center">{product.bonus}</TableCell>
+                <TableCell className="text-center">{product.description}</TableCell>
+                <TableCell className="text-center">
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button variant="primary" onClick={() => handleEditProduct(product.id)}>
+                        <FaEdit />
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent className="max-w-screen w-[90%] h-[90%] overflow-y-auto">
+                      <AlertDialogHeader className="bg-slate-100">
+                        <AlertDialogTitle className="text-center pt-6">
+                          <h5 className="text-[#232A46] font-semibold">Update Product</h5>
+                        </AlertDialogTitle>
+                        <div className="pb-4">
+                          <ProductUpdate id={product.id} getData={() => getData()} />
+                        </div>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel id="product-update">Cancel</AlertDialogCancel>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                </TableCell>
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
     </>
