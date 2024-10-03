@@ -25,7 +25,7 @@ public class DropboxController {
     @PostMapping("/upload")
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) throws IOException, UploadErrorException, DbxException {
         String directLink = dropboxService.uploadFile(file);
-        return ResponseEntity.ok("File uploaded. Direct link: " + directLink);
+        return ResponseEntity.ok(directLink);
     }
     
     @GetMapping("/download")

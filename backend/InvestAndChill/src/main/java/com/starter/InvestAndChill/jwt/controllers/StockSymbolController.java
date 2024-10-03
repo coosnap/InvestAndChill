@@ -65,7 +65,7 @@ public class StockSymbolController {
 	 @PostMapping("/save")
 	  public ResponseEntity<StockSymbol> createStockSymbol(@RequestBody StockSymbol stockSymbol) {
 	    try {
-	    	StockSymbol _stockSymbol = stockSymbolRepository.save(new StockSymbol(stockSymbol.getId(), stockSymbol.getSymbol(), stockSymbol.getCompanyName(), stockSymbol.getNote(), stockSymbol.getSizeOfCompany()));
+	    	StockSymbol _stockSymbol = stockSymbolRepository.save(new StockSymbol(stockSymbol.getId(), stockSymbol.getSymbol(), stockSymbol.getCompanyName(), stockSymbol.getNote(), stockSymbol.getSizeOfCompany(),stockSymbol.getLogo()));
 	      return new ResponseEntity<>(_stockSymbol, HttpStatus.CREATED);
 	    } catch (Exception e) {
 	      return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -84,6 +84,7 @@ public class StockSymbolController {
 	    	if (stockSymbol.getSizeOfCompany() != 0) {
 	    		_stockSymbol.setSizeOfCompany(stockSymbol.getSizeOfCompany());
 	    	}
+	    	_stockSymbol.setLogo(stockSymbol.getLogo());
 	    	
 	      return new ResponseEntity<>(stockSymbolRepository.save(_stockSymbol), HttpStatus.OK);
 	    } else {
