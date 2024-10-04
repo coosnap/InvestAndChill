@@ -1,6 +1,5 @@
 import {
   articleLinkWithStock,
-  articleSetType,
   getArticleDetail,
   insertArticle,
   updateArticle,
@@ -225,7 +224,7 @@ export const AddArticleEditor = () => {
       {isLoading && <Loader />}
       <div className="flex-1 h-1/2">
         <div className="flex gap-4 mb-4">
-          {/* <div>
+          <div>
             <FormControl size="small">
               <InputLabel id="stoke-label">Stoke</InputLabel>
               <Select
@@ -244,7 +243,7 @@ export const AddArticleEditor = () => {
                   ))}
               </Select>
             </FormControl>
-          </div> */}
+          </div>
           <div>
             <FormControl size="small">
               <InputLabel id="type-label">Label</InputLabel>

@@ -16,7 +16,6 @@ axiosInstance.interceptors.request.use(
     if (token) {
       request.headers['Authorization'] = `Bearer ${token}`;
     }
-    console.log(request);
     return request;
   },
   (error) => {
@@ -43,11 +42,7 @@ axiosInstance.interceptors.response.use(
     return response;
   },
   (error) => {
-    if (error.response) {
-      return parseError(error.response.data);
-    } else {
-      return Promise.reject(error);
-    }
+    return Promise.reject(error);
   }
 );
 

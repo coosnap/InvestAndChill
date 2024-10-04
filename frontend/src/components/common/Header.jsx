@@ -192,7 +192,7 @@ function Header() {
             </div>
             {(cookies?.roles?.includes('ROLE_MODERATOR_USER') ||
               cookies?.roles?.includes('ROLE_ADMIN')) && (
-              <Link to="/admin" className="text-lg">
+              <Link to="/admin" className="text-lg" onClick={() => setShowPop(false)}>
                 Đi tới Admin
               </Link>
             )}

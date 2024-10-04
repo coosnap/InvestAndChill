@@ -36,7 +36,7 @@ function ListCompany() {
               categories
                 .filter((e) => e.sizeOfCompany === 1)
                 .map((e) => (
-                  <Link key={e.id} to={`/detail?stoke=${e.symbol}`} className="w-full">
+                  <Link key={e.id} to={`/detail?stoke=${e.id}`} className="w-full">
                     <div className="flex justify-between max-w-1/3 px-4 py-4 border rounded-lg bg-white">
                       <div className="flex items-center">
                         <div className="">
@@ -91,7 +91,7 @@ function ListCompany() {
               categories
                 .filter((e) => e.sizeOfCompany === 2)
                 .map((e) => (
-                  <Link key={e.id} to={`/detail?stoke=${e.symbol}`} className="w-full">
+                  <Link key={e.id} to={`/detail?stoke=${e.id}`} className="w-full">
                     <div className="flex justify-between max-w-1/3 px-4 py-4 border rounded-lg bg-white">
                       <div className="flex items-center">
                         <div className="">
@@ -146,7 +146,7 @@ function ListCompany() {
               categories
                 .filter((e) => e.sizeOfCompany === 3)
                 .map((e) => (
-                  <Link key={e.id} to={`/detail?stoke=${e.symbol}`} className="w-full">
+                  <Link key={e.id} to={`/detail?stoke=${e.id}`} className="w-full">
                     <div className="flex justify-between max-w-1/3 px-4 py-4 border rounded-lg bg-white">
                       <div className="flex items-center">
                         <div className="">

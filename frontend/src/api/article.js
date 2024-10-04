@@ -1,3 +1,5 @@
+import axiosInstance from './axiosInstance';
+
 export async function getArticleAll() {
   const response = await fetch(`${import.meta.env.VITE_REACT_APP_API}/api/article/all`, {
     method: 'GET',
@@ -102,18 +104,12 @@ export async function articleLinkWithStock(id, stockId) {
   return false;
 }
 
-export async function articleSetType(id, type) {
-  const response = await fetch(
-    `${import.meta.env.VITE_REACT_APP_API}/api/article/${id}/setType/${type}`,
-    {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }
+export async function searchArticle(label, stockId) {
+  const response = await axiosInstance.get(
+    `/api/article/search?labelId=${label}&stockId=${stockId}`
   );
-  if (response.ok) {
-    return true;
+  if (response.status === 200) {
+    return response.data;
   }
-  return false;
+  return;
 }

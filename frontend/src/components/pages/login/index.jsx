@@ -12,7 +12,7 @@ import {
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { Controller, useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 import { getArticleAll } from '../../../api/article';
 import { sendEmail, signIn, signUp } from '../../../api/auth';
@@ -29,7 +29,6 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel';
 import Autoplay from 'embla-carousel-autoplay';
-import { jwtDecode } from 'jwt-decode';
 import { toast, ToastContainer } from 'react-toastify';
 import './styles.scss';
 
@@ -172,8 +171,10 @@ function Login() {
       let infoSignIn = await signIn(values);
       setIsLoading(true);
       if (infoSignIn) {
-        let exp = jwtDecode(infoSignIn?.accessToken)?.exp;
-        let d = new Date(exp * 1000);
+        // let exp = jwtDecode(infoSignIn?.accessToken)?.exp;
+        // let d = new Date(exp * 1000);
+        let d = new Date();
+        d.setHours(d.getHours() + 3);
         setCookie(
           'usrId',
           {
@@ -268,18 +269,17 @@ function Login() {
               articleList.map(
                 (e, i) =>
                   i <= 4 && (
-                    <Link
-                      to={'/post/' + e.id}
+                    <div
                       className={`flex justify-between text-gray-900 text-sm mb-1 cursor-pointer pb-1`}
                       key={e.id}
                     >
-                      <div className="truncate-single-line">
+                      <div className="truncate-single-line flex">
                         <StickyNote2Icon color="primary" sx={{ marginRight: '8px' }} />
-                        <span>{e.title}</span>
+                        <p>{e.title}</p>
                       </div>
                       <div className="flex-1 border-b border-dotted border-black mx-1 mb-2"></div>
                       <div className="w-[72px] whitespace-nowrap">{e.createDate.split(' ')[0]}</div>
-                    </Link>
+                    </div>
                   )
               )}
           </div>
