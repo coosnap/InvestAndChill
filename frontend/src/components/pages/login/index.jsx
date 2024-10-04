@@ -1,16 +1,22 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import StickyNote2Icon from '@mui/icons-material/StickyNote2';
-import { IconButton, InputAdornment, TextField } from '@mui/material';
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  InputAdornment,
+  TextField,
+} from '@mui/material';
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { Controller, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 import { getArticleAll } from '../../../api/article';
-import { signIn, signUp } from '../../../api/auth';
+import { sendEmail, signIn, signUp } from '../../../api/auth';
 import Loader from '../../common/Loader';
-import Modal from '../../common/Modal';
 import { Button } from '../../ui/button';
 import { Label } from '../../ui/label';
 
@@ -23,8 +29,9 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel';
 import Autoplay from 'embla-carousel-autoplay';
-import './styles.scss';
 import { jwtDecode } from 'jwt-decode';
+import { ToastContainer } from 'react-toastify';
+import './styles.scss';
 
 const loginSchema = z.object({
   username: z.string().min(1, { message: 'Vui lòng điền tên đăng nhập' }),
@@ -62,21 +69,26 @@ const registerSchema = z
     // }
   });
 
+const forgotSchema = z.object({
+  username: z
+    .string()
+    .min(1, { message: 'Vui lòng điền email' })
+    .email('Chưa đúng định dạng Email'),
+});
+
 function Login() {
   const id = useId();
   const navigate = useNavigate();
 
-  const [showModal, setShowModal] = useState(false);
-  const [showDialog, setShowDialog] = useState(false);
   const [showRegisterDialog, setShowRegisterDialog] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordRe, setShowPasswordRe] = useState(false);
   const [showPasswordConf, setShowPasswordConf] = useState(false);
   const [cookie, setCookie] = useCookies(['access_token', 'usrId', 'roles']);
   const [isLoading, setIsLoading] = useState(false);
-  const [statusDialog, setStatusDialog] = useState({ status: '', message: '' });
   const [articleList, setArticleList] = useState([]);
   const [validate, setValidate] = useState({});
+  const [openForgot, setOpenForgot] = useState(false);
 
   const {
     handleSubmit,
@@ -106,6 +118,34 @@ function Login() {
     resolver: zodResolver(registerSchema),
   });
 
+  const {
+    handleSubmit: handleSubmitForgot,
+    control: controlForgot,
+    formState: { errors: errorForgot },
+  } = useForm({
+    mode: 'all',
+    defaultValues: {
+      username: '',
+    },
+    resolver: zodResolver(forgotSchema),
+  });
+
+  const onSubmitForgot = useCallback(async (values) => {
+    try {
+      let result = await sendEmail(values);
+      if (result) {
+        toast.success('Send Email Successfully!', {
+          position: 'top-right',
+        });
+        setOpenForgot(false);
+      }
+    } catch (error) {
+      toast.error('Send Email Fail!', {
+        position: 'top-right',
+      });
+    }
+  }, []);
+
   const onSubmitRegister = useCallback(async (values) => {
     try {
       // let data = {
@@ -115,12 +155,14 @@ function Login() {
       const response = await signUp(values);
       const responseBody = await response.json();
       if (responseBody.message) {
-        setStatusDialog({ status: 'Success', message: 'Đăng ký thành công' });
-        setShowModal(true);
+        toast.success('Đăng ký thành công!', {
+          position: 'top-right',
+        });
       }
     } catch (error) {
-      setStatusDialog({ status: 'Error', message: 'Đăng ký thất bại' });
-      setShowModal(true);
+      toast.error('Đăng ký thất bại!', {
+        position: 'top-right',
+      });
     }
   }, []);
 
@@ -147,8 +189,8 @@ function Login() {
         infoSignIn.roles.includes('ROLE_ADMIN') ||
         infoSignIn.roles.includes('ROLE_MODERATOR_ARTICLE') ||
         infoSignIn.roles.includes('ROLE_MODERATOR_USER')
-          ? navigate('/admin')
-          : navigate('/invest');
+          ? (window.location.href = '/login')
+          : (window.location.href = '/invest');
       } else {
         setIsLoading(false);
         setValidate((prev) => ({
@@ -157,7 +199,9 @@ function Login() {
         }));
       }
     } catch (error) {
-      setShowDialog(true);
+      toast.error('Tên người dùng hoặc Mật khẩu không đúng.!', {
+        position: 'top-right',
+      });
     }
   }, []);
 
@@ -304,7 +348,7 @@ function Login() {
                 <div>
                   <span
                     className="mt-4 lg:mt-2 font-semibold text-blue-500 hover:text-blue-300 underline cursor-pointer"
-                    onClick={() => setShowRegisterDialog(true)}
+                    onClick={() => setOpenForgot(true)}
                   >
                     Quên mật khẩu
                   </span>
@@ -329,55 +373,58 @@ function Login() {
             <img style={{ width: '100%' }} src="/adv.jpg" alt="Advert" />
           </div>
         </div>
+      </div>
 
-        <div
-          className={`${
-            showRegisterDialog ? '' : 'hidden'
-          } absolute top-0 left-0 w-full h-full opacity-50 bg-black`}
-        ></div>
-        <div className={`${showRegisterDialog ? '' : 'hidden'} absolute top-[10%] left-[35%]`}>
-          <div className="w-[500px] py-10 bg-white rounded-lg shadow-2xl">
-            <div className="px-10">
-              <div>
-                <div>
-                  <p className="font-bold text-xl text-center text-black mb-4">Đăng ký tài khoản</p>
-                </div>
-                <form key={id} onSubmit={handleSubmitRegister(onSubmitRegister)}>
-                  <Controller
-                    name="username"
-                    control={controlRegister}
-                    render={({ field }) => (
-                      <TextField
-                        required
-                        name="username"
-                        className="w-full"
-                        label="Tên đăng nhập"
-                        type="text"
-                        size="small"
-                        error={!!errorsRegister?.username}
-                        helperText={errorsRegister?.username?.message}
-                        {...field}
-                      />
-                    )}
-                  />
-                  <div className="h-5"></div>
-                  <Controller
-                    name="fullName"
-                    control={controlRegister}
-                    render={({ field }) => (
-                      <TextField
-                        name="fullName"
-                        className="w-full"
-                        label="Họ và Tên"
-                        type="text"
-                        size="small"
-                        error={!!errorsRegister?.fullName}
-                        helperText={errorsRegister?.fullName?.message}
-                        {...field}
-                      />
-                    )}
-                  />
-                  {/* <div className="flex gap-4">
+      <Dialog
+        sx={{
+          '.MuiPaper-root': {
+            maxWidth: '500px',
+            width: '100%',
+            minHeight: '180px',
+          },
+        }}
+        open={showRegisterDialog}
+      >
+        <DialogTitle variant="h5" sx={{ fontWeight: 'bold', textAlign: 'center' }}>
+          Đăng ký tài khoản
+        </DialogTitle>
+        <DialogContent>
+          <form onSubmit={handleSubmitRegister(onSubmitRegister)}>
+            <Controller
+              name="username"
+              control={controlRegister}
+              render={({ field }) => (
+                <TextField
+                  required
+                  name="username"
+                  className="w-full"
+                  label="Tên đăng nhập"
+                  type="text"
+                  size="small"
+                  error={!!errorsRegister?.username}
+                  helperText={errorsRegister?.username?.message}
+                  {...field}
+                />
+              )}
+            />
+            <div className="h-5"></div>
+            <Controller
+              name="fullName"
+              control={controlRegister}
+              render={({ field }) => (
+                <TextField
+                  name="fullName"
+                  className="w-full"
+                  label="Họ và Tên"
+                  type="text"
+                  size="small"
+                  error={!!errorsRegister?.fullName}
+                  helperText={errorsRegister?.fullName?.message}
+                  {...field}
+                />
+              )}
+            />
+            {/* <div className="flex gap-4">
                     <Controller
                       name="dateOfBirth"
                       control={controlRegister}
@@ -398,101 +445,133 @@ function Login() {
                       }}
                     />
                   </div> */}
-                  <div className="h-5"></div>
-                  <Controller
-                    name="password"
-                    control={controlRegister}
-                    render={({ field }) => (
-                      <TextField
-                        required
-                        name="password"
-                        className="w-full"
-                        label="Mật khẩu"
-                        size="small"
-                        error={!!errorsRegister?.password}
-                        type={!showPasswordRe ? 'password' : 'text'}
-                        helperText={errorsRegister?.password?.message}
-                        InputProps={{
-                          endAdornment: (
-                            <InputAdornment position="end">
-                              <IconButton
-                                aria-label="toggle password visibility"
-                                onClick={() => setShowPasswordRe(!showPasswordRe)}
-                                edge="end"
-                              >
-                                {showPasswordRe ? <VisibilityOff /> : <Visibility />}
-                              </IconButton>
-                            </InputAdornment>
-                          ),
-                        }}
-                        {...field}
-                      />
-                    )}
-                  />
-                  <div className="h-5"></div>
-                  <Controller
-                    name="passwordConfirm"
-                    control={controlRegister}
-                    render={({ field }) => (
-                      <TextField
-                        required
-                        name="passwordConfirm"
-                        className="w-full"
-                        label="Xác nhận mật khẩu"
-                        size="small"
-                        error={!!errorsRegister?.passwordConfirm}
-                        type={!showPasswordConf ? 'password' : 'text'}
-                        helperText={errorsRegister?.passwordConfirm?.message}
-                        InputProps={{
-                          endAdornment: (
-                            <InputAdornment position="end">
-                              <IconButton
-                                aria-label="toggle password visibility"
-                                onClick={() => setShowPasswordConf(!showPasswordConf)}
-                                edge="end"
-                              >
-                                {showPasswordConf ? <VisibilityOff /> : <Visibility />}
-                              </IconButton>
-                            </InputAdornment>
-                          ),
-                        }}
-                        {...field}
-                      />
-                    )}
-                  />
-                  <div className="text-end mt-6">
-                    <Button
-                      type="button"
-                      variant="secondary"
-                      className="mr-2 border"
-                      onClick={() => setShowRegisterDialog(false)}
-                    >
-                      Cancel
-                    </Button>
-                    <Button type="submit" variant="primary">
-                      Đăng ký
-                    </Button>
-                  </div>
-                </form>
-              </div>
+            <div className="h-5"></div>
+            <Controller
+              name="password"
+              control={controlRegister}
+              render={({ field }) => (
+                <TextField
+                  required
+                  name="password"
+                  className="w-full"
+                  label="Mật khẩu"
+                  size="small"
+                  error={!!errorsRegister?.password}
+                  type={!showPasswordRe ? 'password' : 'text'}
+                  helperText={errorsRegister?.password?.message}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={() => setShowPasswordRe(!showPasswordRe)}
+                          edge="end"
+                        >
+                          {showPasswordRe ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                  {...field}
+                />
+              )}
+            />
+            <div className="h-5"></div>
+            <Controller
+              name="passwordConfirm"
+              control={controlRegister}
+              render={({ field }) => (
+                <TextField
+                  required
+                  name="passwordConfirm"
+                  className="w-full"
+                  label="Xác nhận mật khẩu"
+                  size="small"
+                  error={!!errorsRegister?.passwordConfirm}
+                  type={!showPasswordConf ? 'password' : 'text'}
+                  helperText={errorsRegister?.passwordConfirm?.message}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={() => setShowPasswordConf(!showPasswordConf)}
+                          edge="end"
+                        >
+                          {showPasswordConf ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                  {...field}
+                />
+              )}
+            />
+
+            <div className="flex justify-end gap-2 mt-6">
+              <Button variant="outline" onClick={() => setShowRegisterDialog(false)}>
+                Cancel
+              </Button>
+              <Button variant="primary" type="submit">
+                Save
+              </Button>
             </div>
-          </div>
-        </div>
-      </div>
-      {showDialog && (
-        <Modal
-          handleClickModal={() => setShowDialog(false)}
-          message={'Tên người dùng hoặc Mật khẩu không đúng.'}
-          status="Error"
-        />
-      )}
-      {showModal && (
-        <Modal
-          handleClickModal={() => setShowModal(false)}
-          message={statusDialog.message}
-          status={statusDialog.status}
-        />
-      )}
+          </form>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog
+        sx={{
+          '.MuiPaper-root': {
+            maxWidth: '500px',
+            width: '100%',
+            minHeight: '180px',
+          },
+        }}
+        open={openForgot}
+      >
+        <DialogTitle variant="h5" sx={{ fontWeight: 'bold', textAlign: 'center' }}>
+          Quên mật khẩu
+        </DialogTitle>
+        <DialogContent>
+          <form onSubmit={handleSubmitForgot(onSubmitForgot)}>
+            <div className="w-full">
+              <div className="mb-1">
+                <Label htmlFor="username">Email</Label>
+              </div>
+              <Controller
+                name="username"
+                control={controlForgot}
+                render={({ field }) => (
+                  <TextField
+                    required
+                    name="username"
+                    className="w-full"
+                    placeholder="Vui lòng nhập email"
+                    label=""
+                    size="small"
+                    type="text"
+                    error={!!errorForgot?.username}
+                    helperText={errorForgot?.username?.message}
+                    {...field}
+                  />
+                )}
+              />
+            </div>
+
+            <div className="flex justify-end gap-2 mt-6">
+              <Button variant="outline" onClick={() => setOpenForgot(false)}>
+                Cancel
+              </Button>
+              <Button variant="primary" type="submit">
+                Save
+              </Button>
+            </div>
+          </form>
+        </DialogContent>
+      </Dialog>
+
+      <ToastContainer />
     </div>
   );
 }

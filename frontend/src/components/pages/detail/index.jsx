@@ -1,9 +1,9 @@
 import { getArticleAll } from '@/api/article';
-import StickyNote2Icon from '@mui/icons-material/StickyNote2';
 import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
 import { useEffect, useState } from 'react';
 import Loader from '../../common/Loader';
 
+import { SimpleTreeView, TreeItem } from '@mui/x-tree-view';
 import './style.scss';
 
 function Detail() {
@@ -17,13 +17,19 @@ function Detail() {
   useEffect(() => {
     const loadData = async () => {
       setIsLoading(true);
-      const data = await getArticleAll();
-      if (data) {
-        let result = data.filter((e) => e.stockId.symbol === stokeParam);
-        let business = result.filter((e) => e.type === 1);
-        setBusinessData(business);
-        setIsLoading(false);
-      } else {
+      try {
+        const data = await getArticleAll();
+        if (data) {
+          let result = data.filter((e) => e.stockId.symbol === stokeParam);
+          let business = result.filter((e) => e.type === 1);
+          setBusinessData(business);
+          setIsLoading(false);
+        } else {
+          setBusinessData([]);
+          setIsLoading(false);
+        }
+      } catch (error) {
+        setBusinessData([]);
         setIsLoading(false);
       }
     };
@@ -36,8 +42,8 @@ function Detail() {
 
   return (
     <div className="max-w-sreen h-[calc(100vh-66px)] bg-primary flex gap-14 px-16">
-      <div className="flex-1 mt-12 max-w-[620px]">
-        <Accordion sx={{ border: '1px solid #198ADE', boxShadow: 'none' }}>
+      <div className="mt-12 w-1/3">
+        <Accordion expanded={'1'} sx={{ border: '1px solid #198ADE', boxShadow: 'none' }}>
           <AccordionSummary
             aria-controls="panel1-content"
             id="panel1-header"
@@ -59,7 +65,20 @@ function Detail() {
           <AccordionDetails
             sx={{ display: 'flex', alignItems: 'self-start', flexDirection: 'column' }}
           >
-            {businessData.map((e) => (
+            <SimpleTreeView>
+              <TreeItem itemId="Overview" label="A. Overview">
+                <TreeItem itemId="BizModel" label="1. Biz Model"></TreeItem>
+                <TreeItem itemId="IndustryView" label="2. Industry View"></TreeItem>
+                <TreeItem itemId="CompetitiveAnalysis" label="3. Competitive Analysis"></TreeItem>
+                <TreeItem itemId="ExpandScale" label="4. Expand Scale"></TreeItem>
+                <TreeItem itemId="GovernanceAnalysis" label="5. Governance Analysis"></TreeItem>
+                <TreeItem itemId="EvaluateProspects" label="6. Đánh giá triển vọng"></TreeItem>
+                <TreeItem itemId="Risk" label="7. Rủi ro"></TreeItem>
+              </TreeItem>
+              <TreeItem itemId="Business" label="B. Cập nhật Đánh giá DN"></TreeItem>
+              <TreeItem itemId="Branch" label="C. Cập nhật Đánh giá Ngành"></TreeItem>
+            </SimpleTreeView>
+            {/* {businessData.map((e) => (
               <div
                 key={e.id}
                 className="w-full flex text-sm cursor-pointer"
@@ -73,7 +92,7 @@ function Detail() {
                 <div className="flex-1 border-b border-dotted border-black mx-1 mb-2"></div>
                 <div>{e.createDate.split(' ')[0]}</div>
               </div>
-            ))}
+            ))} */}
           </AccordionDetails>
         </Accordion>
       </div>

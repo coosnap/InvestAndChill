@@ -18,7 +18,7 @@ export async function getStokeDetail(id) {
 
 export async function insertStoke({ data }) {
   const response = await axiosInstance.post('/api/stock/save', data);
-  if (response.status === 200) {
+  if (response.status === 201) {
     return response.data;
   }
   return;

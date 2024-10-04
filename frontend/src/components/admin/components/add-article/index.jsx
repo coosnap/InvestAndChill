@@ -197,7 +197,7 @@ export const AddArticleEditor = () => {
     let formData = new FormData();
     if (file !== null) {
       formData.append('file', file);
-      fetch(`${import.meta.env.VITE_REACT_APP_API}/api/fileStatic/upload`, {
+      fetch(`${import.meta.env.VITE_REACT_APP_API}/api/dropbox/upload`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',

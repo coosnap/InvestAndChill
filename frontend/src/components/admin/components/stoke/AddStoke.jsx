@@ -50,11 +50,10 @@ function AddStoke(props) {
         let data = { ...stoke };
         let result = await updateStoke({ data });
         if (result) {
-          document.getElementById('stoke-cancel')?.click();
-          propsInfo.render();
           toast.success('Update Successfully!', {
             position: 'top-right',
           });
+          props.render();
         }
       } catch (error) {
         toast.error('Update Fail!', {
@@ -67,10 +66,10 @@ function AddStoke(props) {
       try {
         let result = await insertStoke({ data });
         if (result) {
-          propsInfo.render();
           toast.success('Insert Successfully!', {
             position: 'top-right',
           });
+          props.render();
         }
       } catch (error) {
         toast.error('Insert Fail!', {

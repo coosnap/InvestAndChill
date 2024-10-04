@@ -9,17 +9,17 @@ import Login from './components/pages/login';
 import AdminRoute from './components/router/admin-route';
 import PrivateRoute from './components/router/private-route';
 import PublicRoute from './components/router/public-route';
+import Detail from './components/pages/detail';
+import Header from './components/common/Header';
+import Category from './components/pages/Category';
+import Investment from './components/pages/Investment';
 
-const Admin = React.lazy(() => import('./components/admin/Admin.jsx'));
-const Header = React.lazy(() => import('./components/common/Header'));
+const Admin = React.lazy(() => import('./components/admin/Admin'));
 const Buy = React.lazy(() => import('./components/pages/Buy'));
-const Category = React.lazy(() => import('./components/pages/Category.jsx'));
-const Detail = React.lazy(() => import('./components/pages/detail'));
-const Investment = React.lazy(() => import('./components/pages/investment'));
 const NotFound = React.lazy(() => import('./components/pages/NotFound'));
-const Post = React.lazy(() => import('./components/pages/Post.jsx'));
-const Product = React.lazy(() => import('./components/pages/Product.jsx'));
-const Question = React.lazy(() => import('./components/pages/Question.jsx'));
+const Post = React.lazy(() => import('./components/pages/Post'));
+const Product = React.lazy(() => import('./components/pages/Product'));
+const Question = React.lazy(() => import('./components/pages/Question'));
 
 const routes = [
   {
@@ -62,9 +62,7 @@ const routes = [
     path: '/invest',
     element: (
       <PrivateRoute>
-        <Suspense>
-          <Investment />
-        </Suspense>
+        <Investment />
       </PrivateRoute>
     ),
   },
@@ -72,9 +70,7 @@ const routes = [
     path: '/category',
     element: (
       <PrivateRoute>
-        <Suspense>
-          <Category />
-        </Suspense>
+        <Category />
       </PrivateRoute>
     ),
   },
@@ -102,9 +98,7 @@ const routes = [
     path: '/detail',
     element: (
       <PrivateRoute>
-        <Suspense>
-          <Detail />
-        </Suspense>
+        <Detail />
       </PrivateRoute>
     ),
   },
@@ -135,13 +129,7 @@ const Layout = ({ hideHeaderPaths = [] }) => {
 
   return (
     <>
-      {!hideHeaderPaths.includes(pathname) ? (
-        <Suspense>
-          <Header />
-        </Suspense>
-      ) : (
-        <div className="h-8"></div>
-      )}
+      {!hideHeaderPaths.includes(pathname) ? <Header /> : <div className="h-8"></div>}
       <Outlet />
     </>
   );

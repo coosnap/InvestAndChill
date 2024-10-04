@@ -35,24 +35,24 @@ function Investment() {
     if (id === index) navigate(path);
   };
 
-  const mod = (n, m) => {
-    let result = n % m;
-    return result >= 0 ? result : result + m;
-  };
+  // const mod = (n, m) => {
+  //   let result = n % m;
+  //   return result >= 0 ? result : result + m;
+  // };
 
   // if (isLoading) {
   //   return <Loader />;
   // }
 
   return (
-    <div className="flex justify-center items-center relative mx-auto h-[calc(100vh-66px)] bg-primary">
+    <div className="flex justify-center items-center relative mx-auto min-h-[calc(100vh-66px)] bg-primary">
       <div className="flex justify-center gap-8">
         {investData.map((e) => {
           return (
             <article
               key={e.id}
               onClick={() => handleClickCard(e.id, e.href)}
-              className={`w-1/4 flex items-center justify-center cursor-pointer bg-white px-7 py-4 rounded-box opacity-75`}
+              className={`w-1/4 flex items-center justify-center cursor-pointer bg-white px-7 vm:my-2 sm:py-4 rounded-box opacity-75`}
             >
               <div className="group relative flex flex-col items-center">
                 {e?.icon ? (
@@ -67,7 +67,7 @@ function Investment() {
                   <img src={e?.image} alt="" />
                 )}
                 <div className="mt-5 pb-8 text-center">
-                  <p className="text-2xl desktop:text-2xl tablet:text-lg uppercase font-semibold text-gray-900 group-hover:text-gray-600">
+                  <p className="uppercase font-semibold text-gray-900 group-hover:text-gray-600">
                     {e.title}
                   </p>
                 </div>

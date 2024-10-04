@@ -34,7 +34,7 @@ function Product() {
         <div className="text-center mb-8">
           <h2 className="text-[#232A46] font-semibold text-4xl">Các gói dịch vụ</h2>
         </div>
-        <ProductTemplate cls="w-1/4" products={products} handleClickBuy={handleClickBuy} />
+        <ProductTemplate cls="w-1/5" products={products} handleClickBuy={handleClickBuy} />
       </div>
     </div>
   );

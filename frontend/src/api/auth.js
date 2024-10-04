@@ -46,3 +46,11 @@ export async function refreshTokenAPI({ refreshToken }) {
   }
   return;
 }
+
+export async function sendEmail(email) {
+  const response = await axiosInstance.post('/api/email/send', email);
+  if (response.status === 200) {
+    return true;
+  }
+  return;
+}
