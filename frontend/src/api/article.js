@@ -31,6 +31,7 @@ export async function insertArticle(data) {
     title: data.title,
     content: data.content,
     url: data.url,
+    label: data.label,
   };
   const response = await fetch(
     `${import.meta.env.VITE_REACT_APP_API}/api/article/save?stockId=${data.stockId}&type=${
@@ -56,6 +57,7 @@ export async function updateArticle(data) {
     title: data.title,
     content: data.content,
     url: data.url,
+    label: data.label,
   };
   const response = await fetch(`${import.meta.env.VITE_REACT_APP_API}/api/article/${data.id}`, {
     method: 'PUT',

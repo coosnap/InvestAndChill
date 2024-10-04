@@ -67,9 +67,9 @@ function Investment() {
                   <img src={e?.image} alt="" />
                 )}
                 <div className="mt-5 pb-8 text-center">
-                  <p className="uppercase font-semibold text-gray-900 group-hover:text-gray-600">
+                  <h6 className="uppercase font-semibold text-gray-900 group-hover:text-gray-600">
                     {e.title}
-                  </p>
+                  </h6>
                 </div>
               </div>
             </article>

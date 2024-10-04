@@ -92,9 +92,6 @@ export const AddArticleEditor = () => {
   const saveTypeAndStock = async (result) => {
     if (result && result.id) {
       try {
-        if (result.type) {
-          await articleSetType(result.id, result.type);
-        }
         if (result.stockId) {
           await articleLinkWithStock(result.id, result.stockId);
         }
@@ -111,6 +108,7 @@ export const AddArticleEditor = () => {
       title: article.title,
       content: content,
       url: article.url,
+      label: article.label,
     };
     if (articalId) {
       try {
@@ -155,7 +153,7 @@ export const AddArticleEditor = () => {
         id: articalId,
         content: result?.content || '',
         stockId: result?.stockId?.id || '',
-        type: result?.type || '',
+        label: result?.label || '',
         url: result?.url || '',
         title: result?.title || '',
       }));
@@ -227,7 +225,7 @@ export const AddArticleEditor = () => {
       {isLoading && <Loader />}
       <div className="flex-1 h-1/2">
         <div className="flex gap-4 mb-4">
-          <div>
+          {/* <div>
             <FormControl size="small">
               <InputLabel id="stoke-label">Stoke</InputLabel>
               <Select
@@ -246,7 +244,7 @@ export const AddArticleEditor = () => {
                   ))}
               </Select>
             </FormControl>
-          </div>
+          </div> */}
           <div>
             <FormControl size="small">
               <InputLabel id="type-label">Label</InputLabel>
@@ -254,9 +252,9 @@ export const AddArticleEditor = () => {
                 labelId="type-label"
                 id="type-label-small"
                 className="bg-white min-w-[250px]"
-                value={article.type || ''}
+                value={article.label || ''}
                 label="Label"
-                onChange={(e) => setArticle((prev) => ({ ...prev, type: e.target.value }))}
+                onChange={(e) => setArticle((prev) => ({ ...prev, label: e.target.value }))}
               >
                 {sizeData.map((e) => (
                   <MenuItem

@@ -34,6 +34,7 @@ export default function TableStoke() {
     setIsLoading(true);
     try {
       const result = await getStockAll();
+      console.log(result);
       setStokes(result);
     } catch (error) {
       setStokes([]);

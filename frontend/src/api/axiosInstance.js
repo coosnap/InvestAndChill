@@ -8,7 +8,7 @@ const refrToken = getCookie('refresh_token') || '';
 
 const axiosInstance = axios.create({
   baseURL,
-  headers: { Authorization: `Bearer ${token}` },
+  headers: { 'Content-Type': 'application/json' },
 });
 
 axiosInstance.interceptors.request.use(
@@ -16,6 +16,7 @@ axiosInstance.interceptors.request.use(
     if (token) {
       request.headers['Authorization'] = `Bearer ${token}`;
     }
+    console.log(request);
     return request;
   },
   (error) => {
@@ -24,25 +25,29 @@ axiosInstance.interceptors.request.use(
 );
 
 axiosInstance.interceptors.response.use(
-  (response) => response,
-  async (error) => {
-    const originalRequest = error.config;
-    if (error.response.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
+  async (response) => {
+    if (response.status === 401) {
       try {
-        const response = await refreshTokenAPI(refrToken);
-        const { accessToken, refreshToken } = response.data;
+        const resp = await refreshTokenAPI(refrToken);
+        const { accessToken, refreshToken } = resp.data;
         let exp = jwtDecode(accessToken)?.exp;
         let d = new Date(exp * 1000);
         setCookie('access_token', accessToken, { path: '/', expires: d });
         setCookie('refresh_token', refreshToken, { path: '/', expires: d });
         axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-        return axiosInstance(originalRequest);
+        return response;
       } catch (refreshError) {
         return Promise.reject(refreshError);
       }
     }
-    return Promise.reject(error);
+    return response;
+  },
+  (error) => {
+    if (error.response) {
+      return parseError(error.response.data);
+    } else {
+      return Promise.reject(error);
+    }
   }
 );
 

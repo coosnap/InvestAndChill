@@ -30,7 +30,7 @@ import {
 } from '@/components/ui/carousel';
 import Autoplay from 'embla-carousel-autoplay';
 import { jwtDecode } from 'jwt-decode';
-import { ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import './styles.scss';
 
 const loginSchema = z.object({

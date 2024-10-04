@@ -42,7 +42,7 @@ function Detail() {
 
   return (
     <div className="max-w-sreen h-[calc(100vh-66px)] bg-primary flex gap-14 px-16">
-      <div className="mt-12 w-1/3">
+      <div className="mt-12 w-1/3 max-h-[calc(100vh-150px)] overflow-y-auto">
         <Accordion expanded={'1'} sx={{ border: '1px solid #198ADE', boxShadow: 'none' }}>
           <AccordionSummary
             aria-controls="panel1-content"
@@ -67,10 +67,24 @@ function Detail() {
           >
             <SimpleTreeView>
               <TreeItem itemId="Overview" label="A. Overview">
-                <TreeItem itemId="BizModel" label="1. Biz Model"></TreeItem>
-                <TreeItem itemId="IndustryView" label="2. Industry View"></TreeItem>
-                <TreeItem itemId="CompetitiveAnalysis" label="3. Competitive Analysis"></TreeItem>
-                <TreeItem itemId="ExpandScale" label="4. Expand Scale"></TreeItem>
+                <TreeItem itemId="BizModel1" label="1. Biz Model">
+                  <TreeItem itemId="BizModela" label="a. Biz Model"></TreeItem>
+                  <TreeItem itemId="MarketSize" label="b. Market Size n Position"></TreeItem>
+                </TreeItem>
+                <TreeItem itemId="IndustryView" label="2. Industry View">
+                  <TreeItem itemId="Characteristic" label="a. Đặc tính"></TreeItem>
+                  <TreeItem itemId="LevelOfCompetition" label="b. Mức độ cạnh tranh"></TreeItem>
+                  <TreeItem itemId="WiningModel" label="c. Wining Model"></TreeItem>
+                </TreeItem>
+                <TreeItem itemId="CompetitiveAnalysis" label="3. Competitive Analysis">
+                  <TreeItem itemId="ProvenAnalysis" label="a. Phân tích - Chứng minh"></TreeItem>
+                  <TreeItem itemId="CompanyAdventure" label="b. Company Adventure"></TreeItem>
+                  <TreeItem itemId="ViewFact" label="c. View Fact"></TreeItem>
+                </TreeItem>
+                <TreeItem itemId="ExpandScale" label="4. Expand Scale">
+                  <TreeItem itemId="Knowhow" label="a. Tập trung lợi thế/knowhow sẵn có"></TreeItem>
+                  <TreeItem itemId="Expand" label="b. Mở rộng chuỗi giá trị"></TreeItem>
+                </TreeItem>
                 <TreeItem itemId="GovernanceAnalysis" label="5. Governance Analysis"></TreeItem>
                 <TreeItem itemId="EvaluateProspects" label="6. Đánh giá triển vọng"></TreeItem>
                 <TreeItem itemId="Risk" label="7. Rủi ro"></TreeItem>

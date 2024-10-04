@@ -39,8 +39,9 @@ export async function signUp(data) {
   return;
 }
 
-export async function refreshTokenAPI({ refreshToken }) {
-  const response = await axiosInstance.post('/api/auth/refreshtoken', refreshToken);
+export async function refreshTokenAPI(refreshToken) {
+  const response = await axiosInstance.post('/api/auth/refreshtoken', { refreshToken });
+  console.log('response', response);
   if (response.status === 200) {
     return response;
   }

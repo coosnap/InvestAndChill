@@ -2,6 +2,7 @@ import axiosInstance from './axiosInstance';
 
 export async function getStockAll() {
   const response = await axiosInstance.get('/api/stock/all');
+  console.log('response', response);
   if (response.status === 200) {
     return response.data;
   }
