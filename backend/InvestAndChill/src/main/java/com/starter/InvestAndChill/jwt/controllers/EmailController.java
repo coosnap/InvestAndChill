@@ -4,6 +4,8 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +14,7 @@ import com.starter.InvestAndChill.jwt.repository.UserRepository;
 import com.starter.InvestAndChill.jwt.security.services.EmailService;
 import com.starter.InvestAndChill.utils.PasswordGenerator;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/email")
 public class EmailController {
@@ -26,7 +29,7 @@ public class EmailController {
     PasswordEncoder encoder;
 
     @PostMapping("/send")
-    public String sendEmail(@RequestBody Map<String, Object> payload) {
+    public ResponseEntity<?> sendEmail(@RequestBody Map<String, Object> payload) {
     	String username = (String )payload.get("username");
     	Optional<User> userOptional = userRepository.findByUsername(username);
     	 if (userOptional.isPresent()) {
@@ -36,9 +39,9 @@ public class EmailController {
    		  	userRepository.save(user);
     		 
     		 emailService.sendEmail(username, "New Password", "Hi, Password mới của bạn là: " + newPassword);
-    	     return "Email sent successfully";
+    	     return new ResponseEntity<>("Email sent successfully", HttpStatus.OK);
     	 }
-    	 return "Email sent not successfully";
+    	 return new ResponseEntity<>("Email sent failed",HttpStatus.NOT_FOUND);
         
     }
 }
