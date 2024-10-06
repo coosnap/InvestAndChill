@@ -73,7 +73,7 @@ export default function TableArticle() {
   return (
     <>
       {isLoading && <Loader />}
-      <div className="w-1/4 mt-4">
+      {/* <div className="w-1/4 mt-4">
         <TextField
           value={inputValue || ''}
           name="title"
@@ -83,7 +83,7 @@ export default function TableArticle() {
           type="text"
           onChange={(e) => setInputValue(e.target.value)}
         />
-      </div>
+      </div> */}
 
       <div className="h-[calc(100vh-220px)] overflow-y-auto">
         <Table className="custom-td border mt-4 bg-white">

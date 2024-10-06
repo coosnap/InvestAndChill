@@ -58,9 +58,16 @@ function Detail() {
   }));
 
   return (
-    <div className="max-w-sreen h-[calc(100vh-66px)] bg-primary flex gap-14 px-16">
-      <div className="mt-12 w-1/3 max-h-[calc(100vh-150px)] overflow-y-auto">
-        <Accordion expanded={'1'} sx={{ border: '1px solid #198ADE', boxShadow: 'none' }}>
+    <div className="sm:min-h-[calc(100vh-150px)] vm:h-full vm:flex-col lg:flex-row bg-primary flex md:gap-14 vm:gap-6 sm:px-16 vm:px-4">
+      <div className="lg:mt-12 vm:mt-8 xl:w-1/3 lg:w-1/2 sm:w-full vm:w-full vm:min-h-[440px] lg:mb-8 overflow-y-auto">
+        <Accordion
+          expanded={'1'}
+          sx={{
+            border: '1px solid #198ADE',
+            boxShadow: 'none',
+            '.css-rejl51-MuiSimpleTreeView-root': { maxHeight: '100%' },
+          }}
+        >
           <AccordionSummary
             aria-controls="panel1-content"
             id="panel1-header"
@@ -342,9 +349,9 @@ function Detail() {
           </AccordionDetails>
         </Accordion>
       </div>
-      <div className="w-[724px] mx-auto max-h-[calc(100vh-150px)] box-border overflow-y-auto border mt-12 bg-second">
+      <div className="lg:w-[1014px] vm:w:full box-border sm:max-h-[calc(100vh-150px)] vm:h-full overflow-y-auto border vm:mt-0 vm:mb-8 lg:mt-10 bg-second">
         <div className="p-6">
-          <div className="flex justify-center mb-4 text-2xl font-bold">{detail.title}</div>
+          <h5 className="flex justify-center mb-4 text-2xl font-bold">{detail.title}</h5>
           <div dangerouslySetInnerHTML={{ __html: detail.content }} />
         </div>
       </div>

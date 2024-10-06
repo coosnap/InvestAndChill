@@ -14,6 +14,8 @@ import Header from './components/common/Header';
 import Category from './components/pages/Category';
 import Investment from './components/pages/Investment';
 
+import 'react-toastify/dist/ReactToastify.css';
+
 const Admin = React.lazy(() => import('./components/admin/Admin'));
 const Buy = React.lazy(() => import('./components/pages/Buy'));
 const NotFound = React.lazy(() => import('./components/pages/NotFound'));

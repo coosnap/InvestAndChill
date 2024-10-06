@@ -13,7 +13,6 @@ import {
 import { useEffect, useState } from 'react';
 import { FaEdit } from 'react-icons/fa';
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { useRecoilValue } from 'recoil';
 
 const sizeData = [
