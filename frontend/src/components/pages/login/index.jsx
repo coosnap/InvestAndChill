@@ -88,6 +88,7 @@ function Login() {
   const [articleList, setArticleList] = useState([]);
   const [validate, setValidate] = useState({});
   const [openForgot, setOpenForgot] = useState(false);
+  const [articleId, setArticleId] = useState({});
 
   const {
     handleSubmit,
@@ -170,11 +171,11 @@ function Login() {
     try {
       let infoSignIn = await signIn(values);
       setIsLoading(true);
-      if (infoSignIn) {
-        let exp = jwtDecode(infoSignIn?.accessToken)?.exp;
-        let d = new Date(exp * 1000);
-        // let d = new Date();
-        // d.setHours(d.getHours() + 3);
+      if (infoSignIn?.accessToken) {
+        // let exp = jwtDecode(infoSignIn?.accessToken)?.exp;
+        // let d = new Date(exp * 1000);
+        let d = new Date();
+        d.setHours(d.getHours() + 2);
         setCookie(
           'usrId',
           {
@@ -183,7 +184,6 @@ function Login() {
           },
           { path: '/', expires: d }
         );
-        setCookie('refresh_token', infoSignIn.refreshToken, { path: '/', expires: d });
         setCookie('access_token', infoSignIn.accessToken, { path: '/', expires: d });
         setCookie('roles', infoSignIn.roles, { path: '/', expires: d });
         setIsLoading(false);
@@ -232,36 +232,53 @@ function Login() {
 
   const plugin = useRef(Autoplay({ delay: 15000, stopOnInteraction: true }));
 
+  function openArticleById(id) {
+    let item = articleList.find((e) => e.id === id);
+    setArticleId(item);
+  }
+
   return (
     <div className="h-full bg-primary">
       {isLoading ? <Loader /> : ''}
       <div className="sm:w-[80%] vm:w-[90%] flex sm:flex-row vm:flex-col mx-auto gap-4 pb-8">
         <div className="sm:w-1/2 vm:w-full flex flex-col gap-4">
           <div className="flex justify-center rounded-2xl bg-white gap-4 px-8 py-4">
-            <Carousel
-              plugins={[plugin.current]}
-              opts={{
-                align: 'start',
-                loop: true,
-              }}
-              className="w-full"
-            >
-              <CarouselContent>
-                {Array.from({ length: 5 }).map((_, index) => (
-                  <CarouselItem key={index}>
-                    <div className="p-1">
-                      <Card>
-                        <CardContent className="h-[350px] flex items-center justify-center p-6">
-                          <span className="text-3xl font-semibold">{index + 1}</span>
-                        </CardContent>
-                      </Card>
-                    </div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious className="left-4" />
-              <CarouselNext className="right-4" />
-            </Carousel>
+            {articleId.title ? (
+              <div className="w-full h-[350px] border bg-second overflow-y-auto rounded-md p-4">
+                <h6>{articleId.title}</h6>
+                <div dangerouslySetInnerHTML={{ __html: articleId.content }} />
+              </div>
+            ) : (
+              <Carousel
+                plugins={[plugin.current]}
+                opts={{
+                  align: 'start',
+                  loop: true,
+                }}
+                className="w-full"
+              >
+                <CarouselContent>
+                  {articleList &&
+                    articleList.length > 0 &&
+                    articleList.map((e, index) => (
+                      <CarouselItem key={index}>
+                        <div className="p-1">
+                          <Card>
+                            <CardContent className="h-[350px] flex items-center justify-center p-1">
+                              <div className="w-full h-full border bg-second overflow-y-auto rounded-md p-4">
+                                <h6>{e.title}</h6>
+                                <div dangerouslySetInnerHTML={{ __html: e.content }} />
+                              </div>
+                            </CardContent>
+                          </Card>
+                        </div>
+                      </CarouselItem>
+                    ))}
+                </CarouselContent>
+                <CarouselPrevious className="left-4 bg-white" />
+                <CarouselNext className="right-4 bg-white" />
+              </Carousel>
+            )}
           </div>
           <div className="py-4 px-8 bg-white rounded-2xl">
             {articleList &&
@@ -272,6 +289,7 @@ function Login() {
                     <div
                       className={`flex justify-between text-gray-900 text-sm mb-1 cursor-pointer pb-1`}
                       key={e.id}
+                      onClick={() => openArticleById(e.id)}
                     >
                       <div className="truncate-single-line flex">
                         <StickyNote2Icon color="primary" sx={{ marginRight: '8px' }} />

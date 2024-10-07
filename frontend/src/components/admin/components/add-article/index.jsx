@@ -13,6 +13,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 
 import './style.scss';
+import { toast, ToastContainer } from 'react-toastify';
 
 export const AddArticleEditor = () => {
   const ref = useRef(null);
@@ -189,40 +190,69 @@ export const AddArticleEditor = () => {
     { id: 'C', symbol: 'C. Cập nhật Đánh giá Ngành' },
   ];
 
-  const imageHandler = (e) => {
+  const imageHandler = async (e) => {
     const file = e.target.files[0];
     let formData = new FormData();
     if (file !== null) {
-      formData.append('file', file);
-      fetch(`${import.meta.env.VITE_REACT_APP_API}/api/dropbox/upload`, {
+      formData.append('image', file);
+      let response = await fetch(`https://api.imgur.com/3/image`, {
         method: 'POST',
         headers: {
-          Accept: 'application/json',
+          Authorization: 'Client-ID acf15ce43ac285a',
         },
         body: formData,
-      })
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-          } else {
-            return { error: true };
-          }
-        })
-        .then((json) => {
-          const src = json.path;
-          setPathImage(src);
-          return src;
-        })
-        .catch((err) => {
-          console.log('eror: ', err);
+      });
+
+      if (response.status === 429) {
+        setPathImage('');
+        toast.success('Hình ảnh đã tồn tại!', {
+          position: 'top-right',
         });
+        return;
+      }
+
+      if (response.status === 200) {
+        const json = await response.json();
+        const src = await json.data.link;
+        setPathImage(src);
+        toast.success('Upload thành công!', {
+          position: 'top-right',
+        });
+        return src;
+      }
+    }
+  };
+
+  const unsecuredCopyToClipboard = (text) => {
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+      document.execCommand('copy');
+      toast.success('Coppy thành công!', {
+        position: 'top-right',
+      });
+    } catch (err) {
+      console.error('Unable to copy to clipboard', err);
+    }
+    document.body.removeChild(textArea);
+  };
+
+  const copyToClipboard = () => {
+    let content = pathImage;
+    if (window.isSecureContext && navigator.clipboard) {
+      navigator.clipboard.writeText(content);
+    } else {
+      unsecuredCopyToClipboard(content);
     }
   };
 
   return (
-    <div className="mt-8 flex gap-x-8">
+    <div className="mt-8 flex">
       {isLoading && <Loader />}
-      <div className="flex-1 h-1/2">
+      <div className="flex-1 h-1/2 mr-8">
         <div className="flex gap-4 mb-4">
           <div>
             <FormControl size="small">
@@ -318,7 +348,7 @@ export const AddArticleEditor = () => {
           </Button>
         </div>
       </div>
-      <div className="w-[770px] h-[calc(100vh-196px)] border bg-second overflow-y-scroll">
+      <div className="lg:w-[1014px] vm:w:full box-border sm:max-h-[calc(100vh-150px)] min-h-[65vh] vm:h-full border bg-second overflow-y-auto">
         <div className="px-6 py-4" dangerouslySetInnerHTML={{ __html: content }} />
       </div>
       {openUploadFile && (
@@ -342,26 +372,28 @@ export const AddArticleEditor = () => {
                   size="small"
                   disabled
                 />
-                <Button
-                  variant="contained"
-                  onClick={() => navigator.clipboard.writeText(pathImage)}
-                  className="ml-1"
-                >
-                  Copy
-                </Button>
+                {pathImage && (
+                  <Button variant="contained" onClick={copyToClipboard} className="ml-1">
+                    Copy
+                  </Button>
+                )}
               </div>
             </div>
             <div className="flex justify-center mt-6">
               <img width={400} src={pathImage || ''} alt="image" />
             </div>
             <div className="absolute right-4 bottom-4">
-              <Button variant="outlined" onClick={() => setOpenUploadFile(false)}>
+              <Button
+                variant="outlined"
+                onClick={() => (setOpenUploadFile(false), setPathImage(''))}
+              >
                 Close
               </Button>
             </div>
           </div>
         </>
       )}
+      <ToastContainer />
     </div>
   );
 };
