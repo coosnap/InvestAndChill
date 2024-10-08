@@ -26,6 +26,10 @@ function Detail() {
           let resultSecond = data.filter((e) => e.label.length === 2);
           let resultThirs = data.filter((e) => e.label.length === 3);
           setBusinessDataFirst(resultFirst);
+          if (resultFirst?.[0]) {
+            let temp = resultFirst[0];
+            setDetail(temp);
+          }
           setBusinessDataSecond(resultSecond);
           setBusinessDataThirs(resultThirs);
           setIsLoading(false);
@@ -331,21 +335,6 @@ function Detail() {
                 )}
               </CustomTreeItem>
             </SimpleTreeView>
-            {/* {businessData.map((e) => (
-              <div
-                key={e.id}
-                className="w-full flex text-sm cursor-pointer"
-                variant="outlined"
-                onClick={() => (setDetail(e), setOpenBusiness(true))}
-              >
-                <div>
-                  <StickyNote2Icon color="primary" />
-                  <span className="ml-2">{e.title}</span>
-                </div>
-                <div className="flex-1 border-b border-dotted border-black mx-1 mb-2"></div>
-                <div>{e.createDate.split(' ')[0]}</div>
-              </div>
-            ))} */}
           </AccordionDetails>
         </Accordion>
       </div>

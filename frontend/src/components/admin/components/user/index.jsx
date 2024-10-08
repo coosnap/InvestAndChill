@@ -49,7 +49,7 @@ export default function UserAdmin() {
     let data = users.filter((e) => e.id === id);
     let formData = {
       id: id,
-      isVip: data[0].isVip,
+      isVip: data[0].isVip ? 1 : 0,
       fromDate: data[0].fromDate,
       toDate: data[0].toDate,
     };
