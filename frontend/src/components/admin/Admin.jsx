@@ -59,7 +59,7 @@ function Admin() {
   };
 
   return (
-    <div className="container w-[90%] mx-auto pt-6">
+    <div className="pt-8 px-8 bg-primary">
       <Tabs value={tabDefault} onValueChange={onTabChange} className="w-full">
         <TabsList className="bg-white">
           {(cookie[0].roles.includes('ROLE_MODERATOR_USER') ||

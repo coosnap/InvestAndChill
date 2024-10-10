@@ -33,7 +33,7 @@ export async function signUp(data) {
     },
     body: JSON.stringify(authData),
   });
-  if (response.ok) {
+  if (response.status === 200) {
     return response.json();
   }
   return;

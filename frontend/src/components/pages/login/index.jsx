@@ -153,11 +153,11 @@ function Login() {
       //   dateOfBirth: format(values.dateOfBirth, 'dd-MM-yyyy'),
       // };
       const response = await signUp(values);
-      const responseBody = await response.json();
-      if (responseBody.message) {
+      if (response.message) {
         toast.success('Đăng ký thành công!', {
           position: 'top-right',
         });
+        setShowRegisterDialog(false);
       }
     } catch (error) {
       toast.error('Đăng ký thất bại!', {
@@ -407,7 +407,7 @@ function Login() {
           Đăng ký tài khoản
         </DialogTitle>
         <DialogContent>
-          <form onSubmit={handleSubmitRegister(onSubmitRegister)}>
+          <form className="py-2" onSubmit={handleSubmitRegister(onSubmitRegister)}>
             <Controller
               name="username"
               control={controlRegister}

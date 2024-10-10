@@ -62,14 +62,13 @@ function Detail() {
   }));
 
   return (
-    <div className="sm:min-h-[calc(100vh-150px)] vm:h-full vm:flex-col lg:flex-row bg-primary flex md:gap-14 vm:gap-6 sm:px-16 vm:px-4">
-      <div className="lg:mt-12 vm:mt-8 xl:w-1/3 lg:w-1/2 sm:w-full vm:w-full vm:min-h-[440px] lg:mb-8 overflow-y-auto">
+    <div className="flex justify-center gap-8 py-8 bg-primary">
+      <div className="min-w-[426px] w-[426px] pl-8">
         <Accordion
           expanded={'1'}
           sx={{
             border: '1px solid #198ADE',
             boxShadow: 'none',
-            '.css-rejl51-MuiSimpleTreeView-root': { maxHeight: '100%' },
           }}
         >
           <AccordionSummary
@@ -95,14 +94,16 @@ function Detail() {
           >
             <SimpleTreeView defaultExpandedItems={['Overview']}>
               <CustomTreeItem itemId="Overview" label="A. Overview">
+                {console.log('e', businessDataFirst)}
                 {businessDataFirst.map(
                   (e) =>
                     e.label === 'A' && (
                       <TreeItem
                         itemId={e.id}
-                        label={e.title}
+                        label={e.title + ' / ' + e.createDate.split(' ')[0]}
                         onClick={() => setDetail(e)}
-                      ></TreeItem>
+                        className="hover:bg-none"
+                      />
                     )
                 )}
                 <TreeItem itemId="BizModel1" label="1. Biz Model">
@@ -112,9 +113,9 @@ function Detail() {
                         e.label === 'A1a' && (
                           <TreeItem
                             itemId={e.id}
-                            label={e.title}
+                            label={e.title + ' / ' + e.createDate.split(' ')[0]}
                             onClick={() => setDetail(e)}
-                          ></TreeItem>
+                          />
                         )
                     )}
                   </TreeItem>
@@ -124,9 +125,9 @@ function Detail() {
                         e.label === 'A1b' && (
                           <TreeItem
                             itemId={e.id}
-                            label={e.title}
+                            label={e.title + ' / ' + e.createDate.split(' ')[0]}
                             onClick={() => setDetail(e)}
-                          ></TreeItem>
+                          />
                         )
                     )}
                   </TreeItem>
@@ -135,9 +136,9 @@ function Detail() {
                       e.label === 'A1' && (
                         <TreeItem
                           itemId={e.id}
-                          label={e.title}
+                          label={e.title + ' / ' + e.createDate.split(' ')[0]}
                           onClick={() => setDetail(e)}
-                        ></TreeItem>
+                        />
                       )
                   )}
                 </TreeItem>
@@ -148,9 +149,9 @@ function Detail() {
                         e.label === 'A2a' && (
                           <TreeItem
                             itemId={e.id}
-                            label={e.title}
+                            label={e.title + ' / ' + e.createDate.split(' ')[0]}
                             onClick={() => setDetail(e)}
-                          ></TreeItem>
+                          />
                         )
                     )}
                   </TreeItem>
@@ -160,9 +161,9 @@ function Detail() {
                         e.label === 'A2b' && (
                           <TreeItem
                             itemId={e.id}
-                            label={e.title}
+                            label={e.title + ' / ' + e.createDate.split(' ')[0]}
                             onClick={() => setDetail(e)}
-                          ></TreeItem>
+                          />
                         )
                     )}
                   </TreeItem>
@@ -172,9 +173,9 @@ function Detail() {
                         e.label === 'A2c' && (
                           <TreeItem
                             itemId={e.id}
-                            label={e.title}
+                            label={e.title + ' / ' + e.createDate.split(' ')[0]}
                             onClick={() => setDetail(e)}
-                          ></TreeItem>
+                          />
                         )
                     )}
                   </TreeItem>
@@ -183,9 +184,9 @@ function Detail() {
                       e.label === 'A2' && (
                         <TreeItem
                           itemId={e.id}
-                          label={e.title}
+                          label={e.title + ' / ' + e.createDate.split(' ')[0]}
                           onClick={() => setDetail(e)}
-                        ></TreeItem>
+                        />
                       )
                   )}
                 </TreeItem>
@@ -196,9 +197,9 @@ function Detail() {
                         e.label === 'A3a' && (
                           <TreeItem
                             itemId={e.id}
-                            label={e.title}
+                            label={e.title + ' / ' + e.createDate.split(' ')[0]}
                             onClick={() => setDetail(e)}
-                          ></TreeItem>
+                          />
                         )
                     )}
                   </TreeItem>
@@ -208,9 +209,9 @@ function Detail() {
                         e.label === 'A3b' && (
                           <TreeItem
                             itemId={e.id}
-                            label={e.title}
+                            label={e.title + ' / ' + e.createDate.split(' ')[0]}
                             onClick={() => setDetail(e)}
-                          ></TreeItem>
+                          />
                         )
                     )}
                   </TreeItem>
@@ -220,9 +221,9 @@ function Detail() {
                         e.label === 'A3c' && (
                           <TreeItem
                             itemId={e.id}
-                            label={e.title}
+                            label={e.title + ' / ' + e.createDate.split(' ')[0]}
                             onClick={() => setDetail(e)}
-                          ></TreeItem>
+                          />
                         )
                     )}
                   </TreeItem>
@@ -231,9 +232,9 @@ function Detail() {
                       e.label === 'A3' && (
                         <TreeItem
                           itemId={e.id}
-                          label={e.title}
+                          label={e.title + ' / ' + e.createDate.split(' ')[0]}
                           onClick={() => setDetail(e)}
-                        ></TreeItem>
+                        />
                       )
                   )}
                 </TreeItem>
@@ -244,9 +245,9 @@ function Detail() {
                         e.label === 'A4a' && (
                           <TreeItem
                             itemId={e.id}
-                            label={e.title}
+                            label={e.title + ' / ' + e.createDate.split(' ')[0]}
                             onClick={() => setDetail(e)}
-                          ></TreeItem>
+                          />
                         )
                     )}
                   </TreeItem>
@@ -256,9 +257,9 @@ function Detail() {
                         e.label === 'A4b' && (
                           <TreeItem
                             itemId={e.id}
-                            label={e.title}
+                            label={e.title + ' / ' + e.createDate.split(' ')[0]}
                             onClick={() => setDetail(e)}
-                          ></TreeItem>
+                          />
                         )
                     )}
                   </TreeItem>
@@ -267,9 +268,9 @@ function Detail() {
                       e.label === 'A4' && (
                         <TreeItem
                           itemId={e.id}
-                          label={e.title}
+                          label={e.title + ' / ' + e.createDate.split(' ')[0]}
                           onClick={() => setDetail(e)}
-                        ></TreeItem>
+                        />
                       )
                   )}
                 </TreeItem>
@@ -279,9 +280,9 @@ function Detail() {
                       e.label === 'A5' && (
                         <TreeItem
                           itemId={e.id}
-                          label={e.title}
+                          label={e.title + ' / ' + e.createDate.split(' ')[0]}
                           onClick={() => setDetail(e)}
-                        ></TreeItem>
+                        />
                       )
                   )}
                 </TreeItem>
@@ -291,9 +292,9 @@ function Detail() {
                       e.label === 'A6' && (
                         <TreeItem
                           itemId={e.id}
-                          label={e.title}
+                          label={e.title + ' / ' + e.createDate.split(' ')[0]}
                           onClick={() => setDetail(e)}
-                        ></TreeItem>
+                        />
                       )
                   )}
                 </TreeItem>
@@ -303,9 +304,9 @@ function Detail() {
                       e.label === 'A7' && (
                         <TreeItem
                           itemId={e.id}
-                          label={e.title}
+                          label={e.title + ' / ' + e.createDate.split(' ')[0]}
                           onClick={() => setDetail(e)}
-                        ></TreeItem>
+                        />
                       )
                   )}
                 </TreeItem>
@@ -316,9 +317,9 @@ function Detail() {
                     e.label === 'B' && (
                       <TreeItem
                         itemId={e.id}
-                        label={e.title}
+                        label={e.title + ' / ' + e.createDate.split(' ')[0]}
                         onClick={() => setDetail(e)}
-                      ></TreeItem>
+                      />
                     )
                 )}
               </CustomTreeItem>
@@ -328,9 +329,9 @@ function Detail() {
                     e.label === 'C' && (
                       <TreeItem
                         itemId={e.id}
-                        label={e.title}
+                        label={e.title + ' / ' + e.createDate.split(' ')[0]}
                         onClick={() => setDetail(e)}
-                      ></TreeItem>
+                      />
                     )
                 )}
               </CustomTreeItem>
@@ -338,9 +339,9 @@ function Detail() {
           </AccordionDetails>
         </Accordion>
       </div>
-      <div className="lg:w-[1014px] vm:w:full box-border sm:max-h-[calc(100vh-150px)] vm:h-full overflow-y-auto border vm:mt-0 vm:mb-8 lg:mt-10 bg-second">
-        <div className="p-6">
-          <h5 className="flex justify-center mb-4 text-2xl font-bold">{detail.title}</h5>
+      <div className="min-w-[1000px] w-[1000px] border mr-8">
+        <div className="bg-second p-6 h-full">
+          <div className="flex justify-center mb-4 text-2xl font-bold">{detail.title}</div>
           <div dangerouslySetInnerHTML={{ __html: detail.content }} />
         </div>
       </div>

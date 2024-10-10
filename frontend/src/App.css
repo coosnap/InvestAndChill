@@ -3,14 +3,14 @@
 @tailwind utilities;
 
 #root {
-  min-height: 100vh;
-  background-color: #FFF4C7;
   font-size: 16px;
 }
 
-/* .App {
-  height: 100vh;
-} */
+.App {
+  min-width: fit-content;
+  min-height: 100vh;
+  background-color: #FFF4C7;
+}
 
 td {
   border-width: 1px;

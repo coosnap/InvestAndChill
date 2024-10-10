@@ -175,7 +175,7 @@ function Header() {
           className="flex items-center text-3xl tracking-tighter font-semibold text-[#DA5800]"
         >
           <img src="/logo.jpg" width={48} height={48} />
-          <h4 className="ml-3">InvestnChill</h4>
+          <h4 className="ml-3">InvestNChill</h4>
         </Link>
       </div>
       <Popover open={showPop} onOpenChange={setShowPop}>

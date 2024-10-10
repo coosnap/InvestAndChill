@@ -34,7 +34,7 @@ export async function updateStoke({ data }) {
 
 export async function deleteStock({ id }) {
   const response = await axiosInstance.delete(`/api/stock/${id}`);
-  if (response.status === 200) {
+  if (response.status === 204) {
     return true;
   }
   return;
