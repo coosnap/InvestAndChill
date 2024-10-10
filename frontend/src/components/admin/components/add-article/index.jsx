@@ -252,7 +252,7 @@ export const AddArticleEditor = () => {
   return (
     <div className="mt-8 flex justify-center pb-8">
       {isLoading && <Loader />}
-      <div className="min-w-[426px] w-[426px] mr-8">
+      <div className="min-w-[362px] w-[362px] mr-8">
         <div className="flex gap-4 mb-4">
           <div>
             <FormControl size="small">
@@ -280,7 +280,7 @@ export const AddArticleEditor = () => {
               <Select
                 labelId="type-label"
                 id="type-label-small"
-                className="bg-white min-w-[262px]"
+                className="bg-white w-[196px]"
                 value={article.label || ''}
                 label="Label"
                 onChange={(e) => setArticle((prev) => ({ ...prev, label: e.target.value }))}
@@ -348,8 +348,8 @@ export const AddArticleEditor = () => {
           </Button>
         </div>
       </div>
-      <div className="min-w-[1000px] w-[1000px] max-h-[500px] box-border border bg-second overflow-y-auto">
-        <div className="px-6 py-4" dangerouslySetInnerHTML={{ __html: content }} />
+      <div className="min-w-[1000px] w-[1000px] max-h-[500px] p-6 box-border border bg-second overflow-y-auto">
+        <div dangerouslySetInnerHTML={{ __html: content }} />
       </div>
       {openUploadFile && (
         <>
