@@ -60,7 +60,7 @@ public class DataUploadController {
 
   private String callPythonScript(String filePath) {
     try {
-      File scriptFile = ScriptUtils.extractScript("/scripts/chung_khoan.py");
+      File scriptFile = ScriptUtils.extractScript("/scripts/transform_data_script.py");
 
       ProcessBuilder pb = new ProcessBuilder("python", scriptFile.getAbsolutePath() , filePath);
       pb.redirectErrorStream(true);
