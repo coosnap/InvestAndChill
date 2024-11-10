@@ -13,7 +13,7 @@ public class PTCReportKey implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Column(name = "stock_code")
 	private String stockCode;
-	@Column(name = "quarter")
+	@Column(name = "quarter",nullable = true)
 	private String quarter;
 	@Column(name = "year")
 	private String year;
@@ -58,14 +58,14 @@ public class PTCReportKey implements Serializable {
 	        PTCReportKey that = (PTCReportKey) o;
 
 	        if (!stockCode.equals(that.stockCode)) return false;
-	        if (!quarter.equals(that.quarter)) return false;
+	        if (quarter != null ? !quarter.equals(that.quarter) : that.quarter != null) return false;
 	        return year.equals(that.year);
 	    }
 
 	    @Override
 	    public int hashCode() {
 	        int result = stockCode.hashCode();
-	        result = 31 * result + quarter.hashCode();
+	        result = 31 * result + year.hashCode();
 	        return result;
 	    }
 

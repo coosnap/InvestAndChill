@@ -2,9 +2,9 @@ package com.starter.InvestAndChill.jwt.models;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
+import javax.persistence.MappedSuperclass;
 
-@Entity(name = "view_phi_tai_chinh_quy")
+@MappedSuperclass
 public class PTCReport {
 	public PTCReportKey getId() {
 		return id;
