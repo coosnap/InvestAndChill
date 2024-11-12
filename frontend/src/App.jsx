@@ -15,6 +15,7 @@ import Category from './components/pages/Category';
 import Investment from './components/pages/Investment';
 
 import 'react-toastify/dist/ReactToastify.css';
+import { Charts } from './components/pages/chart';
 
 const Admin = React.lazy(() => import('./components/admin/Admin'));
 const Buy = React.lazy(() => import('./components/pages/Buy'));
@@ -47,6 +48,16 @@ const routes = [
     element: (
       <PublicRoute>
         <Login />
+      </PublicRoute>
+    ),
+  },
+  {
+    path: '/chart',
+    element: (
+      <PublicRoute>
+        <Suspense>
+          <Charts />
+        </Suspense>
       </PublicRoute>
     ),
   },

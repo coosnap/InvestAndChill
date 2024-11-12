@@ -177,6 +177,14 @@ function Header() {
           <img src="/logo.jpg" width={48} height={48} />
           <h4 className="ml-3">InvestNChill</h4>
         </Link>
+        <div className="ml-4 mt-1">
+          <TextField
+            sx={{ '& > .MuiOutlinedInput-root': { backgroundColor: 'white' } }}
+            variant="outlined"
+            size="small"
+            placeholder="Tìm kiếm"
+          />
+        </div>
       </div>
       <Popover open={showPop} onOpenChange={setShowPop}>
         <PopoverTrigger asChild>
