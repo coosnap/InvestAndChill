@@ -54,7 +54,7 @@ FROM phi_tai_chinh_report ptcr
 WHERE quarter is not null ;
 
 CREATE VIEW view_phi_tai_chinh_nam AS
-SELECT stock_code ,quarter ,year, p_p_3,
+SELECT stock_code ,'0' as quarter ,year, p_p_3,
 p_p_23,
 p_i_22,
 p_i_23,
