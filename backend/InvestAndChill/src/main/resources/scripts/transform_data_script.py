@@ -595,7 +595,7 @@ def extract_sum_previous_quarters(data, combine_data, cal_col, previous_number=3
             break
 
     if (len(previous_quarters) == (previous_number + 1)) or is_sum_all:
-        return sum(quarter[cal_col] or 0 for quarter in previous_quarters)
+        return sum(float(quarter[cal_col] or 0) for quarter in previous_quarters)
     else:
         return None
 
