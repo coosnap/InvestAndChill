@@ -40,11 +40,13 @@ engine = create_engine(connection_string)
 # file_path = "c:\\projects\\chills\\TEMPLATE DATA VISUAL\\NGAN HANG\\BaoCaoTaiChinh_Quarterly_ACB_raw.xlsx"
 # file_path = "c:\\projects\\chills\\TEMPLATE DATA VISUAL\\NGAN HANG\\BaoCaoTaiChinh_Yearly_ACB_raw.xlsx"
 # file_path = "c:\\projects\\chills\\test_data\\ngan_hang\\ngan_hang_dumb_test.xlsx"
+# file_path = "c:\\projects\\chills\\test_data\\ngan_hang\\VietstockFinance_Bao-cao-tai-chinh_20241118-210551.xlsx"
 
 ### Chung Khoan ###
 # file_path = "c:\\projects\\chills\\TEMPLATE DATA VISUAL\\CHUNG KHOAN\\FiinProX_DuLieuTaiChinh_BaoCaoTaiChinh_Quarterly_SSI_20241101.xlsx"
 # file_path = "c:\\projects\\chills\\TEMPLATE DATA VISUAL\\CHUNG KHOAN\\Chung Khoan_raw.xlsx"
 # file_path = "c:\\projects\\chills\\TEMPLATE DATA VISUAL\\CHUNG KHOAN\\FiinProX_DuLieuTaiChinh_BaoCaoTaiChinh_Yearly_SSI_20240927.xlsx"
+# file_path = "c:\\projects\\chills\\TEMPLATE DATA VISUAL\\CHUNG KHOAN\\FiinProX_DuLieuTaiChinh_BaoCaoTaiChinh_Quarterly_SSI_20241101 - denQ224.xlsx"
 
 
 def parse_quarter_year(date_str: str) -> Tuple[str, str]:
@@ -52,7 +54,6 @@ def parse_quarter_year(date_str: str) -> Tuple[str, str]:
         quarter, year = map(str, re.findall(r'\d+', date_str))
     elif 'tháng' in date_str:
         months, year = map(str, re.findall(r'\d+', date_str))
-        # quarter = months // 3
         quarter = months
     elif 'Năm' in date_str:
         quarter = None
@@ -154,6 +155,8 @@ def phi_tai_chinh_calculate_data(rs: List[Dict], combine_data: List[Dict]) -> Li
             i_10_1 = item['p_p_17'] or 0
             i_10_2 = item['p_p_8'] or 0
             item['p_i_10'] = i_10_1 + i_10_2
+
+            item['p_i_5'] = extract_sum_previous_quarters(item, combine_data, 'p_i_10')
 
             i_11_1 = item['p_b_2'] or 0
             i_11_2 = item['p_b_5'] or 0
@@ -294,8 +297,6 @@ def phi_tai_chinh_calculate_data(rs: List[Dict], combine_data: List[Dict]) -> Li
             i49_2_2 = i49_2 / 4
             item['p_i_49'] = (i49_1_2 + i49_2_2) / i49_2_2 if i49_2_2 != 0 and i49_2_2 is not None else None
 
-            item['p_i_5'] = extract_sum_previous_quarters(item, combine_data, 'p_i_10')
-
             i6_1 = extract_sum_previous_quarters(item, combine_data, 'p_i_20') or 0
             i6_1_2 = i6_1 / 4
             item['p_i_6'] = item['p_i_3'] / i6_1_2 if i6_1_2 != 0 and i6_1_2 is not None else None
@@ -314,7 +315,7 @@ def phi_tai_chinh_calculate_data(rs: List[Dict], combine_data: List[Dict]) -> Li
 
             i24_1 = extract_sum_previous_quarters(item, combine_data, 'p_i_21') or 0
             i24_2 = i24_1 / 4
-            item['p_i_24'] = item['p_i_10'] * 0.8 / i24_2 if item['p_i_10'] is not None and i24_2 != 0 and i24_2 is not None else None
+            item['p_i_24'] = item['p_i_5'] * 0.8 / i24_2 if item['p_i_5'] is not None and i24_2 != 0 and i24_2 is not None else None
 
             item['p_i_30'] = item['p_i_5'] / item['p_i_1'] if item['p_i_5'] is not None and item['p_i_1'] != 0 and item['p_i_1'] is not None else None
 
@@ -438,6 +439,7 @@ def chung_khoan_calculate_data(rs: List[Dict], combine_data: List[Dict]) -> List
             item['c_i_11'] = (item['c_b_3'] or 0) + (item['c_b_7'] or 0)
             item['c_i_16'] = (item['c_b_95'] or 0) + (item['c_b_98'] or 0) + (item['c_b_99'] or 0) + (item['c_b_100'] or 0) + (item['c_b_122'] or 0) + (item['c_b_125'] or 0) + (item['c_b_126'] or 0) + (item['c_b_127'] or 0)
 
+            item['c_i_5'] = extract_sum_previous_quarters(item, combine_data, 'c_i_10')
             item['c_i_8'] = (item['c_i_16'] or 0) - (item['c_i_11'] or 0)
 
             item['c_i_17'] = (item['c_i_16'] or 0) - (item['c_b_93'] or 0)
@@ -448,19 +450,20 @@ def chung_khoan_calculate_data(rs: List[Dict], combine_data: List[Dict]) -> List
 
             i24_1 = extract_sum_previous_quarters(item, combine_data, 'c_i_21') or 0
             i24_2 = i24_1 / 4
-            item['c_i_24'] = item['c_i_10'] * 0.8 / i24_2 if item['c_i_10'] is not None and i24_2 != 0 and i24_2 is not None else None
+            item['c_i_24'] = item['c_i_5'] * 0.8 / i24_2 if item['c_i_5'] is not None and i24_2 != 0 and i24_2 is not None else None
 
             item['c_i_25'] = (item['c_p_42'] or 0) - (item['c_p_57'] or 0) - (item['c_p_58'] or 0)
             item['c_i_26'] = (item['c_p_43'] or 0) - (item['c_p_49'] or 0)
 
             item['c_i_28'] = item['c_i_2'] / item['c_i_1'] if item['c_i_2'] is not None and item['c_i_1'] != 0 and item['c_i_1'] is not None else None
             item['c_i_29'] = item['c_i_9'] / item['c_i_1'] if item['c_i_9'] is not None and item['c_i_1'] != 0 and item['c_i_1'] is not None else None
+            item['c_i_30'] = item['c_i_5'] / item['c_i_1'] if item['c_i_5'] is not None and item['c_i_1'] != 0 and item['c_i_1'] is not None else None
 
             item['c_i_36'] = item['c_i_16'] / item['c_b_142'] if item['c_i_16'] is not None and item['c_b_142'] != 0 and item['c_b_142'] is not None else None
 
             i_37_1 = extract_sum_previous_quarters(item, combine_data, 'c_i_16', 1) or 0
             i_37_2 = i_37_1 / 2
-            item['c_i_37'] = item['c_p_51'] / i_37_2 if item['c_p_51'] is not None and i_37_2 != 0 else None
+            item['c_i_37'] = item['c_p_51'] * 4 / i_37_2 if item['c_p_51'] is not None and i_37_2 != 0 else None
 
             item['c_i_46'] = item['c_i_3'] / item['c_i_1'] if item['c_i_3'] is not None and item['c_i_1'] != 0 and item['c_i_1'] is not None else None
 
@@ -490,13 +493,9 @@ def chung_khoan_calculate_data(rs: List[Dict], combine_data: List[Dict]) -> List
             item['c_i_57'] = (item['c_p_11'] or 0) - (item['c_p_34'] or 0)
             item['c_i_58'] = (item['c_i_50'] or 0) - (item['c_i_51'] or 0) - (item['c_p_32'] or 0)
 
-            item['c_i_5'] = extract_sum_previous_quarters(item, combine_data, 'c_i_10')
-
             i_6_1 = extract_sum_previous_quarters(item, combine_data, 'c_i_20') or 0
             i_6_2 = i_6_1 / 4
             item['c_i_6'] = item['c_i_3'] / i_6_2 if item['c_i_3'] is not None and i_6_2 != 0 and i_6_2 is not None else None
-
-            item['c_i_30'] = item['c_i_5'] / item['c_i_1'] if item['c_i_5'] is not None and item['c_i_1'] != 0 and item['c_i_1'] is not None else None
 
 
 def find_month_year_datas(input, data):
@@ -708,7 +707,8 @@ def handle_vietstock_data(df: pd.DataFrame, mapping_table: str) -> List[Dict]:
     result = []
 
     for map_item in mapping:
-        for col in range(2, df.shape[1]):
+        # for col in range(2, df.shape[0]):
+        for col in range(2, int(df.iloc[5].count()) + 1):
             # for col in range(2, 9):
             stock_code = df.iloc[5, col].strip()
             date_str = df.iloc[6, col]
