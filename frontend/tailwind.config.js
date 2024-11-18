@@ -12,6 +12,12 @@ export default {
       '2xl': '1536px',
     },
     extend: {
+      colors: {
+        primary: '#FFF4C7',
+        second: '#FCE6A9',
+        third: '#AAD6FA',
+        fourth: '#C5F6FA',
+      },
       backgroundColor: {
         primary: '#FFF4C7',
         second: '#FCE6A9',

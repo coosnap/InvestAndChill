@@ -76,7 +76,7 @@ export default function Chart10() {
       height={400}
       data={data}
       barSize={20}
-      className="bg-white"
+      className="bg-second pb-4"
       style={{ width: '100% !important' }}
       margin={{
         top: 20,

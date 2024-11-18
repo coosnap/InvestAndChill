@@ -4,19 +4,25 @@ import { useNavigate } from 'react-router-dom';
 
 const investData = [
   {
-    id: '0',
+    id: '1',
+    href: '/chart',
+    title: 'Dữ liệu và bộ lọc',
+    image: '/tag-0.png',
+  },
+  {
+    id: '2',
     href: '/category',
     title: 'Câu chuyện đầu tư',
     image: '/tag-1.webp',
   },
   {
-    id: '1',
+    id: '3',
     href: '/product',
     title: 'Sản phẩm dịch vụ',
     image: '/tag-4.webp',
   },
   // {
-  //   id: '2',
+  //   id: '4',
   //   href: '/question',
   //   title: 'Các câu hỏi thường gặp',
   //   icon: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#E91F1D" class="w-6 h-6">

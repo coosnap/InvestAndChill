@@ -1,14 +1,16 @@
 import { changePassword, getUserDetail, updateUser } from '@/api/user';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { CodeValue } from '@/store/common';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
 import { useCallback, useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { Controller, useForm } from 'react-hook-form';
 import { FcReading } from 'react-icons/fc';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
+import { useSetRecoilState } from 'recoil';
 import { z } from 'zod';
 import { Label } from '../ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
@@ -42,12 +44,16 @@ const infoSchema = z.object({
 
 function Header() {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const [cookies, setCookie] = useCookies(['access_token', 'usrId']);
 
   const [userInfo, setUserInfo] = useState({});
   const [showPop, setShowPop] = useState(false);
   const [tabDefault, setTabDefault] = useState('user');
   const [open, setOpen] = useState(false);
+  const [valueSearch, setValueSearch] = useState('');
+
+  const setCodeValue = useSetRecoilState(CodeValue);
 
   const {
     handleSubmit,
@@ -177,14 +183,23 @@ function Header() {
           <img src="/logo.jpg" width={48} height={48} />
           <h4 className="ml-3">InvestNChill</h4>
         </Link>
-        <div className="ml-4 mt-1">
-          <TextField
-            sx={{ '& > .MuiOutlinedInput-root': { backgroundColor: 'white' } }}
-            variant="outlined"
-            size="small"
-            placeholder="Tìm kiếm"
-          />
-        </div>
+        {pathname.includes('/chart') && (
+          <div className="ml-4 mt-1">
+            <TextField
+              sx={{ '& > .MuiOutlinedInput-root': { backgroundColor: 'white' } }}
+              variant="outlined"
+              size="small"
+              placeholder="Tìm kiếm"
+              onChange={(e) => setValueSearch(e.target.value?.toUpperCase())}
+              value={valueSearch}
+              onKeyDown={(e) => {
+                if (e.keyCode == 13) {
+                  setCodeValue(e.target.value?.toUpperCase());
+                }
+              }}
+            />
+          </div>
+        )}
       </div>
       <Popover open={showPop} onOpenChange={setShowPop}>
         <PopoverTrigger asChild>
