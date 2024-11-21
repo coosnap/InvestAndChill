@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.starter.InvestAndChill.jwt.models.PTCReport;
-import com.starter.InvestAndChill.jwt.models.PTCReportNam;
-import com.starter.InvestAndChill.jwt.models.PTCReportQuy;
 import com.starter.InvestAndChill.jwt.payload.response.Bal1Response;
 import com.starter.InvestAndChill.jwt.payload.response.Bal2Response;
 import com.starter.InvestAndChill.jwt.payload.response.Bal3Response;
@@ -29,7 +27,6 @@ import com.starter.InvestAndChill.jwt.payload.response.Cf2Response;
 import com.starter.InvestAndChill.jwt.payload.response.Other1Response;
 import com.starter.InvestAndChill.jwt.payload.response.Other2Response;
 import com.starter.InvestAndChill.jwt.payload.response.Perf1Response;
-import com.starter.InvestAndChill.jwt.payload.response.Perf2Response;
 import com.starter.InvestAndChill.jwt.payload.response.Perf3Response;
 import com.starter.InvestAndChill.jwt.payload.response.Perf4Response;
 import com.starter.InvestAndChill.jwt.payload.response.Perf5Response;
@@ -44,7 +41,7 @@ public class PTCReportController {
 	
 	@Autowired
 	PTCRepositoryQuy ptcQuyRepository;
-	Pageable pageableQuy = PageRequest.of(0, 20); 
+	Pageable pageableQuy = PageRequest.of(0, 21); 
 	
 	@Autowired
 	PTCRepositoryNam ptcNamRepository;
@@ -76,28 +73,28 @@ public class PTCReportController {
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 	
+//	@GetMapping("/perf2/{stock}")
+//	public ResponseEntity<?> perf2(@PathVariable String stock,@RequestParam(required = false,name = "type") String type) {
+//		List<PTCReport> listReport = new ArrayList<PTCReport>();
+//		if ("year".equals(type)) {
+//			listReport =  ptcNamRepository.findByStockForPerf(stock,pageableNam);
+//		} else {
+//			listReport =	ptcQuyRepository.findByStockForPerf(stock,pageableQuy);
+//		}
+//		List<Perf2Response> list = listReport.stream()
+//                .map(report -> {
+//                    Perf2Response response = new Perf2Response();
+//                    response.setId(report.getId());
+//                    response.setRoe(report.getRoe());
+//                    response.setRoic(report.getRoic());
+//                    return response;
+//                })
+//                .collect(Collectors.toList());
+//		 return new ResponseEntity<>(list, HttpStatus.OK);
+//	}
+	
 	@GetMapping("/perf2/{stock}")
 	public ResponseEntity<?> perf2(@PathVariable String stock,@RequestParam(required = false,name = "type") String type) {
-		List<PTCReport> listReport = new ArrayList<PTCReport>();
-		if ("year".equals(type)) {
-			listReport =  ptcNamRepository.findByStockForPerf(stock,pageableNam);
-		} else {
-			listReport =	ptcQuyRepository.findByStockForPerf(stock,pageableQuy);
-		}
-		List<Perf2Response> list = listReport.stream()
-                .map(report -> {
-                    Perf2Response response = new Perf2Response();
-                    response.setId(report.getId());
-                    response.setRoe(report.getRoe());
-                    response.setRoic(report.getRoic());
-                    return response;
-                })
-                .collect(Collectors.toList());
-		 return new ResponseEntity<>(list, HttpStatus.OK);
-	}
-//	
-	@GetMapping("/perf3/{stock}")
-	public ResponseEntity<?> perf3(@PathVariable String stock,@RequestParam(required = false,name = "type") String type) {
 		List<PTCReport> listReport = new ArrayList<PTCReport>();
 		if ("year".equals(type)) {
 			listReport =  ptcNamRepository.findByStockForPerf(stock,pageableNam);
@@ -118,8 +115,8 @@ public class PTCReportController {
 		 return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 	
-	@GetMapping("/perf4/{stock}")
-	public ResponseEntity<?> perf4(@PathVariable String stock,@RequestParam(required = false,name = "type") String type) {
+	@GetMapping("/perf3/{stock}")
+	public ResponseEntity<?> perf3(@PathVariable String stock,@RequestParam(required = false,name = "type") String type) {
 		List<PTCReport> listReport = new ArrayList<PTCReport>();
 		if ("year".equals(type)) {
 			listReport =  ptcNamRepository.findByStockForPerf(stock,pageableNam);
