@@ -50,17 +50,19 @@ engine = create_engine(connection_string)
 
 
 def parse_quarter_year(date_str: str) -> Tuple[str, str]:
-    if 'Quý' in date_str:
-        quarter, year = map(str, re.findall(r'\d+', date_str))
-    elif 'tháng' in date_str:
-        months, year = map(str, re.findall(r'\d+', date_str))
-        quarter = months
-    elif 'Năm' in date_str:
-        quarter = None
-        year = str(re.findall(r'\d+', date_str)[0])
-    else:
-        raise ValueError(f"Unexpected quarter/year format: {date_str}")
-
+    try:
+        if 'Quý' in date_str:
+            quarter, year = map(str, re.findall(r'\d+', date_str))
+        elif 'tháng' in date_str:
+            months, year = map(str, re.findall(r'\d+', date_str))
+            quarter = months
+        elif 'Năm' in date_str:
+            quarter = None
+            year = str(re.findall(r'\d+', date_str)[0])
+        else:
+            raise ValueError(f"Unexpected quarter/year format for date_str = {date_str}")
+    except Exception as e:
+        raise ValueError(f"Error parsing date string: {date_str}, Error: {str(e)}")
     return quarter, year
 
 def remove_month_data(transformed_data: List[Dict]) -> List[Dict]:
@@ -71,17 +73,20 @@ def check_table_exists(table_name: str, engine) -> bool:
     return inspector.has_table(table_name)
 
 def parse_quarter_year_fiin(date_str):
-    if isinstance(date_str, (int, float)):
-        quarter = None
-        year = str(date_str)
-    elif isinstance(date_str, str):
-        if date_str.isdigit():
+    try:
+        if isinstance(date_str, (int, float)):
             quarter = None
             year = str(date_str)
+        elif isinstance(date_str, str):
+            if date_str.isdigit():
+                quarter = None
+                year = str(date_str)
+            else:
+                quarter, year = map(str, re.findall(r'\d+', date_str))
         else:
-            quarter, year = map(str, re.findall(r'\d+', date_str))
-    else:
-        raise ValueError("Invalid input type for date_str")
+            raise ValueError("Invalid input type for date_str = {date_str}")
+    except Exception as e:
+        raise ValueError(f"Error parsing date string: {date_str}, Error: {str(e)}")
     return quarter, year
 
 phi_tai_chinh_columns_names_cal = ['p_p_3', 'p_p_5', 'p_p_23',  'p_c_2', 'p_p_10', 'p_p_11', 'p_i_31', 'p_i_16', 'p_b_38', 'p_p_4', 'p_b_18', 'p_i_13', 'p_i_14', 'p_i_18', 'p_b_66', 'p_i_20', 'p_i_10', 'p_i_21', 'p_b_48', 'p_b_52', 'p_i_33', 'p_i_53', 'p_i_7']
@@ -331,18 +336,105 @@ def phi_tai_chinh_calculate_data(rs: List[Dict], combine_data: List[Dict]) -> Li
 
             item['p_i_53'] = (item['p_i_33'] or 0) - (item['p_i_52'] or 0)
 
-            i54_1 = get_previous_quarters_count(item, combine_data, item['stock_code'])
-            i54_2 = extract_sum_previous_quarters(item, combine_data, 'p_i_33', i54_1, True)
-            item['p_i_54'] = i54_2
-
-
-            i55_1 = get_previous_quarters_count(item, combine_data, item['stock_code'])
-            i55_2 = extract_sum_previous_quarters(item, combine_data, 'p_i_53', i55_1, True)
-            item['p_i_55'] = i55_2
+            item['p_i_54'] = extract_sum_previous_quarters(item, combine_data, 'p_i_33', 20)
+            item['p_i_55'] = extract_sum_previous_quarters(item, combine_data, 'p_i_53', 20)
 
             item['p_i_56'] = extract_sum_previous_quarters(item, combine_data, 'p_i_7')
             item['p_i_57'] = item['p_i_56'] / item['p_i_1'] if item['p_i_56'] is not None and item['p_i_1'] != 0 and item['p_i_1'] is not None else None
-    return rs;
+
+            item['p_i_58'] = extract_sum_previous_quarters(item, combine_data, 'p_i_26')
+            item['p_i_59'] = extract_sum_previous_quarters(item, combine_data, 'p_p_22')
+            item['p_i_60'] = extract_sum_previous_quarters(item, combine_data, 'p_p_9')
+            item['p_i_61'] = extract_sum_previous_quarters(item, combine_data, 'p_p_8')
+
+            item['p_i_62'] = (item['p_b_38'] or 0) + (item['p_b_48'] or 0)
+            item['p_i_63'] = (item['p_b_39'] or 0) - (item['p_b_49'] or 0)
+            item['p_i_64'] = (item['p_p_22'] or 0) - (item['p_m_2'] or 0) - (item['p_m_3'] or 0)
+            item['p_i_65'] = extract_sum_previous_quarters(item, combine_data, 'p_i_64')
+            item['p_i_66'] = (item['p_i_26'] or 0) - (item['p_m_2'] or 0)
+            item['p_i_67'] = extract_sum_previous_quarters(item, combine_data, 'p_i_66')
+
+        # start handle year data
+        else:
+            item['p_i_10'] = (item['p_p_17'] or 0) + (item['p_p_8'] or 0)
+            item['p_i_11'] = (item['p_b_2'] or 0) + (item['p_b_5'] or 0)
+            item['p_i_12'] = (item['p_b_9'] or 0) + (item['p_b_28'] or 0)
+            item['p_i_13'] = (item['p_b_10'] or 0) + (item['p_b_29'] or 0)
+            item['p_i_15'] = (item['p_b_66'] or 0) - (item['p_i_11'] or 0) - (item['p_i_12'] or 0) - (item['p_b_18'] or 0) - (item['p_b_36'] or 0) - (item['p_b_47'] or 0) - (item['p_b_50'] or 0)
+            item['p_i_16'] = (item['p_b_78'] or 0) + (item['p_b_91'] or 0)
+            item['p_i_17'] = (item['p_i_16'] or 0) - (item['p_b_67'] or 0)
+            item['p_i_18'] = (item['p_b_69'] or 0) + (item['p_b_84'] or 0)
+            item['p_i_19'] = (item['p_b_98'] or 0) - (item['p_b_100'] or 0) - (item['p_b_113'] or 0)
+            item['p_i_20'] = (item['p_b_98'] or 0) - (item['p_b_116'] or 0)
+
+            i_6_1 = extract_sum_previous_years(item, combine_data, 'p_i_20') or 0
+            i_6_2 = i_6_1 / 2
+            item['p_i_6'] = item['p_p_23'] / i_6_2 if item['p_p_23'] is not None and i_6_2 != 0 and i_6_2 is not None else None
+
+            item['p_i_7'] = (item['p_i_10'] or 0) - (item['p_c_2'] or 0)
+
+            item['p_i_8'] = (item['p_i_16'] or 0) - (item['p_i_11'] or 0)
+            item['p_i_21'] = (item['p_b_98'] or 0) + (item['p_i_8'] or 0)
+
+            item['p_i_22'] = item['p_p_5'] / item['p_p_3'] if item['p_p_5'] is not None and item['p_p_3'] != 0 and item['p_p_3'] is not None else None
+            item['p_i_23'] = item['p_p_23'] / item['p_p_3'] if item['p_p_23'] is not None and item['p_p_3'] != 0 and item['p_p_3'] is not None else None
+
+            i_24_1 = extract_sum_previous_years(item, combine_data, 'p_i_21') or 0
+            i_24_2 = i_24_1 / 2
+            item['p_i_24'] = item['p_i_10'] * 0.8 / i_24_2 if item['p_i_10'] is not None and i_24_2 != 0 and i_24_2 is not None else None
+
+            item['p_i_25'] = (item['p_p_5'] or 0) - (item['p_p_10'] or 0) - (item['p_p_11'] or 0)
+            item['p_i_26'] = (item['p_p_6'] or 0) - (item['p_p_7'] or 0)
+            item['p_i_27'] = (item['p_c_21'] or 0) + (item['p_c_22'] or 0)
+
+            i_31_1 = item['p_b_1'] or 0
+            i_31_2 = item['p_i_11'] or 0
+            i_31_3 = item['p_b_78'] or 0
+            i_31_4 = item['p_b_91'] or 0
+            item['p_i_31'] = i_31_1 - i_31_2 - (i_31_3 - i_31_4)
+
+            i_32_1 = extract_sum_previous_years(item, combine_data, 'p_i_31') or 0
+            i_32_2 = item['p_i_31'] or 0
+            i_32_3 = i_32_1 - i_32_2
+            item['p_i_32'] = i_32_2 - i_32_3
+
+            item['p_i_33'] = (item['p_p_23'] or 0) + (item['p_c_2'] or 0) - (item['p_i_32'] or 0)
+
+            item['p_i_34'] = item['p_b_78'] / item['p_b_98'] if item['p_b_98'] != 0 and item['p_b_98'] is not None and item['p_b_78'] is not None else None
+            item['p_i_35'] = item['p_b_91'] / item['p_b_98'] if item['p_b_98'] != 0 and item['p_b_98'] is not None and item['p_b_91'] is not None else None
+
+            item['p_i_36'] = (item['p_i_34'] or 0) + (item['p_i_35'] or 0)
+
+            i_37_1 = extract_sum_previous_years(item, combine_data, 'p_i_16') or 0
+            i_37_2 = item['p_p_8'] or 0
+            i_37_3 = i_37_1 / 2
+            item['p_i_37'] = i_37_2 / i_37_3 if i_37_3 != 0 else None
+
+            item['p_i_38'] = (item['p_i_17'] or 0) - (item['p_i_12'] or 0)
+
+            i_39_1 = extract_sum_previous_years(item, combine_data, 'p_b_38') or 0
+            i_39_2 = item['p_b_38'] or 0
+            i_39_3 = i_39_1 - i_39_2
+            item['p_i_39'] = i_39_2 - i_39_3
+
+            i_50_1 = extract_sum_previous_years(item, combine_data, 'p_b_48') or 0
+            i_50_2 = item['p_b_48'] or 0
+            i_50_3 = i_50_1 - i_50_2
+            item['p_i_50'] = i_50_2 - i_50_3
+
+            i_51_1 = extract_sum_previous_years(item, combine_data, 'p_b_52') or 0
+            i_51_2 = item['p_b_52'] or 0
+            i_51_3 = i_51_1 - i_51_2
+            item['p_i_51'] = i_51_2 - i_51_3
+
+            item['p_i_52'] = (item['p_i_39'] or 0) + (item['p_i_50'] or 0) + (item['p_i_51'] or 0)
+
+            item['p_i_53'] = (item['p_i_33'] or 0) - (item['p_i_52'] or 0)
+
+            item['p_i_54'] = extract_sum_previous_years(item, combine_data, 'p_i_33', 9)
+            item['p_i_55'] = extract_sum_previous_years(item, combine_data, 'p_i_53', 9)
+
+    return rs
 
 def phi_tai_chinh_handle_missing_data(rs: List[Dict], combine_data: List[Dict]):
     for item in rs:
@@ -352,7 +444,7 @@ def phi_tai_chinh_handle_missing_data(rs: List[Dict], combine_data: List[Dict]):
                 key = f'p_c_{i}'
                 item[key] = (data1[key] or 0) - (data2[key] or 0)
 
-def ngan_hang_calculate_data(rs: List[Dict], combine_data: List[Dict]) -> List[Dict]:
+def ngan_hang_calculate_data(rs: List[Dict], combine_data: List[Dict]):
     for item in rs:
         if item['quarter'] is not None:
             item['b_i_1'] = (item['b_b_5'] or 0) + (item['b_b_6'] or 0)
@@ -422,7 +514,63 @@ def ngan_hang_calculate_data(rs: List[Dict], combine_data: List[Dict]) -> List[D
             i36_1 = get_previous_quarter_data(item, combine_data, 'b_i_18', int(item['quarter']))
             item['b_i_36'] = item['b_i_18'] / i36_1 - 1 if item['b_i_18'] is not None and i36_1 != 0 and i36_1 is not None else None
 
-def chung_khoan_calculate_data(rs: List[Dict], combine_data: List[Dict]) -> List[Dict]:
+        # start handle year data
+        else:
+            item['b_i_1'] = (item['b_b_5'] or 0) + (item['b_b_6'] or 0)
+            item['b_i_2'] = (item['b_b_9'] or 0) + (item['b_b_19'] or 0) + (item['b_b_20'] or 0)
+            item['b_i_3'] = (item['b_b_1'] or 0) - (item['b_i_1'] or 0) - (item['b_i_2'] or 0) - (item['b_b_13'] or 0)
+            item['b_i_4'] = (item['b_b_1'] or 0) - (item['b_b_64'] or 0) - (item['b_b_52'] or 0) - (item['b_b_55'] or 0) - (item['b_b_58'] or 0)
+            item['b_i_5'] = (item['b_p_7'] or 0) + (item['b_p_8'] or 0) + (item['b_p_9'] or 0) + (item['b_p_12'] or 0) + (item['b_p_13'] or 0)
+            item['b_i_6'] = item['b_p_24'] / item['b_p_14'] if item['b_p_24'] is not None and item['b_p_14'] != 0 and item['b_p_14'] is not None else None
+            item['b_i_7'] = item['b_p_15'] / item['b_p_14'] if item['b_p_15'] is not None and item['b_p_14'] != 0 and item['b_p_14'] is not None else None
+            item['b_i_8'] = item['b_p_17'] / item['b_p_14'] if item['b_p_17'] is not None and item['b_p_14'] != 0 and item['b_p_14'] is not None else None
+            item['b_i_9'] = (item['b_i_7'] or 0) + (item['b_i_8'] or 0)
+
+            item['b_i_12'] = (item['b_f_68'] or 0) + (item['b_f_69'] or 0) + (item['b_f_70'] or 0)
+            item['b_i_13'] = (item['b_b_52'] or 0) + (item['b_b_55'] or 0) + (item['b_b_57'] or 0) + (item['b_b_58'] or 0)
+            item['b_i_15'] = (item['b_i_1'] or 0) + (item['b_b_3'] or 0) + (item['b_b_13'] or 0) + (item['b_i_2'] or 0)
+            item['b_i_17'] = (item['b_f_121'] or 0) + (item['b_f_124'] or 0) + (item['b_f_125'] or 0)
+            item['b_i_18'] = (item['b_b_13'] or 0) + (item['b_f_6'] or 0) + (item['b_f_97'] or 0) + (item['b_f_101'] or 0)
+            item['b_i_19'] = (item['b_b_64'] or 0) - (item['b_b_76'] or 0)
+
+            i20_1 = extract_sum_previous_years(item, combine_data, 'b_i_19') or 0
+            i20_2 = i20_1 / 2
+            item['b_i_20'] = item['b_p_24'] / i20_2 if item['b_p_24'] is not None and i20_2 != 0 and i20_2 is not None else None
+
+            i21_1 = extract_sum_previous_years(item, combine_data, 'b_b_1') or 0
+            i21_2 = i21_1 / 2
+            item['b_i_21'] = item['b_p_24'] / i21_2 if item['b_p_24'] is not None and i21_2 != 0 and i21_2 is not None else None
+
+            item['b_i_22'] = item['b_f_67'] / item['b_b_13'] if item['b_f_67'] is not None and item['b_b_13'] != 0 and item['b_b_13'] is not None else None
+            item['b_i_23'] = item['b_i_12'] / item['b_b_13'] if item['b_i_12'] is not None and item['b_b_13'] != 0 and item['b_b_13'] is not None else None
+            item['b_i_24'] = -item['b_b_14'] / item['b_i_12'] if item['b_b_14'] is not None and item['b_i_12'] != 0 and item['b_i_12'] is not None else None
+            item['b_i_25'] = item['b_b_44'] / item['b_b_13'] if item['b_b_44'] is not None and item['b_b_13'] != 0 and item['b_b_13'] is not None else None
+            item['b_i_26'] = ((item['b_i_12'] or 0) + (item['b_f_67'] or 0)) / item['b_b_64'] if item['b_b_64'] != 0 and item['b_b_64'] is not None else None
+            item['b_i_27'] = item['b_b_42'] / item['b_b_1'] if item['b_b_42'] is not None and item['b_b_1'] != 0 and item['b_b_1'] is not None else None
+            item['b_i_28'] = item['b_b_1'] / item['b_b_64'] if item['b_b_1'] is not None and item['b_b_64'] != 0 and item['b_b_64'] is not None else None
+
+            i29_0 = extract_sum_previous_years(item, combine_data, 'b_i_13') or 0
+            i29_1 = i29_0 / 2
+            item['b_i_29'] = item['b_p_2'] / i29_1 if item['b_p_2'] is not None and i29_1 != 0 and i29_1 is not None else None
+
+            i30_0 = extract_sum_previous_years(item, combine_data, 'b_i_15') or 0
+            i30_1 = i30_0 / 2
+            item['b_i_30'] = item['b_p_3'] / i30_1 if item['b_p_3'] is not None and i30_1 != 0 and i30_1 is not None else None
+
+            i31_0 = extract_sum_previous_years(item, combine_data, 'b_i_15') or 0
+            i31_1 = i31_0 / 2
+            item['b_i_31'] = item['b_p_1'] / i31_1 if item['b_p_3'] is not None and i31_1 != 0 and i31_1 is not None else None
+
+            item['b_i_32'] = item['b_i_17'] / item['b_b_55'] if item['b_i_17'] is not None and item['b_b_55'] != 0 and item['b_b_55'] is not None else None
+
+            i35_0 = get_previous_year_data(item, combine_data, 'b_i_13') or 0
+            item['b_i_35'] = item['b_i_13'] / i35_0 - 1 if item['b_i_13'] is not None and i35_0 != 0 and i35_0 is not None else None
+
+            i36_0 = get_previous_year_data(item, combine_data, 'b_i_18') or 0
+            item['b_i_36'] = item['b_i_18'] / i36_0 - 1 if item['b_i_18'] is not None and i36_0 != 0 and i36_0 is not None else None
+
+
+def chung_khoan_calculate_data(rs: List[Dict], combine_data: List[Dict]):
     for item in rs:
         if item['quarter'] is not None:
             item['c_i_15'] = (item['c_b_92'] or 0) - (item['c_b_3'] or 0) - (item['c_b_6'] or 0) - (item['c_b_7'] or 0) - (item['c_b_8'] or 0) - (item['c_b_9'] or 0)
@@ -440,6 +588,11 @@ def chung_khoan_calculate_data(rs: List[Dict], combine_data: List[Dict]) -> List
             item['c_i_16'] = (item['c_b_95'] or 0) + (item['c_b_98'] or 0) + (item['c_b_99'] or 0) + (item['c_b_100'] or 0) + (item['c_b_122'] or 0) + (item['c_b_125'] or 0) + (item['c_b_126'] or 0) + (item['c_b_127'] or 0)
 
             item['c_i_5'] = extract_sum_previous_quarters(item, combine_data, 'c_i_10')
+
+            i_7_1 = extract_sum_previous_quarters(item, combine_data, 'c_b_92') or 0
+            i_7_2 = i_7_1 / 4
+            item['c_i_7'] = item['c_i_3'] / i_7_2 if item['c_i_3'] is not None and i_7_2 != 0 and i_7_2 is not None else None
+
             item['c_i_8'] = (item['c_i_16'] or 0) - (item['c_i_11'] or 0)
 
             item['c_i_17'] = (item['c_i_16'] or 0) - (item['c_b_93'] or 0)
@@ -497,6 +650,54 @@ def chung_khoan_calculate_data(rs: List[Dict], combine_data: List[Dict]) -> List
             i_6_2 = i_6_1 / 4
             item['c_i_6'] = item['c_i_3'] / i_6_2 if item['c_i_3'] is not None and i_6_2 != 0 and i_6_2 is not None else None
 
+        # start handle year data
+        else:
+            item['c_i_15'] = (item['c_b_92'] or 0) - (item['c_b_3'] or 0) - (item['c_b_6'] or 0) - (item['c_b_7'] or 0) - (item['c_b_8'] or 0) - (item['c_b_9'] or 0)
+            item['c_i_19'] = (item['c_b_142'] or 0) - (item['c_b_146'] or 0) - (item['c_b_148'] or 0) - (item['c_b_158'] or 0) - (item['c_b_163'] or 0)
+
+            i_7_1 = extract_sum_previous_years(item, combine_data, 'c_b_92') or 0
+            i_7_2 = i_7_1 / 2
+            item['c_i_7'] = item['c_p_72'] / i_7_2 if item['c_p_72'] is not None and i_7_2 != 0 and i_7_2 is not None else None
+
+            item['c_i_10'] = (item['c_p_65'] or 0) + (item['c_p_51'] or 0)
+            item['c_i_11'] = (item['c_b_3'] or 0) + (item['c_b_7'] or 0)
+            item['c_i_16'] = (item['c_b_95'] or 0) + (item['c_b_98'] or 0) + (item['c_b_99'] or 0) + (item['c_b_100'] or 0) + (item['c_b_122'] or 0) + (item['c_b_125'] or 0) + (item['c_b_126'] or 0) + (item['c_b_127'] or 0)
+
+            item['c_i_8'] = (item['c_i_16'] or 0) - (item['c_i_11'] or 0)
+
+            item['c_i_17'] = (item['c_i_16'] or 0) - (item['c_b_93'] or 0)
+            item['c_i_20'] = (item['c_b_142'] or 0) - (item['c_b_163'] or 0)
+            item['c_i_21'] = (item['c_b_142'] or 0) + (item['c_i_8'] or 0)
+            item['c_i_22'] = item['c_p_42'] / item['c_p_21'] if item['c_p_42'] is not None and item['c_p_21'] != 0 and item['c_p_21'] is not None else None
+            item['c_i_23'] = item['c_p_72'] / item['c_p_21'] if item['c_p_72'] is not None and item['c_p_21'] != 0 and item['c_p_21'] is not None else None
+
+            i24_1 = extract_sum_previous_years(item, combine_data, 'c_i_21') or 0
+            i24_2 = i24_1 / 2
+            item['c_i_24'] = item['c_i_10'] * 0.8 / i24_2 if item['c_i_10'] is not None and i24_2 != 0 and i24_2 is not None else None
+
+            item['c_i_25'] = (item['c_p_42'] or 0) - (item['c_p_57'] or 0) - (item['c_p_58'] or 0)
+            item['c_i_26'] = (item['c_p_43'] or 0) - (item['c_p_49'] or 0)
+
+            item['c_i_36'] = item['c_i_16'] / item['c_b_142'] if item['c_i_16'] is not None and item['c_b_142'] != 0 and item['c_b_142'] is not None else None
+
+            i_37_1 = extract_sum_previous_years(item, combine_data, 'c_i_16') or 0
+            i_37_2 = i_37_1 / 2
+            item['c_i_37'] = item['c_p_51'] * 4 / i_37_2 if item['c_p_51'] is not None and i_37_2 != 0 else None
+
+            item['c_i_50'] = (item['c_p_1'] or 0) - (item['c_p_2'] or 0) - (item['c_p_6'] or 0) - (item['c_p_7'] or 0) - (item['c_p_8'] or 0) - (item['c_p_10'] or 0) - (item['c_p_11'] or 0)
+            item['c_i_51'] = (item['c_p_22'] or 0) - (item['c_p_23'] or 0) - (item['c_p_27'] or 0) - (item['c_p_28'] or 0) - (item['c_p_29'] or 0) - (item['c_p_33'] or 0) - (item['c_p_34'] or 0)
+            item['c_i_52'] = (item['c_p_2'] or 0) - (item['c_p_23'] or 0)
+            item['c_i_53'] = (item['c_p_6'] or 0) - (item['c_p_27'] or 0)
+            item['c_i_54'] = (item['c_p_7'] or 0) - (item['c_p_28'] or 0)
+            item['c_i_55'] = (item['c_p_8'] or 0) - (item['c_p_29'] or 0)
+            item['c_i_56'] = (item['c_p_10'] or 0) - (item['c_p_33'] or 0)
+            item['c_i_57'] = (item['c_p_11'] or 0) - (item['c_p_34'] or 0)
+            item['c_i_58'] = (item['c_i_50'] or 0) - (item['c_i_51'] or 0) - (item['c_p_32'] or 0)
+
+            i_6_1 = extract_sum_previous_years(item, combine_data, 'c_i_20') or 0
+            i_6_2 = i_6_1 / 2
+            item['c_i_6'] = item['c_p_72'] / i_6_2 if item['c_p_72'] is not None and i_6_2 != 0 and i_6_2 is not None else None
+
 
 def find_month_year_datas(input, data):
     if input['quarter'] == '2':
@@ -526,7 +727,7 @@ def get_mapping_table_name(data_source: str, isFiin: bool) -> str:
     mapping = "vietstock_map"
     if isFiin:
         mapping = "fiin_map"
-    return data_source + "_" + mapping;
+    return data_source + "_" + mapping
 
 def get_table_columns(df: pd.DataFrame, data_source: str) -> List[Column]:
     if data_source == "phi_tai_chinh":
@@ -566,7 +767,7 @@ def get_previous_quarters_count(item, combine_data, stock_code):
 
     return max(0, quarters_diff)
 
-def extract_sum_previous_quarters(data, combine_data, cal_col, previous_number=3, is_sum_all = False) -> float:
+def extract_sum_previous_quarters(data, combine_data, cal_col, previous_number=3, is_sum_all = False):
     stock_code = data['stock_code']
     current_quarter = int(data['quarter'])
     current_year = int(data['year'])
@@ -598,6 +799,44 @@ def extract_sum_previous_quarters(data, combine_data, cal_col, previous_number=3
     else:
         return None
 
+def get_previous_years_count(item, combine_data, stock_code):
+    sorted_data = sorted([x for x in combine_data if x['quarter'] is None], key=lambda x: int(x['year']))
+
+    earliest_data = next((item for item in sorted_data if item['stock_code'] == stock_code), None)
+    if not earliest_data:
+        return 0
+
+    earliest_year = int(earliest_data['year'])
+    years_diff = int(item['year']) - earliest_year
+
+    return max(0, years_diff)
+
+def extract_sum_previous_years(data, combine_data, cal_col, previous_number=1):
+    stock_code = data['stock_code']
+    current_year = int(data['year'])
+
+    max_previous_years = get_previous_years_count(data, combine_data, stock_code)
+
+    previous_years = [data]
+    for _ in range(max_previous_years):
+        if len(previous_years) >= (previous_number + 1):
+            break
+        current_year -= 1
+        previous_data = next((item for item in combine_data if
+                              item['quarter'] is None and
+                              item['stock_code'] == stock_code and
+                              int(item['year']) == current_year), None)
+
+        if previous_data:
+            previous_years.append(previous_data)
+        else:
+            break
+
+    if len(previous_years) == (previous_number + 1):
+        return sum(float(year[cal_col] or 0) for year in previous_years)
+    else:
+        return None
+
 def calculate_quarter_data(quarter, year, previous_number) -> tuple[int, int]:
     previous_quarter = quarter
     previous_year = year
@@ -610,7 +849,7 @@ def calculate_quarter_data(quarter, year, previous_number) -> tuple[int, int]:
         previous_number -= 1
 
     return previous_quarter, previous_year
-def get_previous_quarter_data(data, combine_data, cal_col, previous_number) -> float:
+def get_previous_quarter_data(data, combine_data, cal_col, previous_number):
     stock_code = data['stock_code']
     current_quarter = int(data['quarter'])
     current_year = int(data['year'])
@@ -620,6 +859,21 @@ def get_previous_quarter_data(data, combine_data, cal_col, previous_number) -> f
                           item['quarter'] is not None and
                           item['stock_code'] == stock_code and
                           int(item['quarter']) == target_quarter and
+                          int(item['year']) == target_year), None)
+
+    if previous_data:
+        return previous_data[cal_col] or 0
+    else:
+        return None
+
+def get_previous_year_data(data, combine_data, cal_col, previous_number=1):
+    stock_code = data['stock_code']
+    current_year = int(data['year'])
+
+    target_year = current_year - previous_number
+    previous_data = next((item for item in combine_data if
+                          item['quarter'] is None and
+                          item['stock_code'] == stock_code and
                           int(item['year']) == target_year), None)
 
     if previous_data:
@@ -770,7 +1024,7 @@ def read_and_transform_excel(file_path: str) -> List[Dict]:
 
     if check_table_exists(table_name, engine):
         # Get distinct stock codes from the Excel file
-        distinct_stock_codes = [stock_code] if isFiin else df.iloc[stock_code_row, 1:].dropna().unique().tolist()
+        distinct_stock_codes = df.iloc[stock_code_row, 1:].dropna().unique().tolist()
 
         db_data = get_data_from_db(table_name, distinct_stock_codes, columns, engine)
 
