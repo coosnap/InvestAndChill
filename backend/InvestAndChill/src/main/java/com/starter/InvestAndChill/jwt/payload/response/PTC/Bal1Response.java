@@ -1,4 +1,4 @@
-package com.starter.InvestAndChill.jwt.payload.response;
+package com.starter.InvestAndChill.jwt.payload.response.PTC;
 
 public class Bal1Response extends ReportReponse{
 	private Double tienDTNGDaoHan;

@@ -1,4 +1,4 @@
-package com.starter.InvestAndChill.jwt.payload.response;
+package com.starter.InvestAndChill.jwt.payload.response.PTC;
 
 public class Perf5Response extends ReportReponse{
 	

@@ -1,4 +1,4 @@
-package com.starter.InvestAndChill.jwt.payload.response;
+package com.starter.InvestAndChill.jwt.payload.response.PTC;
 
 public class Bal4Response extends ReportReponse{
 	private Double NetDebt;

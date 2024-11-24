@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.starter.InvestAndChill.jwt.models.PTCReport;
-import com.starter.InvestAndChill.jwt.payload.response.Perf1Response;
+import com.starter.InvestAndChill.jwt.payload.response.PTC.Perf1Response;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
