@@ -14,7 +14,7 @@ import com.starter.InvestAndChill.jwt.models.PTCReportQuy;
 
 
 public interface PTCRepositoryQuy extends JpaRepository<PTCReportQuy, PTCReportKey> {
-	@Query("select v from view_phi_tai_chinh_quy v where stock_code =:stock_code order by year desc, quarter desc")
+	@Query("select v from view_phi_tai_chinh_quy_test v where stock_code =:stock_code order by year desc, quarter desc")
 	List<PTCReport> findByStockForPerf(@Param("stock_code") String stock,Pageable pageable);
 
 }

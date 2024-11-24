@@ -1,33 +1,35 @@
 package com.starter.InvestAndChill.jwt.payload.response;
 
 public class Cf1Response extends ReportReponse{
-	private String netIncomeDANWC;
-	private String netIncomeDANWCCAPEX;
-	private String netIncomeDANWCRolling;
-	private String netIncomeDANWCCAPEXRolling;
-	public String getNetIncomeDANWC() {
-		return netIncomeDANWC;
+
+	private Double luuChuyenTienTeRongTuCacHoatDongSanXuatKinhDoanh;
+	private Double luuChuyenTienTeRongTuCacHoatDongDauTu;
+	private Double luuChuyenTienTeTuHoatDongTaiChinh;
+	private Double fcf;
+	public Double getLuuChuyenTienTeRongTuCacHoatDongSanXuatKinhDoanh() {
+		return luuChuyenTienTeRongTuCacHoatDongSanXuatKinhDoanh;
 	}
-	public void setNetIncomeDANWC(String netIncomeDANWC) {
-		this.netIncomeDANWC = netIncomeDANWC;
+	public void setLuuChuyenTienTeRongTuCacHoatDongSanXuatKinhDoanh(
+			Double luuChuyenTienTeRongTuCacHoatDongSanXuatKinhDoanh) {
+		this.luuChuyenTienTeRongTuCacHoatDongSanXuatKinhDoanh = luuChuyenTienTeRongTuCacHoatDongSanXuatKinhDoanh;
 	}
-	public String getNetIncomeDANWCCAPEX() {
-		return netIncomeDANWCCAPEX;
+	public Double getLuuChuyenTienTeRongTuCacHoatDongDauTu() {
+		return luuChuyenTienTeRongTuCacHoatDongDauTu;
 	}
-	public void setNetIncomeDANWCCAPEX(String netIncomeDANWCCAPEX) {
-		this.netIncomeDANWCCAPEX = netIncomeDANWCCAPEX;
+	public void setLuuChuyenTienTeRongTuCacHoatDongDauTu(Double luuChuyenTienTeRongTuCacHoatDongDauTu) {
+		this.luuChuyenTienTeRongTuCacHoatDongDauTu = luuChuyenTienTeRongTuCacHoatDongDauTu;
 	}
-	public String getNetIncomeDANWCRolling() {
-		return netIncomeDANWCRolling;
+	public Double getLuuChuyenTienTeTuHoatDongTaiChinh() {
+		return luuChuyenTienTeTuHoatDongTaiChinh;
 	}
-	public void setNetIncomeDANWCRolling(String netIncomeDANWCRolling) {
-		this.netIncomeDANWCRolling = netIncomeDANWCRolling;
+	public void setLuuChuyenTienTeTuHoatDongTaiChinh(Double luuChuyenTienTeTuHoatDongTaiChinh) {
+		this.luuChuyenTienTeTuHoatDongTaiChinh = luuChuyenTienTeTuHoatDongTaiChinh;
 	}
-	public String getNetIncomeDANWCCAPEXRolling() {
-		return netIncomeDANWCCAPEXRolling;
+	public Double getFcf() {
+		return fcf;
 	}
-	public void setNetIncomeDANWCCAPEXRolling(String netIncomeDANWCCAPEXRolling) {
-		this.netIncomeDANWCCAPEXRolling = netIncomeDANWCCAPEXRolling;
+	public void setFcf(Double fcf) {
+		this.fcf = fcf;
 	}
 
 }

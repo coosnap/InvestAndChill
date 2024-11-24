@@ -1,37 +1,35 @@
 package com.starter.InvestAndChill.jwt.payload.response;
 
-import javax.persistence.Column;
-
 public class Perf5Response extends ReportReponse{
-	private String roe;
-	private String AssetTurnover;
-	private String Leverage;
-	private String DEE;
-	public String getRoe() {
-		return roe;
+	
+	private Double NITrailing;
+	private Double NITrailingAdjust;	
+	private Double MinoritiesTrailing;
+	private Double AssociateTrailing;
+	public Double getNITrailing() {
+		return NITrailing;
 	}
-	public void setRoe(String roe) {
-		this.roe = roe;
+	public void setNITrailing(Double nITrailing) {
+		NITrailing = nITrailing;
 	}
-	public String getAssetTurnover() {
-		return AssetTurnover;
+	public Double getNITrailingAdjust() {
+		return NITrailingAdjust;
 	}
-	public void setAssetTurnover(String assetTurnover) {
-		AssetTurnover = assetTurnover;
+	public void setNITrailingAdjust(Double nITrailingAdjust) {
+		NITrailingAdjust = nITrailingAdjust;
 	}
-	public String getLeverage() {
-		return Leverage;
+	public Double getMinoritiesTrailing() {
+		return MinoritiesTrailing;
 	}
-	public void setLeverage(String leverage) {
-		Leverage = leverage;
+	public void setMinoritiesTrailing(Double minoritiesTrailing) {
+		MinoritiesTrailing = minoritiesTrailing;
 	}
-	public String getDEE() {
-		return DEE;
+	public Double getAssociateTrailing() {
+		return AssociateTrailing;
 	}
-	public void setDEE(String dEE) {
-		DEE = dEE;
+	public void setAssociateTrailing(Double associateTrailing) {
+		AssociateTrailing = associateTrailing;
 	}
-	public Perf5Response() {
-		
-	}
+	
+	
 }

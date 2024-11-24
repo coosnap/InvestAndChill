@@ -6,6 +6,22 @@ import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
 public class PTCReport {
+	public Double getGrossPPE() {
+		return GrossPPE;
+	}
+
+	public void setGrossPPE(Double grossPPE) {
+		GrossPPE = grossPPE;
+	}
+
+	public Double getDAPPE() {
+		return DAPPE;
+	}
+
+	public void setDAPPE(Double dAPPE) {
+		DAPPE = dAPPE;
+	}
+
 	public PTCReportKey getId() {
 		return id;
 	}
@@ -16,516 +32,701 @@ public class PTCReport {
 
 	@EmbeddedId
     private PTCReportKey id;
-	
+	//Perf1
 	@Column(name = "p_p_3")
-	private String doanhSoThuan;
+	private Double doanhSoThuan;
 	@Column(name = "p_p_23")
-	private String loiNhuanCuaCoDongCongTyMe;
+	private Double loiNhuanCuaCoDongCongTyMe;
 	@Column(name = "p_i_22")
-	private String bienLaiGop;
+	private Double bienLaiGop;
 	@Column(name = "p_i_23")
-	private String bienLaiRong;
-	@Column(name = "p_i_6")
-	private String roe;
-	@Column(name = "p_i_24")
-	private String roic;
-	@Column(name = "p_i_25")
-	private String loiNhuanCotLoi;
-	@Column(name = "p_i_26")
-	private String loiNhuanTaiChinh;
-	@Column(name = "p_p_15")
-	private String ThuNhapKhac;
-	@Column(name = "p_p_9")
-	private String LaiLoTuCongTyLienDoanh;
-	@Column(name = "p_i_1")
-	private String SalesTrailing;
-	@Column(name = "p_i_28")
-	private String GPMTrailing;
-	@Column(name = "p_i_29")
-	private String SGAMTrailing;
-	@Column(name = "p_i_30")
-	private String EBITmTrailing;
-	@Column(name = "p_i_47")
-	private String AssetTurnover;
-	@Column(name = "p_i_48")
-	private String Leverage;
-	@Column(name = "p_i_49")
-	private String DEE;
-	@Column(name = "p_i_11")
-	private String tienDTNGDaoHan;
-	@Column(name = "p_i_12")
-	private String phaiThu;
-	@Column(name = "p_b_18")
-	private String hangTonKhoRong;
-	@Column(name = "p_b_36")
-	private String taiSanCoDinh;
-	@Column(name = "p_b_50")
-	private String taiSanDoDangDaiHan;
-	@Column(name = "p_b_47")
-	private String giaTriRongTaiSanDauTu;
-	@Column(name = "p_i_15")
-	private String taiSanKhac;
-	@Column(name = "p_i_16")
-	private String noVay;
-	@Column(name = "p_i_17")
-	private String noChiemDung;
-	@Column(name = "p_b_100")
-	private String vonGop;
-	@Column(name = "p_b_113")
-	private String laiChuaPhanPhoi;
-	@Column(name = "p_i_19")
-	private String vcshKhac;
-	@Column(name = "p_i_34")
-	private String vayNganHanVCSH;
-	@Column(name = "p_i_35")
-	private String vayDaiHanVCSH;
-	@Column(name = "p_i_36")
-	private String vayVCSH;
-	@Column(name = "p_i_37")
-	private String laiVay;
-	@Column(name = "p_b_38")
-	private String nguyenGiaTSCDHuuHinh;
-	@Column(name = "p_b_39")
-	private String khauHaoLuyKeTSCDHuuHinh;
-	@Column(name = "p_b_52")
-	private String xayDungCoBanDoDang;
-	@Column(name = "p_i_40")
-	private String vongQuayHangTonKho;
-	@Column(name = "p_i_41")
-	private String vongQuayPhaiThu;
-	@Column(name = "p_i_42")
-	private String vongQuayPhaiTra;
-	@Column(name = "p_i_33")
-	private String netIncomeDANWC;
-	@Column(name = "p_i_53")
-	private String netIncomeDANWCCAPEX;
-	@Column(name = "p_i_54")
-	private String netIncomeDANWCRolling;
-	@Column(name = "p_i_55")
-	private String netIncomeDANWCCAPEXRolling;
-	@Column(name = "p_c_21")
-	private String luuChuyenTienTeRongTuCacHoatDongSanXuatKinhDoanh;
-	@Column(name = "p_c_29")
-	private String luuChuyenTienTeRongTuCacHoatDongDauTu;
-	@Column(name = "p_c_37")
-	private String luuChuyenTienTeTuHoatDongTaiChinh;
-	@Column(name = "p_i_27")
-	private String fcf;
-	@Column(name = "p_b_70")
-	private String nguoiMuaTraTienTruoc;
-	@Column(name = "p_b_76")
-	private String doanhThuChuaThucHienNganHan;
-	@Column(name = "p_b_85")
-	private String nguoiMuaTraTienTruocDaiHan;
-	@Column(name = "p_b_89")
-	private String doanhThuChuaThucHien;
+	private Double bienLaiRong;
 	
-	public String getNguoiMuaTraTienTruoc() {
-		return nguoiMuaTraTienTruoc;
+	//Perf2
+	@Column(name = "p_i_25")
+	private Double loiNhuanCotLoi;
+	@Column(name = "p_i_26")
+	private Double loiNhuanTaiChinh;
+	@Column(name = "p_p_15")
+	private Double ThuNhapKhac;
+	@Column(name = "p_p_9")
+	private Double LaiLoTuCongTyLienDoanh;
+	
+	//Perf3
+	@Column(name = "p_i_1")
+	private Double SalesTrailing;
+	@Column(name = "p_i_28")
+	private Double GPMTrailing;
+	@Column(name = "p_i_29")
+	private Double SGAMTrailing;
+	@Column(name = "p_i_30")
+	private Double EBITmTrailing;
+	
+	//Perf4
+	@Column(name = "p_i_5")
+	private Double EBITTrailing;
+	@Column(name = "p_i_58")
+	private Double NetFinanceialTrailing;
+	@Column(name = "p_i_67")
+	private Double NetFinancialAdjustTrailing;
+	@Column(name = "p_i_46")
+	private Double NImgTrailing;
+	
+	//Perf5
+	@Column(name = "p_i_3")
+	private Double NITrailing;
+	@Column(name = "p_i_65")
+	private Double NITrailingAdjust;
+	@Column(name = "p_i_59")
+	private Double MinoritiesTrailing;
+	@Column(name = "p_i_60")
+	private Double AssociateTrailing;
+	
+	//Perf6
+	@Column(name = "p_i_56")
+	private Double EBITDATrailing;
+	@Column(name = "p_i_61")
+	private Double InterestExpenseTrailing;
+	
+	
+	//Perf7
+	@Column(name = "p_i_6")
+	private Double roe;
+	@Column(name = "p_i_24")
+	private Double roic;
+	@Column(name = "p_i_37")
+	private Double laiVay;
+	
+	//Perf8
+	@Column(name = "p_i_47")
+	private Double AssetTurnover;
+	@Column(name = "p_i_48")
+	private Double Leverage;
+	@Column(name = "p_i_49")
+	private Double DEE;
+	
+	
+	//Bal1
+	@Column(name = "p_i_11")
+	private Double tienDTNGDaoHan;
+	@Column(name = "p_i_12")
+	private Double phaiThu;
+	@Column(name = "p_b_18")
+	private Double hangTonKhoRong;
+	@Column(name = "p_b_36")
+	private Double taiSanCoDinh;
+	@Column(name = "p_b_50")
+	private Double taiSanDoDangDaiHan;
+	@Column(name = "p_b_47")
+	private Double giaTriRongTaiSanDauTu;
+	@Column(name = "p_i_15")
+	private Double taiSanKhac;
+	
+	//Bal2
+	@Column(name = "p_b_100")
+	private Double vonGop;
+	@Column(name = "p_b_113")
+	private Double laiChuaPhanPhoi;
+	@Column(name = "p_i_19")
+	private Double vcshKhac;
+	@Column(name = "p_i_16")
+	private Double noVay;
+	@Column(name = "p_i_17")
+	private Double noChiemDung;
+	
+	//Bal3
+	@Column(name = "p_i_62")
+	private Double GrossPPE;
+	@Column(name = "p_i_63")
+	private Double DAPPE;
+	@Column(name = "p_b_52")
+	private Double xayDungCoBanDoDang;
+	
+	//Bal4
+	@Column(name = "p_i_8")
+	private Double NetDebt;
+	@Column(name = "p_i_31")
+	private Double Workingcap;
+	
+	//Bal5
+	@Column(name = "p_i_40")
+	private Double vongQuayHangTonKho;
+	@Column(name = "p_i_41")
+	private Double vongQuayPhaiThu;
+	@Column(name = "p_i_42")
+	private Double vongQuayPhaiTra;
+	
+	//Bal6
+	@Column(name = "p_i_34")
+	private Double vayNganHanVCSH;
+	@Column(name = "p_i_35")
+	private Double vayDaiHanVCSH;
+	@Column(name = "p_i_36")
+	private Double vayVCSH;
+	
+	//Cf1
+	@Column(name = "p_c_21")
+	private Double luuChuyenTienTeRongTuCacHoatDongSanXuatKinhDoanh;
+	@Column(name = "p_c_29")
+	private Double luuChuyenTienTeRongTuCacHoatDongDauTu;
+	@Column(name = "p_c_37")
+	private Double luuChuyenTienTeTuHoatDongTaiChinh;
+	@Column(name = "p_i_27")
+	private Double fcf;
+	
+	//Cf2
+	@Column(name = "p_i_33")
+	private Double netIncomeDANWC;
+	@Column(name = "p_i_53")
+	private Double netIncomeDANWCCAPEX;
+	@Column(name = "p_i_54")
+	private Double netIncomeDANWCRolling;
+	@Column(name = "p_i_55")
+	private Double netIncomeDANWCCAPEXRolling;
+	
+	//Cf3
+	@Column(name = "p_b_5")
+	private Double giaTriThuanDauTuNganHan;
+	@Column(name = "p_b_2")
+	private Double tienVaTuongDuongTien;
+	@Column(name = "p_b_58")
+	private Double dauTuNamGiuDenNgayDaoHan;
+	@Column(name = "p_m_1")
+	private Double tienLongTrongPhaiThuChoVay;
+	
+	//cf4
+	@Column(name = "p_b_70")
+	private Double nguoiMuaTraTienTruoc;
+	@Column(name = "p_b_76")
+	private Double doanhThuChuaThucHienNganHan;
+	@Column(name = "p_b_85")
+	private Double nguoiMuaTraTienTruocDaiHan;
+	@Column(name = "p_b_89")
+	private Double doanhThuChuaThucHien;
+	
+	public Double getGiaTriThuanDauTuNganHan() {
+		return giaTriThuanDauTuNganHan;
 	}
 
-	public void setNguoiMuaTraTienTruoc(String nguoiMuaTraTienTruoc) {
-		this.nguoiMuaTraTienTruoc = nguoiMuaTraTienTruoc;
+	public void setGiaTriThuanDauTuNganHan(Double giaTriThuanDauTuNganHan) {
+		this.giaTriThuanDauTuNganHan = giaTriThuanDauTuNganHan;
 	}
 
-	public String getDoanhThuChuaThucHienNganHan() {
-		return doanhThuChuaThucHienNganHan;
+	public Double getTienVaTuongDuongTien() {
+		return tienVaTuongDuongTien;
 	}
 
-	public void setDoanhThuChuaThucHienNganHan(String doanhThuChuaThucHienNganHan) {
-		this.doanhThuChuaThucHienNganHan = doanhThuChuaThucHienNganHan;
+	public void setTienVaTuongDuongTien(Double tienVaTuongDuongTien) {
+		this.tienVaTuongDuongTien = tienVaTuongDuongTien;
 	}
 
-	public String getNguoiMuaTraTienTruocDaiHan() {
-		return nguoiMuaTraTienTruocDaiHan;
+	public Double getDauTuNamGiuDenNgayDaoHan() {
+		return dauTuNamGiuDenNgayDaoHan;
 	}
 
-	public void setNguoiMuaTraTienTruocDaiHan(String nguoiMuaTraTienTruocDaiHan) {
-		this.nguoiMuaTraTienTruocDaiHan = nguoiMuaTraTienTruocDaiHan;
+	public void setDauTuNamGiuDenNgayDaoHan(Double dauTuNamGiuDenNgayDaoHan) {
+		this.dauTuNamGiuDenNgayDaoHan = dauTuNamGiuDenNgayDaoHan;
 	}
 
-	public String getDoanhThuChuaThucHien() {
-		return doanhThuChuaThucHien;
+	public Double getTienLongTrongPhaiThuChoVay() {
+		return tienLongTrongPhaiThuChoVay;
 	}
 
-	public void setDoanhThuChuaThucHien(String doanhThuChuaThucHien) {
-		this.doanhThuChuaThucHien = doanhThuChuaThucHien;
+	public void setTienLongTrongPhaiThuChoVay(Double tienLongTrongPhaiThuChoVay) {
+		this.tienLongTrongPhaiThuChoVay = tienLongTrongPhaiThuChoVay;
 	}
 
-	public String getLuuChuyenTienTeRongTuCacHoatDongSanXuatKinhDoanh() {
+	public Double getNetDebt() {
+		return NetDebt;
+	}
+
+	public void setNetDebt(Double netDebt) {
+		NetDebt = netDebt;
+	}
+
+	public Double getWorkingcap() {
+		return Workingcap;
+	}
+
+	public void setWorkingcap(Double workingcap) {
+		Workingcap = workingcap;
+	}
+
+	public Double getEBITDATrailing() {
+		return EBITDATrailing;
+	}
+
+	public void setEBITDATrailing(Double eBITDATrailing) {
+		EBITDATrailing = eBITDATrailing;
+	}
+
+	public Double getInterestExpenseTrailing() {
+		return InterestExpenseTrailing;
+	}
+
+	public void setInterestExpenseTrailing(Double interestExpenseTrailing) {
+		InterestExpenseTrailing = interestExpenseTrailing;
+	}
+
+	public Double getNITrailing() {
+		return NITrailing;
+	}
+
+	public void setNITrailing(Double nITrailing) {
+		NITrailing = nITrailing;
+	}
+
+	public Double getNITrailingAdjust() {
+		return NITrailingAdjust;
+	}
+
+	public void setNITrailingAdjust(Double nITrailingAdjust) {
+		NITrailingAdjust = nITrailingAdjust;
+	}
+
+	public Double getMinoritiesTrailing() {
+		return MinoritiesTrailing;
+	}
+
+	public void setMinoritiesTrailing(Double minoritiesTrailing) {
+		MinoritiesTrailing = minoritiesTrailing;
+	}
+
+	public Double getAssociateTrailing() {
+		return AssociateTrailing;
+	}
+
+	public void setAssociateTrailing(Double associateTrailing) {
+		AssociateTrailing = associateTrailing;
+	}
+
+	public Double getEBITTrailing() {
+		return EBITTrailing;
+	}
+
+	public void setEBITTrailing(Double eBITTrailing) {
+		EBITTrailing = eBITTrailing;
+	}
+
+	public Double getNetFinanceialTrailing() {
+		return NetFinanceialTrailing;
+	}
+
+	public void setNetFinanceialTrailing(Double netFinanceialTrailing) {
+		NetFinanceialTrailing = netFinanceialTrailing;
+	}
+
+	public Double getNetFinancialAdjustTrailing() {
+		return NetFinancialAdjustTrailing;
+	}
+
+	public void setNetFinancialAdjustTrailing(Double netFinancialAdjustTrailing) {
+		NetFinancialAdjustTrailing = netFinancialAdjustTrailing;
+	}
+
+	public Double getNImgTrailing() {
+		return NImgTrailing;
+	}
+
+	public void setNImgTrailing(Double nImgTrailing) {
+		NImgTrailing = nImgTrailing;
+	}
+
+	public Double getDoanhSoThuan() {
+		return doanhSoThuan;
+	}
+
+	public void setDoanhSoThuan(Double doanhSoThuan) {
+		this.doanhSoThuan = doanhSoThuan;
+	}
+
+	public Double getLoiNhuanCuaCoDongCongTyMe() {
+		return loiNhuanCuaCoDongCongTyMe;
+	}
+
+	public void setLoiNhuanCuaCoDongCongTyMe(Double loiNhuanCuaCoDongCongTyMe) {
+		this.loiNhuanCuaCoDongCongTyMe = loiNhuanCuaCoDongCongTyMe;
+	}
+
+	public Double getBienLaiGop() {
+		return bienLaiGop;
+	}
+
+	public void setBienLaiGop(Double bienLaiGop) {
+		this.bienLaiGop = bienLaiGop;
+	}
+
+	public Double getBienLaiRong() {
+		return bienLaiRong;
+	}
+
+	public void setBienLaiRong(Double bienLaiRong) {
+		this.bienLaiRong = bienLaiRong;
+	}
+
+	public Double getLoiNhuanCotLoi() {
+		return loiNhuanCotLoi;
+	}
+
+	public void setLoiNhuanCotLoi(Double loiNhuanCotLoi) {
+		this.loiNhuanCotLoi = loiNhuanCotLoi;
+	}
+
+	public Double getLoiNhuanTaiChinh() {
+		return loiNhuanTaiChinh;
+	}
+
+	public void setLoiNhuanTaiChinh(Double loiNhuanTaiChinh) {
+		this.loiNhuanTaiChinh = loiNhuanTaiChinh;
+	}
+
+	public Double getThuNhapKhac() {
+		return ThuNhapKhac;
+	}
+
+	public void setThuNhapKhac(Double thuNhapKhac) {
+		ThuNhapKhac = thuNhapKhac;
+	}
+
+	public Double getLaiLoTuCongTyLienDoanh() {
+		return LaiLoTuCongTyLienDoanh;
+	}
+
+	public void setLaiLoTuCongTyLienDoanh(Double laiLoTuCongTyLienDoanh) {
+		LaiLoTuCongTyLienDoanh = laiLoTuCongTyLienDoanh;
+	}
+
+	public Double getRoe() {
+		return roe;
+	}
+
+	public void setRoe(Double roe) {
+		this.roe = roe;
+	}
+
+	public Double getRoic() {
+		return roic;
+	}
+
+	public void setRoic(Double roic) {
+		this.roic = roic;
+	}
+
+	public Double getSalesTrailing() {
+		return SalesTrailing;
+	}
+
+	public void setSalesTrailing(Double salesTrailing) {
+		SalesTrailing = salesTrailing;
+	}
+
+	public Double getGPMTrailing() {
+		return GPMTrailing;
+	}
+
+	public void setGPMTrailing(Double gPMTrailing) {
+		GPMTrailing = gPMTrailing;
+	}
+
+	public Double getSGAMTrailing() {
+		return SGAMTrailing;
+	}
+
+	public void setSGAMTrailing(Double sGAMTrailing) {
+		SGAMTrailing = sGAMTrailing;
+	}
+
+	public Double getEBITmTrailing() {
+		return EBITmTrailing;
+	}
+
+	public void setEBITmTrailing(Double eBITmTrailing) {
+		EBITmTrailing = eBITmTrailing;
+	}
+
+	public Double getAssetTurnover() {
+		return AssetTurnover;
+	}
+
+	public void setAssetTurnover(Double assetTurnover) {
+		AssetTurnover = assetTurnover;
+	}
+
+	public Double getLeverage() {
+		return Leverage;
+	}
+
+	public void setLeverage(Double leverage) {
+		Leverage = leverage;
+	}
+
+	public Double getDEE() {
+		return DEE;
+	}
+
+	public void setDEE(Double dEE) {
+		DEE = dEE;
+	}
+
+	public Double getTienDTNGDaoHan() {
+		return tienDTNGDaoHan;
+	}
+
+	public void setTienDTNGDaoHan(Double tienDTNGDaoHan) {
+		this.tienDTNGDaoHan = tienDTNGDaoHan;
+	}
+
+	public Double getPhaiThu() {
+		return phaiThu;
+	}
+
+	public void setPhaiThu(Double phaiThu) {
+		this.phaiThu = phaiThu;
+	}
+
+	public Double getHangTonKhoRong() {
+		return hangTonKhoRong;
+	}
+
+	public void setHangTonKhoRong(Double hangTonKhoRong) {
+		this.hangTonKhoRong = hangTonKhoRong;
+	}
+
+	public Double getTaiSanCoDinh() {
+		return taiSanCoDinh;
+	}
+
+	public void setTaiSanCoDinh(Double taiSanCoDinh) {
+		this.taiSanCoDinh = taiSanCoDinh;
+	}
+
+	public Double getTaiSanDoDangDaiHan() {
+		return taiSanDoDangDaiHan;
+	}
+
+	public void setTaiSanDoDangDaiHan(Double taiSanDoDangDaiHan) {
+		this.taiSanDoDangDaiHan = taiSanDoDangDaiHan;
+	}
+
+	public Double getGiaTriRongTaiSanDauTu() {
+		return giaTriRongTaiSanDauTu;
+	}
+
+	public void setGiaTriRongTaiSanDauTu(Double giaTriRongTaiSanDauTu) {
+		this.giaTriRongTaiSanDauTu = giaTriRongTaiSanDauTu;
+	}
+
+	public Double getTaiSanKhac() {
+		return taiSanKhac;
+	}
+
+	public void setTaiSanKhac(Double taiSanKhac) {
+		this.taiSanKhac = taiSanKhac;
+	}
+
+	public Double getNoVay() {
+		return noVay;
+	}
+
+	public void setNoVay(Double noVay) {
+		this.noVay = noVay;
+	}
+
+	public Double getNoChiemDung() {
+		return noChiemDung;
+	}
+
+	public void setNoChiemDung(Double noChiemDung) {
+		this.noChiemDung = noChiemDung;
+	}
+
+	public Double getVonGop() {
+		return vonGop;
+	}
+
+	public void setVonGop(Double vonGop) {
+		this.vonGop = vonGop;
+	}
+
+	public Double getLaiChuaPhanPhoi() {
+		return laiChuaPhanPhoi;
+	}
+
+	public void setLaiChuaPhanPhoi(Double laiChuaPhanPhoi) {
+		this.laiChuaPhanPhoi = laiChuaPhanPhoi;
+	}
+
+	public Double getVcshKhac() {
+		return vcshKhac;
+	}
+
+	public void setVcshKhac(Double vcshKhac) {
+		this.vcshKhac = vcshKhac;
+	}
+
+	public Double getVayNganHanVCSH() {
+		return vayNganHanVCSH;
+	}
+
+	public void setVayNganHanVCSH(Double vayNganHanVCSH) {
+		this.vayNganHanVCSH = vayNganHanVCSH;
+	}
+
+	public Double getVayDaiHanVCSH() {
+		return vayDaiHanVCSH;
+	}
+
+	public void setVayDaiHanVCSH(Double vayDaiHanVCSH) {
+		this.vayDaiHanVCSH = vayDaiHanVCSH;
+	}
+
+	public Double getVayVCSH() {
+		return vayVCSH;
+	}
+
+	public void setVayVCSH(Double vayVCSH) {
+		this.vayVCSH = vayVCSH;
+	}
+
+	public Double getLaiVay() {
+		return laiVay;
+	}
+
+	public void setLaiVay(Double laiVay) {
+		this.laiVay = laiVay;
+	}
+
+
+	public Double getXayDungCoBanDoDang() {
+		return xayDungCoBanDoDang;
+	}
+
+	public void setXayDungCoBanDoDang(Double xayDungCoBanDoDang) {
+		this.xayDungCoBanDoDang = xayDungCoBanDoDang;
+	}
+
+	public Double getVongQuayHangTonKho() {
+		return vongQuayHangTonKho;
+	}
+
+	public void setVongQuayHangTonKho(Double vongQuayHangTonKho) {
+		this.vongQuayHangTonKho = vongQuayHangTonKho;
+	}
+
+	public Double getVongQuayPhaiThu() {
+		return vongQuayPhaiThu;
+	}
+
+	public void setVongQuayPhaiThu(Double vongQuayPhaiThu) {
+		this.vongQuayPhaiThu = vongQuayPhaiThu;
+	}
+
+	public Double getVongQuayPhaiTra() {
+		return vongQuayPhaiTra;
+	}
+
+	public void setVongQuayPhaiTra(Double vongQuayPhaiTra) {
+		this.vongQuayPhaiTra = vongQuayPhaiTra;
+	}
+
+	public Double getNetIncomeDANWC() {
+		return netIncomeDANWC;
+	}
+
+	public void setNetIncomeDANWC(Double netIncomeDANWC) {
+		this.netIncomeDANWC = netIncomeDANWC;
+	}
+
+	public Double getNetIncomeDANWCCAPEX() {
+		return netIncomeDANWCCAPEX;
+	}
+
+	public void setNetIncomeDANWCCAPEX(Double netIncomeDANWCCAPEX) {
+		this.netIncomeDANWCCAPEX = netIncomeDANWCCAPEX;
+	}
+
+	public Double getNetIncomeDANWCRolling() {
+		return netIncomeDANWCRolling;
+	}
+
+	public void setNetIncomeDANWCRolling(Double netIncomeDANWCRolling) {
+		this.netIncomeDANWCRolling = netIncomeDANWCRolling;
+	}
+
+	public Double getNetIncomeDANWCCAPEXRolling() {
+		return netIncomeDANWCCAPEXRolling;
+	}
+
+	public void setNetIncomeDANWCCAPEXRolling(Double netIncomeDANWCCAPEXRolling) {
+		this.netIncomeDANWCCAPEXRolling = netIncomeDANWCCAPEXRolling;
+	}
+
+	public Double getLuuChuyenTienTeRongTuCacHoatDongSanXuatKinhDoanh() {
 		return luuChuyenTienTeRongTuCacHoatDongSanXuatKinhDoanh;
 	}
 
 	public void setLuuChuyenTienTeRongTuCacHoatDongSanXuatKinhDoanh(
-			String luuChuyenTienTeRongTuCacHoatDongSanXuatKinhDoanh) {
+			Double luuChuyenTienTeRongTuCacHoatDongSanXuatKinhDoanh) {
 		this.luuChuyenTienTeRongTuCacHoatDongSanXuatKinhDoanh = luuChuyenTienTeRongTuCacHoatDongSanXuatKinhDoanh;
 	}
 
-	public String getLuuChuyenTienTeRongTuCacHoatDongDauTu() {
+	public Double getLuuChuyenTienTeRongTuCacHoatDongDauTu() {
 		return luuChuyenTienTeRongTuCacHoatDongDauTu;
 	}
 
-	public void setLuuChuyenTienTeRongTuCacHoatDongDauTu(String luuChuyenTienTeRongTuCacHoatDongDauTu) {
+	public void setLuuChuyenTienTeRongTuCacHoatDongDauTu(Double luuChuyenTienTeRongTuCacHoatDongDauTu) {
 		this.luuChuyenTienTeRongTuCacHoatDongDauTu = luuChuyenTienTeRongTuCacHoatDongDauTu;
 	}
 
-	public String getLuuChuyenTienTeTuHoatDongTaiChinh() {
+	public Double getLuuChuyenTienTeTuHoatDongTaiChinh() {
 		return luuChuyenTienTeTuHoatDongTaiChinh;
 	}
 
-	public void setLuuChuyenTienTeTuHoatDongTaiChinh(String luuChuyenTienTeTuHoatDongTaiChinh) {
+	public void setLuuChuyenTienTeTuHoatDongTaiChinh(Double luuChuyenTienTeTuHoatDongTaiChinh) {
 		this.luuChuyenTienTeTuHoatDongTaiChinh = luuChuyenTienTeTuHoatDongTaiChinh;
 	}
 
-	public String getFcf() {
+	public Double getFcf() {
 		return fcf;
 	}
 
-	public void setFcf(String fcf) {
+	public void setFcf(Double fcf) {
 		this.fcf = fcf;
 	}
 
-	public String getNetIncomeDANWC() {
-		return netIncomeDANWC;
+	public Double getNguoiMuaTraTienTruoc() {
+		return nguoiMuaTraTienTruoc;
 	}
 
-	public void setNetIncomeDANWC(String netIncomeDANWC) {
-		this.netIncomeDANWC = netIncomeDANWC;
+	public void setNguoiMuaTraTienTruoc(Double nguoiMuaTraTienTruoc) {
+		this.nguoiMuaTraTienTruoc = nguoiMuaTraTienTruoc;
 	}
 
-	public String getNetIncomeDANWCCAPEX() {
-		return netIncomeDANWCCAPEX;
+	public Double getDoanhThuChuaThucHienNganHan() {
+		return doanhThuChuaThucHienNganHan;
 	}
 
-	public void setNetIncomeDANWCCAPEX(String netIncomeDANWCCAPEX) {
-		this.netIncomeDANWCCAPEX = netIncomeDANWCCAPEX;
+	public void setDoanhThuChuaThucHienNganHan(Double doanhThuChuaThucHienNganHan) {
+		this.doanhThuChuaThucHienNganHan = doanhThuChuaThucHienNganHan;
 	}
 
-	public String getNetIncomeDANWCRolling() {
-		return netIncomeDANWCRolling;
+	public Double getNguoiMuaTraTienTruocDaiHan() {
+		return nguoiMuaTraTienTruocDaiHan;
 	}
 
-	public void setNetIncomeDANWCRolling(String netIncomeDANWCRolling) {
-		this.netIncomeDANWCRolling = netIncomeDANWCRolling;
+	public void setNguoiMuaTraTienTruocDaiHan(Double nguoiMuaTraTienTruocDaiHan) {
+		this.nguoiMuaTraTienTruocDaiHan = nguoiMuaTraTienTruocDaiHan;
 	}
 
-	public String getNetIncomeDANWCCAPEXRolling() {
-		return netIncomeDANWCCAPEXRolling;
+	public Double getDoanhThuChuaThucHien() {
+		return doanhThuChuaThucHien;
 	}
 
-	public void setNetIncomeDANWCCAPEXRolling(String netIncomeDANWCCAPEXRolling) {
-		this.netIncomeDANWCCAPEXRolling = netIncomeDANWCCAPEXRolling;
+	public void setDoanhThuChuaThucHien(Double doanhThuChuaThucHien) {
+		this.doanhThuChuaThucHien = doanhThuChuaThucHien;
 	}
 
-	public String getVongQuayHangTonKho() {
-		return vongQuayHangTonKho;
-	}
-
-	public void setVongQuayHangTonKho(String vongQuayHangTonKho) {
-		this.vongQuayHangTonKho = vongQuayHangTonKho;
-	}
-
-	public String getVongQuayPhaiThu() {
-		return vongQuayPhaiThu;
-	}
-
-	public void setVongQuayPhaiThu(String vongQuayPhaiThu) {
-		this.vongQuayPhaiThu = vongQuayPhaiThu;
-	}
-
-	public String getVongQuayPhaiTra() {
-		return vongQuayPhaiTra;
-	}
-
-	public void setVongQuayPhaiTra(String vongQuayPhaiTra) {
-		this.vongQuayPhaiTra = vongQuayPhaiTra;
-	}
-
-	public String getNguyenGiaTSCDHuuHinh() {
-		return nguyenGiaTSCDHuuHinh;
-	}
-
-	public void setNguyenGiaTSCDHuuHinh(String nguyenGiaTSCDHuuHinh) {
-		this.nguyenGiaTSCDHuuHinh = nguyenGiaTSCDHuuHinh;
-	}
-
-	public String getKhauHaoLuyKeTSCDHuuHinh() {
-		return khauHaoLuyKeTSCDHuuHinh;
-	}
-
-	public void setKhauHaoLuyKeTSCDHuuHinh(String khauHaoLuyKeTSCDHuuHinh) {
-		this.khauHaoLuyKeTSCDHuuHinh = khauHaoLuyKeTSCDHuuHinh;
-	}
-
-	public String getXayDungCoBanDoDang() {
-		return xayDungCoBanDoDang;
-	}
-
-	public void setXayDungCoBanDoDang(String xayDungCoBanDoDang) {
-		this.xayDungCoBanDoDang = xayDungCoBanDoDang;
-	}
-
-	public String getVayNganHanVCSH() {
-		return vayNganHanVCSH;
-	}
-
-	public void setVayNganHanVCSH(String vayNganHanVCSH) {
-		this.vayNganHanVCSH = vayNganHanVCSH;
-	}
-
-	public String getVayDaiHanVCSH() {
-		return vayDaiHanVCSH;
-	}
-
-	public void setVayDaiHanVCSH(String vayDaiHanVCSH) {
-		this.vayDaiHanVCSH = vayDaiHanVCSH;
-	}
-
-	public String getVayVCSH() {
-		return vayVCSH;
-	}
-
-	public void setVayVCSH(String vayVCSH) {
-		this.vayVCSH = vayVCSH;
-	}
-
-	public String getLaiVay() {
-		return laiVay;
-	}
-
-	public void setLaiVay(String laiVay) {
-		this.laiVay = laiVay;
-	}
-
-	public String getNoVay() {
-		return noVay;
-	}
-
-	public void setNoVay(String noVay) {
-		this.noVay = noVay;
-	}
-
-	public String getNoChiemDung() {
-		return noChiemDung;
-	}
-
-	public void setNoChiemDung(String noChiemDung) {
-		this.noChiemDung = noChiemDung;
-	}
-
-	public String getVonGop() {
-		return vonGop;
-	}
-
-	public void setVonGop(String vonGop) {
-		this.vonGop = vonGop;
-	}
-
-	public String getLaiChuaPhanPhoi() {
-		return laiChuaPhanPhoi;
-	}
-
-	public void setLaiChuaPhanPhoi(String laiChuaPhanPhoi) {
-		this.laiChuaPhanPhoi = laiChuaPhanPhoi;
-	}
-
-	public String getVcshKhac() {
-		return vcshKhac;
-	}
-
-	public void setVcshKhac(String vcshKhac) {
-		this.vcshKhac = vcshKhac;
-	}
-
-	public String getTienDTNGDaoHan() {
-		return tienDTNGDaoHan;
-	}
-
-	public void setTienDTNGDaoHan(String tienDTNGDaoHan) {
-		this.tienDTNGDaoHan = tienDTNGDaoHan;
-	}
-
-	public String getPhaiThu() {
-		return phaiThu;
-	}
-
-	public void setPhaiThu(String phaiThu) {
-		this.phaiThu = phaiThu;
-	}
-
-	public String getHangTonKhoRong() {
-		return hangTonKhoRong;
-	}
-
-	public void setHangTonKhoRong(String hangTonKhoRong) {
-		this.hangTonKhoRong = hangTonKhoRong;
-	}
-
-	public String getTaiSanCoDinh() {
-		return taiSanCoDinh;
-	}
-
-	public void setTaiSanCoDinh(String taiSanCoDinh) {
-		this.taiSanCoDinh = taiSanCoDinh;
-	}
-
-	public String getTaiSanDoDangDaiHan() {
-		return taiSanDoDangDaiHan;
-	}
-
-	public void setTaiSanDoDangDaiHan(String taiSanDoDangDaiHan) {
-		this.taiSanDoDangDaiHan = taiSanDoDangDaiHan;
-	}
-
-	public String getGiaTriRongTaiSanDauTu() {
-		return giaTriRongTaiSanDauTu;
-	}
-
-	public void setGiaTriRongTaiSanDauTu(String giaTriRongTaiSanDauTu) {
-		this.giaTriRongTaiSanDauTu = giaTriRongTaiSanDauTu;
-	}
-
-	public String getTaiSanKhac() {
-		return taiSanKhac;
-	}
-
-	public void setTaiSanKhac(String taiSanKhac) {
-		this.taiSanKhac = taiSanKhac;
-	}
-
-	public String getAssetTurnover() {
-		return AssetTurnover;
-	}
-
-	public void setAssetTurnover(String assetTurnover) {
-		AssetTurnover = assetTurnover;
-	}
-
-	public String getLeverage() {
-		return Leverage;
-	}
-
-	public void setLeverage(String leverage) {
-		Leverage = leverage;
-	}
-
-	public String getDEE() {
-		return DEE;
-	}
-
-	public void setDEE(String dEE) {
-		DEE = dEE;
-	}
-
-	public String getSalesTrailing() {
-		return SalesTrailing;
-	}
-
-	public void setSalesTrailing(String salesTrailing) {
-		SalesTrailing = salesTrailing;
-	}
-
-	public String getGPMTrailing() {
-		return GPMTrailing;
-	}
-
-	public void setGPMTrailing(String gPMTrailing) {
-		GPMTrailing = gPMTrailing;
-	}
-
-	public String getSGAMTrailing() {
-		return SGAMTrailing;
-	}
-
-	public void setSGAMTrailing(String sGAMTrailing) {
-		SGAMTrailing = sGAMTrailing;
-	}
-
-	public String getEBITmTrailing() {
-		return EBITmTrailing;
-	}
-
-	public void setEBITmTrailing(String eBITmTrailing) {
-		EBITmTrailing = eBITmTrailing;
-	}
-
-	public String getLoiNhuanCotLoi() {
-		return loiNhuanCotLoi;
-	}
-
-	public void setLoiNhuanCotLoi(String loiNhuanCotLoi) {
-		this.loiNhuanCotLoi = loiNhuanCotLoi;
-	}
-
-	public String getLoiNhuanTaiChinh() {
-		return loiNhuanTaiChinh;
-	}
-
-	public void setLoiNhuanTaiChinh(String loiNhuanTaiChinh) {
-		this.loiNhuanTaiChinh = loiNhuanTaiChinh;
-	}
-
-	public String getThuNhapKhac() {
-		return ThuNhapKhac;
-	}
-
-	public void setThuNhapKhac(String thuNhapKhac) {
-		ThuNhapKhac = thuNhapKhac;
-	}
-
-	public String getLaiLoTuCongTyLienDoanh() {
-		return LaiLoTuCongTyLienDoanh;
-	}
-
-	public void setLaiLoTuCongTyLienDoanh(String laiLoTuCongTyLienDoanh) {
-		LaiLoTuCongTyLienDoanh = laiLoTuCongTyLienDoanh;
-	}
-
-	public String getRoe() {
-		return roe;
-	}
-
-	public void setRoe(String roe) {
-		this.roe = roe;
-	}
-
-	public String getRoic() {
-		return roic;
-	}
-
-	public void setRoic(String roic) {
-		this.roic = roic;
-	}
-
-	public String getLoiNhuanCuaCoDongCongTyMe() {
-		return loiNhuanCuaCoDongCongTyMe;
-	}
-
-	public void setLoiNhuanCuaCoDongCongTyMe(String loiNhuanCuaCoDongCongTyMe) {
-		this.loiNhuanCuaCoDongCongTyMe = loiNhuanCuaCoDongCongTyMe;
-	}
-
-	public String getBienLaiGop() {
-		return bienLaiGop;
-	}
-
-	public void setBienLaiGop(String bienLaiGop) {
-		this.bienLaiGop = bienLaiGop;
-	}
-
-	public String getBienLaiRong() {
-		return bienLaiRong;
-	}
-
-	public void setBienLaiRong(String bienLaiRong) {
-		this.bienLaiRong = bienLaiRong;
-	}
-
-	public String getDoanhSoThuan() {
-		return doanhSoThuan;
-	}
-
-	public void setDoanhSoThuan(String doanhSoThuan) {
-		this.doanhSoThuan = doanhSoThuan;
-	}
+	
+	
+	
 }

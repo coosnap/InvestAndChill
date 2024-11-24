@@ -1,33 +1,33 @@
 package com.starter.InvestAndChill.jwt.payload.response;
 
 public class Cf2Response extends ReportReponse{
-	private String luuChuyenTienTeRongTuCacHoatDongSanXuatKinhDoanh;
-	private String luuChuyenTienTeRongTuCacHoatDongDauTu;
-	private String luuChuyenTienTeTuHoatDongTaiChinh;
-	private String fcf;
-	public String getFcf() {
-		return fcf;
+
+	private Double netIncomeDANWC;
+	public Double getNetIncomeDANWC() {
+		return netIncomeDANWC;
 	}
-	public void setFcf(String fcf) {
-		this.fcf = fcf;
+	public void setNetIncomeDANWC(Double netIncomeDANWC) {
+		this.netIncomeDANWC = netIncomeDANWC;
 	}
-	public String getLuuChuyenTienTeRongTuCacHoatDongSanXuatKinhDoanh() {
-		return luuChuyenTienTeRongTuCacHoatDongSanXuatKinhDoanh;
+	public Double getNetIncomeDANWCCAPEX() {
+		return netIncomeDANWCCAPEX;
 	}
-	public void setLuuChuyenTienTeRongTuCacHoatDongSanXuatKinhDoanh(
-			String luuChuyenTienTeRongTuCacHoatDongSanXuatKinhDoanh) {
-		this.luuChuyenTienTeRongTuCacHoatDongSanXuatKinhDoanh = luuChuyenTienTeRongTuCacHoatDongSanXuatKinhDoanh;
+	public void setNetIncomeDANWCCAPEX(Double netIncomeDANWCCAPEX) {
+		this.netIncomeDANWCCAPEX = netIncomeDANWCCAPEX;
 	}
-	public String getLuuChuyenTienTeRongTuCacHoatDongDauTu() {
-		return luuChuyenTienTeRongTuCacHoatDongDauTu;
+	public Double getNetIncomeDANWCRolling() {
+		return netIncomeDANWCRolling;
 	}
-	public void setLuuChuyenTienTeRongTuCacHoatDongDauTu(String luuChuyenTienTeRongTuCacHoatDongDauTu) {
-		this.luuChuyenTienTeRongTuCacHoatDongDauTu = luuChuyenTienTeRongTuCacHoatDongDauTu;
+	public void setNetIncomeDANWCRolling(Double netIncomeDANWCRolling) {
+		this.netIncomeDANWCRolling = netIncomeDANWCRolling;
 	}
-	public String getLuuChuyenTienTeTuHoatDongTaiChinh() {
-		return luuChuyenTienTeTuHoatDongTaiChinh;
+	public Double getNetIncomeDANWCCAPEXRolling() {
+		return netIncomeDANWCCAPEXRolling;
 	}
-	public void setLuuChuyenTienTeTuHoatDongTaiChinh(String luuChuyenTienTeTuHoatDongTaiChinh) {
-		this.luuChuyenTienTeTuHoatDongTaiChinh = luuChuyenTienTeTuHoatDongTaiChinh;
+	public void setNetIncomeDANWCCAPEXRolling(Double netIncomeDANWCCAPEXRolling) {
+		this.netIncomeDANWCCAPEXRolling = netIncomeDANWCCAPEXRolling;
 	}
+	private Double netIncomeDANWCCAPEX;
+	private Double netIncomeDANWCRolling;
+	private Double netIncomeDANWCCAPEXRolling;
 }

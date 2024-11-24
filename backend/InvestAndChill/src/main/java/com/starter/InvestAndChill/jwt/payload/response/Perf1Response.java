@@ -1,53 +1,40 @@
 package com.starter.InvestAndChill.jwt.payload.response;
 
-import com.starter.InvestAndChill.jwt.models.PTCReportKey;
-
 public class Perf1Response extends ReportReponse {
-	private String doanhSoThuan;
-	private String loiNhuanCuaCoDongCongTyMe;
-	private String bienLaiGop;
-	private String bienLaiRong;
-	
-	public Perf1Response() {
-	}
-	
-	public Perf1Response(PTCReportKey key, String doanhSoThuan, String loiNhuanCuaCoDongCongTyMe, String bienLaiGop, String bienLaiRong) {
-		super(key);
-		this.doanhSoThuan = doanhSoThuan;
-		this.loiNhuanCuaCoDongCongTyMe = loiNhuanCuaCoDongCongTyMe;
-		this.bienLaiGop = bienLaiGop;
-		this.bienLaiRong = bienLaiRong;
-	}
+	private Double doanhSoThuan;
+	private Double loiNhuanCuaCoDongCongTyMe;
+	private Double bienLaiGop;
+	private Double bienLaiRong;
 
-	public String getDoanhSoThuan() {
+	public Double getDoanhSoThuan() {
 		return doanhSoThuan;
 	}
 
-	public void setDoanhSoThuan(String doanhSoThuan) {
+	public void setDoanhSoThuan(Double doanhSoThuan) {
 		this.doanhSoThuan = doanhSoThuan;
 	}
 
-	public String getLoiNhuanCuaCoDongCongTyMe() {
+	public Double getLoiNhuanCuaCoDongCongTyMe() {
 		return loiNhuanCuaCoDongCongTyMe;
 	}
 
-	public void setLoiNhuanCuaCoDongCongTyMe(String loiNhuanCuaCoDongCongTyMe) {
+	public void setLoiNhuanCuaCoDongCongTyMe(Double loiNhuanCuaCoDongCongTyMe) {
 		this.loiNhuanCuaCoDongCongTyMe = loiNhuanCuaCoDongCongTyMe;
 	}
 
-	public String getBienLaiGop() {
+	public Double getBienLaiGop() {
 		return bienLaiGop;
 	}
 
-	public void setBienLaiGop(String bienLaiGop) {
+	public void setBienLaiGop(Double bienLaiGop) {
 		this.bienLaiGop = bienLaiGop;
 	}
 
-	public String getBienLaiRong() {
+	public Double getBienLaiRong() {
 		return bienLaiRong;
 	}
 
-	public void setBienLaiRong(String bienLaiRong) {
+	public void setBienLaiRong(Double bienLaiRong) {
 		this.bienLaiRong = bienLaiRong;
 	}
 	

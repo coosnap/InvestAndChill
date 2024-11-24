@@ -1,35 +1,27 @@
 package com.starter.InvestAndChill.jwt.payload.response;
 
 public class Bal3Response extends ReportReponse{
-	private String vayNganHanVCSH;
-	private String vayDaiHanVCSH;
-	private String vayVCSH;
-	private String laiVay;
-	public String getVayNganHanVCSH() {
-		return vayNganHanVCSH;
+
+	private Double GrossPPE;
+	private Double DAPPE;
+	private Double xayDungCoBanDoDang;
+	public Double getGrossPPE() {
+		return GrossPPE;
 	}
-	public void setVayNganHanVCSH(String vayNganHanVCSH) {
-		this.vayNganHanVCSH = vayNganHanVCSH;
+	public void setGrossPPE(Double grossPPE) {
+		GrossPPE = grossPPE;
 	}
-	public String getVayDaiHanVCSH() {
-		return vayDaiHanVCSH;
+	public Double getDAPPE() {
+		return DAPPE;
 	}
-	public void setVayDaiHanVCSH(String vayDaiHanVCSH) {
-		this.vayDaiHanVCSH = vayDaiHanVCSH;
+	public void setDAPPE(Double dAPPE) {
+		DAPPE = dAPPE;
 	}
-	public String getVayVCSH() {
-		return vayVCSH;
+	public Double getXayDungCoBanDoDang() {
+		return xayDungCoBanDoDang;
 	}
-	public void setVayVCSH(String vayVCSH) {
-		this.vayVCSH = vayVCSH;
+	public void setXayDungCoBanDoDang(Double xayDungCoBanDoDang) {
+		this.xayDungCoBanDoDang = xayDungCoBanDoDang;
 	}
-	public String getLaiVay() {
-		return laiVay;
-	}
-	public void setLaiVay(String laiVay) {
-		this.laiVay = laiVay;
-	}
-	public Bal3Response() {
-		
-	}
+	
 }

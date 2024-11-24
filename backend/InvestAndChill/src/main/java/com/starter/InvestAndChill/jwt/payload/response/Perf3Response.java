@@ -1,34 +1,32 @@
 package com.starter.InvestAndChill.jwt.payload.response;
 
 public class Perf3Response extends ReportReponse{
-	private String loiNhuanCotLoi;
-	private String loiNhuanTaiChinh;
-	private String ThuNhapKhac;
-	private String LaiLoTuCongTyLienDoanh;
-	public String getLoiNhuanCotLoi() {
-		return loiNhuanCotLoi;
+	private Double SalesTrailing;
+	private Double GPMTrailing;
+	private Double SGAMTrailing;
+	private Double EBITmTrailing;
+	public Double getSalesTrailing() {
+		return SalesTrailing;
 	}
-	public void setLoiNhuanCotLoi(String loiNhuanCotLoi) {
-		this.loiNhuanCotLoi = loiNhuanCotLoi;
+	public void setSalesTrailing(Double salesTrailing) {
+		SalesTrailing = salesTrailing;
 	}
-	public String getLoiNhuanTaiChinh() {
-		return loiNhuanTaiChinh;
+	public Double getGPMTrailing() {
+		return GPMTrailing;
 	}
-	public void setLoiNhuanTaiChinh(String loiNhuanTaiChinh) {
-		this.loiNhuanTaiChinh = loiNhuanTaiChinh;
+	public void setGPMTrailing(Double gPMTrailing) {
+		GPMTrailing = gPMTrailing;
 	}
-	public String getThuNhapKhac() {
-		return ThuNhapKhac;
+	public Double getSGAMTrailing() {
+		return SGAMTrailing;
 	}
-	public void setThuNhapKhac(String thuNhapKhac) {
-		ThuNhapKhac = thuNhapKhac;
+	public void setSGAMTrailing(Double sGAMTrailing) {
+		SGAMTrailing = sGAMTrailing;
 	}
-	public String getLaiLoTuCongTyLienDoanh() {
-		return LaiLoTuCongTyLienDoanh;
+	public Double getEBITmTrailing() {
+		return EBITmTrailing;
 	}
-	public void setLaiLoTuCongTyLienDoanh(String laiLoTuCongTyLienDoanh) {
-		LaiLoTuCongTyLienDoanh = laiLoTuCongTyLienDoanh;
-	}
-	public Perf3Response() {
+	public void setEBITmTrailing(Double eBITmTrailing) {
+		EBITmTrailing = eBITmTrailing;
 	}
 }
