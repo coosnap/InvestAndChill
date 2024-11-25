@@ -63,7 +63,7 @@ function Detail() {
 
   return (
     <div className="flex justify-center gap-8 py-8 bg-primary">
-      <div className="min-w-[426px] w-[426px] pl-8">
+      <div className="min-w-[426px] w-[426px] max-h-[600px] overflow-y-auto pl-8">
         <Accordion
           expanded={'1'}
           sx={{
@@ -339,8 +339,8 @@ function Detail() {
           </AccordionDetails>
         </Accordion>
       </div>
-      <div className="min-w-[1000px] w-[1000px] border mr-8">
-        <div className="bg-second p-6 h-full">
+      <div className="relative min-w-[1000px] w-[1000px] border mr-8 select-none">
+        <div className="bg-second p-6 max-h-[600px] h-[600px] overflow-y-auto water-mark">
           <div className="flex justify-center mb-4 text-2xl font-bold">{detail.title}</div>
           <div dangerouslySetInnerHTML={{ __html: detail.content }} />
         </div>

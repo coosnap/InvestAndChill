@@ -9,7 +9,7 @@
 .App {
   min-width: fit-content;
   min-height: 100vh;
-  background-color: #FFF4C7;
+  background-color: #fff4c7;
 }
 
 td {
@@ -56,4 +56,23 @@ p {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+.css-jsexje-MuiSwitch-thumb {
+  box-shadow: none !important;
+}
+
+.water-mark::after {
+  z-index: 0;
+  content: 'https://investnchil.com';
+  color: red;
+  font-size: 5.5rem;
+  position: absolute;
+  top: 14rem;
+  opacity: 0.2;
+  transform: rotate(-35deg);
+}
+
+.chart {
+  width: 100% !important;
 }
