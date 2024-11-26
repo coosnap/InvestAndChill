@@ -1,4 +1,4 @@
-package com.starter.InvestAndChill.jwt.payload.response.PTC;
+package com.starter.InvestAndChill.jwt.payload.response;
 
 import com.starter.InvestAndChill.jwt.models.ReportKey;
 

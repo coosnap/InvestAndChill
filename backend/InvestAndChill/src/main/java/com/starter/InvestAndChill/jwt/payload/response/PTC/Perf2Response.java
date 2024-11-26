@@ -1,5 +1,7 @@
 package com.starter.InvestAndChill.jwt.payload.response.PTC;
 
+import com.starter.InvestAndChill.jwt.payload.response.ReportReponse;
+
 public class Perf2Response extends ReportReponse{
 	private Double loiNhuanCotLoi;
 	private Double loiNhuanTaiChinh;

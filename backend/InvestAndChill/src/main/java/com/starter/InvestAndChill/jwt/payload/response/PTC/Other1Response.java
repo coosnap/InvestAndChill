@@ -1,5 +1,7 @@
 package com.starter.InvestAndChill.jwt.payload.response.PTC;
 
+import com.starter.InvestAndChill.jwt.payload.response.ReportReponse;
+
 public class Other1Response extends ReportReponse{
 	private String nguoiMuaTraTienTruoc;
 	private String doanhThuChuaThucHienNganHan;

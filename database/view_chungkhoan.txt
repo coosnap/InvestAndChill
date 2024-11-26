@@ -51,7 +51,7 @@ FROM chung_khoan_report ckr
 WHERE quarter is not null ;
 
 CREATE VIEW view_chung_khoan_nam AS
-SELECT stock_code ,'0' ,year, 
+SELECT stock_code ,'0' as quarter,year, 
 c_p_21,
 c_p_72,
 c_i_22,
