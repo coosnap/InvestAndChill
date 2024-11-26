@@ -5,7 +5,7 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 @Embeddable
-public class PTCReportKey implements Serializable {
+public class ReportKey implements Serializable {
 
 	/**
 	 * 
@@ -18,9 +18,9 @@ public class PTCReportKey implements Serializable {
 	@Column(name = "year")
 	private String year;
 	
-	public PTCReportKey() {}
+	public ReportKey() {}
 	
-	public PTCReportKey(String stockCode, String quarter, String year) {
+	public ReportKey(String stockCode, String quarter, String year) {
 		this.stockCode = stockCode;
 		this.quarter = quarter;
 		this.year = year;
@@ -55,7 +55,7 @@ public class PTCReportKey implements Serializable {
 	        if (this == o) return true;
 	        if (o == null || getClass() != o.getClass()) return false;
 
-	        PTCReportKey that = (PTCReportKey) o;
+	        ReportKey that = (ReportKey) o;
 
 	        if (!stockCode.equals(that.stockCode)) return false;
 	        if (quarter != null ? !quarter.equals(that.quarter) : that.quarter != null) return false;

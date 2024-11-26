@@ -22,16 +22,16 @@ public class PTCReport {
 		DAPPE = dAPPE;
 	}
 
-	public PTCReportKey getId() {
+	public ReportKey getId() {
 		return id;
 	}
 
-	public void setId(PTCReportKey id) {
+	public void setId(ReportKey id) {
 		this.id = id;
 	}
 
 	@EmbeddedId
-    private PTCReportKey id;
+    private ReportKey id;
 	//Perf1
 	@Column(name = "p_p_3")
 	private Double doanhSoThuan;
