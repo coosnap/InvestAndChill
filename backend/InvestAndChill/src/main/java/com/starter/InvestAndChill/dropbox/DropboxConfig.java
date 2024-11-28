@@ -13,7 +13,7 @@ public class DropboxConfig {
 
 	 private String accessToken;
 	 
-	 public DropboxConfig(@Value("${DROPBOX_ACCESS_TOKEN}") String accessToken) {
+	 public DropboxConfig(@Value("123") String accessToken) {
 	        this.accessToken = accessToken;
 	    }
 

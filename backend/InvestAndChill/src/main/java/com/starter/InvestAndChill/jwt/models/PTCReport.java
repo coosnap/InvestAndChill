@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.MappedSuperclass;
 
+import org.hibernate.annotations.Formula;
+
 @MappedSuperclass
 public class PTCReport {
 	public Double getGrossPPE() {
@@ -165,11 +167,11 @@ public class PTCReport {
 	private Double vayVCSH;
 	
 	//Cf1
-	@Column(name = "p_c_21")
+	@Formula("COALESCE(p_c_21, p_c_49)")
 	private Double luuChuyenTienTeRongTuCacHoatDongSanXuatKinhDoanh;
-	@Column(name = "p_c_29")
+	@Formula("COALESCE(p_c_29, p_c_57)")
 	private Double luuChuyenTienTeRongTuCacHoatDongDauTu;
-	@Column(name = "p_c_37")
+	@Formula("COALESCE(p_c_37, p_c_65)")
 	private Double luuChuyenTienTeTuHoatDongTaiChinh;
 	@Column(name = "p_i_27")
 	private Double fcf;
