@@ -170,7 +170,7 @@ function Login() {
     setValidate({});
     try {
       let infoSignIn = await signIn(values);
-      setIsLoading(true);
+      // setIsLoading(true);
       if (infoSignIn?.accessToken) {
         // let exp = jwtDecode(infoSignIn?.accessToken)?.exp;
         // let d = new Date(exp * 1000);
@@ -186,14 +186,14 @@ function Login() {
         );
         setCookie('access_token', infoSignIn.accessToken, { path: '/', expires: d });
         setCookie('roles', infoSignIn.roles, { path: '/', expires: d });
-        setIsLoading(false);
+        // setIsLoading(false);
         infoSignIn.roles.includes('ROLE_ADMIN') ||
         infoSignIn.roles.includes('ROLE_MODERATOR_ARTICLE') ||
         infoSignIn.roles.includes('ROLE_MODERATOR_USER')
           ? (window.location.href = '/login')
           : (window.location.href = '/invest');
       } else {
-        setIsLoading(false);
+        // setIsLoading(false);
         setValidate((prev) => ({
           ...prev,
           loginMessage: 'Tên đăng nhập hoặc mật khẩu không đúng',
@@ -207,12 +207,13 @@ function Login() {
   }, []);
 
   async function getData() {
-    setIsLoading(true);
     try {
+      setIsLoading(true);
       const article = await getArticleAll();
       setArticleList(article);
     } catch (error) {
       setArticleList([]);
+      setIsLoading(false);
     }
     setIsLoading(false);
   }
@@ -237,9 +238,11 @@ function Login() {
     setArticleId(item);
   }
 
+  if (isLoading) return <Loader />;
+
   return (
     <div className="h-full bg-primary">
-      {isLoading ? <Loader /> : ''}
+      {/* {isLoading ? <Loader /> : ''} */}
       <div className="sm:w-[80%] vm:w-[90%] flex sm:flex-row vm:flex-col mx-auto gap-4 pb-8">
         <div className="sm:w-1/2 vm:w-full flex flex-col gap-4">
           <div className="flex justify-center rounded-2xl bg-white gap-4 px-8 py-4">

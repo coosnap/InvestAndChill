@@ -73,6 +73,17 @@ p {
   transform: rotate(-35deg);
 }
 
+.water-mark-chart::after {
+  z-index: 0;
+  content: 'https://investnchil.com';
+  color: red;
+  font-size: 3.5rem;
+  position: absolute;
+  top: 10rem;
+  opacity: 0.2;
+  transform: rotate(-25deg);
+}
+
 .chart {
   width: 100% !important;
 }
