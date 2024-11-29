@@ -18,11 +18,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.starter.InvestAndChill.jwt.models.NganHangReport;
 import com.starter.InvestAndChill.jwt.models.PTCReport;
-
+import com.starter.InvestAndChill.jwt.payload.response.nganhang.Bal10Response;
+import com.starter.InvestAndChill.jwt.payload.response.nganhang.Bal11Response;
+import com.starter.InvestAndChill.jwt.payload.response.nganhang.Bal12Response;
 import com.starter.InvestAndChill.jwt.payload.response.nganhang.Bal1Response;
 import com.starter.InvestAndChill.jwt.payload.response.nganhang.Bal2Response;
 import com.starter.InvestAndChill.jwt.payload.response.nganhang.Bal3Response;
 import com.starter.InvestAndChill.jwt.payload.response.nganhang.Bal4Response;
+import com.starter.InvestAndChill.jwt.payload.response.nganhang.Bal5Response;
+import com.starter.InvestAndChill.jwt.payload.response.nganhang.Bal6Response;
+import com.starter.InvestAndChill.jwt.payload.response.nganhang.Bal7Response;
+import com.starter.InvestAndChill.jwt.payload.response.nganhang.Bal8Response;
+import com.starter.InvestAndChill.jwt.payload.response.nganhang.Bal9Response;
 import com.starter.InvestAndChill.jwt.payload.response.nganhang.Perf1Response;
 import com.starter.InvestAndChill.jwt.payload.response.nganhang.Perf2Response;
 import com.starter.InvestAndChill.jwt.payload.response.nganhang.Perf3Response;
@@ -230,6 +237,205 @@ public class BankReportController {
 	                    response.setBienLaiThuan(report.getBienLaiThuan());
 	                    response.setChiPhiHuyDong(report.getChiPhiHuyDong());
 	                    response.setTyLeCasa(report.getTyLeCasa());
+	                    return response;
+	                })
+	                .collect(Collectors.toList());
+			
+		return new ResponseEntity<>(list, HttpStatus.OK);
+	}
+	@GetMapping("/bal5/{stock}")
+	public ResponseEntity<?> bal5(@PathVariable String stock, @RequestParam(required = false,name = "type") String type) {
+		List<NganHangReport> listReport = new ArrayList<NganHangReport>();
+		List<Bal5Response> list;
+	
+		if ("year".equals(type)) {
+			listReport =  nhNamRepository.findByStockForPerf(stock,pageableNam);
+		} else {
+			listReport =	nhQuyRepository.findByStockForPerf(stock,pageableQuy);
+		}
+		list = listReport.stream()
+	                .map(report -> {
+	                	Bal5Response response = new Bal5Response();
+	                    response.setId(report.getId());
+	                    response.setCacKhoanLaiPhiPhaiThu(report.getCacKhoanLaiPhiPhaiThu());
+	                    response.setLaiPhiPhaiThuChoVayKhachHang(report.getLaiPhiPhaiThuChoVayKhachHang());
+	                    response.setTaiSanCoKhac(report.getTaiSanCoKhac());
+	                    response.setTSCoKhacTongTS(report.getTSCoKhacTongTS());
+	                    return response;
+	                })
+	                .collect(Collectors.toList());
+			
+		return new ResponseEntity<>(list, HttpStatus.OK);
+	}
+	
+	@GetMapping("/bal6/{stock}")
+	public ResponseEntity<?> bal6(@PathVariable String stock, @RequestParam(required = false,name = "type") String type) {
+		List<NganHangReport> listReport = new ArrayList<NganHangReport>();
+		List<Bal6Response> list;
+	
+		if ("year".equals(type)) {
+			listReport =  nhNamRepository.findByStockForPerf(stock,pageableNam);
+		} else {
+			listReport =	nhQuyRepository.findByStockForPerf(stock,pageableQuy);
+		}
+		list = listReport.stream()
+	                .map(report -> {
+	                	Bal6Response response = new Bal6Response();
+	                    response.setId(report.getId());
+	                    response.setNoCanLuuY(report.getNoCanLuuY());
+	                    response.setNoN2ChoVayKhachHang(report.getNoN2ChoVayKhachHang());
+	                    response.setNoXau(report.getNoXau());
+	                    response.setTyLeNoXau(report.getTyLeNoXau());
+	                    return response;
+	                })
+	                .collect(Collectors.toList());
+			
+		return new ResponseEntity<>(list, HttpStatus.OK);
+	}
+	
+	@GetMapping("/bal7/{stock}")
+	public ResponseEntity<?> bal7(@PathVariable String stock, @RequestParam(required = false,name = "type") String type) {
+		List<NganHangReport> listReport = new ArrayList<NganHangReport>();
+		List<Bal7Response> list;
+	
+		if ("year".equals(type)) {
+			listReport =  nhNamRepository.findByStockForPerf(stock,pageableNam);
+		} else {
+			listReport =	nhQuyRepository.findByStockForPerf(stock,pageableQuy);
+		}
+		list = listReport.stream()
+	                .map(report -> {
+	                	Bal7Response response = new Bal7Response();
+	                    response.setId(report.getId());
+	                    response.setDuPhongBaoNoXau(report.getDuPhongBaoNoXau());
+	                    response.setDuPhongRuiRoChoVayKhachHang(report.getDuPhongRuiRoChoVayKhachHang());
+	                    response.setNoXau(report.getNoXau());
+	                    return response;
+	                })
+	                .collect(Collectors.toList());
+			
+		return new ResponseEntity<>(list, HttpStatus.OK);
+	}
+	
+	@GetMapping("/bal8/{stock}")
+	public ResponseEntity<?> bal8(@PathVariable String stock, @RequestParam(required = false,name = "type") String type) {
+		List<NganHangReport> listReport = new ArrayList<NganHangReport>();
+		List<Bal8Response> list;
+	
+		if ("year".equals(type)) {
+			listReport =  nhNamRepository.findByStockForPerf(stock,pageableNam);
+		} else {
+			listReport =	nhQuyRepository.findByStockForPerf(stock,pageableQuy);
+		}
+		list = listReport.stream()
+	                .map(report -> {
+	                	Bal8Response response = new Bal8Response();
+	                    response.setId(report.getId());
+	                    response.setNoN25VCSH(report.getNoN25VCSH());
+	                    response.setVonChuSoHuu(report.getVonChuSoHuu());
+	                    return response;
+	                })
+	                .collect(Collectors.toList());
+			
+		return new ResponseEntity<>(list, HttpStatus.OK);
+	}
+	
+	@GetMapping("/bal9/{stock}")
+	public ResponseEntity<?> bal9(@PathVariable String stock, @RequestParam(required = false,name = "type") String type) {
+		List<NganHangReport> listReport = new ArrayList<NganHangReport>();
+		List<Bal9Response> list;
+	
+		if ("year".equals(type)) {
+			listReport =  nhNamRepository.findByStockForPerf(stock,pageableNam);
+		} else {
+			listReport =	nhQuyRepository.findByStockForPerf(stock,pageableQuy);
+		}
+		list = listReport.stream()
+	                .map(report -> {
+	                	Bal9Response response = new Bal9Response();
+	                    response.setId(report.getId());
+	                    response.setChoVayDaiHan(report.getChoVayDaiHan());
+	                    response.setChoVayNganHan(report.getChoVayNganHan());
+	                    response.setChoVayTrungHan(report.getChoVayTrungHan());
+	                    return response;
+	                })
+	                .collect(Collectors.toList());
+			
+		return new ResponseEntity<>(list, HttpStatus.OK);
+	}
+	
+	@GetMapping("/bal10/{stock}")
+	public ResponseEntity<?> bal10(@PathVariable String stock, @RequestParam(required = false,name = "type") String type) {
+		List<NganHangReport> listReport = new ArrayList<NganHangReport>();
+		List<Bal10Response> list;
+	
+		if ("year".equals(type)) {
+			listReport =  nhNamRepository.findByStockForPerf(stock,pageableNam);
+		} else {
+			listReport =	nhQuyRepository.findByStockForPerf(stock,pageableQuy);
+		}
+		list = listReport.stream()
+	                .map(report -> {
+	                	Bal10Response response = new Bal10Response();
+	                    response.setId(report.getId());
+	                    response.setCaNhan(report.getCaNhan());
+	                    response.setCongTyTNHHVaCoPhan(report.getCongTyTNHHVaCoPhan());
+	                    response.setDoanhNghiepNhaNuoc(report.getDoanhNghiepNhaNuoc());
+	                    response.setDoanhNghiepNuocNgoai(report.getDoanhNghiepNuocNgoai());
+	                    response.setHopTacXaVaCongTyTuNhan(report.getHopTacXaVaCongTyTuNhan());
+	                    response.setKhac(report.getKhac());
+	                    return response;
+	                })
+	                .collect(Collectors.toList());
+			
+		return new ResponseEntity<>(list, HttpStatus.OK);
+	}
+	
+	@GetMapping("/bal11/{stock}")
+	public ResponseEntity<?> bal11(@PathVariable String stock, @RequestParam(required = false,name = "type") String type) {
+		List<NganHangReport> listReport = new ArrayList<NganHangReport>();
+		List<Bal11Response> list;
+	
+		if ("year".equals(type)) {
+			listReport =  nhNamRepository.findByStockForPerf(stock,pageableNam);
+		} else {
+			listReport =	nhQuyRepository.findByStockForPerf(stock,pageableQuy);
+		}
+		list = listReport.stream()
+	                .map(report -> {
+	                	Bal11Response response = new Bal11Response();
+	                    response.setId(report.getId());
+	                    response.setTienGuiChoNhungMucDichRiengBiet(report.getTienGuiChoNhungMucDichRiengBiet());
+	                    response.setTienGuiCoKyHan(report.getTienGuiCoKyHan());
+	                    response.setTienGuiKhongKyHan(report.getTienGuiKhongKyHan());
+	                    response.setTienGuiKyQuy(report.getTienGuiKyQuy());
+	                    response.setTienGuiTietKiem(report.getTienGuiTietKiem());
+	                    return response;
+	                })
+	                .collect(Collectors.toList());
+			
+		return new ResponseEntity<>(list, HttpStatus.OK);
+	}
+	
+	@GetMapping("/bal12/{stock}")
+	public ResponseEntity<?> bal12(@PathVariable String stock, @RequestParam(required = false,name = "type") String type) {
+		List<NganHangReport> listReport = new ArrayList<NganHangReport>();
+		List<Bal12Response> list;
+	
+		if ("year".equals(type)) {
+			listReport =  nhNamRepository.findByStockForPerf(stock,pageableNam);
+		} else {
+			listReport =	nhQuyRepository.findByStockForPerf(stock,pageableQuy);
+		}
+		list = listReport.stream()
+	                .map(report -> {
+	                	Bal12Response response = new Bal12Response();
+	                    response.setId(report.getId());
+	                    response.setCaNhanTG(report.getCaNhanTG());
+	                    response.setDoanhNghiepNhaNuocTG(report.getDoanhNghiepNhaNuocTG());
+	                    response.setDoanhNghiepNuocNgoaiTG(report.getDoanhNghiepNuocNgoaiTG());
+	                    response.setDoanhNghiepTuNhanTG(report.getDoanhNghiepTuNhanTG());
+	                    response.setKhacTG(report.getKhacTG());
 	                    return response;
 	                })
 	                .collect(Collectors.toList());
