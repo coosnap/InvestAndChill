@@ -24,14 +24,16 @@ engine = create_engine(connection_string)
 # file_path = "C:\projects\chills\TEMPLATE DATA VISUAL\PHI TAI CHINH\FiinProX_DuLieuTaiChinh_BaoCaoTaiChinh_Quarterly_CTR_20241030.xlsx"
 # file_path = "c:\projects\chills\TEMPLATE DATA VISUAL\PHI TAI CHINH\FiinPro_BCTC_FRT_hopnhat_2022_0_tyvnd_04_25_202311286223 - Copy.xlsm"
 # file_path = "c:\projects\chills\TEMPLATE DATA VISUAL\PHI TAI CHINH\Phi Tai Chinh_raw.xlsx"
-# file_path = "C:\projects\chills\TEMPLATE DATA VISUAL\\NGAN HANG\BaoCaoTaiChinh_Quarterly_ACB_raw.xlsx"
-# file_path = "C:\projects\chills\TEMPLATE DATA VISUAL\CHUNG KHOAN\FiinProX_DuLieuTaiChinh_BaoCaoTaiChinh_Quarterly_SSI_20241101.xlsx"
 # file_path = "c:\projects\chills\ctcp\ctcp1.xlsx"
+# file_path = "C:\\projects\\chills\\Phitaichinh\\ctcp59-upcom.xlsx"
 
 # testing
-# file_path = "c:\projects\chills\\test_data\phi_tai_chinh\\2022_2024q2\\2022_2024q2\ctcp3.xlsx"
-# file_path = "c:\projects\chills\\test_data\phi_tai_chinh\FiinProX_DuLieuTaiChinh_BaoCaoTaiChinh_Quarterly_CTR_20241030.xlsx"
+file_path = "c:\projects\chills\\test_data\phi_tai_chinh\\2022_2024q2\\2022_2024q2\ctcp1.xlsx"
+file_path = "c:\projects\chills\\test_data\phi_tai_chinh\FiinProX_DuLieuTaiChinh_BaoCaoTaiChinh_Quarterly_CTR_20241030.xlsx"
+# file_path = "c:\projects\chills\\test_data\phi_tai_chinh\FiinProX_DuLieuTaiChinh_BaoCaoTaiChinh_Quarterly_CTR_20241030 - MissData.xlsx"
+file_path = "c:\projects\chills\\test_data\phi_tai_chinh\FiinProX_DuLieuTaiChinh_BaoCaoTaiChinh_Quarterly_CTR_20241030 - MissData - Quarter.xlsx"
 # file_path = "c:\projects\chills\\test_data\phi_tai_chinh\CTR_2022_2024q3.xlsx"
+file_path = "c:\\projects\\chills\\test_data\\phi_tai_chinh\\2022_2024q2\\2022_2024q2\\ctcp1 - missing data q  and y.xlsx"
 
 # 7-11
 # file_path = "c:\projects\chills\\test_data\\7-11\phitaichinh\phitaichinh\\fiin\FiinProX_DuLieuTaiChinh_BaoCaoTaiChinh_Quarterly_BWE_20240319.xlsx"
@@ -41,13 +43,20 @@ engine = create_engine(connection_string)
 # file_path = "c:\\projects\\chills\\TEMPLATE DATA VISUAL\\NGAN HANG\\BaoCaoTaiChinh_Yearly_ACB_raw.xlsx"
 # file_path = "c:\\projects\\chills\\test_data\\ngan_hang\\ngan_hang_dumb_test.xlsx"
 # file_path = "c:\\projects\\chills\\test_data\\ngan_hang\\VietstockFinance_Bao-cao-tai-chinh_20241118-210551.xlsx"
+# file_path = "c:\\projects\\chills\\test_data\\ngan_hang\\FiinProX_DuLieuTaiChinh_BaoCaoTaiChinh_Yearly_ACB_20240917.xlsx"
 
 ### Chung Khoan ###
 # file_path = "c:\\projects\\chills\\TEMPLATE DATA VISUAL\\CHUNG KHOAN\\FiinProX_DuLieuTaiChinh_BaoCaoTaiChinh_Quarterly_SSI_20241101.xlsx"
 # file_path = "c:\\projects\\chills\\TEMPLATE DATA VISUAL\\CHUNG KHOAN\\Chung Khoan_raw.xlsx"
-# file_path = "c:\\projects\\chills\\TEMPLATE DATA VISUAL\\CHUNG KHOAN\\FiinProX_DuLieuTaiChinh_BaoCaoTaiChinh_Yearly_SSI_20240927.xlsx"
 # file_path = "c:\\projects\\chills\\TEMPLATE DATA VISUAL\\CHUNG KHOAN\\FiinProX_DuLieuTaiChinh_BaoCaoTaiChinh_Quarterly_SSI_20241101 - denQ224.xlsx"
+# file_path = "c:\\projects\\chills\\TEMPLATE DATA VISUAL\\CHUNG KHOAN\\FiinProX_DuLieuTaiChinh_BaoCaoTaiChinh_Yearly_SSI_20240927.xlsx"
 
+# testing chung khoan
+# file_path = "c:\\projects\\chills\\TEMPLATE DATA VISUAL\\CHUNG KHOAN\\FiinProX_DuLieuTaiChinh_BaoCaoTaiChinh_Quartely_SSI_20241101.xlsx"
+# file_path = "c:\\projects\\chills\\TEMPLATE DATA VISUAL\\CHUNG KHOAN\\FiinProX_DuLieuTaiChinh_BaoCaoTaiChinh_Quarterly_SSI_20241101 - denQ224.xlsx"
+# file_path = "c:\\projects\\chills\\TEMPLATE DATA VISUAL\\CHUNG KHOAN\\FiinProX_DuLieuTaiChinh_BaoCaoTaiChinh_Yearly_SSI_20240927.xlsx"
+# file_path = "C:\\projects\\chills\\test_data\chung_khoan\\VietstockFinance_Bao-cao-tai-chinh_20241124-190453.xlsx"
+# file_path = "C:\projects\chills\\test_data\chung_khoan\loiquy\FiinProX_DuLieuTaiChinh_BaoCaoTaiChinh_Quarterly_ACBS_20241101.xlsx"
 
 def parse_quarter_year(date_str: str) -> Tuple[str, str]:
     try:
@@ -222,7 +231,12 @@ def phi_tai_chinh_calculate_data(rs: List[Dict], combine_data: List[Dict]) -> Li
             i_26_2 = item['p_p_7'] or 0
             item['p_i_26'] = i_26_1 - i_26_2
 
-            item['p_i_27'] = (item['p_c_21'] or 0) + (item['p_c_22'] or 0)
+            i_27_1 = 0 if (item['p_c_21'] == 0 and item['p_c_49'] is None) or (item['p_c_21'] is None and item['p_c_49'] == 0) else (
+                    item['p_c_21'] or item['p_c_49'])
+            i_27_2 = 0 if (item['p_c_22'] == 0 and item['p_c_50'] is None) or (item['p_c_22'] is None and item['p_c_50'] == 0) else (
+                    item['p_c_22'] or item['p_c_50'])
+            item['p_i_27'] = i_27_1 + i_27_2 if i_27_1 is not None and i_27_2 is not None else None
+
 
             item['p_i_28'] = item['p_i_2'] / item['p_i_1'] if item['p_i_2'] is not None and item['p_i_1'] != 0 and item['p_i_1'] is not None else None
             item['p_i_29'] = item['p_i_9'] / item['p_i_1'] if item['p_i_9'] is not None and item['p_i_1'] != 0 and item['p_i_1'] is not None else None
@@ -238,10 +252,7 @@ def phi_tai_chinh_calculate_data(rs: List[Dict], combine_data: List[Dict]) -> Li
             i_32_3 = i_32_1 - i_32_2
             item['p_i_32'] = i_32_2 - i_32_3
 
-            i_33_1 = item['p_p_23'] or 0
-            i_33_2 = item['p_c_2'] or 0
-            i_33_3 = item['p_i_32'] or 0
-            item['p_i_33'] = i_33_1 + i_33_2 - i_33_3
+            item['p_i_33'] = item['p_p_23'] + item['p_c_2'] - item['p_i_32'] if item['p_p_23'] is not None and item['p_c_2'] is not None and item['p_i_32'] is not None else None
 
             item['p_i_34'] = item['p_b_78'] / item['p_b_98'] if item['p_b_98'] != 0 and item['p_b_98'] is not None and item['p_b_78'] is not None else None
             item['p_i_35'] = item['p_b_91'] / item['p_b_98'] if item['p_b_98'] != 0 and item['p_b_98'] is not None and item['p_b_91'] is not None else None
@@ -250,65 +261,62 @@ def phi_tai_chinh_calculate_data(rs: List[Dict], combine_data: List[Dict]) -> Li
             i_36_2 = item['p_i_35'] or 0
             item['p_i_36'] = i_36_1 + i_36_2
 
-            i_37_1 = extract_sum_previous_quarters(item, combine_data, 'p_i_16', 1) or 0
-            i_37_2 = item['p_p_8'] or 0
-            i_37_3 = i_37_1 / 2
-            item['p_i_37'] = i_37_2 * 4 / i_37_3 if i_37_3 != 0 else None
+            i_37_1 = extract_sum_previous_quarters(item, combine_data, 'p_i_16', 1)
+            i_37_2 = item['p_p_8']
+            i_37_3 = i_37_1 / 2 if i_37_1 is not None and i_37_2 is not None else None
+            item['p_i_37'] = i_37_2 * 4 / i_37_3 if i_37_3 != 0 and i_37_3 is not None and i_37_2 is not None  else None
 
             i_38_1 = item['p_i_17'] or 0
             i_38_2 = item['p_i_12'] or 0
             item['p_i_38'] = i_38_1 - i_38_2
 
-            i_39_1 = extract_sum_previous_quarters(item, combine_data, 'p_b_38', 1) or 0
-            i_39_2 = item['p_b_38'] or 0
-            i_39_3 = i_39_1 - i_39_2
-            item['p_i_39'] = i_39_2 - i_39_3
+            i_39_1 = extract_sum_previous_quarters(item, combine_data, 'p_b_38', 1)
+            i_39_2 = item['p_b_38']
+            i_39_3 = i_39_1 - i_39_2 if i_39_1 is not None and item['p_b_38'] is not None else None
+            item['p_i_39'] = i_39_2 - i_39_3 if i_39_1 is not None and i_39_3 is not None else None
 
+            i40_1 = extract_sum_previous_quarters(item, combine_data, 'p_p_4')
+            i40_2 = extract_sum_previous_quarters(item, combine_data, 'p_b_18')
+            i40_2_2 = i40_2 / 4 if i40_2 is not None else None
+            item['p_i_40'] = i40_1 / i40_2_2 if i40_2_2 != 0 and i40_1 is not None and i40_2_2 is not None else None
 
-            i40_1 = extract_sum_previous_quarters(item, combine_data, 'p_p_4') or 0
-            i40_2 = extract_sum_previous_quarters(item, combine_data, 'p_b_18') or 0
-            i40_2_2 = i40_2 / 4
-            item['p_i_40'] = i40_1 / i40_2_2 if i40_2_2 != 0 else None
+            i41_1 = extract_sum_previous_quarters(item, combine_data, 'p_p_3')
+            i41_2 = extract_sum_previous_quarters(item, combine_data, 'p_i_13')
+            i41_2_2 = i41_2 / 4 if i41_2 is not None else None
+            item['p_i_41'] = i41_1 / i41_2_2 if i41_2_2 != 0 and i41_1 is not None and i41_2_2 is not None else None
 
-            i41_1 = extract_sum_previous_quarters(item, combine_data, 'p_p_3') or 0
-            i41_2 = extract_sum_previous_quarters(item, combine_data, 'p_i_13') or 0
-            i41_2_2 = i41_2 / 4
-            item['p_i_41'] = i41_1 / i41_2_2 if i41_2_2 != 0 else None
-
-            i42_1 = extract_sum_previous_quarters(item, combine_data, 'p_p_4') or 0
-            i42_2 = extract_sum_previous_quarters(item, combine_data, 'p_i_14') or 0
-            i42_3 = extract_sum_previous_quarters(item, combine_data, 'p_i_18') or 0
-            i42_3_2 = i42_3 / 4
-            item['p_i_42'] = (i42_1 + i42_2) / i42_3_2 if i42_3_2 != 0 and i42_3_2 is not None else None
+            i42_1 = extract_sum_previous_quarters(item, combine_data, 'p_p_4')
+            i42_2 = extract_sum_previous_quarters(item, combine_data, 'p_i_14')
+            i42_3 = extract_sum_previous_quarters(item, combine_data, 'p_i_18')
+            i42_3_2 = i42_3 / 4 if i42_3 is not None else None
+            item['p_i_42'] = (i42_1 + i42_2) / i42_3_2 if i42_3_2 != 0 and i42_3_2 is not None and i42_1 is not None and i42_2 is not None else None
 
             item['p_i_43'] = 365 / item['p_i_40'] if item['p_i_40'] != 0 and item['p_i_40'] is not None else None
             item['p_i_44'] = 365 / item['p_i_41'] if item['p_i_41'] != 0 and item['p_i_41'] is not None else None
             item['p_i_45'] = 365 / item['p_i_42'] if item['p_i_42'] != 0 and item['p_i_42'] is not None else None
-            item['p_i_46'] = item['p_i_3'] / item['p_i_1'] if item['p_i_1'] != 0 and item['p_i_1'] is not None else None
+            item['p_i_46'] = item['p_i_3'] / item['p_i_1'] if item['p_i_1'] != 0 and item['p_i_1'] is not None and item['p_i_3'] is not None else None
 
-            i47_1 = extract_sum_previous_quarters(item, combine_data, 'p_b_66') or 0
-            i47_1_2 = i47_1 / 4
-            item['p_i_47'] = item['p_i_1'] / i47_1_2 if i47_1_2 != 0 and i47_1_2 is not None else None
+            i47_1 = extract_sum_previous_quarters(item, combine_data, 'p_b_66')
+            i47_1_2 = i47_1 / 4 if i47_1 is not None else None
+            item['p_i_47'] = item['p_i_1'] / i47_1_2 if i47_1_2 != 0 and i47_1_2 is not None and item['p_i_1'] is not None else None
 
-            i48_1 = extract_sum_previous_quarters(item, combine_data, 'p_b_66') or 0
-            i48_1_2 = i48_1 / 4
-            i48_2 = extract_sum_previous_quarters(item, combine_data, 'p_i_20') or 0
-            i48_2_2 = i48_2 / 4
-            item['p_i_48'] = i48_1_2 / i48_2_2 if i48_2_2 != 0 and i48_2_2 is not None else None
+            i48_1 = extract_sum_previous_quarters(item, combine_data, 'p_b_66')
+            i48_1_2 = i48_1 / 4 if i48_1 is not None else None
+            i48_2 = extract_sum_previous_quarters(item, combine_data, 'p_i_20')
+            i48_2_2 = i48_2 / 4 if i48_2 is not None else None
+            item['p_i_48'] = i48_1_2 / i48_2_2 if i48_2_2 != 0 and i48_2_2 is not None and i48_1_2 is not None else None
 
-            i49_1 = extract_sum_previous_quarters(item, combine_data, 'p_i_16') or 0
-            i49_1_2 = i49_1 / 4
-            i49_2 = extract_sum_previous_quarters(item, combine_data, 'p_i_20') or 0
-            i49_2_2 = i49_2 / 4
-            item['p_i_49'] = (i49_1_2 + i49_2_2) / i49_2_2 if i49_2_2 != 0 and i49_2_2 is not None else None
+            i49_1 = extract_sum_previous_quarters(item, combine_data, 'p_i_16')
+            i49_1_2 = i49_1 / 4 if i49_1 is not None else None
+            i49_2 = extract_sum_previous_quarters(item, combine_data, 'p_i_20')
+            i49_2_2 = i49_2 / 4 if i49_2 is not None else None
+            item['p_i_49'] = (i49_1_2 + i49_2_2) / i49_2_2 if i49_2_2 != 0 and i49_2_2 is not None and i49_1_2 is not None else None
 
-            i6_1 = extract_sum_previous_quarters(item, combine_data, 'p_i_20') or 0
-            i6_1_2 = i6_1 / 4
-            item['p_i_6'] = item['p_i_3'] / i6_1_2 if i6_1_2 != 0 and i6_1_2 is not None else None
+            i6_1 = extract_sum_previous_quarters(item, combine_data, 'p_i_20')
+            i6_1_2 = i6_1 / 4 if i6_1 is not None else None
+            item['p_i_6'] = item['p_i_3'] / i6_1_2 if i6_1_2 != 0 and i6_1_2 is not None and item['p_i_3'] is not None else None
 
-            i_7_1 = item['p_i_10'] or 0
-            i_7_2 = item['p_c_2'] or 0
-            item['p_i_7'] = i_7_1 + i_7_2
+            item['p_i_7'] = item['p_i_10'] + item['p_c_2'] if item['p_i_10'] is not None and item['p_c_2'] is not None else None
 
             i_8_1 = item['p_i_16'] or 0
             i_8_2 = item['p_i_11'] or 0
@@ -318,26 +326,26 @@ def phi_tai_chinh_calculate_data(rs: List[Dict], combine_data: List[Dict]) -> Li
             i_21_2 = item['p_i_8'] or 0
             item['p_i_21'] = i_21_1 + i_21_2
 
-            i24_1 = extract_sum_previous_quarters(item, combine_data, 'p_i_21') or 0
-            i24_2 = i24_1 / 4
+            i24_1 = extract_sum_previous_quarters(item, combine_data, 'p_i_21')
+            i24_2 = i24_1 / 4 if i24_1 is not None else None
             item['p_i_24'] = item['p_i_5'] * 0.8 / i24_2 if item['p_i_5'] is not None and i24_2 != 0 and i24_2 is not None else None
 
             item['p_i_30'] = item['p_i_5'] / item['p_i_1'] if item['p_i_5'] is not None and item['p_i_1'] != 0 and item['p_i_1'] is not None else None
 
-            i50_1 = extract_sum_previous_quarters(item, combine_data, 'p_b_48', 1) or 0
-            i50_2 = i50_1 - (item['p_b_48'] or 0)
-            item['p_i_50'] = (item['p_b_48'] or 0) - i50_2
+            i50_1 = extract_sum_previous_quarters(item, combine_data, 'p_b_48', 1)
+            i50_2 = i50_1 - item['p_b_48'] if i50_1 is not None and item['p_b_48'] is not None else None
+            item['p_i_50'] = item['p_b_48'] - i50_2 if item['p_b_48'] is not None and i50_2 is not None else None
 
-            i51_1 = extract_sum_previous_quarters(item, combine_data, 'p_b_52', 1) or 0
-            i51_2 = i51_1 - (item['p_b_52'] or 0)
-            item['p_i_51'] = (item['p_b_52'] or 0) - i51_2
+            i51_1 = extract_sum_previous_quarters(item, combine_data, 'p_b_52', 1)
+            i51_2 = i51_1 - item['p_b_52'] if i51_1 is not None and item['p_b_52'] is not None else None
+            item['p_i_51'] = item['p_b_52'] - i51_2 if item['p_b_52'] is not None and i51_2 is not None else None
 
             item['p_i_52'] = (item['p_i_39'] or 0) + (item['p_i_50'] or 0) + (item['p_i_51'] or 0)
 
-            item['p_i_53'] = (item['p_i_33'] or 0) - (item['p_i_52'] or 0)
+            item['p_i_53'] = item['p_i_33'] - item['p_i_52'] if item['p_i_33'] is not None and item['p_i_52'] is not None else None
 
-            item['p_i_54'] = extract_sum_previous_quarters(item, combine_data, 'p_i_33', 20)
-            item['p_i_55'] = extract_sum_previous_quarters(item, combine_data, 'p_i_53', 20)
+            # item['p_i_54'] = extract_sum_previous_quarters(item, combine_data, 'p_i_33', 20)
+            # item['p_i_55'] = extract_sum_previous_quarters(item, combine_data, 'p_i_53', 20)
 
             item['p_i_56'] = extract_sum_previous_quarters(item, combine_data, 'p_i_7')
             item['p_i_57'] = item['p_i_56'] / item['p_i_1'] if item['p_i_56'] is not None and item['p_i_1'] != 0 and item['p_i_1'] is not None else None
@@ -367,11 +375,11 @@ def phi_tai_chinh_calculate_data(rs: List[Dict], combine_data: List[Dict]) -> Li
             item['p_i_19'] = (item['p_b_98'] or 0) - (item['p_b_100'] or 0) - (item['p_b_113'] or 0)
             item['p_i_20'] = (item['p_b_98'] or 0) - (item['p_b_116'] or 0)
 
-            i_6_1 = extract_sum_previous_years(item, combine_data, 'p_i_20') or 0
-            i_6_2 = i_6_1 / 2
+            i_6_1 = extract_sum_previous_years(item, combine_data, 'p_i_20')
+            i_6_2 = i_6_1 / 2 if i_6_1 is not None else None
             item['p_i_6'] = item['p_p_23'] / i_6_2 if item['p_p_23'] is not None and i_6_2 != 0 and i_6_2 is not None else None
 
-            item['p_i_7'] = (item['p_i_10'] or 0) - (item['p_c_2'] or 0)
+            item['p_i_7'] = item['p_i_10'] + item['p_c_2'] if item['p_i_10'] is not None and item['p_c_2'] is not None else None
 
             item['p_i_8'] = (item['p_i_16'] or 0) - (item['p_i_11'] or 0)
             item['p_i_21'] = (item['p_b_98'] or 0) + (item['p_i_8'] or 0)
@@ -379,13 +387,18 @@ def phi_tai_chinh_calculate_data(rs: List[Dict], combine_data: List[Dict]) -> Li
             item['p_i_22'] = item['p_p_5'] / item['p_p_3'] if item['p_p_5'] is not None and item['p_p_3'] != 0 and item['p_p_3'] is not None else None
             item['p_i_23'] = item['p_p_23'] / item['p_p_3'] if item['p_p_23'] is not None and item['p_p_3'] != 0 and item['p_p_3'] is not None else None
 
-            i_24_1 = extract_sum_previous_years(item, combine_data, 'p_i_21') or 0
-            i_24_2 = i_24_1 / 2
+            i_24_1 = extract_sum_previous_years(item, combine_data, 'p_i_21')
+            i_24_2 = i_24_1 / 2 if i_24_1 is not None else None
             item['p_i_24'] = item['p_i_10'] * 0.8 / i_24_2 if item['p_i_10'] is not None and i_24_2 != 0 and i_24_2 is not None else None
 
             item['p_i_25'] = (item['p_p_5'] or 0) - (item['p_p_10'] or 0) - (item['p_p_11'] or 0)
             item['p_i_26'] = (item['p_p_6'] or 0) - (item['p_p_7'] or 0)
-            item['p_i_27'] = (item['p_c_21'] or 0) + (item['p_c_22'] or 0)
+
+            i_27_1 = 0 if (item['p_c_21'] == 0 and item['p_c_49'] is None) or (item['p_c_21'] is None and item['p_c_49'] == 0) else (
+                    item['p_c_21'] or item['p_c_49'])
+            i_27_2 = 0 if (item['p_c_22'] == 0 and item['p_c_50'] is None) or (item['p_c_22'] is None and item['p_c_50'] == 0) else (
+                    item['p_c_22'] or item['p_c_50'])
+            item['p_i_27'] = i_27_1 + i_27_2 if i_27_1 is not None and i_27_2 is not None else None
 
             i_31_1 = item['p_b_1'] or 0
             i_31_2 = item['p_i_11'] or 0
@@ -393,46 +406,47 @@ def phi_tai_chinh_calculate_data(rs: List[Dict], combine_data: List[Dict]) -> Li
             i_31_4 = item['p_b_91'] or 0
             item['p_i_31'] = i_31_1 - i_31_2 - (i_31_3 - i_31_4)
 
-            i_32_1 = extract_sum_previous_years(item, combine_data, 'p_i_31') or 0
-            i_32_2 = item['p_i_31'] or 0
-            i_32_3 = i_32_1 - i_32_2
-            item['p_i_32'] = i_32_2 - i_32_3
+            i_32_1 = extract_sum_previous_years(item, combine_data, 'p_i_31')
+            i_32_2 = item['p_i_31']
+            i_32_3 = i_32_1 - i_32_2 if i_32_1 is not None and i_32_2 is not None else None
+            item['p_i_32'] = i_32_2 - i_32_3 if i_32_2 is not None and i_32_3 is not None else None
 
-            item['p_i_33'] = (item['p_p_23'] or 0) + (item['p_c_2'] or 0) - (item['p_i_32'] or 0)
+            item['p_i_33'] = item['p_p_23'] + item['p_c_2'] - item['p_i_32'] if item['p_p_23'] is not None and item['p_c_2'] is not None and item[
+                'p_i_32'] is not None else None
 
             item['p_i_34'] = item['p_b_78'] / item['p_b_98'] if item['p_b_98'] != 0 and item['p_b_98'] is not None and item['p_b_78'] is not None else None
             item['p_i_35'] = item['p_b_91'] / item['p_b_98'] if item['p_b_98'] != 0 and item['p_b_98'] is not None and item['p_b_91'] is not None else None
 
             item['p_i_36'] = (item['p_i_34'] or 0) + (item['p_i_35'] or 0)
 
-            i_37_1 = extract_sum_previous_years(item, combine_data, 'p_i_16') or 0
-            i_37_2 = item['p_p_8'] or 0
-            i_37_3 = i_37_1 / 2
-            item['p_i_37'] = i_37_2 / i_37_3 if i_37_3 != 0 else None
+            i_37_1 = extract_sum_previous_years(item, combine_data, 'p_i_16')
+            i_37_2 = item['p_p_8']
+            i_37_3 = i_37_1 / 2 if i_37_1 is not None else None
+            item['p_i_37'] = i_37_2 / i_37_3 if i_37_3 != 0 and i_37_2 is not None and i_37_3 is not None else None
 
             item['p_i_38'] = (item['p_i_17'] or 0) - (item['p_i_12'] or 0)
 
-            i_39_1 = extract_sum_previous_years(item, combine_data, 'p_b_38') or 0
-            i_39_2 = item['p_b_38'] or 0
-            i_39_3 = i_39_1 - i_39_2
-            item['p_i_39'] = i_39_2 - i_39_3
+            i_39_1 = extract_sum_previous_years(item, combine_data, 'p_b_38')
+            i_39_2 = item['p_b_38']
+            i_39_3 = i_39_1 - i_39_2 if i_39_1 is not None and item['p_b_38'] is not None else None
+            item['p_i_39'] = i_39_2 - i_39_3 if i_39_1 is not None and i_39_3 is not None else None
 
-            i_50_1 = extract_sum_previous_years(item, combine_data, 'p_b_48') or 0
-            i_50_2 = item['p_b_48'] or 0
-            i_50_3 = i_50_1 - i_50_2
-            item['p_i_50'] = i_50_2 - i_50_3
+            i_50_1 = extract_sum_previous_years(item, combine_data, 'p_b_48')
+            i_50_2 = item['p_b_48']
+            i_50_3 = i_50_1 - i_50_2 if i_50_1 is not None and i_50_2 is not None else None
+            item['p_i_50'] = i_50_2 - i_50_3 if i_50_2 is not None and i_50_3 is not None else None
 
-            i_51_1 = extract_sum_previous_years(item, combine_data, 'p_b_52') or 0
-            i_51_2 = item['p_b_52'] or 0
-            i_51_3 = i_51_1 - i_51_2
-            item['p_i_51'] = i_51_2 - i_51_3
+            i_51_1 = extract_sum_previous_years(item, combine_data, 'p_b_52')
+            i_51_2 = item['p_b_52']
+            i_51_3 = i_51_1 - i_51_2 if i_51_1 is not None and i_51_2 is not None else None
+            item['p_i_51'] = i_51_2 - i_51_3 if i_51_2 is not None and i_51_3 is not None else None
 
             item['p_i_52'] = (item['p_i_39'] or 0) + (item['p_i_50'] or 0) + (item['p_i_51'] or 0)
 
-            item['p_i_53'] = (item['p_i_33'] or 0) - (item['p_i_52'] or 0)
+            item['p_i_53'] = item['p_i_33'] - item['p_i_52'] if item['p_i_33'] is not None and item['p_i_52'] is not None else None
 
-            item['p_i_54'] = extract_sum_previous_years(item, combine_data, 'p_i_33', 9)
-            item['p_i_55'] = extract_sum_previous_years(item, combine_data, 'p_i_53', 9)
+            # item['p_i_54'] = extract_sum_previous_years(item, combine_data, 'p_i_33', 9)
+            # item['p_i_55'] = extract_sum_previous_years(item, combine_data, 'p_i_53', 9)
 
     return rs
 
@@ -440,9 +454,11 @@ def phi_tai_chinh_handle_missing_data(rs: List[Dict], combine_data: List[Dict]):
     for item in rs:
         if item['quarter'] == '2' or item['quarter'] == '3' or item['quarter'] == '4':
             data1, data2 = find_month_year_datas(item, combine_data)
-            for i in range(1, 42):
+            # 1 - 42: gian tiep
+            # 43 - 70: truc tiep
+            for i in range(1, 70):
                 key = f'p_c_{i}'
-                item[key] = (data1[key] or 0) - (data2[key] or 0)
+                item[key] = None if data1 is None or data2 is None else (data1[key] or 0) - (data2[key] or 0)
 
 def ngan_hang_calculate_data(rs: List[Dict], combine_data: List[Dict]):
     for item in rs:
@@ -637,7 +653,7 @@ def chung_khoan_calculate_data(rs: List[Dict], combine_data: List[Dict]):
             item['c_i_49'] = (i_49_2 + i_49_4) / i_49_4 if i_49_2 != 0 and i_49_4 != 0 else None
 
             item['c_i_50'] = (item['c_p_1'] or 0) - (item['c_p_2'] or 0) - (item['c_p_6'] or 0) - (item['c_p_7'] or 0) - (item['c_p_8'] or 0) - (item['c_p_10'] or 0) - (item['c_p_11'] or 0)
-            item['c_i_51'] = (item['c_p_22'] or 0) - (item['c_p_23'] or 0) - (item['c_p_27'] or 0) - (item['c_p_28'] or 0) - (item['c_p_29'] or 0) - (item['c_p_33'] or 0) - (item['c_p_34'] or 0)
+            item['c_i_51'] = (item['c_p_41'] or 0) - (item['c_p_23'] or 0) - (item['c_p_27'] or 0) - (item['c_p_28'] or 0) - (item['c_p_29'] or 0) - (item['c_p_33'] or 0) - (item['c_p_34'] or 0)
             item['c_i_52'] = (item['c_p_2'] or 0) - (item['c_p_23'] or 0)
             item['c_i_53'] = (item['c_p_6'] or 0) - (item['c_p_27'] or 0)
             item['c_i_54'] = (item['c_p_7'] or 0) - (item['c_p_28'] or 0)
@@ -682,10 +698,10 @@ def chung_khoan_calculate_data(rs: List[Dict], combine_data: List[Dict]):
 
             i_37_1 = extract_sum_previous_years(item, combine_data, 'c_i_16') or 0
             i_37_2 = i_37_1 / 2
-            item['c_i_37'] = item['c_p_51'] * 4 / i_37_2 if item['c_p_51'] is not None and i_37_2 != 0 else None
+            item['c_i_37'] = item['c_p_51'] / i_37_2 if item['c_p_51'] is not None and i_37_2 != 0 else None
 
             item['c_i_50'] = (item['c_p_1'] or 0) - (item['c_p_2'] or 0) - (item['c_p_6'] or 0) - (item['c_p_7'] or 0) - (item['c_p_8'] or 0) - (item['c_p_10'] or 0) - (item['c_p_11'] or 0)
-            item['c_i_51'] = (item['c_p_22'] or 0) - (item['c_p_23'] or 0) - (item['c_p_27'] or 0) - (item['c_p_28'] or 0) - (item['c_p_29'] or 0) - (item['c_p_33'] or 0) - (item['c_p_34'] or 0)
+            item['c_i_51'] = (item['c_p_41'] or 0) - (item['c_p_23'] or 0) - (item['c_p_27'] or 0) - (item['c_p_28'] or 0) - (item['c_p_29'] or 0) - (item['c_p_33'] or 0) - (item['c_p_34'] or 0)
             item['c_i_52'] = (item['c_p_2'] or 0) - (item['c_p_23'] or 0)
             item['c_i_53'] = (item['c_p_6'] or 0) - (item['c_p_27'] or 0)
             item['c_i_54'] = (item['c_p_7'] or 0) - (item['c_p_28'] or 0)
@@ -740,7 +756,7 @@ def get_table_columns(df: pd.DataFrame, data_source: str) -> List[Column]:
 def check_file_from_fiin(file_path: str) -> bool:
     excel_file = pd.ExcelFile(file_path)
     sheet_names = excel_file.sheet_names
-    return True if len(sheet_names) == 4 else False
+    return True if len(sheet_names) >= 4 else False
 
 def get_data_from_db(table_name: str, stock_codes, columns, engine) -> List[Dict]:
     where_clause = "WHERE stock_code IN :stock_codes"
@@ -772,11 +788,12 @@ def extract_sum_previous_quarters(data, combine_data, cal_col, previous_number=3
     current_quarter = int(data['quarter'])
     current_year = int(data['year'])
 
-    max_previous_quarters = get_previous_quarters_count(data, combine_data, stock_code)
+    # max_previous_quarters = get_previous_quarters_count(data, combine_data, stock_code)
 
     previous_quarters = [data]
-    for _ in range(max_previous_quarters):
-        if (len(previous_quarters) >= (previous_number + 1)):
+    # for _ in range(max_previous_quarters):
+    for _ in range(previous_number + 1):
+        if len(previous_quarters) >= (previous_number + 1):
             break
         current_quarter -= 1
         if current_quarter == 0:
@@ -815,10 +832,11 @@ def extract_sum_previous_years(data, combine_data, cal_col, previous_number=1):
     stock_code = data['stock_code']
     current_year = int(data['year'])
 
-    max_previous_years = get_previous_years_count(data, combine_data, stock_code)
+    # max_previous_years = get_previous_years_count(data, combine_data, stock_code)
 
     previous_years = [data]
-    for _ in range(max_previous_years):
+    # for _ in range(max_previous_years):
+    for _ in range(previous_number + 1):
         if len(previous_years) >= (previous_number + 1):
             break
         current_year -= 1
@@ -890,7 +908,7 @@ def get_negative_codes(source: str) -> List[str]:
         return phi_tai_chinh_negate_codes
 
 
-def handle_fiin_data(df: pd.DataFrame, mapping_table: str, source: str) -> Tuple[List[Dict], str]:
+def handle_fiin_data(df: pd.DataFrame, mapping_table: str, data_source: str) -> Tuple[List[Dict], str]:
     print(f"mapping_table = {mapping_table}")
 
     all_sheets = pd.read_excel(file_path, sheet_name=None, header=None)
@@ -902,13 +920,15 @@ def handle_fiin_data(df: pd.DataFrame, mapping_table: str, source: str) -> Tuple
     # print(mapping)
     # Initialize a list to store the result
     result = []
-    negate_codes = get_negative_codes(source)
+    negate_codes = get_negative_codes(data_source)
 
     # Create a mapping of sheet indices to sheet names
     sheet_index_to_name = {i+1: name for i, name in enumerate(all_sheets.keys())}
     sheet_name_1 = sheet_index_to_name[1]
     df_1 = all_sheets[sheet_name_1]
     stock_code = df_1.iloc[7, 1].strip()
+
+    number_of_row_money_sheet = all_sheets[sheet_index_to_name[3]].shape[0]
     # Iterate over each mapping item
     for map_item in mapping:
         sheet_index = map_item['sheet_index']
@@ -933,6 +953,16 @@ def handle_fiin_data(df: pd.DataFrame, mapping_table: str, source: str) -> Tuple
 
             code = map_item['code']
             row_index = map_item['row_index'] - 1
+            # row_index = int(map_item['row_index']) - 1 if map_item['row_index'] else None
+
+            # check have data on in-direct transfer money sheet
+            if data_source == "phi_tai_chinh" and number_of_row_money_sheet < 70 and sheet_index == 3:
+                if row_index >= 48: # indirect part shifted to above
+                    row_index = row_index - 33
+                else:
+                    row_index = 9 # get row 10th to be null data
+
+
             value = None if col is None else df.iloc[row_index, col]
             # value = None if col is None or row_index >= df.shape[0] or col >= df.shape[1] else df.iloc[row_index, col]
             value = None if pd.isna(value) else value
@@ -1191,14 +1221,14 @@ if __name__ == "__main__":
     print()
 
     # Save to JSON
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    output_file = os.path.join(script_dir, 'transformed_data_out.json')
-    save_to_json(transformed_data, output_file)
-
+    # script_dir = os.path.dirname(os.path.abspath(__file__))
+    # output_file = os.path.join(script_dir, 'transformed_data_out.json')
+    # save_to_json(transformed_data, output_file)
+    #
     end_time2 = time.time()
-    execution_time = end_time2 - end_time
-    print(f"Total save_to_json time: {execution_time:.2f} seconds")
-    print()
+    # execution_time = end_time2 - end_time
+    # print(f"Total save_to_json time: {execution_time:.2f} seconds")
+    # print()
 
     transformed_data = remove_month_data(transformed_data)
 

@@ -1,6 +1,5 @@
 import pandas as pd
-
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, Column, Integer, VARCHAR, inspect, MetaData, Table, Numeric
 db_config = {
     'username': 'myuser',
     'password': 'secret',
@@ -21,16 +20,24 @@ engine = create_engine(connection_string)
 
 # file_path = 'C:\projects\chills\TEMPLATE DATA VISUAL\PHI TAI CHINH\mapping table.xlsx'
 # file_path = 'c:\projects\chills\TEMPLATE DATA VISUAL\mapping table_cal_visual_5-11-2024.xlsx'
-file_path = 'c:\projects\chills\mapping table_cal_visual_12-11-2024.xlsx'
+file_path = 'c:\projects\chills\mapping table_26-11-2024.xlsx'
+
 def fiin_map(table_name, sheet):
     table_name = table_name + '_fiin_map'
 
-    # Read specific columns from row 5 to the end
+    # Read specific columns from row 4 to the end
     df = pd.read_excel(file_path, sheet_name=sheet, usecols=[1, 2, 4], skiprows=3, header=None)
 
-    # Rename columns
-    df.columns = ['row_index', 'sheet_index', 'code']
+    # Create table with specific columns type
+    columns = [Column('row_index', Integer), Column('sheet_index', Integer), Column('code', VARCHAR(length=15))]
+    inspector = inspect(engine)
+    if table_name not in inspector.get_table_names():
+        metadata = MetaData()
+        Table(table_name, metadata, *columns)
+        metadata.create_all(engine)
 
+    # Rename columns for df
+    df.columns = ['row_index', 'sheet_index', 'code',]
     df.to_sql(table_name, engine, if_exists='append', index=False)
     print(f"Inserted {len(df)} new records.")
     print("Data has been successfully saved to the database for fiin map")
@@ -38,22 +45,31 @@ def fiin_map(table_name, sheet):
 def vs_map(table_name, sheet):
     table_name = table_name + '_vietstock_map'
 
-    # Read specific columns from row 5 to the end
+    # Read specific columns from row 4 to the end
     df = pd.read_excel(file_path, sheet_name=sheet, usecols=[4, 5], skiprows=3, header=None)
 
-    # Rename columns
+    # Create table with specific columns type
+    columns = [Column('code', VARCHAR(length=15)), Column('row_index', Integer)]
+    inspector = inspect(engine)
+    if table_name not in inspector.get_table_names():
+        metadata = MetaData()
+        Table(table_name, metadata, *columns)
+        metadata.create_all(engine)
+
+    # Rename columns for df
     df.columns = ['code', 'row_index']
 
     df.to_sql(table_name, engine, if_exists='append', index=False)
     print(f"Inserted {len(df)} new records.")
     print("Data has been successfully saved to the database for vietstock")
 
-if __name__ == "__main__":
-    # table_name = 'phi_tai_chinh'
-    # sheet = 'phitaichinh'
 
-    table_name = 'ngan_hang'
-    sheet = 'nganhang'
+if __name__ == "__main__":
+    table_name = 'phi_tai_chinh'
+    sheet = 'phitaichinh'
+
+    # table_name = 'ngan_hang'
+    # sheet = 'nganhang'
 
     # table_name = 'chung_khoan'
     # sheet = 'chungkhoan'
