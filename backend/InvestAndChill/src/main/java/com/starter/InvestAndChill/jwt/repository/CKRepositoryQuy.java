@@ -14,4 +14,6 @@ import com.starter.InvestAndChill.jwt.models.ReportKey;
 public interface CKRepositoryQuy extends JpaRepository<ChungKhoanReportQuy, ReportKey> {
 	@Query("select v from view_chung_khoan_quy v where stock_code =:stock_code order by year desc, quarter desc")
 	List<ChungKhoanReport> findByStockForPerf(@Param("stock_code") String stock,Pageable pageable);
+	@Query("select count(*) from view_chung_khoan_quy v where stock_code =:stock_code")
+	Long checkStockIsBelongTo(@Param("stock_code") String stock);
 }

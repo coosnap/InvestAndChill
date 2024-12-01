@@ -14,4 +14,6 @@ import com.starter.InvestAndChill.jwt.models.ReportKey;
 public interface NganHangRepositoryQuy extends JpaRepository<NganHangReportQuy, ReportKey> {
 	@Query("select v from view_ngan_hang_quy v where stock_code =:stock_code order by year desc, quarter desc")
 	List<NganHangReport> findByStockForPerf(@Param("stock_code") String stock,Pageable pageable);
+	@Query("select count(*) from view_ngan_hang_quy v where stock_code =:stock_code")
+	Long checkStockIsBelongTo(@Param("stock_code") String stock);
 }

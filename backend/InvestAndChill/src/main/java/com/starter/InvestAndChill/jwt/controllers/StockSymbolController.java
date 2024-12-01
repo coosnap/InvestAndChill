@@ -19,16 +19,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.starter.InvestAndChill.jwt.models.ChungKhoanReportQuy;
 import com.starter.InvestAndChill.jwt.models.StockSymbol;
+import com.starter.InvestAndChill.jwt.payload.response.TypeResponse;
+import com.starter.InvestAndChill.jwt.repository.CKRepositoryQuy;
+import com.starter.InvestAndChill.jwt.repository.NganHangRepositoryQuy;
+import com.starter.InvestAndChill.jwt.repository.PTCRepositoryQuy;
 import com.starter.InvestAndChill.jwt.repository.StockSymbolRepository;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/stock")
-@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+//@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 public class StockSymbolController {
 	@Autowired
 	StockSymbolRepository stockSymbolRepository;
+	
+	@Autowired
+	PTCRepositoryQuy ptcRepository;
+	
+	@Autowired
+	CKRepositoryQuy ckRepository;
+	
+	@Autowired
+	NganHangRepositoryQuy nhRepository;
 	
 	@GetMapping("/all")
 	//@PreAuthorize("hasRole('ADMIN')")
@@ -46,6 +60,28 @@ public class StockSymbolController {
 			}
 
 			return new ResponseEntity<>(stockSymbols, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping("/type/{id}")
+	public ResponseEntity<?> Stocktype(@PathVariable String id) {
+		try {
+			Long ptcReportNumber = ptcRepository.checkStockIsBelongTo(id);
+			if (ptcReportNumber > 0) {
+				return new ResponseEntity<>(new TypeResponse(id,"PTC"), HttpStatus.OK);
+			}
+			Long ckReportNumber = ckRepository.checkStockIsBelongTo(id);
+			if (ckReportNumber > 0) {
+				return new ResponseEntity<>(new TypeResponse(id,"ChungKhoan"), HttpStatus.OK);
+			}
+			Long nhReportNumber = nhRepository.checkStockIsBelongTo(id);
+			if (nhReportNumber > 0) {
+				return new ResponseEntity<>(new TypeResponse(id,"NganHang"), HttpStatus.OK);
+			}
+			
+			return new ResponseEntity<>(null, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
