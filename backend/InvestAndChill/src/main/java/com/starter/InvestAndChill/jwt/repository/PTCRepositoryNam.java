@@ -12,6 +12,6 @@ import com.starter.InvestAndChill.jwt.models.ReportKey;
 import com.starter.InvestAndChill.jwt.models.PTCReportNam;
 
 public interface PTCRepositoryNam extends JpaRepository<PTCReportNam, ReportKey>{
-	@Query("select t from view_phi_tai_chinh_nam_test t where stock_code =:stock_code order by year desc")
+	@Query("select t from view_phi_tai_chinh_nam t where stock_code =:stock_code order by year desc")
 	List<PTCReport> findByStockForPerf(@Param("stock_code") String stock,Pageable pageable);
 }

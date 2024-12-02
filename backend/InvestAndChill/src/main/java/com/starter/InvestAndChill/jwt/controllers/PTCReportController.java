@@ -37,6 +37,7 @@ import com.starter.InvestAndChill.jwt.payload.response.PTC.Perf7Response;
 import com.starter.InvestAndChill.jwt.payload.response.PTC.Perf8Response;
 import com.starter.InvestAndChill.jwt.repository.PTCRepositoryNam;
 import com.starter.InvestAndChill.jwt.repository.PTCRepositoryQuy;
+import com.starter.InvestAndChill.utils.Constants;
 
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -67,6 +68,7 @@ public class PTCReportController {
 	                .map(report -> {
 	                    Perf1Response response = new Perf1Response();
 	                    response.setId(report.getId());
+	                    response.setTitle(Constants.PTC_perf1);
 	                    response.setDoanhSoThuan(report.getDoanhSoThuan());
 	                    response.setLoiNhuanCuaCoDongCongTyMe(report.getLoiNhuanCuaCoDongCongTyMe());
 	                    response.setBienLaiGop(report.getBienLaiGop());
@@ -386,27 +388,27 @@ public class PTCReportController {
 		 return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 	
-	@GetMapping("/cf2/{stock}")
-	public ResponseEntity<?> cf2(@PathVariable String stock,@RequestParam(required = false,name = "type") String type) {
-		List<PTCReport> listReport = new ArrayList<PTCReport>();
-		if ("year".equals(type)) {
-			listReport =  ptcNamRepository.findByStockForPerf(stock,pageableNam);
-		} else {
-			listReport =	ptcQuyRepository.findByStockForPerf(stock,pageableQuy);
-		}
-		List<Cf2Response> list = listReport.stream()
-                .map(report -> {
-                	Cf2Response response = new Cf2Response();
-                	response.setId(report.getId());
-                    response.setNetIncomeDANWC(report.getNetIncomeDANWC());
-                    response.setNetIncomeDANWCCAPEX(report.getNetIncomeDANWCCAPEX());
-                    response.setNetIncomeDANWCCAPEXRolling(report.getNetIncomeDANWCCAPEXRolling());
-                    response.setNetIncomeDANWCRolling(report.getNetIncomeDANWCRolling());
-                    return response;
-                })
-                .collect(Collectors.toList());
-		 return new ResponseEntity<>(list, HttpStatus.OK);
-	}
+//	@GetMapping("/cf2/{stock}")
+//	public ResponseEntity<?> cf2(@PathVariable String stock,@RequestParam(required = false,name = "type") String type) {
+//		List<PTCReport> listReport = new ArrayList<PTCReport>();
+//		if ("year".equals(type)) {
+//			listReport =  ptcNamRepository.findByStockForPerf(stock,pageableNam);
+//		} else {
+//			listReport =	ptcQuyRepository.findByStockForPerf(stock,pageableQuy);
+//		}
+//		List<Cf2Response> list = listReport.stream()
+//                .map(report -> {
+//                	Cf2Response response = new Cf2Response();
+//                	response.setId(report.getId());
+//                    response.setNetIncomeDANWC(report.getNetIncomeDANWC());
+//                    response.setNetIncomeDANWCCAPEX(report.getNetIncomeDANWCCAPEX());
+//                    response.setNetIncomeDANWCCAPEXRolling(report.getNetIncomeDANWCCAPEXRolling());
+//                    response.setNetIncomeDANWCRolling(report.getNetIncomeDANWCRolling());
+//                    return response;
+//                })
+//                .collect(Collectors.toList());
+//		 return new ResponseEntity<>(list, HttpStatus.OK);
+//	}
 	
 	@GetMapping("/cf3/{stock}")
 	public ResponseEntity<?> cf3(@PathVariable String stock,@RequestParam(required = false,name = "type") String type) {

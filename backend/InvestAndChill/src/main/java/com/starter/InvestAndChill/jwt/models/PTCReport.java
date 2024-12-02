@@ -181,10 +181,10 @@ public class PTCReport {
 	private Double netIncomeDANWC;
 	@Column(name = "p_i_53")
 	private Double netIncomeDANWCCAPEX;
-	@Column(name = "p_i_54")
-	private Double netIncomeDANWCRolling;
-	@Column(name = "p_i_55")
-	private Double netIncomeDANWCCAPEXRolling;
+//	@Column(name = "p_i_54")
+//	private Double netIncomeDANWCRolling;
+//	@Column(name = "p_i_55")
+//	private Double netIncomeDANWCCAPEXRolling;
 	
 	//Cf3
 	@Column(name = "p_b_5")
@@ -647,21 +647,21 @@ public class PTCReport {
 		this.netIncomeDANWCCAPEX = netIncomeDANWCCAPEX;
 	}
 
-	public Double getNetIncomeDANWCRolling() {
-		return netIncomeDANWCRolling;
-	}
-
-	public void setNetIncomeDANWCRolling(Double netIncomeDANWCRolling) {
-		this.netIncomeDANWCRolling = netIncomeDANWCRolling;
-	}
-
-	public Double getNetIncomeDANWCCAPEXRolling() {
-		return netIncomeDANWCCAPEXRolling;
-	}
-
-	public void setNetIncomeDANWCCAPEXRolling(Double netIncomeDANWCCAPEXRolling) {
-		this.netIncomeDANWCCAPEXRolling = netIncomeDANWCCAPEXRolling;
-	}
+//	public Double getNetIncomeDANWCRolling() {
+//		return netIncomeDANWCRolling;
+//	}
+//
+//	public void setNetIncomeDANWCRolling(Double netIncomeDANWCRolling) {
+//		this.netIncomeDANWCRolling = netIncomeDANWCRolling;
+//	}
+//
+//	public Double getNetIncomeDANWCCAPEXRolling() {
+//		return netIncomeDANWCCAPEXRolling;
+//	}
+//
+//	public void setNetIncomeDANWCCAPEXRolling(Double netIncomeDANWCCAPEXRolling) {
+//		this.netIncomeDANWCCAPEXRolling = netIncomeDANWCCAPEXRolling;
+//	}
 
 	public Double getLuuChuyenTienTeRongTuCacHoatDongSanXuatKinhDoanh() {
 		return luuChuyenTienTeRongTuCacHoatDongSanXuatKinhDoanh;
