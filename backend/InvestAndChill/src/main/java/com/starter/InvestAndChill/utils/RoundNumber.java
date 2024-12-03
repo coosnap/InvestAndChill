@@ -4,23 +4,41 @@ import java.text.DecimalFormat;
 
 public class RoundNumber {
 	public static void main(String[] args) {
-        double number = 12.89123;
+        Double number = null;
 
         // Định dạng số với dấu phân cách phần nghìn và làm tròn
         DecimalFormat formatter = new DecimalFormat("#,###.#");
-        
+        String test;
         // In ra số đã được định dạng
-        System.out.println(formatter.format(number));
+        try {
+        	test = formatter.format(number);
+        } catch (Exception e) {
+			test = null;
+		}
+        //return test;
+        System.out.println(test);
     }
 	
 	public static String lamTron(Double tyDong) {
 		DecimalFormat formatter = new DecimalFormat("#,###");
-		return formatter.format(tyDong);
+		String value;
+		try {
+			value = formatter.format(tyDong);
+		} catch (Exception e) {
+			value = null;
+		}
+		return value;
 	}
 	
 	public static String lamTronLan(Double tyDong) {
 		DecimalFormat formatter = new DecimalFormat("#,###.#");
-		return formatter.format(tyDong);
+		String value;
+		try {
+			value = formatter.format(tyDong);
+		} catch (Exception e) {
+			value = null;
+		}
+		return value;
 	}
 	
 }

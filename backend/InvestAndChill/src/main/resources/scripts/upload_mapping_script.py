@@ -1,19 +1,27 @@
 import pandas as pd
 from sqlalchemy import create_engine, Column, Integer, VARCHAR, inspect, MetaData, Table, Numeric
-db_config = {
-    'username': 'myuser',
-    'password': 'secret',
-    'host': 'localhost',
-    'port': '5432',
-    'database': 'mydatabase'
-}
-# db_config = {
+#db_config = {
+#    'username': 'myuser',
+#    'password': 'secret',
+#    'host': 'localhost',
+#    'port': '5432',
+#    'database': 'mydatabase'
+#}
+#db_config = {
 #     'username': 'u5njifacefuq5b',
 #     'password': 'pe18e1299ede0f0c814d0ffb4a4a90812a968e581aef7a696f40c9969578b6606',
 #     'host': 'ca8a5csd8gqht9.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com',
 #     'port': '5432',
 #     'database': 'd1re3fkrj0ginj'
 # }
+#host: 103.1.239.154
+db_config = {
+    'username': 'postgres',
+    'password': 'investchill123',
+    'host': 'localhost',
+    'port': '5432',
+    'database': 'investnchilldb'
+}
 
 connection_string = f"postgresql://{db_config['username']}:{db_config['password']}@{db_config['host']}:{db_config['port']}/{db_config['database']}"
 engine = create_engine(connection_string)
