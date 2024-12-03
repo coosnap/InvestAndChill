@@ -4,34 +4,36 @@ import com.starter.InvestAndChill.jwt.payload.response.ReportReponse;
 
 public class Perf5Response extends ReportReponse{
 	
-	private Double NITrailing;
-	private Double NITrailingAdjust;	
-	private Double MinoritiesTrailing;
-	private Double AssociateTrailing;
-	public Double getNITrailing() {
+	private String NITrailing;
+	private String NITrailingAdjust;	
+	private String MinoritiesTrailing;
+	private String AssociateTrailing;
+	public String getNITrailing() {
 		return NITrailing;
 	}
-	public void setNITrailing(Double nITrailing) {
+	public void setNITrailing(String nITrailing) {
 		NITrailing = nITrailing;
 	}
-	public Double getNITrailingAdjust() {
+	public String getNITrailingAdjust() {
 		return NITrailingAdjust;
 	}
-	public void setNITrailingAdjust(Double nITrailingAdjust) {
+	public void setNITrailingAdjust(String nITrailingAdjust) {
 		NITrailingAdjust = nITrailingAdjust;
 	}
-	public Double getMinoritiesTrailing() {
+	public String getMinoritiesTrailing() {
 		return MinoritiesTrailing;
 	}
-	public void setMinoritiesTrailing(Double minoritiesTrailing) {
+	public void setMinoritiesTrailing(String minoritiesTrailing) {
 		MinoritiesTrailing = minoritiesTrailing;
 	}
-	public Double getAssociateTrailing() {
+	public String getAssociateTrailing() {
 		return AssociateTrailing;
 	}
-	public void setAssociateTrailing(Double associateTrailing) {
+	public void setAssociateTrailing(String associateTrailing) {
 		AssociateTrailing = associateTrailing;
 	}
+	
+	
 	
 	
 }

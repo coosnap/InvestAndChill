@@ -4,40 +4,40 @@ import com.starter.InvestAndChill.jwt.payload.response.ReportReponse;
 
 public class Bal3Response extends ReportReponse{
 	
-	public Double getNoVay() {
+	public String getNoVay() {
 		return noVay;
 	}
-	public void setNoVay(Double noVay) {
+	public void setNoVay(String noVay) {
 		this.noVay = noVay;
 	}
-	public Double getNoChiemDung() {
+	public String getNoChiemDung() {
 		return noChiemDung;
 	}
-	public void setNoChiemDung(Double noChiemDung) {
+	public void setNoChiemDung(String noChiemDung) {
 		this.noChiemDung = noChiemDung;
 	}
-	public Double getVcshKhac() {
+	public String getVcshKhac() {
 		return vcshKhac;
 	}
-	public void setVcshKhac(Double vcshKhac) {
+	public void setVcshKhac(String vcshKhac) {
 		this.vcshKhac = vcshKhac;
 	}
-	public Double getCoPhieuPhoThongCoQuyenBieuQuyet() {
+	public String getCoPhieuPhoThongCoQuyenBieuQuyet() {
 		return coPhieuPhoThongCoQuyenBieuQuyet;
 	}
-	public void setCoPhieuPhoThongCoQuyenBieuQuyet(Double coPhieuPhoThongCoQuyenBieuQuyet) {
+	public void setCoPhieuPhoThongCoQuyenBieuQuyet(String coPhieuPhoThongCoQuyenBieuQuyet) {
 		this.coPhieuPhoThongCoQuyenBieuQuyet = coPhieuPhoThongCoQuyenBieuQuyet;
 	}
-	public Double getLoiNhuanChuaPhanPhoi() {
+	public String getLoiNhuanChuaPhanPhoi() {
 		return loiNhuanChuaPhanPhoi;
 	}
-	public void setLoiNhuanChuaPhanPhoi(Double loiNhuanChuaPhanPhoi) {
+	public void setLoiNhuanChuaPhanPhoi(String loiNhuanChuaPhanPhoi) {
 		this.loiNhuanChuaPhanPhoi = loiNhuanChuaPhanPhoi;
 	}
-	private Double noVay;
-	private Double noChiemDung;
-	private Double vcshKhac;
-	private Double coPhieuPhoThongCoQuyenBieuQuyet;
-	private Double loiNhuanChuaPhanPhoi;
+	private String noVay;
+	private String noChiemDung;
+	private String vcshKhac;
+	private String coPhieuPhoThongCoQuyenBieuQuyet;
+	private String loiNhuanChuaPhanPhoi;
 
 }

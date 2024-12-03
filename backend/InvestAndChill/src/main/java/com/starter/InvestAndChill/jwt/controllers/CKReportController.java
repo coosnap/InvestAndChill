@@ -24,6 +24,7 @@ import com.starter.InvestAndChill.jwt.payload.response.chungkhoan.Bal5Response;
 import com.starter.InvestAndChill.jwt.payload.response.chungkhoan.Perf2Response;
 import com.starter.InvestAndChill.jwt.repository.CKRepositoryNam;
 import com.starter.InvestAndChill.jwt.repository.CKRepositoryQuy;
+import com.starter.InvestAndChill.utils.RoundNumber;
 
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -34,6 +35,7 @@ public class CKReportController {
 	@Autowired
 	CKRepositoryQuy ckQuyRepository;
 	Pageable pageableQuy = PageRequest.of(0, 21); 
+	Pageable pageableToanQuy = PageRequest.of(0, 40);
 	
 	@Autowired
 	CKRepositoryNam ckNamRepository;
@@ -53,10 +55,10 @@ public class CKReportController {
 	                .map(report -> {
 	                    Perf1Response response = new Perf1Response();
 	                    response.setId(report.getId());
-	                    response.setDoanhSoThuan(report.getDoanhThuThuanVeHoatDongKinhDoanh());
-	                    response.setLoiNhuanCuaCoDongCongTyMe(report.getLoiNhuanSauThuePhanBoChoChuSoHuu());
-	                    response.setBienLaiGop(report.getBienLaiGop());
-	                    response.setBienLaiRong(report.getBienLaiRong());
+	                    response.setDoanhSoThuan(RoundNumber.lamTron(report.getDoanhThuThuanVeHoatDongKinhDoanh()));
+	                    response.setLoiNhuanCuaCoDongCongTyMe(RoundNumber.lamTron(report.getLoiNhuanSauThuePhanBoChoChuSoHuu()));
+	                    response.setBienLaiGop(RoundNumber.lamTron(report.getBienLaiGop()));
+	                    response.setBienLaiRong(RoundNumber.lamTron(report.getBienLaiRong()));
 	                    return response;
 	                })
 	                .collect(Collectors.toList());
@@ -78,9 +80,9 @@ public class CKReportController {
 	                .map(report -> {
 	                    Perf2Response response = new Perf2Response();
 	                    response.setId(report.getId());
-	                    response.setRoa(report.getRoa());
-	                    response.setRoe(report.getRoe());
-	                    response.setRoic(report.getRoic());
+	                    response.setRoa(RoundNumber.lamTron(report.getRoa()));
+	                    response.setRoe(RoundNumber.lamTron(report.getRoe()));
+	                    response.setRoic(RoundNumber.lamTron(report.getRoic()));
 	                    return response;
 	                })
 	                .collect(Collectors.toList());
@@ -102,9 +104,9 @@ public class CKReportController {
 	                .map(report -> {
 	                	com.starter.InvestAndChill.jwt.payload.response.PTC.Perf2Response response = new com.starter.InvestAndChill.jwt.payload.response.PTC.Perf2Response();
 	                    response.setId(report.getId());
-	                    response.setLoiNhuanCotLoi(report.getLoiNhuanCotLoi());
-	                    response.setLoiNhuanTaiChinh(report.getLoiNhuanTaiChinh());
-	                    response.setThuNhapKhac(report.getThuNhapKhacRong());
+	                    response.setLoiNhuanCotLoi(RoundNumber.lamTron(report.getLoiNhuanCotLoi()));
+	                    response.setLoiNhuanTaiChinh(RoundNumber.lamTron(report.getLoiNhuanTaiChinh()));
+	                    response.setThuNhapKhac(RoundNumber.lamTron(report.getThuNhapKhacRong()));
 	                    return response;
 	                })
 	                .collect(Collectors.toList());
@@ -120,16 +122,16 @@ public class CKReportController {
 		if ("year".equals(type)) {
 			listReport =  ckNamRepository.findByStockForPerf(stock,pageableNam);
 		} else {
-			listReport =	ckQuyRepository.findByStockForPerf(stock,pageableQuy);
+			listReport =	ckQuyRepository.findByStockForPerf(stock,pageableToanQuy);
 		}
 		list = listReport.stream()
 	                .map(report -> {
 	                	com.starter.InvestAndChill.jwt.payload.response.PTC.Perf3Response response = new com.starter.InvestAndChill.jwt.payload.response.PTC.Perf3Response();
 	                    response.setId(report.getId());
-	                    response.setEBITmTrailing(report.getEBITmTrailing());
-	                    response.setGPMTrailing(report.getGPMTrailing());
-	                    response.setSalesTrailing(report.getSalesTrailing());
-	                    response.setSGAMTrailing(report.getSGAMTrailing());
+	                    response.setEBITmTrailing(RoundNumber.lamTron(report.getEBITmTrailing()));
+	                    response.setGPMTrailing(RoundNumber.lamTron(report.getGPMTrailing()));
+	                    response.setSalesTrailing(RoundNumber.lamTron(report.getSalesTrailing()));
+	                    response.setSGAMTrailing(RoundNumber.lamTron(report.getSGAMTrailing()));
 	                    return response;
 	                })
 	                .collect(Collectors.toList());
@@ -145,17 +147,17 @@ public class CKReportController {
 		if ("year".equals(type)) {
 			listReport =  ckNamRepository.findByStockForPerf(stock,pageableNam);
 		} else {
-			listReport =	ckQuyRepository.findByStockForPerf(stock,pageableQuy);
+			listReport =	ckQuyRepository.findByStockForPerf(stock,pageableToanQuy);
 		}
 		list = listReport.stream()
 	                .map(report -> {
 	                	com.starter.InvestAndChill.jwt.payload.response.PTC.Perf8Response response = new com.starter.InvestAndChill.jwt.payload.response.PTC.Perf8Response();
 	                    response.setId(report.getId());
-	                    response.setAssetTurnover(report.getAssetTurnover());
-	                    response.setDEE(report.getDEE());
-	                    response.setLeverage(report.getLeverage());
-	                    response.setNImgTrailing(report.getNImgTrailing());
-	                    response.setRoe(report.getRoe());
+	                    response.setAssetTurnover(RoundNumber.lamTron(report.getAssetTurnover()));
+	                    response.setDEE(RoundNumber.lamTron(report.getDEE()));
+	                    response.setLeverage(RoundNumber.lamTron(report.getLeverage()));
+	                    response.setNImgTrailing(RoundNumber.lamTron(report.getNImgTrailing()));
+	                    response.setRoe(RoundNumber.lamTron(report.getRoe()));
 	                    return response;
 	                })
 	                .collect(Collectors.toList());
@@ -177,8 +179,8 @@ public class CKReportController {
 	                .map(report -> {
 	                	com.starter.InvestAndChill.jwt.payload.response.PTC.Bal6Response response = new com.starter.InvestAndChill.jwt.payload.response.PTC.Bal6Response();
 	                    response.setId(report.getId());
-	                    response.setLaiVay(report.getLaiVay());
-	                    response.setVayVCSH(report.getVayVCSH());
+	                    response.setLaiVay(RoundNumber.lamTron(report.getLaiVay()));
+	                    response.setVayVCSH(RoundNumber.lamTron(report.getVayVCSH()));
 	                    return response;
 	                })
 	                .collect(Collectors.toList());
@@ -200,12 +202,12 @@ public class CKReportController {
 	                .map(report -> {
 	                	Bal2Response response = new Bal2Response();
 	                    response.setId(report.getId());
-	                    response.setCacKhoanChoVay(report.getCacKhoanChoVay());
-	                    response.setCacKhoanDauTuNamGiuDenNgayDaoHan(report.getCacKhoanDauTuNamGiuDenNgayDaoHan());
-	                    response.setCacKhoanTaiChinhSanSangDeBan(report.getCacKhoanTaiChinhSanSangDeBan());
-	                    response.setCacTaiSanTaiChinhThongQuaGhiNhanLaiLo(report.getCacTaiSanTaiChinhThongQuaGhiNhanLaiLo());
-	                    response.setTaiSanKhac(report.getTaiSanKhac());
-	                    response.setTienVaTaiSanTuongDuongTien(report.getTienVaTaiSanTuongDuongTien());
+	                    response.setCacKhoanChoVay(RoundNumber.lamTron(report.getCacKhoanChoVay()));
+	                    response.setCacKhoanDauTuNamGiuDenNgayDaoHan(RoundNumber.lamTron(report.getCacKhoanDauTuNamGiuDenNgayDaoHan()));
+	                    response.setCacKhoanTaiChinhSanSangDeBan(RoundNumber.lamTron(report.getCacKhoanTaiChinhSanSangDeBan()));
+	                    response.setCacTaiSanTaiChinhThongQuaGhiNhanLaiLo(RoundNumber.lamTron(report.getCacTaiSanTaiChinhThongQuaGhiNhanLaiLo()));
+	                    response.setTaiSanKhac(RoundNumber.lamTron(report.getTaiSanKhac()));
+	                    response.setTienVaTaiSanTuongDuongTien(RoundNumber.lamTron(report.getTienVaTaiSanTuongDuongTien()));
 	                    return response;
 	                })
 	                .collect(Collectors.toList());
@@ -227,11 +229,11 @@ public class CKReportController {
 	                .map(report -> {
 	                	Bal3Response response = new Bal3Response();
 	                    response.setId(report.getId());
-	                    response.setCoPhieuPhoThongCoQuyenBieuQuyet(report.getCoPhieuPhoThongCoQuyenBieuQuyet());
-	                    response.setLoiNhuanChuaPhanPhoi(report.getLoiNhuanChuaPhanPhoi());
-	                    response.setNoChiemDung(report.getNoChiemDung());
-	                    response.setNoVay(report.getNoVay());
-	                    response.setVcshKhac(report.getVcshKhac());
+	                    response.setCoPhieuPhoThongCoQuyenBieuQuyet(RoundNumber.lamTron(report.getCoPhieuPhoThongCoQuyenBieuQuyet()));
+	                    response.setLoiNhuanChuaPhanPhoi(RoundNumber.lamTron(report.getLoiNhuanChuaPhanPhoi()));
+	                    response.setNoChiemDung(RoundNumber.lamTron(report.getNoChiemDung()));
+	                    response.setNoVay(RoundNumber.lamTron(report.getNoVay()));
+	                    response.setVcshKhac(RoundNumber.lamTron(report.getVcshKhac()));
 	                    return response;
 	                })
 	                .collect(Collectors.toList());
@@ -253,13 +255,13 @@ public class CKReportController {
 	                .map(report -> {
 	                	Bal4Response response = new Bal4Response();
 	                    response.setId(report.getId());
-	                    response.setDoanhThuNghiepVuBaoLanhPhatHanhChungKhoan(report.getDoanhThuNghiepVuBaoLanhPhatHanhChungKhoan());
-	                    response.setDoanhThuNghiepVuMoiGioiChungKhoan(report.getDoanhThuNghiepVuMoiGioiChungKhoan());
-	                    response.setLaiTuCacKhoanChoVayVaPhaiThu(report.getLaiTuCacKhoanChoVayVaPhaiThu());
-	                    response.setLaiTuCacKhoanDauTuNamGiuDenNgayDaoHan(report.getLaiTuCacKhoanDauTuNamGiuDenNgayDaoHan());
-	                    response.setLaiTuCacTaiSanTaiChinhGhiNhanThongQuaLaiLo(report.getLaiTuCacTaiSanTaiChinhGhiNhanThongQuaLaiLo());
-	                    response.setLaiTuCacTaiSanTaiChinhSanSangDeBan(report.getLaiTuCacTaiSanTaiChinhSanSangDeBan());
-	                    response.setTongDoanhThuKhac(report.getTongDoanhThuKhac());
+	                    response.setDoanhThuNghiepVuBaoLanhPhatHanhChungKhoan(RoundNumber.lamTron(report.getDoanhThuNghiepVuBaoLanhPhatHanhChungKhoan()));
+	                    response.setDoanhThuNghiepVuMoiGioiChungKhoan(RoundNumber.lamTron(report.getDoanhThuNghiepVuMoiGioiChungKhoan()));
+	                    response.setLaiTuCacKhoanChoVayVaPhaiThu(RoundNumber.lamTron(report.getLaiTuCacKhoanChoVayVaPhaiThu()));
+	                    response.setLaiTuCacKhoanDauTuNamGiuDenNgayDaoHan(RoundNumber.lamTron(report.getLaiTuCacKhoanDauTuNamGiuDenNgayDaoHan()));
+	                    response.setLaiTuCacTaiSanTaiChinhGhiNhanThongQuaLaiLo(RoundNumber.lamTron(report.getLaiTuCacTaiSanTaiChinhGhiNhanThongQuaLaiLo()));
+	                    response.setLaiTuCacTaiSanTaiChinhSanSangDeBan(RoundNumber.lamTron(report.getLaiTuCacTaiSanTaiChinhSanSangDeBan()));
+	                    response.setTongDoanhThuKhac(RoundNumber.lamTron(report.getTongDoanhThuKhac()));
 	                    return response;
 	                })
 	                .collect(Collectors.toList());
@@ -281,13 +283,13 @@ public class CKReportController {
 	                .map(report -> {
 	                	Bal5Response response = new Bal5Response();
 	                    response.setId(report.getId());
-	                    response.setGPAFS(report.getGPAFS());
-	                    response.setGPBaoLanhPhatHanh(report.getGPBaoLanhPhatHanh());
-	                    response.setGPCVMargin(report.getGPCVMargin());
-	                    response.setGPFVTPL(report.getGPFVTPL());
-	                    response.setGPHTM(report.getGPHTM());
-	                    response.setGPKhac(report.getGPKhac());
-	                    response.setGPMoiGioi(report.getGPMoiGioi());
+	                    response.setGPAFS(RoundNumber.lamTron(report.getGPAFS()));
+	                    response.setGPBaoLanhPhatHanh(RoundNumber.lamTron(report.getGPBaoLanhPhatHanh()));
+	                    response.setGPCVMargin(RoundNumber.lamTron(report.getGPCVMargin()));
+	                    response.setGPFVTPL(RoundNumber.lamTron(report.getGPFVTPL()));
+	                    response.setGPHTM(RoundNumber.lamTron(report.getGPHTM()));
+	                    response.setGPKhac(RoundNumber.lamTron(report.getGPKhac()));
+	                    response.setGPMoiGioi(RoundNumber.lamTron(report.getGPMoiGioi()));
 	                    return response;
 	                })
 	                .collect(Collectors.toList());

@@ -1,45 +1,45 @@
 package com.starter.InvestAndChill.jwt.payload.response.nganhang;
 
-import javax.persistence.Column;
-
 import com.starter.InvestAndChill.jwt.payload.response.ReportReponse;
 
 public class Bal12Response extends ReportReponse{
 
-	private Double doanhNghiepNhaNuocTG;
-	private Double doanhNghiepTuNhanTG;
-	private Double doanhNghiepNuocNgoaiTG;
-	private Double caNhanTG;
-	private Double khacTG;
-	public Double getDoanhNghiepNhaNuocTG() {
+	private String doanhNghiepNhaNuocTG;
+	private String doanhNghiepTuNhanTG;
+	private String doanhNghiepNuocNgoaiTG;
+	private String caNhanTG;
+	private String khacTG;
+	public String getDoanhNghiepNhaNuocTG() {
 		return doanhNghiepNhaNuocTG;
 	}
-	public void setDoanhNghiepNhaNuocTG(Double doanhNghiepNhaNuocTG) {
+	public void setDoanhNghiepNhaNuocTG(String doanhNghiepNhaNuocTG) {
 		this.doanhNghiepNhaNuocTG = doanhNghiepNhaNuocTG;
 	}
-	public Double getDoanhNghiepTuNhanTG() {
+	public String getDoanhNghiepTuNhanTG() {
 		return doanhNghiepTuNhanTG;
 	}
-	public void setDoanhNghiepTuNhanTG(Double doanhNghiepTuNhanTG) {
+	public void setDoanhNghiepTuNhanTG(String doanhNghiepTuNhanTG) {
 		this.doanhNghiepTuNhanTG = doanhNghiepTuNhanTG;
 	}
-	public Double getDoanhNghiepNuocNgoaiTG() {
+	public String getDoanhNghiepNuocNgoaiTG() {
 		return doanhNghiepNuocNgoaiTG;
 	}
-	public void setDoanhNghiepNuocNgoaiTG(Double doanhNghiepNuocNgoaiTG) {
+	public void setDoanhNghiepNuocNgoaiTG(String doanhNghiepNuocNgoaiTG) {
 		this.doanhNghiepNuocNgoaiTG = doanhNghiepNuocNgoaiTG;
 	}
-	public Double getCaNhanTG() {
+	public String getCaNhanTG() {
 		return caNhanTG;
 	}
-	public void setCaNhanTG(Double caNhanTG) {
+	public void setCaNhanTG(String caNhanTG) {
 		this.caNhanTG = caNhanTG;
 	}
-	public Double getKhacTG() {
+	public String getKhacTG() {
 		return khacTG;
 	}
-	public void setKhacTG(Double khacTG) {
+	public void setKhacTG(String khacTG) {
 		this.khacTG = khacTG;
 	}
+	
+	
 
 }

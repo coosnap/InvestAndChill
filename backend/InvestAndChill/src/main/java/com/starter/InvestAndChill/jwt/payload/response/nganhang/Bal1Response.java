@@ -6,34 +6,36 @@ import com.starter.InvestAndChill.jwt.payload.response.ReportReponse;
 
 public class Bal1Response extends ReportReponse{
 
-	private Double TGVaChoVayCacTCTDKhacTruocDuPhong;
-	private Double choVayKhachHang;
-	private Double chungKhoanTruocDP;
-	private Double cacTaiSanKhac;
-	public Double getTGVaChoVayCacTCTDKhacTruocDuPhong() {
+	private String TGVaChoVayCacTCTDKhacTruocDuPhong;
+	private String choVayKhachHang;
+	private String chungKhoanTruocDP;
+	private String cacTaiSanKhac;
+	public String getTGVaChoVayCacTCTDKhacTruocDuPhong() {
 		return TGVaChoVayCacTCTDKhacTruocDuPhong;
 	}
-	public void setTGVaChoVayCacTCTDKhacTruocDuPhong(Double tGVaChoVayCacTCTDKhacTruocDuPhong) {
+	public void setTGVaChoVayCacTCTDKhacTruocDuPhong(String tGVaChoVayCacTCTDKhacTruocDuPhong) {
 		TGVaChoVayCacTCTDKhacTruocDuPhong = tGVaChoVayCacTCTDKhacTruocDuPhong;
 	}
-	public Double getChoVayKhachHang() {
+	public String getChoVayKhachHang() {
 		return choVayKhachHang;
 	}
-	public void setChoVayKhachHang(Double choVayKhachHang) {
+	public void setChoVayKhachHang(String choVayKhachHang) {
 		this.choVayKhachHang = choVayKhachHang;
 	}
-	public Double getChungKhoanTruocDP() {
+	public String getChungKhoanTruocDP() {
 		return chungKhoanTruocDP;
 	}
-	public void setChungKhoanTruocDP(Double chungKhoanTruocDP) {
+	public void setChungKhoanTruocDP(String chungKhoanTruocDP) {
 		this.chungKhoanTruocDP = chungKhoanTruocDP;
 	}
-	public Double getCacTaiSanKhac() {
+	public String getCacTaiSanKhac() {
 		return cacTaiSanKhac;
 	}
-	public void setCacTaiSanKhac(Double cacTaiSanKhac) {
+	public void setCacTaiSanKhac(String cacTaiSanKhac) {
 		this.cacTaiSanKhac = cacTaiSanKhac;
 	}
+	
+	
 	
 
 }

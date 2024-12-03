@@ -3,53 +3,53 @@ package com.starter.InvestAndChill.jwt.payload.response.chungkhoan;
 import com.starter.InvestAndChill.jwt.payload.response.ReportReponse;
 
 public class Bal5Response extends ReportReponse{
-	public Double getGPFVTPL() {
+	public String getGPFVTPL() {
 		return GPFVTPL;
 	}
-	public void setGPFVTPL(Double gPFVTPL) {
+	public void setGPFVTPL(String gPFVTPL) {
 		GPFVTPL = gPFVTPL;
 	}
-	public Double getGPCVMargin() {
+	public String getGPCVMargin() {
 		return GPCVMargin;
 	}
-	public void setGPCVMargin(Double gPCVMargin) {
+	public void setGPCVMargin(String gPCVMargin) {
 		GPCVMargin = gPCVMargin;
 	}
-	public Double getGPMoiGioi() {
+	public String getGPMoiGioi() {
 		return GPMoiGioi;
 	}
-	public void setGPMoiGioi(Double gPMoiGioi) {
+	public void setGPMoiGioi(String gPMoiGioi) {
 		GPMoiGioi = gPMoiGioi;
 	}
-	public Double getGPHTM() {
+	public String getGPHTM() {
 		return GPHTM;
 	}
-	public void setGPHTM(Double gPHTM) {
+	public void setGPHTM(String gPHTM) {
 		GPHTM = gPHTM;
 	}
-	public Double getGPAFS() {
+	public String getGPAFS() {
 		return GPAFS;
 	}
-	public void setGPAFS(Double gPAFS) {
+	public void setGPAFS(String gPAFS) {
 		GPAFS = gPAFS;
 	}
-	public Double getGPBaoLanhPhatHanh() {
+	public String getGPBaoLanhPhatHanh() {
 		return GPBaoLanhPhatHanh;
 	}
-	public void setGPBaoLanhPhatHanh(Double gPBaoLanhPhatHanh) {
+	public void setGPBaoLanhPhatHanh(String gPBaoLanhPhatHanh) {
 		GPBaoLanhPhatHanh = gPBaoLanhPhatHanh;
 	}
-	public Double getGPKhac() {
+	public String getGPKhac() {
 		return GPKhac;
 	}
-	public void setGPKhac(Double gPKhac) {
+	public void setGPKhac(String gPKhac) {
 		GPKhac = gPKhac;
 	}
-	private Double GPFVTPL;
-	private Double GPCVMargin;
-	private Double GPMoiGioi;
-	private Double GPHTM;
-	private Double GPAFS;
-	private Double GPBaoLanhPhatHanh;
-	private Double GPKhac;
+	private String GPFVTPL;
+	private String GPCVMargin;
+	private String GPMoiGioi;
+	private String GPHTM;
+	private String GPAFS;
+	private String GPBaoLanhPhatHanh;
+	private String GPKhac;
 }

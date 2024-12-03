@@ -24,7 +24,6 @@ import com.starter.InvestAndChill.jwt.payload.response.PTC.Bal4Response;
 import com.starter.InvestAndChill.jwt.payload.response.PTC.Bal5Response;
 import com.starter.InvestAndChill.jwt.payload.response.PTC.Bal6Response;
 import com.starter.InvestAndChill.jwt.payload.response.PTC.Cf1Response;
-import com.starter.InvestAndChill.jwt.payload.response.PTC.Cf2Response;
 import com.starter.InvestAndChill.jwt.payload.response.PTC.Cf3Response;
 import com.starter.InvestAndChill.jwt.payload.response.PTC.Cf4Response;
 import com.starter.InvestAndChill.jwt.payload.response.PTC.Perf1Response;
@@ -38,6 +37,7 @@ import com.starter.InvestAndChill.jwt.payload.response.PTC.Perf8Response;
 import com.starter.InvestAndChill.jwt.repository.PTCRepositoryNam;
 import com.starter.InvestAndChill.jwt.repository.PTCRepositoryQuy;
 import com.starter.InvestAndChill.utils.Constants;
+import com.starter.InvestAndChill.utils.RoundNumber;
 
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -48,6 +48,7 @@ public class PTCReportController {
 	@Autowired
 	PTCRepositoryQuy ptcQuyRepository;
 	Pageable pageableQuy = PageRequest.of(0, 21); 
+	Pageable pageableToanQuy = PageRequest.of(0, 40); 
 	
 	@Autowired
 	PTCRepositoryNam ptcNamRepository;
@@ -69,10 +70,10 @@ public class PTCReportController {
 	                    Perf1Response response = new Perf1Response();
 	                    response.setId(report.getId());
 	                    response.setTitle(Constants.PTC_perf1);
-	                    response.setDoanhSoThuan(report.getDoanhSoThuan());
-	                    response.setLoiNhuanCuaCoDongCongTyMe(report.getLoiNhuanCuaCoDongCongTyMe());
-	                    response.setBienLaiGop(report.getBienLaiGop());
-	                    response.setBienLaiRong(report.getBienLaiRong());
+	                    response.setDoanhSoThuan(RoundNumber.lamTron(report.getDoanhSoThuan()));
+	                    response.setLoiNhuanCuaCoDongCongTyMe(RoundNumber.lamTron(report.getLoiNhuanCuaCoDongCongTyMe()));
+	                    response.setBienLaiGop(RoundNumber.lamTron(report.getBienLaiGop()));
+	                    response.setBienLaiRong(RoundNumber.lamTron(report.getBienLaiRong()));
 	                    return response;
 	                })
 	                .collect(Collectors.toList());
@@ -92,10 +93,10 @@ public class PTCReportController {
                 .map(report -> {
                     Perf2Response response = new Perf2Response();
                     response.setId(report.getId());
-                    response.setLoiNhuanCotLoi(report.getLoiNhuanCotLoi());
-                    response.setLoiNhuanTaiChinh(report.getLoiNhuanTaiChinh());
-                    response.setThuNhapKhac(report.getThuNhapKhac());
-                    response.setLaiLoTuCongTyLienDoanh(report.getLaiLoTuCongTyLienDoanh());
+                    response.setLoiNhuanCotLoi(RoundNumber.lamTron(report.getLoiNhuanCotLoi()));
+                    response.setLoiNhuanTaiChinh(RoundNumber.lamTron(report.getLoiNhuanTaiChinh()));
+                    response.setThuNhapKhac(RoundNumber.lamTron(report.getThuNhapKhac()));
+                    response.setLaiLoTuCongTyLienDoanh(RoundNumber.lamTron(report.getLaiLoTuCongTyLienDoanh()));
                     return response;
                 })
                 .collect(Collectors.toList());
@@ -108,16 +109,16 @@ public class PTCReportController {
 		if ("year".equals(type)) {
 			listReport =  ptcNamRepository.findByStockForPerf(stock,pageableNam);
 		} else {
-			listReport =	ptcQuyRepository.findByStockForPerf(stock,pageableQuy);
+			listReport =	ptcQuyRepository.findByStockForPerf(stock,pageableToanQuy);
 		}
 		List<Perf3Response> list = listReport.stream()
                 .map(report -> {
                     Perf3Response response = new Perf3Response();
                     response.setId(report.getId());
-                    response.setSalesTrailing(report.getSalesTrailing());
-                    response.setGPMTrailing(report.getGPMTrailing());
-                    response.setSGAMTrailing(report.getSGAMTrailing());
-                    response.setEBITmTrailing(report.getEBITmTrailing());
+                    response.setSalesTrailing(RoundNumber.lamTron(report.getSalesTrailing()));
+                    response.setGPMTrailing(RoundNumber.lamTron(report.getGPMTrailing()));
+                    response.setSGAMTrailing(RoundNumber.lamTron(report.getSGAMTrailing()));
+                    response.setEBITmTrailing(RoundNumber.lamTron(report.getEBITmTrailing()));
                     return response;
                 })
                 .collect(Collectors.toList());
@@ -130,17 +131,17 @@ public class PTCReportController {
 		if ("year".equals(type)) {
 			listReport =  ptcNamRepository.findByStockForPerf(stock,pageableNam);
 		} else {
-			listReport =	ptcQuyRepository.findByStockForPerf(stock,pageableQuy);
+			listReport =	ptcQuyRepository.findByStockForPerf(stock,pageableToanQuy);
 		}
 		List<Perf4Response> list = listReport.stream()
                 .map(report -> {
                     Perf4Response response = new Perf4Response();
                     response.setId(report.getId());
-                    response.setEBITTrailing(report.getEBITTrailing());
-                    response.setNetFinanceialTrailing(report.getNetFinanceialTrailing());
-                    response.setNetFinancialAdjustTrailing(report.getNetFinancialAdjustTrailing());
-                    response.setNImgTrailing(report.getNImgTrailing());
-                    response.setEBITmTrailing(report.getEBITmTrailing());
+                    response.setEBITTrailing(RoundNumber.lamTron(report.getEBITTrailing()));
+                    response.setNetFinanceialTrailing(RoundNumber.lamTron(report.getNetFinanceialTrailing()));
+                    response.setNetFinancialAdjustTrailing(RoundNumber.lamTron(report.getNetFinancialAdjustTrailing()));
+                    response.setNImgTrailing(RoundNumber.lamTron(report.getNImgTrailing()));
+                    response.setEBITmTrailing(RoundNumber.lamTron(report.getEBITmTrailing()));
                     return response;
                 })
                 .collect(Collectors.toList());
@@ -153,16 +154,16 @@ public class PTCReportController {
 		if ("year".equals(type)) {
 			listReport =  ptcNamRepository.findByStockForPerf(stock,pageableNam);
 		} else {
-			listReport =	ptcQuyRepository.findByStockForPerf(stock,pageableQuy);
+			listReport =	ptcQuyRepository.findByStockForPerf(stock,pageableToanQuy);
 		}
 		List<Perf5Response> list = listReport.stream()
                 .map(report -> {
                 	Perf5Response response = new Perf5Response();
                     response.setId(report.getId());
-                    response.setNITrailing(report.getNITrailing());
-                    response.setAssociateTrailing(report.getAssociateTrailing());
-                    response.setMinoritiesTrailing(report.getMinoritiesTrailing());
-                    response.setNITrailingAdjust(report.getNITrailingAdjust());
+                    response.setNITrailing(RoundNumber.lamTron(report.getNITrailing()));
+                    response.setAssociateTrailing(RoundNumber.lamTron(report.getAssociateTrailing()));
+                    response.setMinoritiesTrailing(RoundNumber.lamTron(report.getMinoritiesTrailing()));
+                    response.setNITrailingAdjust(RoundNumber.lamTron(report.getNITrailingAdjust()));
                     return response;
                 })
                 .collect(Collectors.toList());
@@ -175,15 +176,15 @@ public class PTCReportController {
 		if ("year".equals(type)) {
 			listReport =  ptcNamRepository.findByStockForPerf(stock,pageableNam);
 		} else {
-			listReport =	ptcQuyRepository.findByStockForPerf(stock,pageableQuy);
+			listReport =	ptcQuyRepository.findByStockForPerf(stock,pageableToanQuy);
 		}
 		List<Perf6Response> list = listReport.stream()
                 .map(report -> {
                 	Perf6Response response = new Perf6Response();
                     response.setId(report.getId());
-                    response.setEBITDATrailing(report.getEBITDATrailing());
-                    response.setEBITTrailing(report.getEBITTrailing());
-                    response.setInterestExpenseTrailing(report.getInterestExpenseTrailing());
+                    response.setEBITDATrailing(RoundNumber.lamTron(report.getEBITDATrailing()));
+                    response.setEBITTrailing(RoundNumber.lamTron(report.getEBITTrailing()));
+                    response.setInterestExpenseTrailing(RoundNumber.lamTron(report.getInterestExpenseTrailing()));
                     return response;
                 })
                 .collect(Collectors.toList());
@@ -202,9 +203,9 @@ public class PTCReportController {
                 .map(report -> {
                 	Perf7Response response = new Perf7Response();
                     response.setId(report.getId());
-                    response.setRoe(report.getRoe());
-                    response.setRoic(report.getRoic());
-                    response.setLaiVay(report.getLaiVay());
+                    response.setRoe(RoundNumber.lamTron(report.getRoe()));
+                    response.setRoic(RoundNumber.lamTron(report.getRoic()));
+                    response.setLaiVay(RoundNumber.lamTron(report.getLaiVay()));
                     return response;
                 })
                 .collect(Collectors.toList());
@@ -217,17 +218,17 @@ public class PTCReportController {
 		if ("year".equals(type)) {
 			listReport =  ptcNamRepository.findByStockForPerf(stock,pageableNam);
 		} else {
-			listReport =	ptcQuyRepository.findByStockForPerf(stock,pageableQuy);
+			listReport =	ptcQuyRepository.findByStockForPerf(stock,pageableToanQuy);
 		}
 		List<Perf8Response> list = listReport.stream()
                 .map(report -> {
                 	Perf8Response response = new Perf8Response();
                     response.setId(report.getId());
-                    response.setRoe(report.getRoe());
-                    response.setAssetTurnover(report.getAssetTurnover());
-                    response.setLeverage(report.getLeverage());
-                    response.setNImgTrailing(report.getNImgTrailing());
-                    response.setDEE(report.getDEE());
+                    response.setRoe(RoundNumber.lamTron(report.getRoe()));
+                    response.setAssetTurnover(RoundNumber.lamTronLan(report.getAssetTurnover()));
+                    response.setLeverage(RoundNumber.lamTronLan(report.getLeverage()));
+                    response.setNImgTrailing(RoundNumber.lamTron(report.getNImgTrailing()));
+                    response.setDEE(RoundNumber.lamTronLan(report.getDEE()));
                     return response;
                 })
                 .collect(Collectors.toList());
@@ -246,13 +247,13 @@ public class PTCReportController {
                 .map(report -> {
                 	Bal1Response response = new Bal1Response();
                 	response.setId(report.getId());
-                    response.setTienDTNGDaoHan(report.getTienDTNGDaoHan());
-                    response.setPhaiThu(report.getPhaiThu());
-                    response.setHangTonKhoRong(report.getHangTonKhoRong());
-                    response.setTaiSanCoDinh(report.getTaiSanCoDinh());
-                    response.setTaiSanDoDangDaiHan(report.getTaiSanDoDangDaiHan());
-                    response.setGiaTriRongTaiSanDauTu(report.getGiaTriRongTaiSanDauTu());
-                    response.setTaiSanKhac(report.getTaiSanKhac());
+                    response.setTienDTNGDaoHan(RoundNumber.lamTron(report.getTienDTNGDaoHan()));
+                    response.setPhaiThu(RoundNumber.lamTron(report.getPhaiThu()));
+                    response.setHangTonKhoRong(RoundNumber.lamTron(report.getHangTonKhoRong()));
+                    response.setTaiSanCoDinh(RoundNumber.lamTron(report.getTaiSanCoDinh()));
+                    response.setTaiSanDoDangDaiHan(RoundNumber.lamTron(report.getTaiSanDoDangDaiHan()));
+                    response.setGiaTriRongTaiSanDauTu(RoundNumber.lamTron(report.getGiaTriRongTaiSanDauTu()));
+                    response.setTaiSanKhac(RoundNumber.lamTron(report.getTaiSanKhac()));
                     return response;
                 })
                 .collect(Collectors.toList());
@@ -271,11 +272,11 @@ public class PTCReportController {
                 .map(report -> {
                 	Bal2Response response = new Bal2Response();
                 	response.setId(report.getId());
-                    response.setNoVay(report.getNoVay());
-                    response.setNoChiemDung(report.getNoChiemDung());
-                    response.setVonGop(report.getVonGop());
-                    response.setLaiChuaPhanPhoi(report.getLaiChuaPhanPhoi());
-                    response.setVcshKhac(report.getVcshKhac());
+                    response.setNoVay(RoundNumber.lamTron(report.getNoVay()));
+                    response.setNoChiemDung(RoundNumber.lamTron(report.getNoChiemDung()));
+                    response.setVonGop(RoundNumber.lamTron(report.getVonGop()));
+                    response.setLaiChuaPhanPhoi(RoundNumber.lamTron(report.getLaiChuaPhanPhoi()));
+                    response.setVcshKhac(RoundNumber.lamTron(report.getVcshKhac()));
                     return response;
                 })
                 .collect(Collectors.toList());
@@ -294,9 +295,9 @@ public class PTCReportController {
                 .map(report -> {
                 	Bal3Response response = new Bal3Response();
                 	response.setId(report.getId());
-                    response.setDAPPE(report.getDAPPE());
-                    response.setGrossPPE(report.getGrossPPE());
-                    response.setXayDungCoBanDoDang(report.getXayDungCoBanDoDang());
+                    response.setDAPPE(RoundNumber.lamTron(report.getDAPPE()));
+                    response.setGrossPPE(RoundNumber.lamTron(report.getGrossPPE()));
+                    response.setXayDungCoBanDoDang(RoundNumber.lamTron(report.getXayDungCoBanDoDang()));
                     return response;
                 })
                 .collect(Collectors.toList());
@@ -315,8 +316,8 @@ public class PTCReportController {
                 .map(report -> {
                 	Bal4Response response = new Bal4Response();
                 	response.setId(report.getId());
-                	response.setNetDebt(report.getNetDebt());
-                	response.setWorkingcap(report.getWorkingcap());
+                	response.setNetDebt(RoundNumber.lamTron(report.getNetDebt()));
+                	response.setWorkingcap(RoundNumber.lamTron(report.getWorkingcap()));
                     return response;
                 })
                 .collect(Collectors.toList());
@@ -329,15 +330,15 @@ public class PTCReportController {
 		if ("year".equals(type)) {
 			listReport =  ptcNamRepository.findByStockForPerf(stock,pageableNam);
 		} else {
-			listReport =	ptcQuyRepository.findByStockForPerf(stock,pageableQuy);
+			listReport =	ptcQuyRepository.findByStockForPerf(stock,pageableToanQuy);
 		}
 		List<Bal5Response> list = listReport.stream()
                 .map(report -> {
                 	Bal5Response response = new Bal5Response();
                 	response.setId(report.getId());
-                    response.setVongQuayHangTonKho(report.getVongQuayHangTonKho());
-                    response.setVongQuayPhaiThu(report.getVongQuayPhaiThu());
-                    response.setVongQuayPhaiTra(report.getVongQuayPhaiTra());
+                    response.setVongQuayHangTonKho(RoundNumber.lamTronLan(report.getVongQuayHangTonKho()));
+                    response.setVongQuayPhaiThu(RoundNumber.lamTronLan(report.getVongQuayPhaiThu()));
+                    response.setVongQuayPhaiTra(RoundNumber.lamTronLan(report.getVongQuayPhaiTra()));
                     return response;
                 })
                 .collect(Collectors.toList());
@@ -356,10 +357,10 @@ public class PTCReportController {
                 .map(report -> {
                 	Bal6Response response = new Bal6Response();
                 	response.setId(report.getId());
-                    response.setLaiVay(report.getLaiVay());
-                    response.setVayDaiHanVCSH(report.getVayDaiHanVCSH());
-                    response.setVayNganHanVCSH(report.getVayNganHanVCSH());
-                    response.setVayVCSH(report.getVayVCSH());
+                    response.setLaiVay(RoundNumber.lamTron(report.getLaiVay()));
+                    response.setVayDaiHanVCSH(RoundNumber.lamTron(report.getVayDaiHanVCSH()));
+                    response.setVayNganHanVCSH(RoundNumber.lamTron(report.getVayNganHanVCSH()));
+                    response.setVayVCSH(RoundNumber.lamTron(report.getVayVCSH()));
                     return response;
                 })
                 .collect(Collectors.toList());
@@ -378,10 +379,10 @@ public class PTCReportController {
                 .map(report -> {
                 	Cf1Response response = new Cf1Response();
                 	response.setId(report.getId());
-                	response.setLuuChuyenTienTeRongTuCacHoatDongSanXuatKinhDoanh(report.getLuuChuyenTienTeRongTuCacHoatDongSanXuatKinhDoanh());
-                	response.setLuuChuyenTienTeRongTuCacHoatDongDauTu(report.getLuuChuyenTienTeRongTuCacHoatDongDauTu());
-                	response.setLuuChuyenTienTeTuHoatDongTaiChinh(report.getLuuChuyenTienTeTuHoatDongTaiChinh());
-                	response.setFcf(report.getFcf());
+                	response.setLuuChuyenTienTeRongTuCacHoatDongSanXuatKinhDoanh(RoundNumber.lamTron(report.getLuuChuyenTienTeRongTuCacHoatDongSanXuatKinhDoanh()));
+                	response.setLuuChuyenTienTeRongTuCacHoatDongDauTu(RoundNumber.lamTron(report.getLuuChuyenTienTeRongTuCacHoatDongDauTu()));
+                	response.setLuuChuyenTienTeTuHoatDongTaiChinh(RoundNumber.lamTron(report.getLuuChuyenTienTeTuHoatDongTaiChinh()));
+                	response.setFcf(RoundNumber.lamTron(report.getFcf()));
                     return response;
                 })
                 .collect(Collectors.toList());
@@ -422,11 +423,11 @@ public class PTCReportController {
                 .map(report -> {
                 	Cf3Response response = new Cf3Response();
                 	response.setId(report.getId());
-                    response.setDauTuNamGiuDenNgayDaoHan(report.getDauTuNamGiuDenNgayDaoHan());
-                    response.setGiaTriThuanDauTuNganHan(report.getGiaTriThuanDauTuNganHan());
-                    response.setNoVay(-report.getNoVay());
-                    response.setTienLongTrongPhaiThuChoVay(report.getTienLongTrongPhaiThuChoVay());
-                    response.setTienVaTuongDuongTien(report.getTienVaTuongDuongTien());
+                    response.setDauTuNamGiuDenNgayDaoHan(RoundNumber.lamTron(report.getDauTuNamGiuDenNgayDaoHan()));
+                    response.setGiaTriThuanDauTuNganHan(RoundNumber.lamTron(report.getGiaTriThuanDauTuNganHan()));
+                    response.setNoVay(RoundNumber.lamTron(-report.getNoVay()));
+                    response.setTienLongTrongPhaiThuChoVay(RoundNumber.lamTron(report.getTienLongTrongPhaiThuChoVay()));
+                    response.setTienVaTuongDuongTien(RoundNumber.lamTron(report.getTienVaTuongDuongTien()));
                     return response;
                 })
                 .collect(Collectors.toList());
@@ -445,10 +446,10 @@ public class PTCReportController {
                 .map(report -> {
                 	Cf4Response response = new Cf4Response();
                 	response.setId(report.getId());
-                    response.setDoanhThuChuaThucHien(report.getDoanhThuChuaThucHien());
-                    response.setDoanhThuChuaThucHienNganHan(report.getDoanhThuChuaThucHienNganHan());
-                    response.setNguoiMuaTraTienTruoc(report.getNguoiMuaTraTienTruoc());
-                    response.setNguoiMuaTraTienTruocDaiHan(report.getNguoiMuaTraTienTruocDaiHan());
+                    response.setDoanhThuChuaThucHien(RoundNumber.lamTron(report.getDoanhThuChuaThucHien()));
+                    response.setDoanhThuChuaThucHienNganHan(RoundNumber.lamTron(report.getDoanhThuChuaThucHienNganHan()));
+                    response.setNguoiMuaTraTienTruoc(RoundNumber.lamTron(report.getNguoiMuaTraTienTruoc()));
+                    response.setNguoiMuaTraTienTruocDaiHan(RoundNumber.lamTron(report.getNguoiMuaTraTienTruocDaiHan()));
                     return response;
                 })
                 .collect(Collectors.toList());

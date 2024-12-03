@@ -4,32 +4,34 @@ import com.starter.InvestAndChill.jwt.payload.response.ReportReponse;
 
 public class Cf2Response extends ReportReponse{
 
-	private Double netIncomeDANWC;
-	public Double getNetIncomeDANWC() {
+	private String netIncomeDANWC;
+	private String netIncomeDANWCCAPEX;
+	private String netIncomeDANWCRolling;
+	private String netIncomeDANWCCAPEXRolling;
+	public String getNetIncomeDANWC() {
 		return netIncomeDANWC;
 	}
-	public void setNetIncomeDANWC(Double netIncomeDANWC) {
+	public void setNetIncomeDANWC(String netIncomeDANWC) {
 		this.netIncomeDANWC = netIncomeDANWC;
 	}
-	public Double getNetIncomeDANWCCAPEX() {
+	public String getNetIncomeDANWCCAPEX() {
 		return netIncomeDANWCCAPEX;
 	}
-	public void setNetIncomeDANWCCAPEX(Double netIncomeDANWCCAPEX) {
+	public void setNetIncomeDANWCCAPEX(String netIncomeDANWCCAPEX) {
 		this.netIncomeDANWCCAPEX = netIncomeDANWCCAPEX;
 	}
-	public Double getNetIncomeDANWCRolling() {
+	public String getNetIncomeDANWCRolling() {
 		return netIncomeDANWCRolling;
 	}
-	public void setNetIncomeDANWCRolling(Double netIncomeDANWCRolling) {
+	public void setNetIncomeDANWCRolling(String netIncomeDANWCRolling) {
 		this.netIncomeDANWCRolling = netIncomeDANWCRolling;
 	}
-	public Double getNetIncomeDANWCCAPEXRolling() {
+	public String getNetIncomeDANWCCAPEXRolling() {
 		return netIncomeDANWCCAPEXRolling;
 	}
-	public void setNetIncomeDANWCCAPEXRolling(Double netIncomeDANWCCAPEXRolling) {
+	public void setNetIncomeDANWCCAPEXRolling(String netIncomeDANWCCAPEXRolling) {
 		this.netIncomeDANWCCAPEXRolling = netIncomeDANWCCAPEXRolling;
 	}
-	private Double netIncomeDANWCCAPEX;
-	private Double netIncomeDANWCRolling;
-	private Double netIncomeDANWCCAPEXRolling;
+	
+	
 }

@@ -4,27 +4,29 @@ import com.starter.InvestAndChill.jwt.payload.response.ReportReponse;
 
 public class Perf3Response extends ReportReponse{
 	
-	private Double thuNhapLaiThuan;
-	private Double laiLoTHuanTuHoatDongDichVu;
-	private Double laiKhac;
-	public Double getThuNhapLaiThuan() {
+	private String thuNhapLaiThuan;
+	private String laiLoTHuanTuHoatDongDichVu;
+	private String laiKhac;
+	public String getThuNhapLaiThuan() {
 		return thuNhapLaiThuan;
 	}
-	public void setThuNhapLaiThuan(Double thuNhapLaiThuan) {
+	public void setThuNhapLaiThuan(String thuNhapLaiThuan) {
 		this.thuNhapLaiThuan = thuNhapLaiThuan;
 	}
-	public Double getLaiLoTHuanTuHoatDongDichVu() {
+	public String getLaiLoTHuanTuHoatDongDichVu() {
 		return laiLoTHuanTuHoatDongDichVu;
 	}
-	public void setLaiLoTHuanTuHoatDongDichVu(Double laiLoTHuanTuHoatDongDichVu) {
+	public void setLaiLoTHuanTuHoatDongDichVu(String laiLoTHuanTuHoatDongDichVu) {
 		this.laiLoTHuanTuHoatDongDichVu = laiLoTHuanTuHoatDongDichVu;
 	}
-	public Double getLaiKhac() {
+	public String getLaiKhac() {
 		return laiKhac;
 	}
-	public void setLaiKhac(Double laiKhac) {
+	public void setLaiKhac(String laiKhac) {
 		this.laiKhac = laiKhac;
 	}
+	
+	
 	
 	
 

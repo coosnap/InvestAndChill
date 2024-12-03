@@ -4,47 +4,48 @@ import com.starter.InvestAndChill.jwt.payload.response.ReportReponse;
 
 public class Bal10Response extends ReportReponse{
 
-	private Double doanhNghiepNhaNuoc;
-	public Double getDoanhNghiepNhaNuoc() {
+	private String doanhNghiepNhaNuoc;
+	private String congTyTNHHVaCoPhan;
+	private String doanhNghiepNuocNgoai;
+	private String hopTacXaVaCongTyTuNhan;
+	private String caNhan;
+	private String khac;
+	public String getDoanhNghiepNhaNuoc() {
 		return doanhNghiepNhaNuoc;
 	}
-	public void setDoanhNghiepNhaNuoc(Double doanhNghiepNhaNuoc) {
+	public void setDoanhNghiepNhaNuoc(String doanhNghiepNhaNuoc) {
 		this.doanhNghiepNhaNuoc = doanhNghiepNhaNuoc;
 	}
-	public Double getCongTyTNHHVaCoPhan() {
+	public String getCongTyTNHHVaCoPhan() {
 		return congTyTNHHVaCoPhan;
 	}
-	public void setCongTyTNHHVaCoPhan(Double congTyTNHHVaCoPhan) {
+	public void setCongTyTNHHVaCoPhan(String congTyTNHHVaCoPhan) {
 		this.congTyTNHHVaCoPhan = congTyTNHHVaCoPhan;
 	}
-	public Double getDoanhNghiepNuocNgoai() {
+	public String getDoanhNghiepNuocNgoai() {
 		return doanhNghiepNuocNgoai;
 	}
-	public void setDoanhNghiepNuocNgoai(Double doanhNghiepNuocNgoai) {
+	public void setDoanhNghiepNuocNgoai(String doanhNghiepNuocNgoai) {
 		this.doanhNghiepNuocNgoai = doanhNghiepNuocNgoai;
 	}
-	public Double getHopTacXaVaCongTyTuNhan() {
+	public String getHopTacXaVaCongTyTuNhan() {
 		return hopTacXaVaCongTyTuNhan;
 	}
-	public void setHopTacXaVaCongTyTuNhan(Double hopTacXaVaCongTyTuNhan) {
+	public void setHopTacXaVaCongTyTuNhan(String hopTacXaVaCongTyTuNhan) {
 		this.hopTacXaVaCongTyTuNhan = hopTacXaVaCongTyTuNhan;
 	}
-	public Double getCaNhan() {
+	public String getCaNhan() {
 		return caNhan;
 	}
-	public void setCaNhan(Double caNhan) {
+	public void setCaNhan(String caNhan) {
 		this.caNhan = caNhan;
 	}
-	public Double getKhac() {
+	public String getKhac() {
 		return khac;
 	}
-	public void setKhac(Double khac) {
+	public void setKhac(String khac) {
 		this.khac = khac;
 	}
-	private Double congTyTNHHVaCoPhan;
-	private Double doanhNghiepNuocNgoai;
-	private Double hopTacXaVaCongTyTuNhan;
-	private Double caNhan;
-	private Double khac;
 
+	
 }

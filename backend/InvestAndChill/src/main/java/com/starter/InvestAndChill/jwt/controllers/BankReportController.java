@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.starter.InvestAndChill.jwt.models.NganHangReport;
-import com.starter.InvestAndChill.jwt.models.PTCReport;
 import com.starter.InvestAndChill.jwt.payload.response.nganhang.Bal10Response;
 import com.starter.InvestAndChill.jwt.payload.response.nganhang.Bal11Response;
 import com.starter.InvestAndChill.jwt.payload.response.nganhang.Bal12Response;
@@ -34,10 +33,9 @@ import com.starter.InvestAndChill.jwt.payload.response.nganhang.Perf1Response;
 import com.starter.InvestAndChill.jwt.payload.response.nganhang.Perf2Response;
 import com.starter.InvestAndChill.jwt.payload.response.nganhang.Perf3Response;
 import com.starter.InvestAndChill.jwt.payload.response.nganhang.Perf4Response;
-import com.starter.InvestAndChill.jwt.repository.CKRepositoryNam;
-import com.starter.InvestAndChill.jwt.repository.CKRepositoryQuy;
 import com.starter.InvestAndChill.jwt.repository.NganHangRepositoryNam;
 import com.starter.InvestAndChill.jwt.repository.NganHangRepositoryQuy;
+import com.starter.InvestAndChill.utils.RoundNumber;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -45,7 +43,8 @@ import com.starter.InvestAndChill.jwt.repository.NganHangRepositoryQuy;
 public class BankReportController {
 	@Autowired
 	NganHangRepositoryQuy nhQuyRepository;
-	Pageable pageableQuy = PageRequest.of(0, 21); 
+	Pageable pageableQuy = PageRequest.of(0, 21);
+	Pageable pageableToanQuy = PageRequest.of(0, 40);
 	
 	@Autowired
 	NganHangRepositoryNam nhNamRepository;
@@ -65,9 +64,9 @@ public class BankReportController {
 	                .map(report -> {
 	                    Perf1Response response = new Perf1Response();
 	                    response.setId(report.getId());
-	                    response.setBienLaiRong(report.getBienLaiRong());
-	                    response.setCoDongCuaCongTyMe(report.getCoDongCuaCongTyMe());
-	                    response.setBienLaiRong(report.getBienLaiRong());
+	                    response.setBienLaiRong(RoundNumber.lamTron(report.getBienLaiRong()));
+	                    response.setCoDongCuaCongTyMe(RoundNumber.lamTron(report.getCoDongCuaCongTyMe()));
+	                    response.setBienLaiRong(RoundNumber.lamTron(report.getBienLaiRong()));
 	                    return response;
 	                })
 	                .collect(Collectors.toList());
@@ -89,9 +88,9 @@ public class BankReportController {
 	                .map(report -> {
 	                    Perf2Response response = new Perf2Response();
 	                    response.setId(report.getId());
-	                    response.setCPDuPhongTTNHD(report.getCPDuPhongTTNHD());
-	                    response.setCPHoatDongTTNHD(report.getCPHoatDongTTNHD());
-	                    response.setTongCPTTNHD(report.getTongCPTTNHD());
+	                    response.setCPDuPhongTTNHD(RoundNumber.lamTron(report.getCPDuPhongTTNHD()));
+	                    response.setCPHoatDongTTNHD(RoundNumber.lamTron(report.getCPHoatDongTTNHD()));
+	                    response.setTongCPTTNHD(RoundNumber.lamTron(report.getTongCPTTNHD()));
 	                    return response;
 	                })
 	                .collect(Collectors.toList());
@@ -113,9 +112,9 @@ public class BankReportController {
 	                .map(report -> {
 	                    Perf3Response response = new Perf3Response();
 	                    response.setId(report.getId());
-	                    response.setLaiKhac(report.getLaiKhac());
-	                    response.setLaiLoTHuanTuHoatDongDichVu(report.getLaiLoTHuanTuHoatDongDichVu());
-	                    response.setThuNhapLaiThuan(report.getThuNhapLaiThuan());
+	                    response.setLaiKhac(RoundNumber.lamTron(report.getLaiKhac()));
+	                    response.setLaiLoTHuanTuHoatDongDichVu(RoundNumber.lamTron(report.getLaiLoTHuanTuHoatDongDichVu()));
+	                    response.setThuNhapLaiThuan(RoundNumber.lamTron(report.getThuNhapLaiThuan()));
 	                    return response;
 	                })
 	                .collect(Collectors.toList());
@@ -136,9 +135,9 @@ public class BankReportController {
 		list = listReport.stream()
 	                .map(report -> {
 	                	Perf4Response response = new Perf4Response();
-	                    response.setId(report.getId());
-	                    response.setRoa(report.getRoa());
-	                    response.setRoe(report.getRoe());
+	                	response.setId(report.getId());
+	                    response.setRoa(RoundNumber.lamTron(report.getRoa()));
+	                    response.setRoe(RoundNumber.lamTron(report.getRoe()));
 	                    return response;
 	                })
 	                .collect(Collectors.toList());
@@ -159,11 +158,11 @@ public class BankReportController {
 		list = listReport.stream()
 	                .map(report -> {
 	                	Bal1Response response = new Bal1Response();
-	                    response.setId(report.getId());
-	                    response.setCacTaiSanKhac(report.getCacTaiSanKhac());
-	                    response.setChoVayKhachHang(report.getChoVayKhachHang());
-	                    response.setChungKhoanTruocDP(report.getChungKhoanTruocDP());
-	                    response.setTGVaChoVayCacTCTDKhacTruocDuPhong(report.getTGVaChoVayCacTCTDKhacTruocDuPhong());
+	                	response.setId(report.getId());
+	                    response.setCacTaiSanKhac(RoundNumber.lamTron(report.getCacTaiSanKhac()));
+	                    response.setChoVayKhachHang(RoundNumber.lamTron(report.getChoVayKhachHang()));
+	                    response.setChungKhoanTruocDP(RoundNumber.lamTron(report.getChungKhoanTruocDP()));
+	                    response.setTGVaChoVayCacTCTDKhacTruocDuPhong(RoundNumber.lamTron(report.getTGVaChoVayCacTCTDKhacTruocDuPhong()));
 	                    return response;
 	                })
 	                .collect(Collectors.toList());
@@ -184,12 +183,12 @@ public class BankReportController {
 		list = listReport.stream()
 	                .map(report -> {
 	                	Bal2Response response = new Bal2Response();
-	                    response.setId(report.getId());
-	                    response.setNoPhaiTraKhac(report.getNoPhaiTraKhac());
-	                    response.setPhatHanhGiayToCoGia(report.getPhatHanhGiayToCoGia());
-	                    response.setTienGuiCuaKhachHang(report.getTienGuiCuaKhachHang());
-	                    response.setTienGuiVaVayCacToChucTinDung(report.getTienGuiVaVayCacToChucTinDung());
-	                    response.setVonChuSoHuu(report.getVonChuSoHuu());
+	                	response.setId(report.getId());
+	                    response.setNoPhaiTraKhac(RoundNumber.lamTron(report.getNoPhaiTraKhac()));
+	                    response.setPhatHanhGiayToCoGia(RoundNumber.lamTron(report.getPhatHanhGiayToCoGia()));
+	                    response.setTienGuiCuaKhachHang(RoundNumber.lamTron(report.getTienGuiCuaKhachHang()));
+	                    response.setTienGuiVaVayCacToChucTinDung(RoundNumber.lamTron(report.getTienGuiVaVayCacToChucTinDung()));
+	                    response.setVonChuSoHuu(RoundNumber.lamTron(report.getVonChuSoHuu()));
 	                    return response;
 	                })
 	                .collect(Collectors.toList());
@@ -210,9 +209,9 @@ public class BankReportController {
 		list = listReport.stream()
 	                .map(report -> {
 	                	Bal3Response response = new Bal3Response();
-	                    response.setId(report.getId());
-	                    response.setHuyDongSVDauNam(report.getHuyDongSVDauNam());
-	                    response.setTinDungSVDauNam(report.getTinDungSVDauNam());
+	                	response.setId(report.getId());
+	                    response.setHuyDongSVDauNam(RoundNumber.lamTron(report.getHuyDongSVDauNam()));
+	                    response.setTinDungSVDauNam(RoundNumber.lamTron(report.getTinDungSVDauNam()));
 	                    return response;
 	                })
 	                .collect(Collectors.toList());
@@ -233,10 +232,10 @@ public class BankReportController {
 		list = listReport.stream()
 	                .map(report -> {
 	                	Bal4Response response = new Bal4Response();
-	                    response.setId(report.getId());
-	                    response.setBienLaiThuan(report.getBienLaiThuan());
-	                    response.setChiPhiHuyDong(report.getChiPhiHuyDong());
-	                    response.setTyLeCasa(report.getTyLeCasa());
+	                	response.setId(report.getId());
+	                    response.setBienLaiThuan(RoundNumber.lamTron(report.getBienLaiThuan()));
+	                    response.setChiPhiHuyDong(RoundNumber.lamTron(report.getChiPhiHuyDong()));
+	                    response.setTyLeCasa(RoundNumber.lamTron(report.getTyLeCasa()));
 	                    return response;
 	                })
 	                .collect(Collectors.toList());
@@ -256,11 +255,11 @@ public class BankReportController {
 		list = listReport.stream()
 	                .map(report -> {
 	                	Bal5Response response = new Bal5Response();
-	                    response.setId(report.getId());
-	                    response.setCacKhoanLaiPhiPhaiThu(report.getCacKhoanLaiPhiPhaiThu());
-	                    response.setLaiPhiPhaiThuChoVayKhachHang(report.getLaiPhiPhaiThuChoVayKhachHang());
-	                    response.setTaiSanCoKhac(report.getTaiSanCoKhac());
-	                    response.setTSCoKhacTongTS(report.getTSCoKhacTongTS());
+	                	response.setId(report.getId());
+	                    response.setCacKhoanLaiPhiPhaiThu(RoundNumber.lamTron(report.getCacKhoanLaiPhiPhaiThu()));
+	                    response.setLaiPhiPhaiThuChoVayKhachHang(RoundNumber.lamTron(report.getLaiPhiPhaiThuChoVayKhachHang()));
+	                    response.setTaiSanCoKhac(RoundNumber.lamTron(report.getTaiSanCoKhac()));
+	                    response.setTSCoKhacTongTS(RoundNumber.lamTron(report.getTSCoKhacTongTS()));
 	                    return response;
 	                })
 	                .collect(Collectors.toList());
@@ -281,11 +280,11 @@ public class BankReportController {
 		list = listReport.stream()
 	                .map(report -> {
 	                	Bal6Response response = new Bal6Response();
-	                    response.setId(report.getId());
-	                    response.setNoCanLuuY(report.getNoCanLuuY());
-	                    response.setNoN2ChoVayKhachHang(report.getNoN2ChoVayKhachHang());
-	                    response.setNoXau(report.getNoXau());
-	                    response.setTyLeNoXau(report.getTyLeNoXau());
+	                	response.setId(report.getId());
+	                    response.setNoCanLuuY(RoundNumber.lamTron(report.getNoCanLuuY()));
+	                    response.setNoN2ChoVayKhachHang(RoundNumber.lamTron(report.getNoN2ChoVayKhachHang()));
+	                    response.setNoXau(RoundNumber.lamTron(report.getNoXau()));
+	                    response.setTyLeNoXau(RoundNumber.lamTron(report.getTyLeNoXau()));
 	                    return response;
 	                })
 	                .collect(Collectors.toList());
@@ -306,10 +305,10 @@ public class BankReportController {
 		list = listReport.stream()
 	                .map(report -> {
 	                	Bal7Response response = new Bal7Response();
-	                    response.setId(report.getId());
-	                    response.setDuPhongBaoNoXau(report.getDuPhongBaoNoXau());
-	                    response.setDuPhongRuiRoChoVayKhachHang(report.getDuPhongRuiRoChoVayKhachHang());
-	                    response.setNoXau(report.getNoXau());
+	                	response.setId(report.getId());
+	                    response.setDuPhongBaoNoXau(RoundNumber.lamTron(report.getDuPhongBaoNoXau()));
+	                    response.setDuPhongRuiRoChoVayKhachHang(RoundNumber.lamTron(report.getDuPhongRuiRoChoVayKhachHang()));
+	                    response.setNoXau(RoundNumber.lamTron(report.getNoXau()));
 	                    return response;
 	                })
 	                .collect(Collectors.toList());
@@ -330,9 +329,9 @@ public class BankReportController {
 		list = listReport.stream()
 	                .map(report -> {
 	                	Bal8Response response = new Bal8Response();
-	                    response.setId(report.getId());
-	                    response.setNoN25VCSH(report.getNoN25VCSH());
-	                    response.setVonChuSoHuu(report.getVonChuSoHuu());
+	                	response.setId(report.getId());
+	                    response.setNoN25VCSH(RoundNumber.lamTron(report.getNoN25VCSH()));
+	                    response.setVonChuSoHuu(RoundNumber.lamTron(report.getVonChuSoHuu()));
 	                    return response;
 	                })
 	                .collect(Collectors.toList());
@@ -348,15 +347,15 @@ public class BankReportController {
 		if ("year".equals(type)) {
 			listReport =  nhNamRepository.findByStockForPerf(stock,pageableNam);
 		} else {
-			listReport =	nhQuyRepository.findByStockForPerf(stock,pageableQuy);
+			listReport =	nhQuyRepository.findByStockForPerf(stock,pageableToanQuy);
 		}
 		list = listReport.stream()
 	                .map(report -> {
 	                	Bal9Response response = new Bal9Response();
-	                    response.setId(report.getId());
-	                    response.setChoVayDaiHan(report.getChoVayDaiHan());
-	                    response.setChoVayNganHan(report.getChoVayNganHan());
-	                    response.setChoVayTrungHan(report.getChoVayTrungHan());
+	                	response.setId(report.getId());
+	                    response.setChoVayDaiHan(RoundNumber.lamTron(report.getChoVayDaiHan()));
+	                    response.setChoVayNganHan(RoundNumber.lamTron(report.getChoVayNganHan()));
+	                    response.setChoVayTrungHan(RoundNumber.lamTron(report.getChoVayTrungHan()));
 	                    return response;
 	                })
 	                .collect(Collectors.toList());
@@ -372,18 +371,18 @@ public class BankReportController {
 		if ("year".equals(type)) {
 			listReport =  nhNamRepository.findByStockForPerf(stock,pageableNam);
 		} else {
-			listReport =	nhQuyRepository.findByStockForPerf(stock,pageableQuy);
+			listReport =	nhQuyRepository.findByStockForPerf(stock,pageableToanQuy);
 		}
 		list = listReport.stream()
 	                .map(report -> {
 	                	Bal10Response response = new Bal10Response();
-	                    response.setId(report.getId());
-	                    response.setCaNhan(report.getCaNhan());
-	                    response.setCongTyTNHHVaCoPhan(report.getCongTyTNHHVaCoPhan());
-	                    response.setDoanhNghiepNhaNuoc(report.getDoanhNghiepNhaNuoc());
-	                    response.setDoanhNghiepNuocNgoai(report.getDoanhNghiepNuocNgoai());
-	                    response.setHopTacXaVaCongTyTuNhan(report.getHopTacXaVaCongTyTuNhan());
-	                    response.setKhac(report.getKhac());
+	                	response.setId(report.getId());
+	                    response.setCaNhan(RoundNumber.lamTron(report.getCaNhan()));
+	                    response.setCongTyTNHHVaCoPhan(RoundNumber.lamTron(report.getCongTyTNHHVaCoPhan()));
+	                    response.setDoanhNghiepNhaNuoc(RoundNumber.lamTron(report.getDoanhNghiepNhaNuoc()));
+	                    response.setDoanhNghiepNuocNgoai(RoundNumber.lamTron(report.getDoanhNghiepNuocNgoai()));
+	                    response.setHopTacXaVaCongTyTuNhan(RoundNumber.lamTron(report.getHopTacXaVaCongTyTuNhan()));
+	                    response.setKhac(RoundNumber.lamTron(report.getKhac()));
 	                    return response;
 	                })
 	                .collect(Collectors.toList());
@@ -399,17 +398,17 @@ public class BankReportController {
 		if ("year".equals(type)) {
 			listReport =  nhNamRepository.findByStockForPerf(stock,pageableNam);
 		} else {
-			listReport =	nhQuyRepository.findByStockForPerf(stock,pageableQuy);
+			listReport =	nhQuyRepository.findByStockForPerf(stock,pageableToanQuy);
 		}
 		list = listReport.stream()
 	                .map(report -> {
 	                	Bal11Response response = new Bal11Response();
-	                    response.setId(report.getId());
-	                    response.setTienGuiChoNhungMucDichRiengBiet(report.getTienGuiChoNhungMucDichRiengBiet());
-	                    response.setTienGuiCoKyHan(report.getTienGuiCoKyHan());
-	                    response.setTienGuiKhongKyHan(report.getTienGuiKhongKyHan());
-	                    response.setTienGuiKyQuy(report.getTienGuiKyQuy());
-	                    response.setTienGuiTietKiem(report.getTienGuiTietKiem());
+	                	response.setId(report.getId());
+	                    response.setTienGuiChoNhungMucDichRiengBiet(RoundNumber.lamTron(report.getTienGuiChoNhungMucDichRiengBiet()));
+	                    response.setTienGuiCoKyHan(RoundNumber.lamTron(report.getTienGuiCoKyHan()));
+	                    response.setTienGuiKhongKyHan(RoundNumber.lamTron(report.getTienGuiKhongKyHan()));
+	                    response.setTienGuiKyQuy(RoundNumber.lamTron(report.getTienGuiKyQuy()));
+	                    response.setTienGuiTietKiem(RoundNumber.lamTron(report.getTienGuiTietKiem()));
 	                    return response;
 	                })
 	                .collect(Collectors.toList());
@@ -425,17 +424,17 @@ public class BankReportController {
 		if ("year".equals(type)) {
 			listReport =  nhNamRepository.findByStockForPerf(stock,pageableNam);
 		} else {
-			listReport =	nhQuyRepository.findByStockForPerf(stock,pageableQuy);
+			listReport =	nhQuyRepository.findByStockForPerf(stock,pageableToanQuy);
 		}
 		list = listReport.stream()
 	                .map(report -> {
 	                	Bal12Response response = new Bal12Response();
-	                    response.setId(report.getId());
-	                    response.setCaNhanTG(report.getCaNhanTG());
-	                    response.setDoanhNghiepNhaNuocTG(report.getDoanhNghiepNhaNuocTG());
-	                    response.setDoanhNghiepNuocNgoaiTG(report.getDoanhNghiepNuocNgoaiTG());
-	                    response.setDoanhNghiepTuNhanTG(report.getDoanhNghiepTuNhanTG());
-	                    response.setKhacTG(report.getKhacTG());
+	                	response.setId(report.getId());
+	                    response.setCaNhanTG(RoundNumber.lamTron(report.getCaNhanTG()));
+	                    response.setDoanhNghiepNhaNuocTG(RoundNumber.lamTron(report.getDoanhNghiepNhaNuocTG()));
+	                    response.setDoanhNghiepNuocNgoaiTG(RoundNumber.lamTron(report.getDoanhNghiepNuocNgoaiTG()));
+	                    response.setDoanhNghiepTuNhanTG(RoundNumber.lamTron(report.getDoanhNghiepTuNhanTG()));
+	                    response.setKhacTG(RoundNumber.lamTron(report.getKhacTG()));
 	                    return response;
 	                })
 	                .collect(Collectors.toList());

@@ -4,25 +4,27 @@ import com.starter.InvestAndChill.jwt.payload.response.ReportReponse;
 
 public class Perf7Response extends ReportReponse{
 	
-	private Double roe;
-	public Double getRoe() {
+	private String roe;
+	private String roic;
+	private String laiVay;
+	public String getRoe() {
 		return roe;
 	}
-	public void setRoe(Double roe) {
+	public void setRoe(String roe) {
 		this.roe = roe;
 	}
-	public Double getRoic() {
+	public String getRoic() {
 		return roic;
 	}
-	public void setRoic(Double roic) {
+	public void setRoic(String roic) {
 		this.roic = roic;
 	}
-	public Double getLaiVay() {
+	public String getLaiVay() {
 		return laiVay;
 	}
-	public void setLaiVay(Double laiVay) {
+	public void setLaiVay(String laiVay) {
 		this.laiVay = laiVay;
 	}
-	private Double roic;
-	private Double laiVay;
+	
+	
 }

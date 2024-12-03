@@ -3,32 +3,33 @@ package com.starter.InvestAndChill.jwt.payload.response.PTC;
 import com.starter.InvestAndChill.jwt.payload.response.ReportReponse;
 
 public class Perf3Response extends ReportReponse{
-	private Double SalesTrailing;
-	private Double GPMTrailing;
-	private Double SGAMTrailing;
-	private Double EBITmTrailing;
-	public Double getSalesTrailing() {
+	private String SalesTrailing;
+	private String GPMTrailing;
+	private String SGAMTrailing;
+	private String EBITmTrailing;
+	public String getSalesTrailing() {
 		return SalesTrailing;
 	}
-	public void setSalesTrailing(Double salesTrailing) {
+	public void setSalesTrailing(String salesTrailing) {
 		SalesTrailing = salesTrailing;
 	}
-	public Double getGPMTrailing() {
+	public String getGPMTrailing() {
 		return GPMTrailing;
 	}
-	public void setGPMTrailing(Double gPMTrailing) {
+	public void setGPMTrailing(String gPMTrailing) {
 		GPMTrailing = gPMTrailing;
 	}
-	public Double getSGAMTrailing() {
+	public String getSGAMTrailing() {
 		return SGAMTrailing;
 	}
-	public void setSGAMTrailing(Double sGAMTrailing) {
+	public void setSGAMTrailing(String sGAMTrailing) {
 		SGAMTrailing = sGAMTrailing;
 	}
-	public Double getEBITmTrailing() {
+	public String getEBITmTrailing() {
 		return EBITmTrailing;
 	}
-	public void setEBITmTrailing(Double eBITmTrailing) {
+	public void setEBITmTrailing(String eBITmTrailing) {
 		EBITmTrailing = eBITmTrailing;
 	}
+	
 }

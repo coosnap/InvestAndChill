@@ -3,54 +3,55 @@ package com.starter.InvestAndChill.jwt.payload.response.PTC;
 import com.starter.InvestAndChill.jwt.payload.response.ReportReponse;
 
 public class Bal1Response extends ReportReponse{
-	private Double tienDTNGDaoHan;
-	private Double phaiThu;
-	private Double hangTonKhoRong;
-	private Double taiSanCoDinh;
-	private Double taiSanDoDangDaiHan;
-	private Double giaTriRongTaiSanDauTu;
-	private Double taiSanKhac;
-	public Double getTienDTNGDaoHan() {
+	private String tienDTNGDaoHan;
+	private String phaiThu;
+	private String hangTonKhoRong;
+	private String taiSanCoDinh;
+	private String taiSanDoDangDaiHan;
+	private String giaTriRongTaiSanDauTu;
+	private String taiSanKhac;
+	public String getTienDTNGDaoHan() {
 		return tienDTNGDaoHan;
 	}
-	public void setTienDTNGDaoHan(Double tienDTNGDaoHan) {
+	public void setTienDTNGDaoHan(String tienDTNGDaoHan) {
 		this.tienDTNGDaoHan = tienDTNGDaoHan;
 	}
-	public Double getPhaiThu() {
+	public String getPhaiThu() {
 		return phaiThu;
 	}
-	public void setPhaiThu(Double phaiThu) {
+	public void setPhaiThu(String phaiThu) {
 		this.phaiThu = phaiThu;
 	}
-	public Double getHangTonKhoRong() {
+	public String getHangTonKhoRong() {
 		return hangTonKhoRong;
 	}
-	public void setHangTonKhoRong(Double hangTonKhoRong) {
+	public void setHangTonKhoRong(String hangTonKhoRong) {
 		this.hangTonKhoRong = hangTonKhoRong;
 	}
-	public Double getTaiSanCoDinh() {
+	public String getTaiSanCoDinh() {
 		return taiSanCoDinh;
 	}
-	public void setTaiSanCoDinh(Double taiSanCoDinh) {
+	public void setTaiSanCoDinh(String taiSanCoDinh) {
 		this.taiSanCoDinh = taiSanCoDinh;
 	}
-	public Double getTaiSanDoDangDaiHan() {
+	public String getTaiSanDoDangDaiHan() {
 		return taiSanDoDangDaiHan;
 	}
-	public void setTaiSanDoDangDaiHan(Double taiSanDoDangDaiHan) {
+	public void setTaiSanDoDangDaiHan(String taiSanDoDangDaiHan) {
 		this.taiSanDoDangDaiHan = taiSanDoDangDaiHan;
 	}
-	public Double getGiaTriRongTaiSanDauTu() {
+	public String getGiaTriRongTaiSanDauTu() {
 		return giaTriRongTaiSanDauTu;
 	}
-	public void setGiaTriRongTaiSanDauTu(Double giaTriRongTaiSanDauTu) {
+	public void setGiaTriRongTaiSanDauTu(String giaTriRongTaiSanDauTu) {
 		this.giaTriRongTaiSanDauTu = giaTriRongTaiSanDauTu;
 	}
-	public Double getTaiSanKhac() {
+	public String getTaiSanKhac() {
 		return taiSanKhac;
 	}
-	public void setTaiSanKhac(Double taiSanKhac) {
+	public void setTaiSanKhac(String taiSanKhac) {
 		this.taiSanKhac = taiSanKhac;
 	}
+	
 	
 }

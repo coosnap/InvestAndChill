@@ -3,40 +3,41 @@ package com.starter.InvestAndChill.jwt.payload.response.PTC;
 import com.starter.InvestAndChill.jwt.payload.response.ReportReponse;
 
 public class Perf4Response extends ReportReponse{
-	private Double EBITTrailing;
-	private Double NetFinanceialTrailing;
-	private Double NetFinancialAdjustTrailing;
-	private Double NImgTrailing;
-	private Double EBITmTrailing;
-	public Double getEBITmTrailing() {
-		return EBITmTrailing;
-	}
-	public void setEBITmTrailing(Double eBITmTrailing) {
-		EBITmTrailing = eBITmTrailing;
-	}
-	public Double getEBITTrailing() {
+	private String EBITTrailing;
+	private String NetFinanceialTrailing;
+	private String NetFinancialAdjustTrailing;
+	private String NImgTrailing;
+	private String EBITmTrailing;
+	public String getEBITTrailing() {
 		return EBITTrailing;
 	}
-	public void setEBITTrailing(Double eBITTrailing) {
+	public void setEBITTrailing(String eBITTrailing) {
 		EBITTrailing = eBITTrailing;
 	}
-	public Double getNetFinanceialTrailing() {
+	public String getNetFinanceialTrailing() {
 		return NetFinanceialTrailing;
 	}
-	public void setNetFinanceialTrailing(Double netFinanceialTrailing) {
+	public void setNetFinanceialTrailing(String netFinanceialTrailing) {
 		NetFinanceialTrailing = netFinanceialTrailing;
 	}
-	public Double getNetFinancialAdjustTrailing() {
+	public String getNetFinancialAdjustTrailing() {
 		return NetFinancialAdjustTrailing;
 	}
-	public void setNetFinancialAdjustTrailing(Double netFinancialAdjustTrailing) {
+	public void setNetFinancialAdjustTrailing(String netFinancialAdjustTrailing) {
 		NetFinancialAdjustTrailing = netFinancialAdjustTrailing;
 	}
-	public Double getNImgTrailing() {
+	public String getNImgTrailing() {
 		return NImgTrailing;
 	}
-	public void setNImgTrailing(Double nImgTrailing) {
+	public void setNImgTrailing(String nImgTrailing) {
 		NImgTrailing = nImgTrailing;
 	}
+	public String getEBITmTrailing() {
+		return EBITmTrailing;
+	}
+	public void setEBITmTrailing(String eBITmTrailing) {
+		EBITmTrailing = eBITmTrailing;
+	}
+	
 
 }

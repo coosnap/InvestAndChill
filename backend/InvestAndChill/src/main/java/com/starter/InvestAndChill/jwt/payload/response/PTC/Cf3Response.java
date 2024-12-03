@@ -3,40 +3,41 @@ package com.starter.InvestAndChill.jwt.payload.response.PTC;
 import com.starter.InvestAndChill.jwt.payload.response.ReportReponse;
 
 public class Cf3Response extends ReportReponse{
-	private Double noVay;
-	private Double giaTriThuanDauTuNganHan;
-	private Double tienVaTuongDuongTien;
-	private Double dauTuNamGiuDenNgayDaoHan;
-	private Double tienLongTrongPhaiThuChoVay;
-	public Double getNoVay() {
+	private String noVay;
+	private String giaTriThuanDauTuNganHan;
+	private String tienVaTuongDuongTien;
+	private String dauTuNamGiuDenNgayDaoHan;
+	private String tienLongTrongPhaiThuChoVay;
+	public String getNoVay() {
 		return noVay;
 	}
-	public void setNoVay(Double noVay) {
+	public void setNoVay(String noVay) {
 		this.noVay = noVay;
 	}
-	public Double getGiaTriThuanDauTuNganHan() {
+	public String getGiaTriThuanDauTuNganHan() {
 		return giaTriThuanDauTuNganHan;
 	}
-	public void setGiaTriThuanDauTuNganHan(Double giaTriThuanDauTuNganHan) {
+	public void setGiaTriThuanDauTuNganHan(String giaTriThuanDauTuNganHan) {
 		this.giaTriThuanDauTuNganHan = giaTriThuanDauTuNganHan;
 	}
-	public Double getTienVaTuongDuongTien() {
+	public String getTienVaTuongDuongTien() {
 		return tienVaTuongDuongTien;
 	}
-	public void setTienVaTuongDuongTien(Double tienVaTuongDuongTien) {
+	public void setTienVaTuongDuongTien(String tienVaTuongDuongTien) {
 		this.tienVaTuongDuongTien = tienVaTuongDuongTien;
 	}
-	public Double getDauTuNamGiuDenNgayDaoHan() {
+	public String getDauTuNamGiuDenNgayDaoHan() {
 		return dauTuNamGiuDenNgayDaoHan;
 	}
-	public void setDauTuNamGiuDenNgayDaoHan(Double dauTuNamGiuDenNgayDaoHan) {
+	public void setDauTuNamGiuDenNgayDaoHan(String dauTuNamGiuDenNgayDaoHan) {
 		this.dauTuNamGiuDenNgayDaoHan = dauTuNamGiuDenNgayDaoHan;
 	}
-	public Double getTienLongTrongPhaiThuChoVay() {
+	public String getTienLongTrongPhaiThuChoVay() {
 		return tienLongTrongPhaiThuChoVay;
 	}
-	public void setTienLongTrongPhaiThuChoVay(Double tienLongTrongPhaiThuChoVay) {
+	public void setTienLongTrongPhaiThuChoVay(String tienLongTrongPhaiThuChoVay) {
 		this.tienLongTrongPhaiThuChoVay = tienLongTrongPhaiThuChoVay;
 	}
+	
 
 }

@@ -3,25 +3,28 @@ package com.starter.InvestAndChill.jwt.payload.response.nganhang;
 import com.starter.InvestAndChill.jwt.payload.response.ReportReponse;
 
 public class Perf1Response extends ReportReponse{
-	private Double tongThuNhapHoatDong;
-	private Double coDongCuaCongTyMe;
-	public Double getTongThuNhapHoatDong() {
+	private String tongThuNhapHoatDong;
+	private String coDongCuaCongTyMe;
+	private String bienLaiRong;
+	public String getTongThuNhapHoatDong() {
 		return tongThuNhapHoatDong;
 	}
-	public void setTongThuNhapHoatDong(Double tongThuNhapHoatDong) {
+	public void setTongThuNhapHoatDong(String tongThuNhapHoatDong) {
 		this.tongThuNhapHoatDong = tongThuNhapHoatDong;
 	}
-	public Double getCoDongCuaCongTyMe() {
+	public String getCoDongCuaCongTyMe() {
 		return coDongCuaCongTyMe;
 	}
-	public void setCoDongCuaCongTyMe(Double coDongCuaCongTyMe) {
+	public void setCoDongCuaCongTyMe(String coDongCuaCongTyMe) {
 		this.coDongCuaCongTyMe = coDongCuaCongTyMe;
 	}
-	public Double getBienLaiRong() {
+	public String getBienLaiRong() {
 		return bienLaiRong;
 	}
-	public void setBienLaiRong(Double bienLaiRong) {
+	public void setBienLaiRong(String bienLaiRong) {
 		this.bienLaiRong = bienLaiRong;
 	}
-	private Double bienLaiRong;
+	
+	
+	
 }
