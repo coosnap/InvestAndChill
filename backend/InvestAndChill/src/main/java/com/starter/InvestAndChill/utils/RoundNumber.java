@@ -4,14 +4,14 @@ import java.text.DecimalFormat;
 
 public class RoundNumber {
 	public static void main(String[] args) {
-        Double number = null;
+        Double number = 0.65;
 
         // Định dạng số với dấu phân cách phần nghìn và làm tròn
-        DecimalFormat formatter = new DecimalFormat("#,###.#");
+        DecimalFormat formatter = new DecimalFormat("#");
         String test;
         // In ra số đã được định dạng
         try {
-        	test = formatter.format(number);
+        	test = formatter.format(number*100);
         } catch (Exception e) {
 			test = null;
 		}
@@ -20,10 +20,21 @@ public class RoundNumber {
     }
 	
 	public static String lamTron(Double tyDong) {
-		DecimalFormat formatter = new DecimalFormat("#,###");
+		DecimalFormat formatter = new DecimalFormat("#");
 		String value;
 		try {
 			value = formatter.format(tyDong);
+		} catch (Exception e) {
+			value = null;
+		}
+		return value;
+	}
+	
+	public static String lamTronPhanTram(Double tyDong) {
+		DecimalFormat formatter = new DecimalFormat("#");
+		String value;
+		try {
+			value = formatter.format(tyDong*100);
 		} catch (Exception e) {
 			value = null;
 		}
