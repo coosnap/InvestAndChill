@@ -3,33 +3,32 @@ package com.starter.InvestAndChill.jwt.payload.response.PTC;
 import com.starter.InvestAndChill.jwt.payload.response.ReportReponse;
 
 public class Perf2Response extends ReportReponse{
-	private String loiNhuanCotLoi;
-	private String loiNhuanTaiChinh;
-	private String ThuNhapKhac;
-	private String LaiLoTuCongTyLienDoanh;
-	public String getLoiNhuanCotLoi() {
+	private Double loiNhuanCotLoi;
+	private Double loiNhuanTaiChinh;
+	private Double ThuNhapKhac;
+	private Double LaiLoTuCongTyLienDoanh;
+	public Double getLoiNhuanCotLoi() {
 		return loiNhuanCotLoi;
 	}
-	public void setLoiNhuanCotLoi(String loiNhuanCotLoi) {
+	public void setLoiNhuanCotLoi(Double loiNhuanCotLoi) {
 		this.loiNhuanCotLoi = loiNhuanCotLoi;
 	}
-	public String getLoiNhuanTaiChinh() {
+	public Double getLoiNhuanTaiChinh() {
 		return loiNhuanTaiChinh;
 	}
-	public void setLoiNhuanTaiChinh(String loiNhuanTaiChinh) {
+	public void setLoiNhuanTaiChinh(Double loiNhuanTaiChinh) {
 		this.loiNhuanTaiChinh = loiNhuanTaiChinh;
 	}
-	public String getThuNhapKhac() {
+	public Double getThuNhapKhac() {
 		return ThuNhapKhac;
 	}
-	public void setThuNhapKhac(String thuNhapKhac) {
+	public void setThuNhapKhac(Double thuNhapKhac) {
 		ThuNhapKhac = thuNhapKhac;
 	}
-	public String getLaiLoTuCongTyLienDoanh() {
+	public Double getLaiLoTuCongTyLienDoanh() {
 		return LaiLoTuCongTyLienDoanh;
 	}
-	public void setLaiLoTuCongTyLienDoanh(String laiLoTuCongTyLienDoanh) {
+	public void setLaiLoTuCongTyLienDoanh(Double laiLoTuCongTyLienDoanh) {
 		LaiLoTuCongTyLienDoanh = laiLoTuCongTyLienDoanh;
 	}
-	
 }

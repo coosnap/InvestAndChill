@@ -4,34 +4,33 @@ import com.starter.InvestAndChill.jwt.payload.response.ReportReponse;
 
 public class Bal6Response extends ReportReponse{
 
-	private String vayNganHanVCSH;
-	private String vayDaiHanVCSH;
-	private String vayVCSH;
-	private String laiVay;
-	public String getVayNganHanVCSH() {
+	private Double vayNganHanVCSH;
+	private Double vayDaiHanVCSH;
+	private Double vayVCSH;
+	private Double laiVay;
+	public Double getVayNganHanVCSH() {
 		return vayNganHanVCSH;
 	}
-	public void setVayNganHanVCSH(String vayNganHanVCSH) {
+	public void setVayNganHanVCSH(Double vayNganHanVCSH) {
 		this.vayNganHanVCSH = vayNganHanVCSH;
 	}
-	public String getVayDaiHanVCSH() {
+	public Double getVayDaiHanVCSH() {
 		return vayDaiHanVCSH;
 	}
-	public void setVayDaiHanVCSH(String vayDaiHanVCSH) {
+	public void setVayDaiHanVCSH(Double vayDaiHanVCSH) {
 		this.vayDaiHanVCSH = vayDaiHanVCSH;
 	}
-	public String getVayVCSH() {
+	public Double getVayVCSH() {
 		return vayVCSH;
 	}
-	public void setVayVCSH(String vayVCSH) {
+	public void setVayVCSH(Double vayVCSH) {
 		this.vayVCSH = vayVCSH;
 	}
-	public String getLaiVay() {
+	public Double getLaiVay() {
 		return laiVay;
 	}
-	public void setLaiVay(String laiVay) {
+	public void setLaiVay(Double laiVay) {
 		this.laiVay = laiVay;
 	}
-	
 
 }

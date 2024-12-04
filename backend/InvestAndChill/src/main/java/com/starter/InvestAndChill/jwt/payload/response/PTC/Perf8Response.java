@@ -4,41 +4,41 @@ import com.starter.InvestAndChill.jwt.payload.response.ReportReponse;
 
 public class Perf8Response extends ReportReponse{
 
-	private String AssetTurnover;
-	private String Leverage;
-	private String DEE;
-	private String roe;
-	private String NImgTrailing;
-	public String getAssetTurnover() {
+	private Double AssetTurnover;
+	private Double Leverage;
+	private Double DEE;
+	private Double roe;
+	private Double NImgTrailing;
+	public Double getAssetTurnover() {
 		return AssetTurnover;
 	}
-	public void setAssetTurnover(String assetTurnover) {
+	public void setAssetTurnover(Double assetTurnover) {
 		AssetTurnover = assetTurnover;
 	}
-	public String getLeverage() {
+	public Double getLeverage() {
 		return Leverage;
 	}
-	public void setLeverage(String leverage) {
+	public void setLeverage(Double leverage) {
 		Leverage = leverage;
 	}
-	public String getDEE() {
+	public Double getDEE() {
 		return DEE;
 	}
-	public void setDEE(String dEE) {
+	public void setDEE(Double dEE) {
 		DEE = dEE;
 	}
-	public String getRoe() {
+
+	public Double getRoe() {
 		return roe;
 	}
-	public void setRoe(String roe) {
+	public void setRoe(Double roe) {
 		this.roe = roe;
 	}
-	public String getNImgTrailing() {
+	public Double getNImgTrailing() {
 		return NImgTrailing;
 	}
-	public void setNImgTrailing(String nImgTrailing) {
+	public void setNImgTrailing(Double nImgTrailing) {
 		NImgTrailing = nImgTrailing;
 	}
-	
 
 }

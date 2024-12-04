@@ -4,42 +4,40 @@ import com.starter.InvestAndChill.jwt.payload.response.ReportReponse;
 
 public class Bal11Response extends ReportReponse{
 
-	private String tienGuiKhongKyHan;
-	private String tienGuiCoKyHan;
-	private String tienGuiTietKiem;
-	private String tienGuiKyQuy;
-	private String tienGuiChoNhungMucDichRiengBiet;
-	public String getTienGuiKhongKyHan() {
+	private Double tienGuiKhongKyHan;
+	private Double tienGuiCoKyHan;
+	private Double tienGuiTietKiem;
+	private Double tienGuiKyQuy;
+	private Double tienGuiChoNhungMucDichRiengBiet;
+	public Double getTienGuiKhongKyHan() {
 		return tienGuiKhongKyHan;
 	}
-	public void setTienGuiKhongKyHan(String tienGuiKhongKyHan) {
+	public void setTienGuiKhongKyHan(Double tienGuiKhongKyHan) {
 		this.tienGuiKhongKyHan = tienGuiKhongKyHan;
 	}
-	public String getTienGuiCoKyHan() {
+	public Double getTienGuiCoKyHan() {
 		return tienGuiCoKyHan;
 	}
-	public void setTienGuiCoKyHan(String tienGuiCoKyHan) {
+	public void setTienGuiCoKyHan(Double tienGuiCoKyHan) {
 		this.tienGuiCoKyHan = tienGuiCoKyHan;
 	}
-	public String getTienGuiTietKiem() {
+	public Double getTienGuiTietKiem() {
 		return tienGuiTietKiem;
 	}
-	public void setTienGuiTietKiem(String tienGuiTietKiem) {
+	public void setTienGuiTietKiem(Double tienGuiTietKiem) {
 		this.tienGuiTietKiem = tienGuiTietKiem;
 	}
-	public String getTienGuiKyQuy() {
+	public Double getTienGuiKyQuy() {
 		return tienGuiKyQuy;
 	}
-	public void setTienGuiKyQuy(String tienGuiKyQuy) {
+	public void setTienGuiKyQuy(Double tienGuiKyQuy) {
 		this.tienGuiKyQuy = tienGuiKyQuy;
 	}
-	public String getTienGuiChoNhungMucDichRiengBiet() {
+	public Double getTienGuiChoNhungMucDichRiengBiet() {
 		return tienGuiChoNhungMucDichRiengBiet;
 	}
-	public void setTienGuiChoNhungMucDichRiengBiet(String tienGuiChoNhungMucDichRiengBiet) {
+	public void setTienGuiChoNhungMucDichRiengBiet(Double tienGuiChoNhungMucDichRiengBiet) {
 		this.tienGuiChoNhungMucDichRiengBiet = tienGuiChoNhungMucDichRiengBiet;
 	}
-	
-	
 
 }

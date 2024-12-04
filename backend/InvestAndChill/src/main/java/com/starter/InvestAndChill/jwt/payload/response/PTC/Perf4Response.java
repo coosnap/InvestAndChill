@@ -3,41 +3,40 @@ package com.starter.InvestAndChill.jwt.payload.response.PTC;
 import com.starter.InvestAndChill.jwt.payload.response.ReportReponse;
 
 public class Perf4Response extends ReportReponse{
-	private String EBITTrailing;
-	private String NetFinanceialTrailing;
-	private String NetFinancialAdjustTrailing;
-	private String NImgTrailing;
-	private String EBITmTrailing;
-	public String getEBITTrailing() {
-		return EBITTrailing;
-	}
-	public void setEBITTrailing(String eBITTrailing) {
-		EBITTrailing = eBITTrailing;
-	}
-	public String getNetFinanceialTrailing() {
-		return NetFinanceialTrailing;
-	}
-	public void setNetFinanceialTrailing(String netFinanceialTrailing) {
-		NetFinanceialTrailing = netFinanceialTrailing;
-	}
-	public String getNetFinancialAdjustTrailing() {
-		return NetFinancialAdjustTrailing;
-	}
-	public void setNetFinancialAdjustTrailing(String netFinancialAdjustTrailing) {
-		NetFinancialAdjustTrailing = netFinancialAdjustTrailing;
-	}
-	public String getNImgTrailing() {
-		return NImgTrailing;
-	}
-	public void setNImgTrailing(String nImgTrailing) {
-		NImgTrailing = nImgTrailing;
-	}
-	public String getEBITmTrailing() {
+	private Double EBITTrailing;
+	private Double NetFinanceialTrailing;
+	private Double NetFinancialAdjustTrailing;
+	private Double NImgTrailing;
+	private Double EBITmTrailing;
+	public Double getEBITmTrailing() {
 		return EBITmTrailing;
 	}
-	public void setEBITmTrailing(String eBITmTrailing) {
+	public void setEBITmTrailing(Double eBITmTrailing) {
 		EBITmTrailing = eBITmTrailing;
 	}
-	
+	public Double getEBITTrailing() {
+		return EBITTrailing;
+	}
+	public void setEBITTrailing(Double eBITTrailing) {
+		EBITTrailing = eBITTrailing;
+	}
+	public Double getNetFinanceialTrailing() {
+		return NetFinanceialTrailing;
+	}
+	public void setNetFinanceialTrailing(Double netFinanceialTrailing) {
+		NetFinanceialTrailing = netFinanceialTrailing;
+	}
+	public Double getNetFinancialAdjustTrailing() {
+		return NetFinancialAdjustTrailing;
+	}
+	public void setNetFinancialAdjustTrailing(Double netFinancialAdjustTrailing) {
+		NetFinancialAdjustTrailing = netFinancialAdjustTrailing;
+	}
+	public Double getNImgTrailing() {
+		return NImgTrailing;
+	}
+	public void setNImgTrailing(Double nImgTrailing) {
+		NImgTrailing = nImgTrailing;
+	}
 
 }

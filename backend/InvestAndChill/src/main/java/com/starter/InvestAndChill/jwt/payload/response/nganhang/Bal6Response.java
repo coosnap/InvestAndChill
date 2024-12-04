@@ -3,35 +3,33 @@ package com.starter.InvestAndChill.jwt.payload.response.nganhang;
 import com.starter.InvestAndChill.jwt.payload.response.ReportReponse;
 
 public class Bal6Response extends ReportReponse{
-	private String noCanLuuY;
-	private String noXau;
-	private String noN2ChoVayKhachHang;
-	private String tyLeNoXau;
-	public String getNoCanLuuY() {
+	private Double noCanLuuY;
+	private Double noXau;
+	private Double noN2ChoVayKhachHang;
+	private Double tyLeNoXau;
+	public Double getNoCanLuuY() {
 		return noCanLuuY;
 	}
-	public void setNoCanLuuY(String noCanLuuY) {
+	public void setNoCanLuuY(Double noCanLuuY) {
 		this.noCanLuuY = noCanLuuY;
 	}
-	public String getNoXau() {
+	public Double getNoXau() {
 		return noXau;
 	}
-	public void setNoXau(String noXau) {
+	public void setNoXau(Double noXau) {
 		this.noXau = noXau;
 	}
-	public String getNoN2ChoVayKhachHang() {
+	public Double getNoN2ChoVayKhachHang() {
 		return noN2ChoVayKhachHang;
 	}
-	public void setNoN2ChoVayKhachHang(String noN2ChoVayKhachHang) {
+	public void setNoN2ChoVayKhachHang(Double noN2ChoVayKhachHang) {
 		this.noN2ChoVayKhachHang = noN2ChoVayKhachHang;
 	}
-	public String getTyLeNoXau() {
+	public Double getTyLeNoXau() {
 		return tyLeNoXau;
 	}
-	public void setTyLeNoXau(String tyLeNoXau) {
+	public void setTyLeNoXau(Double tyLeNoXau) {
 		this.tyLeNoXau = tyLeNoXau;
 	}
-	
-	
 
 }
