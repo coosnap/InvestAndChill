@@ -72,8 +72,8 @@ public class PTCReportController {
 	                    response.setTitle(Constants.PTC_perf1);
 	                    response.setDoanhSoThuan(RoundNumber.lamTron(report.getDoanhSoThuan()));
 	                    response.setLoiNhuanCuaCoDongCongTyMe(RoundNumber.lamTron(report.getLoiNhuanCuaCoDongCongTyMe()));
-	                    response.setBienLaiGop(RoundNumber.lamTron(report.getBienLaiGop()));
-	                    response.setBienLaiRong(RoundNumber.lamTron(report.getBienLaiRong()));
+	                    response.setBienLaiGop(RoundNumber.lamTronPhanTram(report.getBienLaiGop()));
+	                    response.setBienLaiRong(RoundNumber.lamTronPhanTram(report.getBienLaiRong()));
 	                    return response;
 	                })
 	                .collect(Collectors.toList());
@@ -116,9 +116,9 @@ public class PTCReportController {
                     Perf3Response response = new Perf3Response();
                     response.setId(report.getId());
                     response.setSalesTrailing(RoundNumber.lamTron(report.getSalesTrailing()));
-                    response.setGPMTrailing(RoundNumber.lamTron(report.getGPMTrailing()));
-                    response.setSGAMTrailing(RoundNumber.lamTron(report.getSGAMTrailing()));
-                    response.setEBITmTrailing(RoundNumber.lamTron(report.getEBITmTrailing()));
+                    response.setGPMTrailing(RoundNumber.lamTronPhanTram(report.getGPMTrailing()));
+                    response.setSGAMTrailing(RoundNumber.lamTronPhanTram(report.getSGAMTrailing()));
+                    response.setEBITmTrailing(RoundNumber.lamTronPhanTram(report.getEBITmTrailing()));
                     return response;
                 })
                 .collect(Collectors.toList());
@@ -140,8 +140,8 @@ public class PTCReportController {
                     response.setEBITTrailing(RoundNumber.lamTron(report.getEBITTrailing()));
                     response.setNetFinanceialTrailing(RoundNumber.lamTron(report.getNetFinanceialTrailing()));
                     response.setNetFinancialAdjustTrailing(RoundNumber.lamTron(report.getNetFinancialAdjustTrailing()));
-                    response.setNImgTrailing(RoundNumber.lamTron(report.getNImgTrailing()));
-                    response.setEBITmTrailing(RoundNumber.lamTron(report.getEBITmTrailing()));
+                    response.setNImgTrailing(RoundNumber.lamTronPhanTram(report.getNImgTrailing()));
+                    response.setEBITmTrailing(RoundNumber.lamTronPhanTram(report.getEBITmTrailing()));
                     return response;
                 })
                 .collect(Collectors.toList());
@@ -203,9 +203,9 @@ public class PTCReportController {
                 .map(report -> {
                 	Perf7Response response = new Perf7Response();
                     response.setId(report.getId());
-                    response.setRoe(RoundNumber.lamTron(report.getRoe()));
-                    response.setRoic(RoundNumber.lamTron(report.getRoic()));
-                    response.setLaiVay(RoundNumber.lamTron(report.getLaiVay()));
+                    response.setRoe(RoundNumber.lamTronPhanTram(report.getRoe()));
+                    response.setRoic(RoundNumber.lamTronPhanTram(report.getRoic()));
+                    response.setLaiVay(RoundNumber.lamTronPhanTram(report.getLaiVay()));
                     return response;
                 })
                 .collect(Collectors.toList());
@@ -224,10 +224,10 @@ public class PTCReportController {
                 .map(report -> {
                 	Perf8Response response = new Perf8Response();
                     response.setId(report.getId());
-                    response.setRoe(RoundNumber.lamTron(report.getRoe()));
+                    response.setRoe(RoundNumber.lamTronPhanTram(report.getRoe()));
                     response.setAssetTurnover(RoundNumber.lamTronLan(report.getAssetTurnover()));
                     response.setLeverage(RoundNumber.lamTronLan(report.getLeverage()));
-                    response.setNImgTrailing(RoundNumber.lamTron(report.getNImgTrailing()));
+                    response.setNImgTrailing(RoundNumber.lamTronPhanTram(report.getNImgTrailing()));
                     response.setDEE(RoundNumber.lamTronLan(report.getDEE()));
                     return response;
                 })
@@ -357,10 +357,10 @@ public class PTCReportController {
                 .map(report -> {
                 	Bal6Response response = new Bal6Response();
                 	response.setId(report.getId());
-                    response.setLaiVay(RoundNumber.lamTron(report.getLaiVay()));
-                    response.setVayDaiHanVCSH(RoundNumber.lamTron(report.getVayDaiHanVCSH()));
-                    response.setVayNganHanVCSH(RoundNumber.lamTron(report.getVayNganHanVCSH()));
-                    response.setVayVCSH(RoundNumber.lamTron(report.getVayVCSH()));
+                    response.setLaiVay(RoundNumber.lamTronPhanTram(report.getLaiVay()));
+                    response.setVayDaiHanVCSH(RoundNumber.lamTronPhanTram(report.getVayDaiHanVCSH()));
+                    response.setVayNganHanVCSH(RoundNumber.lamTronPhanTram(report.getVayNganHanVCSH()));
+                    response.setVayVCSH(RoundNumber.lamTronPhanTram(report.getVayVCSH()));
                     return response;
                 })
                 .collect(Collectors.toList());
@@ -454,7 +454,7 @@ public class PTCReportController {
                 })
                 .collect(Collectors.toList());
 		 return new ResponseEntity<>(list, HttpStatus.OK);
-	}
+	} 
 //	
 //	@GetMapping("/other1/{stock}")
 //	public ResponseEntity<?> other1(@PathVariable String stock,@RequestParam(required = false,name = "type") String type) {

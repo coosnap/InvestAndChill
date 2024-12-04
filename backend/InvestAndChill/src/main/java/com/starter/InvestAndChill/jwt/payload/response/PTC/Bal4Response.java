@@ -3,18 +3,18 @@ package com.starter.InvestAndChill.jwt.payload.response.PTC;
 import com.starter.InvestAndChill.jwt.payload.response.ReportReponse;
 
 public class Bal4Response extends ReportReponse{
-	private String NetDebt;
-	private String Workingcap;
-	public String getNetDebt() {
+	private Integer NetDebt;
+	private Integer Workingcap;
+	public Integer getNetDebt() {
 		return NetDebt;
 	}
-	public void setNetDebt(String netDebt) {
+	public void setNetDebt(Integer netDebt) {
 		NetDebt = netDebt;
 	}
-	public String getWorkingcap() {
+	public Integer getWorkingcap() {
 		return Workingcap;
 	}
-	public void setWorkingcap(String workingcap) {
+	public void setWorkingcap(Integer workingcap) {
 		Workingcap = workingcap;
 	}
 	

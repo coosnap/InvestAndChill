@@ -4,25 +4,25 @@ import com.starter.InvestAndChill.jwt.payload.response.ReportReponse;
 
 public class Perf6Response extends ReportReponse{
 
-	private String EBITDATrailing;
-	private String InterestExpenseTrailing;
-	private String EBITTrailing;
-	public String getEBITDATrailing() {
+	private Integer EBITDATrailing;
+	private Integer InterestExpenseTrailing;
+	private Integer EBITTrailing;
+	public Integer getEBITDATrailing() {
 		return EBITDATrailing;
 	}
-	public void setEBITDATrailing(String eBITDATrailing) {
+	public void setEBITDATrailing(Integer eBITDATrailing) {
 		EBITDATrailing = eBITDATrailing;
 	}
-	public String getInterestExpenseTrailing() {
+	public Integer getInterestExpenseTrailing() {
 		return InterestExpenseTrailing;
 	}
-	public void setInterestExpenseTrailing(String interestExpenseTrailing) {
+	public void setInterestExpenseTrailing(Integer interestExpenseTrailing) {
 		InterestExpenseTrailing = interestExpenseTrailing;
 	}
-	public String getEBITTrailing() {
+	public Integer getEBITTrailing() {
 		return EBITTrailing;
 	}
-	public void setEBITTrailing(String eBITTrailing) {
+	public void setEBITTrailing(Integer eBITTrailing) {
 		EBITTrailing = eBITTrailing;
 	}
 	

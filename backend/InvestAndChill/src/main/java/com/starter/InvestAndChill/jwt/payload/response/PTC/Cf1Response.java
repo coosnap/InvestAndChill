@@ -4,33 +4,33 @@ import com.starter.InvestAndChill.jwt.payload.response.ReportReponse;
 
 public class Cf1Response extends ReportReponse{
 
-	private String luuChuyenTienTeRongTuCacHoatDongSanXuatKinhDoanh;
-	private String luuChuyenTienTeRongTuCacHoatDongDauTu;
-	private String luuChuyenTienTeTuHoatDongTaiChinh;
-	private String fcf;
-	public String getLuuChuyenTienTeRongTuCacHoatDongSanXuatKinhDoanh() {
+	private Integer luuChuyenTienTeRongTuCacHoatDongSanXuatKinhDoanh;
+	private Integer luuChuyenTienTeRongTuCacHoatDongDauTu;
+	private Integer luuChuyenTienTeTuHoatDongTaiChinh;
+	private Integer fcf;
+	public Integer getLuuChuyenTienTeRongTuCacHoatDongSanXuatKinhDoanh() {
 		return luuChuyenTienTeRongTuCacHoatDongSanXuatKinhDoanh;
 	}
 	public void setLuuChuyenTienTeRongTuCacHoatDongSanXuatKinhDoanh(
-			String luuChuyenTienTeRongTuCacHoatDongSanXuatKinhDoanh) {
+			Integer luuChuyenTienTeRongTuCacHoatDongSanXuatKinhDoanh) {
 		this.luuChuyenTienTeRongTuCacHoatDongSanXuatKinhDoanh = luuChuyenTienTeRongTuCacHoatDongSanXuatKinhDoanh;
 	}
-	public String getLuuChuyenTienTeRongTuCacHoatDongDauTu() {
+	public Integer getLuuChuyenTienTeRongTuCacHoatDongDauTu() {
 		return luuChuyenTienTeRongTuCacHoatDongDauTu;
 	}
-	public void setLuuChuyenTienTeRongTuCacHoatDongDauTu(String luuChuyenTienTeRongTuCacHoatDongDauTu) {
+	public void setLuuChuyenTienTeRongTuCacHoatDongDauTu(Integer luuChuyenTienTeRongTuCacHoatDongDauTu) {
 		this.luuChuyenTienTeRongTuCacHoatDongDauTu = luuChuyenTienTeRongTuCacHoatDongDauTu;
 	}
-	public String getLuuChuyenTienTeTuHoatDongTaiChinh() {
+	public Integer getLuuChuyenTienTeTuHoatDongTaiChinh() {
 		return luuChuyenTienTeTuHoatDongTaiChinh;
 	}
-	public void setLuuChuyenTienTeTuHoatDongTaiChinh(String luuChuyenTienTeTuHoatDongTaiChinh) {
+	public void setLuuChuyenTienTeTuHoatDongTaiChinh(Integer luuChuyenTienTeTuHoatDongTaiChinh) {
 		this.luuChuyenTienTeTuHoatDongTaiChinh = luuChuyenTienTeTuHoatDongTaiChinh;
 	}
-	public String getFcf() {
+	public Integer getFcf() {
 		return fcf;
 	}
-	public void setFcf(String fcf) {
+	public void setFcf(Integer fcf) {
 		this.fcf = fcf;
 	}
 	

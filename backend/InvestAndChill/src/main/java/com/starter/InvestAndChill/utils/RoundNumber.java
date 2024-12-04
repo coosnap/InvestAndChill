@@ -1,44 +1,32 @@
 package com.starter.InvestAndChill.utils;
 
-import java.text.DecimalFormat;
-
 public class RoundNumber {
 	public static void main(String[] args) {
-        Double number = null;
-
-        // Định dạng số với dấu phân cách phần nghìn và làm tròn
-        DecimalFormat formatter = new DecimalFormat("#,###.#");
-        String test;
-        // In ra số đã được định dạng
-        try {
-        	test = formatter.format(number);
-        } catch (Exception e) {
-			test = null;
-		}
-        //return test;
-        System.out.println(test);
+		double number = 5.6789;
+		System.out.println(lamTronLan(number));
     }
 	
-	public static String lamTron(Double tyDong) {
-		DecimalFormat formatter = new DecimalFormat("#,###");
-		String value;
-		try {
-			value = formatter.format(tyDong);
-		} catch (Exception e) {
-			value = null;
-		}
-		return value;
+	public static Integer lamTron(Double tyDong) {
+		if (tyDong == null)
+			return null;
+		long rounded = Math.round(tyDong);
+		Integer integerValue = (int) rounded; 
+		return integerValue;
 	}
 	
-	public static String lamTronLan(Double tyDong) {
-		DecimalFormat formatter = new DecimalFormat("#,###.#");
-		String value;
-		try {
-			value = formatter.format(tyDong);
-		} catch (Exception e) {
-			value = null;
-		}
-		return value;
+	public static Integer lamTronPhanTram(Double tyDong) {
+		if (tyDong == null)
+			return null;
+		long rounded = Math.round(tyDong*100);
+		Integer integerValue = (int) rounded; 
+		return integerValue;
+	}
+	
+	public static Double lamTronLan(Double tyDong) {
+		if (tyDong == null)
+			return null;
+		double rounded = Math.round(tyDong * 10.0) / 10.0;  // Làm tròn đến 1 chữ số thập phân
+		return rounded;
 	}
 	
 }

@@ -3,25 +3,25 @@ package com.starter.InvestAndChill.jwt.payload.response.PTC;
 import com.starter.InvestAndChill.jwt.payload.response.ReportReponse;
 
 public class Bal5Response extends ReportReponse{
-	private String vongQuayHangTonKho;
-	private String vongQuayPhaiThu;
-	private String vongQuayPhaiTra;
-	public String getVongQuayHangTonKho() {
+	private Double vongQuayHangTonKho;
+	private Double vongQuayPhaiThu;
+	private Double vongQuayPhaiTra;
+	public Double getVongQuayHangTonKho() {
 		return vongQuayHangTonKho;
 	}
-	public void setVongQuayHangTonKho(String vongQuayHangTonKho) {
+	public void setVongQuayHangTonKho(Double vongQuayHangTonKho) {
 		this.vongQuayHangTonKho = vongQuayHangTonKho;
 	}
-	public String getVongQuayPhaiThu() {
+	public Double getVongQuayPhaiThu() {
 		return vongQuayPhaiThu;
 	}
-	public void setVongQuayPhaiThu(String vongQuayPhaiThu) {
+	public void setVongQuayPhaiThu(Double vongQuayPhaiThu) {
 		this.vongQuayPhaiThu = vongQuayPhaiThu;
 	}
-	public String getVongQuayPhaiTra() {
+	public Double getVongQuayPhaiTra() {
 		return vongQuayPhaiTra;
 	}
-	public void setVongQuayPhaiTra(String vongQuayPhaiTra) {
+	public void setVongQuayPhaiTra(Double vongQuayPhaiTra) {
 		this.vongQuayPhaiTra = vongQuayPhaiTra;
 	}
 	

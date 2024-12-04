@@ -41,7 +41,7 @@ public class CKReportController {
 	CKRepositoryNam ckNamRepository;
 	Pageable pageableNam = PageRequest.of(0, 10); 
 	
-	@GetMapping("/perf1/{stock}")
+	/*@GetMapping("/perf1/{stock}")
 	public ResponseEntity<?> perf1(@PathVariable String stock, @RequestParam(required = false,name = "type") String type) {
 		List<ChungKhoanReport> listReport = new ArrayList<ChungKhoanReport>();
 		List<Perf1Response> list;
@@ -295,6 +295,6 @@ public class CKReportController {
 	                .collect(Collectors.toList());
 			
 		return new ResponseEntity<>(list, HttpStatus.OK);
-	}
+	}*/
 
 }

@@ -3,39 +3,39 @@ package com.starter.InvestAndChill.jwt.payload.response.PTC;
 import com.starter.InvestAndChill.jwt.payload.response.ReportReponse;
 
 public class Bal2Response extends ReportReponse{
-	private String noVay;
-	private String noChiemDung;
-	private String vonGop;
-	private String laiChuaPhanPhoi;
-	private String vcshKhac;
-	public String getNoVay() {
+	private Integer noVay;
+	private Integer noChiemDung;
+	private Integer vonGop;
+	private Integer laiChuaPhanPhoi;
+	private Integer vcshKhac;
+	public Integer getNoVay() {
 		return noVay;
 	}
-	public void setNoVay(String noVay) {
+	public void setNoVay(Integer noVay) {
 		this.noVay = noVay;
 	}
-	public String getNoChiemDung() {
+	public Integer getNoChiemDung() {
 		return noChiemDung;
 	}
-	public void setNoChiemDung(String noChiemDung) {
+	public void setNoChiemDung(Integer noChiemDung) {
 		this.noChiemDung = noChiemDung;
 	}
-	public String getVonGop() {
+	public Integer getVonGop() {
 		return vonGop;
 	}
-	public void setVonGop(String vonGop) {
+	public void setVonGop(Integer vonGop) {
 		this.vonGop = vonGop;
 	}
-	public String getLaiChuaPhanPhoi() {
+	public Integer getLaiChuaPhanPhoi() {
 		return laiChuaPhanPhoi;
 	}
-	public void setLaiChuaPhanPhoi(String laiChuaPhanPhoi) {
+	public void setLaiChuaPhanPhoi(Integer laiChuaPhanPhoi) {
 		this.laiChuaPhanPhoi = laiChuaPhanPhoi;
 	}
-	public String getVcshKhac() {
+	public Integer getVcshKhac() {
 		return vcshKhac;
 	}
-	public void setVcshKhac(String vcshKhac) {
+	public void setVcshKhac(Integer vcshKhac) {
 		this.vcshKhac = vcshKhac;
 	}
 	
