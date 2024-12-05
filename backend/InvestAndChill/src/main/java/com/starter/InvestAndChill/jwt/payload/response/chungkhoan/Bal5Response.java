@@ -3,53 +3,53 @@ package com.starter.InvestAndChill.jwt.payload.response.chungkhoan;
 import com.starter.InvestAndChill.jwt.payload.response.ReportReponse;
 
 public class Bal5Response extends ReportReponse{
-	public Double getGPFVTPL() {
+	public Integer getGPFVTPL() {
 		return GPFVTPL;
 	}
-	public void setGPFVTPL(Double gPFVTPL) {
+	public void setGPFVTPL(Integer gPFVTPL) {
 		GPFVTPL = gPFVTPL;
 	}
-	public Double getGPCVMargin() {
+	public Integer getGPCVMargin() {
 		return GPCVMargin;
 	}
-	public void setGPCVMargin(Double gPCVMargin) {
+	public void setGPCVMargin(Integer gPCVMargin) {
 		GPCVMargin = gPCVMargin;
 	}
-	public Double getGPMoiGioi() {
+	public Integer getGPMoiGioi() {
 		return GPMoiGioi;
 	}
-	public void setGPMoiGioi(Double gPMoiGioi) {
+	public void setGPMoiGioi(Integer gPMoiGioi) {
 		GPMoiGioi = gPMoiGioi;
 	}
-	public Double getGPHTM() {
+	public Integer getGPHTM() {
 		return GPHTM;
 	}
-	public void setGPHTM(Double gPHTM) {
+	public void setGPHTM(Integer gPHTM) {
 		GPHTM = gPHTM;
 	}
-	public Double getGPAFS() {
+	public Integer getGPAFS() {
 		return GPAFS;
 	}
-	public void setGPAFS(Double gPAFS) {
+	public void setGPAFS(Integer gPAFS) {
 		GPAFS = gPAFS;
 	}
-	public Double getGPBaoLanhPhatHanh() {
+	public Integer getGPBaoLanhPhatHanh() {
 		return GPBaoLanhPhatHanh;
 	}
-	public void setGPBaoLanhPhatHanh(Double gPBaoLanhPhatHanh) {
+	public void setGPBaoLanhPhatHanh(Integer gPBaoLanhPhatHanh) {
 		GPBaoLanhPhatHanh = gPBaoLanhPhatHanh;
 	}
-	public Double getGPKhac() {
+	public Integer getGPKhac() {
 		return GPKhac;
 	}
-	public void setGPKhac(Double gPKhac) {
+	public void setGPKhac(Integer gPKhac) {
 		GPKhac = gPKhac;
 	}
-	private Double GPFVTPL;
-	private Double GPCVMargin;
-	private Double GPMoiGioi;
-	private Double GPHTM;
-	private Double GPAFS;
-	private Double GPBaoLanhPhatHanh;
-	private Double GPKhac;
+	private Integer GPFVTPL;
+	private Integer GPCVMargin;
+	private Integer GPMoiGioi;
+	private Integer GPHTM;
+	private Integer GPAFS;
+	private Integer GPBaoLanhPhatHanh;
+	private Integer GPKhac;
 }

@@ -3,25 +3,25 @@ package com.starter.InvestAndChill.jwt.payload.response.nganhang;
 import com.starter.InvestAndChill.jwt.payload.response.ReportReponse;
 
 public class Bal7Response extends ReportReponse{
-	private Double duPhongRuiRoChoVayKhachHang;
-	private Double duPhongBaoNoXau;
-	private Double noXau;
-	public Double getDuPhongRuiRoChoVayKhachHang() {
+	private Integer duPhongRuiRoChoVayKhachHang;
+	private Integer duPhongBaoNoXau;
+	private Integer noXau;
+	public Integer getDuPhongRuiRoChoVayKhachHang() {
 		return duPhongRuiRoChoVayKhachHang;
 	}
-	public void setDuPhongRuiRoChoVayKhachHang(Double duPhongRuiRoChoVayKhachHang) {
+	public void setDuPhongRuiRoChoVayKhachHang(Integer duPhongRuiRoChoVayKhachHang) {
 		this.duPhongRuiRoChoVayKhachHang = duPhongRuiRoChoVayKhachHang;
 	}
-	public Double getDuPhongBaoNoXau() {
+	public Integer getDuPhongBaoNoXau() {
 		return duPhongBaoNoXau;
 	}
-	public void setDuPhongBaoNoXau(Double duPhongBaoNoXau) {
+	public void setDuPhongBaoNoXau(Integer duPhongBaoNoXau) {
 		this.duPhongBaoNoXau = duPhongBaoNoXau;
 	}
-	public Double getNoXau() {
+	public Integer getNoXau() {
 		return noXau;
 	}
-	public void setNoXau(Double noXau) {
+	public void setNoXau(Integer noXau) {
 		this.noXau = noXau;
 	}
 

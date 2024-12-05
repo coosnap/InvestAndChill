@@ -4,25 +4,25 @@ import com.starter.InvestAndChill.jwt.payload.response.ReportReponse;
 
 public class Bal4Response extends ReportReponse{
 	
-	private Double chiPhiHuyDong;
-	private Double bienLaiThuan;
-	private Double tyLeCasa;
-	public Double getTyLeCasa() {
+	private Integer chiPhiHuyDong;
+	private Integer bienLaiThuan;
+	private Integer tyLeCasa;
+	public Integer getTyLeCasa() {
 		return tyLeCasa;
 	}
-	public void setTyLeCasa(Double tyLeCasa) {
+	public void setTyLeCasa(Integer tyLeCasa) {
 		this.tyLeCasa = tyLeCasa;
 	}
-	public Double getChiPhiHuyDong() {
+	public Integer getChiPhiHuyDong() {
 		return chiPhiHuyDong;
 	}
-	public void setChiPhiHuyDong(Double chiPhiHuyDong) {
+	public void setChiPhiHuyDong(Integer chiPhiHuyDong) {
 		this.chiPhiHuyDong = chiPhiHuyDong;
 	}
-	public Double getBienLaiThuan() {
+	public Integer getBienLaiThuan() {
 		return bienLaiThuan;
 	}
-	public void setBienLaiThuan(Double bienLaiThuan) {
+	public void setBienLaiThuan(Integer bienLaiThuan) {
 		this.bienLaiThuan = bienLaiThuan;
 	}
 

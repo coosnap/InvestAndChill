@@ -4,26 +4,26 @@ import com.starter.InvestAndChill.jwt.payload.response.ReportReponse;
 
 public class Perf2Response extends ReportReponse{
 
-	private Double CPHoatDongTTNHD;
-	private Double CPDuPhongTTNHD;
-	public Double getCPHoatDongTTNHD() {
+	private Integer CPHoatDongTTNHD;
+	private Integer CPDuPhongTTNHD;
+	public Integer getCPHoatDongTTNHD() {
 		return CPHoatDongTTNHD;
 	}
-	public void setCPHoatDongTTNHD(Double cPHoatDongTTNHD) {
+	public void setCPHoatDongTTNHD(Integer cPHoatDongTTNHD) {
 		CPHoatDongTTNHD = cPHoatDongTTNHD;
 	}
-	public Double getCPDuPhongTTNHD() {
+	public Integer getCPDuPhongTTNHD() {
 		return CPDuPhongTTNHD;
 	}
-	public void setCPDuPhongTTNHD(Double cPDuPhongTTNHD) {
+	public void setCPDuPhongTTNHD(Integer cPDuPhongTTNHD) {
 		CPDuPhongTTNHD = cPDuPhongTTNHD;
 	}
-	public Double getTongCPTTNHD() {
+	public Integer getTongCPTTNHD() {
 		return TongCPTTNHD;
 	}
-	public void setTongCPTTNHD(Double tongCPTTNHD) {
+	public void setTongCPTTNHD(Integer tongCPTTNHD) {
 		TongCPTTNHD = tongCPTTNHD;
 	}
-	private Double TongCPTTNHD;
+	private Integer TongCPTTNHD;
 
 }

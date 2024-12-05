@@ -3,53 +3,53 @@ package com.starter.InvestAndChill.jwt.payload.response.chungkhoan;
 import com.starter.InvestAndChill.jwt.payload.response.ReportReponse;
 
 public class Bal4Response extends ReportReponse{
-	private Double laiTuCacTaiSanTaiChinhGhiNhanThongQuaLaiLo;
-	private Double laiTuCacKhoanChoVayVaPhaiThu;
-	private Double doanhThuNghiepVuMoiGioiChungKhoan;
-	private Double laiTuCacKhoanDauTuNamGiuDenNgayDaoHan;
-	private Double laiTuCacTaiSanTaiChinhSanSangDeBan;
-	private Double doanhThuNghiepVuBaoLanhPhatHanhChungKhoan;
-	public Double getLaiTuCacTaiSanTaiChinhGhiNhanThongQuaLaiLo() {
+	private Integer laiTuCacTaiSanTaiChinhGhiNhanThongQuaLaiLo;
+	private Integer laiTuCacKhoanChoVayVaPhaiThu;
+	private Integer doanhThuNghiepVuMoiGioiChungKhoan;
+	private Integer laiTuCacKhoanDauTuNamGiuDenNgayDaoHan;
+	private Integer laiTuCacTaiSanTaiChinhSanSangDeBan;
+	private Integer doanhThuNghiepVuBaoLanhPhatHanhChungKhoan;
+	public Integer getLaiTuCacTaiSanTaiChinhGhiNhanThongQuaLaiLo() {
 		return laiTuCacTaiSanTaiChinhGhiNhanThongQuaLaiLo;
 	}
-	public void setLaiTuCacTaiSanTaiChinhGhiNhanThongQuaLaiLo(Double laiTuCacTaiSanTaiChinhGhiNhanThongQuaLaiLo) {
+	public void setLaiTuCacTaiSanTaiChinhGhiNhanThongQuaLaiLo(Integer laiTuCacTaiSanTaiChinhGhiNhanThongQuaLaiLo) {
 		this.laiTuCacTaiSanTaiChinhGhiNhanThongQuaLaiLo = laiTuCacTaiSanTaiChinhGhiNhanThongQuaLaiLo;
 	}
-	public Double getLaiTuCacKhoanChoVayVaPhaiThu() {
+	public Integer getLaiTuCacKhoanChoVayVaPhaiThu() {
 		return laiTuCacKhoanChoVayVaPhaiThu;
 	}
-	public void setLaiTuCacKhoanChoVayVaPhaiThu(Double laiTuCacKhoanChoVayVaPhaiThu) {
+	public void setLaiTuCacKhoanChoVayVaPhaiThu(Integer laiTuCacKhoanChoVayVaPhaiThu) {
 		this.laiTuCacKhoanChoVayVaPhaiThu = laiTuCacKhoanChoVayVaPhaiThu;
 	}
-	public Double getDoanhThuNghiepVuMoiGioiChungKhoan() {
+	public Integer getDoanhThuNghiepVuMoiGioiChungKhoan() {
 		return doanhThuNghiepVuMoiGioiChungKhoan;
 	}
-	public void setDoanhThuNghiepVuMoiGioiChungKhoan(Double doanhThuNghiepVuMoiGioiChungKhoan) {
+	public void setDoanhThuNghiepVuMoiGioiChungKhoan(Integer doanhThuNghiepVuMoiGioiChungKhoan) {
 		this.doanhThuNghiepVuMoiGioiChungKhoan = doanhThuNghiepVuMoiGioiChungKhoan;
 	}
-	public Double getLaiTuCacKhoanDauTuNamGiuDenNgayDaoHan() {
+	public Integer getLaiTuCacKhoanDauTuNamGiuDenNgayDaoHan() {
 		return laiTuCacKhoanDauTuNamGiuDenNgayDaoHan;
 	}
-	public void setLaiTuCacKhoanDauTuNamGiuDenNgayDaoHan(Double laiTuCacKhoanDauTuNamGiuDenNgayDaoHan) {
+	public void setLaiTuCacKhoanDauTuNamGiuDenNgayDaoHan(Integer laiTuCacKhoanDauTuNamGiuDenNgayDaoHan) {
 		this.laiTuCacKhoanDauTuNamGiuDenNgayDaoHan = laiTuCacKhoanDauTuNamGiuDenNgayDaoHan;
 	}
-	public Double getLaiTuCacTaiSanTaiChinhSanSangDeBan() {
+	public Integer getLaiTuCacTaiSanTaiChinhSanSangDeBan() {
 		return laiTuCacTaiSanTaiChinhSanSangDeBan;
 	}
-	public void setLaiTuCacTaiSanTaiChinhSanSangDeBan(Double laiTuCacTaiSanTaiChinhSanSangDeBan) {
+	public void setLaiTuCacTaiSanTaiChinhSanSangDeBan(Integer laiTuCacTaiSanTaiChinhSanSangDeBan) {
 		this.laiTuCacTaiSanTaiChinhSanSangDeBan = laiTuCacTaiSanTaiChinhSanSangDeBan;
 	}
-	public Double getDoanhThuNghiepVuBaoLanhPhatHanhChungKhoan() {
+	public Integer getDoanhThuNghiepVuBaoLanhPhatHanhChungKhoan() {
 		return doanhThuNghiepVuBaoLanhPhatHanhChungKhoan;
 	}
-	public void setDoanhThuNghiepVuBaoLanhPhatHanhChungKhoan(Double doanhThuNghiepVuBaoLanhPhatHanhChungKhoan) {
+	public void setDoanhThuNghiepVuBaoLanhPhatHanhChungKhoan(Integer doanhThuNghiepVuBaoLanhPhatHanhChungKhoan) {
 		this.doanhThuNghiepVuBaoLanhPhatHanhChungKhoan = doanhThuNghiepVuBaoLanhPhatHanhChungKhoan;
 	}
-	public Double getTongDoanhThuKhac() {
+	public Integer getTongDoanhThuKhac() {
 		return tongDoanhThuKhac;
 	}
-	public void setTongDoanhThuKhac(Double tongDoanhThuKhac) {
+	public void setTongDoanhThuKhac(Integer tongDoanhThuKhac) {
 		this.tongDoanhThuKhac = tongDoanhThuKhac;
 	}
-	private Double tongDoanhThuKhac;
+	private Integer tongDoanhThuKhac;
 }

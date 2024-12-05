@@ -3,18 +3,18 @@ package com.starter.InvestAndChill.jwt.payload.response.nganhang;
 import com.starter.InvestAndChill.jwt.payload.response.ReportReponse;
 
 public class Perf4Response extends ReportReponse{
-	public Double getRoe() {
+	public Integer getRoe() {
 		return roe;
 	}
-	public void setRoe(Double roe) {
+	public void setRoe(Integer roe) {
 		this.roe = roe;
 	}
-	public Double getRoa() {
+	public Integer getRoa() {
 		return roa;
 	}
-	public void setRoa(Double roa) {
+	public void setRoa(Integer roa) {
 		this.roa = roa;
 	}
-	private Double roe;
-	private Double roa;
+	private Integer roe;
+	private Integer roa;
 }

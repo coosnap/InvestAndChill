@@ -4,46 +4,46 @@ import com.starter.InvestAndChill.jwt.payload.response.ReportReponse;
 
 public class Bal2Response extends ReportReponse{
 	
-	public Double getTienVaTaiSanTuongDuongTien() {
+	public Integer getTienVaTaiSanTuongDuongTien() {
 		return tienVaTaiSanTuongDuongTien;
 	}
-	public void setTienVaTaiSanTuongDuongTien(Double tienVaTaiSanTuongDuongTien) {
+	public void setTienVaTaiSanTuongDuongTien(Integer tienVaTaiSanTuongDuongTien) {
 		this.tienVaTaiSanTuongDuongTien = tienVaTaiSanTuongDuongTien;
 	}
-	public Double getCacTaiSanTaiChinhThongQuaGhiNhanLaiLo() {
+	public Integer getCacTaiSanTaiChinhThongQuaGhiNhanLaiLo() {
 		return cacTaiSanTaiChinhThongQuaGhiNhanLaiLo;
 	}
-	public void setCacTaiSanTaiChinhThongQuaGhiNhanLaiLo(Double cacTaiSanTaiChinhThongQuaGhiNhanLaiLo) {
+	public void setCacTaiSanTaiChinhThongQuaGhiNhanLaiLo(Integer cacTaiSanTaiChinhThongQuaGhiNhanLaiLo) {
 		this.cacTaiSanTaiChinhThongQuaGhiNhanLaiLo = cacTaiSanTaiChinhThongQuaGhiNhanLaiLo;
 	}
-	public Double getCacKhoanDauTuNamGiuDenNgayDaoHan() {
+	public Integer getCacKhoanDauTuNamGiuDenNgayDaoHan() {
 		return cacKhoanDauTuNamGiuDenNgayDaoHan;
 	}
-	public void setCacKhoanDauTuNamGiuDenNgayDaoHan(Double cacKhoanDauTuNamGiuDenNgayDaoHan) {
+	public void setCacKhoanDauTuNamGiuDenNgayDaoHan(Integer cacKhoanDauTuNamGiuDenNgayDaoHan) {
 		this.cacKhoanDauTuNamGiuDenNgayDaoHan = cacKhoanDauTuNamGiuDenNgayDaoHan;
 	}
-	public Double getCacKhoanChoVay() {
+	public Integer getCacKhoanChoVay() {
 		return cacKhoanChoVay;
 	}
-	public void setCacKhoanChoVay(Double cacKhoanChoVay) {
+	public void setCacKhoanChoVay(Integer cacKhoanChoVay) {
 		this.cacKhoanChoVay = cacKhoanChoVay;
 	}
-	public Double getCacKhoanTaiChinhSanSangDeBan() {
+	public Integer getCacKhoanTaiChinhSanSangDeBan() {
 		return cacKhoanTaiChinhSanSangDeBan;
 	}
-	public void setCacKhoanTaiChinhSanSangDeBan(Double cacKhoanTaiChinhSanSangDeBan) {
+	public void setCacKhoanTaiChinhSanSangDeBan(Integer cacKhoanTaiChinhSanSangDeBan) {
 		this.cacKhoanTaiChinhSanSangDeBan = cacKhoanTaiChinhSanSangDeBan;
 	}
-	public Double getTaiSanKhac() {
+	public Integer getTaiSanKhac() {
 		return taiSanKhac;
 	}
-	public void setTaiSanKhac(Double taiSanKhac) {
+	public void setTaiSanKhac(Integer taiSanKhac) {
 		this.taiSanKhac = taiSanKhac;
 	}
-	private Double tienVaTaiSanTuongDuongTien;
-	private Double cacTaiSanTaiChinhThongQuaGhiNhanLaiLo;
-	private Double cacKhoanDauTuNamGiuDenNgayDaoHan;
-	private Double cacKhoanChoVay;
-	private Double cacKhoanTaiChinhSanSangDeBan;
-	private Double taiSanKhac;
+	private Integer tienVaTaiSanTuongDuongTien;
+	private Integer cacTaiSanTaiChinhThongQuaGhiNhanLaiLo;
+	private Integer cacKhoanDauTuNamGiuDenNgayDaoHan;
+	private Integer cacKhoanChoVay;
+	private Integer cacKhoanTaiChinhSanSangDeBan;
+	private Integer taiSanKhac;
 }

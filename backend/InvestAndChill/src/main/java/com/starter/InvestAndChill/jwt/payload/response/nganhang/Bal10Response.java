@@ -4,47 +4,47 @@ import com.starter.InvestAndChill.jwt.payload.response.ReportReponse;
 
 public class Bal10Response extends ReportReponse{
 
-	private Double doanhNghiepNhaNuoc;
-	public Double getDoanhNghiepNhaNuoc() {
+	private Integer doanhNghiepNhaNuoc;
+	public Integer getDoanhNghiepNhaNuoc() {
 		return doanhNghiepNhaNuoc;
 	}
-	public void setDoanhNghiepNhaNuoc(Double doanhNghiepNhaNuoc) {
+	public void setDoanhNghiepNhaNuoc(Integer doanhNghiepNhaNuoc) {
 		this.doanhNghiepNhaNuoc = doanhNghiepNhaNuoc;
 	}
-	public Double getCongTyTNHHVaCoPhan() {
+	public Integer getCongTyTNHHVaCoPhan() {
 		return congTyTNHHVaCoPhan;
 	}
-	public void setCongTyTNHHVaCoPhan(Double congTyTNHHVaCoPhan) {
+	public void setCongTyTNHHVaCoPhan(Integer congTyTNHHVaCoPhan) {
 		this.congTyTNHHVaCoPhan = congTyTNHHVaCoPhan;
 	}
-	public Double getDoanhNghiepNuocNgoai() {
+	public Integer getDoanhNghiepNuocNgoai() {
 		return doanhNghiepNuocNgoai;
 	}
-	public void setDoanhNghiepNuocNgoai(Double doanhNghiepNuocNgoai) {
+	public void setDoanhNghiepNuocNgoai(Integer doanhNghiepNuocNgoai) {
 		this.doanhNghiepNuocNgoai = doanhNghiepNuocNgoai;
 	}
-	public Double getHopTacXaVaCongTyTuNhan() {
+	public Integer getHopTacXaVaCongTyTuNhan() {
 		return hopTacXaVaCongTyTuNhan;
 	}
-	public void setHopTacXaVaCongTyTuNhan(Double hopTacXaVaCongTyTuNhan) {
+	public void setHopTacXaVaCongTyTuNhan(Integer hopTacXaVaCongTyTuNhan) {
 		this.hopTacXaVaCongTyTuNhan = hopTacXaVaCongTyTuNhan;
 	}
-	public Double getCaNhan() {
+	public Integer getCaNhan() {
 		return caNhan;
 	}
-	public void setCaNhan(Double caNhan) {
+	public void setCaNhan(Integer caNhan) {
 		this.caNhan = caNhan;
 	}
-	public Double getKhac() {
+	public Integer getKhac() {
 		return khac;
 	}
-	public void setKhac(Double khac) {
+	public void setKhac(Integer khac) {
 		this.khac = khac;
 	}
-	private Double congTyTNHHVaCoPhan;
-	private Double doanhNghiepNuocNgoai;
-	private Double hopTacXaVaCongTyTuNhan;
-	private Double caNhan;
-	private Double khac;
+	private Integer congTyTNHHVaCoPhan;
+	private Integer doanhNghiepNuocNgoai;
+	private Integer hopTacXaVaCongTyTuNhan;
+	private Integer caNhan;
+	private Integer khac;
 
 }

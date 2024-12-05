@@ -3,32 +3,32 @@ package com.starter.InvestAndChill.jwt.payload.response.nganhang;
 import com.starter.InvestAndChill.jwt.payload.response.ReportReponse;
 
 public class Bal5Response extends ReportReponse{
-	private Double taiSanCoKhac;
-	private Double cacKhoanLaiPhiPhaiThu;
-	private Double TSCoKhacTongTS;
-	private Double laiPhiPhaiThuChoVayKhachHang;
-	public Double getTaiSanCoKhac() {
+	private Integer taiSanCoKhac;
+	private Integer cacKhoanLaiPhiPhaiThu;
+	private Integer TSCoKhacTongTS;
+	private Integer laiPhiPhaiThuChoVayKhachHang;
+	public Integer getTaiSanCoKhac() {
 		return taiSanCoKhac;
 	}
-	public void setTaiSanCoKhac(Double taiSanCoKhac) {
+	public void setTaiSanCoKhac(Integer taiSanCoKhac) {
 		this.taiSanCoKhac = taiSanCoKhac;
 	}
-	public Double getCacKhoanLaiPhiPhaiThu() {
+	public Integer getCacKhoanLaiPhiPhaiThu() {
 		return cacKhoanLaiPhiPhaiThu;
 	}
-	public void setCacKhoanLaiPhiPhaiThu(Double cacKhoanLaiPhiPhaiThu) {
+	public void setCacKhoanLaiPhiPhaiThu(Integer cacKhoanLaiPhiPhaiThu) {
 		this.cacKhoanLaiPhiPhaiThu = cacKhoanLaiPhiPhaiThu;
 	}
-	public Double getTSCoKhacTongTS() {
+	public Integer getTSCoKhacTongTS() {
 		return TSCoKhacTongTS;
 	}
-	public void setTSCoKhacTongTS(Double tSCoKhacTongTS) {
+	public void setTSCoKhacTongTS(Integer tSCoKhacTongTS) {
 		TSCoKhacTongTS = tSCoKhacTongTS;
 	}
-	public Double getLaiPhiPhaiThuChoVayKhachHang() {
+	public Integer getLaiPhiPhaiThuChoVayKhachHang() {
 		return laiPhiPhaiThuChoVayKhachHang;
 	}
-	public void setLaiPhiPhaiThuChoVayKhachHang(Double laiPhiPhaiThuChoVayKhachHang) {
+	public void setLaiPhiPhaiThuChoVayKhachHang(Integer laiPhiPhaiThuChoVayKhachHang) {
 		this.laiPhiPhaiThuChoVayKhachHang = laiPhiPhaiThuChoVayKhachHang;
 	}
 

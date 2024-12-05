@@ -4,40 +4,40 @@ import com.starter.InvestAndChill.jwt.payload.response.ReportReponse;
 
 public class Bal2Response extends ReportReponse{
 	
-	private Double tienGuiVaVayCacToChucTinDung;
-	private Double tienGuiCuaKhachHang;
-	private Double phatHanhGiayToCoGia;
-	private Double vonChuSoHuu;
-	public Double getTienGuiVaVayCacToChucTinDung() {
+	private Integer tienGuiVaVayCacToChucTinDung;
+	private Integer tienGuiCuaKhachHang;
+	private Integer phatHanhGiayToCoGia;
+	private Integer vonChuSoHuu;
+	public Integer getTienGuiVaVayCacToChucTinDung() {
 		return tienGuiVaVayCacToChucTinDung;
 	}
-	public void setTienGuiVaVayCacToChucTinDung(Double tienGuiVaVayCacToChucTinDung) {
+	public void setTienGuiVaVayCacToChucTinDung(Integer tienGuiVaVayCacToChucTinDung) {
 		this.tienGuiVaVayCacToChucTinDung = tienGuiVaVayCacToChucTinDung;
 	}
-	public Double getTienGuiCuaKhachHang() {
+	public Integer getTienGuiCuaKhachHang() {
 		return tienGuiCuaKhachHang;
 	}
-	public void setTienGuiCuaKhachHang(Double tienGuiCuaKhachHang) {
+	public void setTienGuiCuaKhachHang(Integer tienGuiCuaKhachHang) {
 		this.tienGuiCuaKhachHang = tienGuiCuaKhachHang;
 	}
-	public Double getPhatHanhGiayToCoGia() {
+	public Integer getPhatHanhGiayToCoGia() {
 		return phatHanhGiayToCoGia;
 	}
-	public void setPhatHanhGiayToCoGia(Double phatHanhGiayToCoGia) {
+	public void setPhatHanhGiayToCoGia(Integer phatHanhGiayToCoGia) {
 		this.phatHanhGiayToCoGia = phatHanhGiayToCoGia;
 	}
-	public Double getVonChuSoHuu() {
+	public Integer getVonChuSoHuu() {
 		return vonChuSoHuu;
 	}
-	public void setVonChuSoHuu(Double vonChuSoHuu) {
+	public void setVonChuSoHuu(Integer vonChuSoHuu) {
 		this.vonChuSoHuu = vonChuSoHuu;
 	}
-	public Double getNoPhaiTraKhac() {
+	public Integer getNoPhaiTraKhac() {
 		return noPhaiTraKhac;
 	}
-	public void setNoPhaiTraKhac(Double noPhaiTraKhac) {
+	public void setNoPhaiTraKhac(Integer noPhaiTraKhac) {
 		this.noPhaiTraKhac = noPhaiTraKhac;
 	}
-	private Double noPhaiTraKhac;
+	private Integer noPhaiTraKhac;
 
 }

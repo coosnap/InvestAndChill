@@ -3,6 +3,7 @@ package com.starter.InvestAndChill.jwt.models;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Formula;
 
@@ -181,10 +182,13 @@ public class PTCReport {
 	private Double netIncomeDANWC;
 	@Column(name = "p_i_53")
 	private Double netIncomeDANWCCAPEX;
-//	@Column(name = "p_i_54")
-//	private Double netIncomeDANWCRolling;
-//	@Column(name = "p_i_55")
-//	private Double netIncomeDANWCCAPEXRolling;
+	
+	//p_i_54 ( cong don p_i_33)
+	 @Transient
+	private Double netIncomeDANWCRolling;
+	//p_i_55 ( cong don p_i_53)
+	 @Transient
+	private Double netIncomeDANWCCAPEXRolling;
 	
 	//Cf3
 	@Column(name = "p_b_5")
@@ -728,7 +732,21 @@ public class PTCReport {
 		this.doanhThuChuaThucHien = doanhThuChuaThucHien;
 	}
 
-	
+	public Double getNetIncomeDANWCRolling() {
+		return netIncomeDANWCRolling;
+	}
+
+	public void setNetIncomeDANWCRolling(Double netIncomeDANWCRolling) {
+		this.netIncomeDANWCRolling = netIncomeDANWCRolling;
+	}
+
+	public Double getNetIncomeDANWCCAPEXRolling() {
+		return netIncomeDANWCCAPEXRolling;
+	}
+
+	public void setNetIncomeDANWCCAPEXRolling(Double netIncomeDANWCCAPEXRolling) {
+		this.netIncomeDANWCCAPEXRolling = netIncomeDANWCCAPEXRolling;
+	}
 	
 	
 }

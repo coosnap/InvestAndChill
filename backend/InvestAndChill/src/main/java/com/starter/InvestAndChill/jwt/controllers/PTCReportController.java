@@ -1,6 +1,7 @@
 package com.starter.InvestAndChill.jwt.controllers;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,6 +25,7 @@ import com.starter.InvestAndChill.jwt.payload.response.PTC.Bal4Response;
 import com.starter.InvestAndChill.jwt.payload.response.PTC.Bal5Response;
 import com.starter.InvestAndChill.jwt.payload.response.PTC.Bal6Response;
 import com.starter.InvestAndChill.jwt.payload.response.PTC.Cf1Response;
+import com.starter.InvestAndChill.jwt.payload.response.PTC.Cf2Response;
 import com.starter.InvestAndChill.jwt.payload.response.PTC.Cf3Response;
 import com.starter.InvestAndChill.jwt.payload.response.PTC.Cf4Response;
 import com.starter.InvestAndChill.jwt.payload.response.PTC.Perf1Response;
@@ -36,6 +38,7 @@ import com.starter.InvestAndChill.jwt.payload.response.PTC.Perf7Response;
 import com.starter.InvestAndChill.jwt.payload.response.PTC.Perf8Response;
 import com.starter.InvestAndChill.jwt.repository.PTCRepositoryNam;
 import com.starter.InvestAndChill.jwt.repository.PTCRepositoryQuy;
+import com.starter.InvestAndChill.utils.CalculatorUtils;
 import com.starter.InvestAndChill.utils.Constants;
 import com.starter.InvestAndChill.utils.RoundNumber;
 
@@ -65,6 +68,7 @@ public class PTCReportController {
 		} else {
 			listReport =	ptcQuyRepository.findByStockForPerf(stock,pageableQuy);
 		}
+		Collections.reverse(listReport);
 		list = listReport.stream()
 	                .map(report -> {
 	                    Perf1Response response = new Perf1Response();
@@ -89,10 +93,12 @@ public class PTCReportController {
 		} else {
 			listReport =	ptcQuyRepository.findByStockForPerf(stock,pageableQuy);
 		}
+		Collections.reverse(listReport);
 		List<Perf2Response> list = listReport.stream()
                 .map(report -> {
                     Perf2Response response = new Perf2Response();
                     response.setId(report.getId());
+                    response.setTitle(Constants.PTC_perf2);
                     response.setLoiNhuanCotLoi(RoundNumber.lamTron(report.getLoiNhuanCotLoi()));
                     response.setLoiNhuanTaiChinh(RoundNumber.lamTron(report.getLoiNhuanTaiChinh()));
                     response.setThuNhapKhac(RoundNumber.lamTron(report.getThuNhapKhac()));
@@ -111,10 +117,12 @@ public class PTCReportController {
 		} else {
 			listReport =	ptcQuyRepository.findByStockForPerf(stock,pageableToanQuy);
 		}
+		Collections.reverse(listReport);
 		List<Perf3Response> list = listReport.stream()
                 .map(report -> {
                     Perf3Response response = new Perf3Response();
                     response.setId(report.getId());
+                    response.setTitle(Constants.PTC_perf3);
                     response.setSalesTrailing(RoundNumber.lamTron(report.getSalesTrailing()));
                     response.setGPMTrailing(RoundNumber.lamTronPhanTram(report.getGPMTrailing()));
                     response.setSGAMTrailing(RoundNumber.lamTronPhanTram(report.getSGAMTrailing()));
@@ -133,10 +141,12 @@ public class PTCReportController {
 		} else {
 			listReport =	ptcQuyRepository.findByStockForPerf(stock,pageableToanQuy);
 		}
+		Collections.reverse(listReport);
 		List<Perf4Response> list = listReport.stream()
                 .map(report -> {
                     Perf4Response response = new Perf4Response();
                     response.setId(report.getId());
+                    response.setTitle(Constants.PTC_perf4);
                     response.setEBITTrailing(RoundNumber.lamTron(report.getEBITTrailing()));
                     response.setNetFinanceialTrailing(RoundNumber.lamTron(report.getNetFinanceialTrailing()));
                     response.setNetFinancialAdjustTrailing(RoundNumber.lamTron(report.getNetFinancialAdjustTrailing()));
@@ -156,10 +166,12 @@ public class PTCReportController {
 		} else {
 			listReport =	ptcQuyRepository.findByStockForPerf(stock,pageableToanQuy);
 		}
+		Collections.reverse(listReport);
 		List<Perf5Response> list = listReport.stream()
                 .map(report -> {
                 	Perf5Response response = new Perf5Response();
                     response.setId(report.getId());
+                    response.setTitle(Constants.PTC_perf5);
                     response.setNITrailing(RoundNumber.lamTron(report.getNITrailing()));
                     response.setAssociateTrailing(RoundNumber.lamTron(report.getAssociateTrailing()));
                     response.setMinoritiesTrailing(RoundNumber.lamTron(report.getMinoritiesTrailing()));
@@ -178,10 +190,12 @@ public class PTCReportController {
 		} else {
 			listReport =	ptcQuyRepository.findByStockForPerf(stock,pageableToanQuy);
 		}
+		Collections.reverse(listReport);
 		List<Perf6Response> list = listReport.stream()
                 .map(report -> {
                 	Perf6Response response = new Perf6Response();
                     response.setId(report.getId());
+                    response.setTitle(Constants.PTC_perf6);
                     response.setEBITDATrailing(RoundNumber.lamTron(report.getEBITDATrailing()));
                     response.setEBITTrailing(RoundNumber.lamTron(report.getEBITTrailing()));
                     response.setInterestExpenseTrailing(RoundNumber.lamTron(report.getInterestExpenseTrailing()));
@@ -199,10 +213,12 @@ public class PTCReportController {
 		} else {
 			listReport =	ptcQuyRepository.findByStockForPerf(stock,pageableQuy);
 		}
+		Collections.reverse(listReport);
 		List<Perf7Response> list = listReport.stream()
                 .map(report -> {
                 	Perf7Response response = new Perf7Response();
                     response.setId(report.getId());
+                    response.setTitle(Constants.PTC_perf7);
                     response.setRoe(RoundNumber.lamTronPhanTram(report.getRoe()));
                     response.setRoic(RoundNumber.lamTronPhanTram(report.getRoic()));
                     response.setLaiVay(RoundNumber.lamTronPhanTram(report.getLaiVay()));
@@ -220,10 +236,12 @@ public class PTCReportController {
 		} else {
 			listReport =	ptcQuyRepository.findByStockForPerf(stock,pageableToanQuy);
 		}
+		Collections.reverse(listReport);
 		List<Perf8Response> list = listReport.stream()
                 .map(report -> {
                 	Perf8Response response = new Perf8Response();
                     response.setId(report.getId());
+                    response.setTitle(Constants.PTC_perf8);
                     response.setRoe(RoundNumber.lamTronPhanTram(report.getRoe()));
                     response.setAssetTurnover(RoundNumber.lamTronLan(report.getAssetTurnover()));
                     response.setLeverage(RoundNumber.lamTronLan(report.getLeverage()));
@@ -243,10 +261,12 @@ public class PTCReportController {
 		} else {
 			listReport =	ptcQuyRepository.findByStockForPerf(stock,pageableQuy);
 		}
+		Collections.reverse(listReport);
 		List<Bal1Response> list = listReport.stream()
                 .map(report -> {
                 	Bal1Response response = new Bal1Response();
                 	response.setId(report.getId());
+                	response.setTitle(Constants.PTC_bal1);
                     response.setTienDTNGDaoHan(RoundNumber.lamTron(report.getTienDTNGDaoHan()));
                     response.setPhaiThu(RoundNumber.lamTron(report.getPhaiThu()));
                     response.setHangTonKhoRong(RoundNumber.lamTron(report.getHangTonKhoRong()));
@@ -268,10 +288,12 @@ public class PTCReportController {
 		} else {
 			listReport =	ptcQuyRepository.findByStockForPerf(stock,pageableQuy);
 		}
+		Collections.reverse(listReport);
 		List<Bal2Response> list = listReport.stream()
                 .map(report -> {
                 	Bal2Response response = new Bal2Response();
                 	response.setId(report.getId());
+                	response.setTitle(Constants.PTC_bal2);
                     response.setNoVay(RoundNumber.lamTron(report.getNoVay()));
                     response.setNoChiemDung(RoundNumber.lamTron(report.getNoChiemDung()));
                     response.setVonGop(RoundNumber.lamTron(report.getVonGop()));
@@ -291,10 +313,12 @@ public class PTCReportController {
 		} else {
 			listReport =	ptcQuyRepository.findByStockForPerf(stock,pageableQuy);
 		}
+		Collections.reverse(listReport);
 		List<Bal3Response> list = listReport.stream()
                 .map(report -> {
                 	Bal3Response response = new Bal3Response();
                 	response.setId(report.getId());
+                	response.setTitle(Constants.PTC_bal3);
                     response.setDAPPE(RoundNumber.lamTron(report.getDAPPE()));
                     response.setGrossPPE(RoundNumber.lamTron(report.getGrossPPE()));
                     response.setXayDungCoBanDoDang(RoundNumber.lamTron(report.getXayDungCoBanDoDang()));
@@ -312,10 +336,12 @@ public class PTCReportController {
 		} else {
 			listReport =	ptcQuyRepository.findByStockForPerf(stock,pageableQuy);
 		}
+		Collections.reverse(listReport);
 		List<Bal4Response> list = listReport.stream()
                 .map(report -> {
                 	Bal4Response response = new Bal4Response();
                 	response.setId(report.getId());
+                	response.setTitle(Constants.PTC_bal4);
                 	response.setNetDebt(RoundNumber.lamTron(report.getNetDebt()));
                 	response.setWorkingcap(RoundNumber.lamTron(report.getWorkingcap()));
                     return response;
@@ -332,10 +358,12 @@ public class PTCReportController {
 		} else {
 			listReport =	ptcQuyRepository.findByStockForPerf(stock,pageableToanQuy);
 		}
+		Collections.reverse(listReport);
 		List<Bal5Response> list = listReport.stream()
                 .map(report -> {
                 	Bal5Response response = new Bal5Response();
                 	response.setId(report.getId());
+                	response.setTitle(Constants.PTC_bal5);
                     response.setVongQuayHangTonKho(RoundNumber.lamTronLan(report.getVongQuayHangTonKho()));
                     response.setVongQuayPhaiThu(RoundNumber.lamTronLan(report.getVongQuayPhaiThu()));
                     response.setVongQuayPhaiTra(RoundNumber.lamTronLan(report.getVongQuayPhaiTra()));
@@ -353,10 +381,12 @@ public class PTCReportController {
 		} else {
 			listReport =	ptcQuyRepository.findByStockForPerf(stock,pageableQuy);
 		}
+		Collections.reverse(listReport);
 		List<Bal6Response> list = listReport.stream()
                 .map(report -> {
                 	Bal6Response response = new Bal6Response();
                 	response.setId(report.getId());
+                	response.setTitle(Constants.PTC_bal6);
                     response.setLaiVay(RoundNumber.lamTronPhanTram(report.getLaiVay()));
                     response.setVayDaiHanVCSH(RoundNumber.lamTronPhanTram(report.getVayDaiHanVCSH()));
                     response.setVayNganHanVCSH(RoundNumber.lamTronPhanTram(report.getVayNganHanVCSH()));
@@ -375,10 +405,12 @@ public class PTCReportController {
 		} else {
 			listReport =	ptcQuyRepository.findByStockForPerf(stock,pageableQuy);
 		}
+		Collections.reverse(listReport);
 		List<Cf1Response> list = listReport.stream()
                 .map(report -> {
                 	Cf1Response response = new Cf1Response();
                 	response.setId(report.getId());
+                	response.setTitle(Constants.PTC_cf1);
                 	response.setLuuChuyenTienTeRongTuCacHoatDongSanXuatKinhDoanh(RoundNumber.lamTron(report.getLuuChuyenTienTeRongTuCacHoatDongSanXuatKinhDoanh()));
                 	response.setLuuChuyenTienTeRongTuCacHoatDongDauTu(RoundNumber.lamTron(report.getLuuChuyenTienTeRongTuCacHoatDongDauTu()));
                 	response.setLuuChuyenTienTeTuHoatDongTaiChinh(RoundNumber.lamTron(report.getLuuChuyenTienTeTuHoatDongTaiChinh()));
@@ -389,27 +421,31 @@ public class PTCReportController {
 		 return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 	
-//	@GetMapping("/cf2/{stock}")
-//	public ResponseEntity<?> cf2(@PathVariable String stock,@RequestParam(required = false,name = "type") String type) {
-//		List<PTCReport> listReport = new ArrayList<PTCReport>();
-//		if ("year".equals(type)) {
-//			listReport =  ptcNamRepository.findByStockForPerf(stock,pageableNam);
-//		} else {
-//			listReport =	ptcQuyRepository.findByStockForPerf(stock,pageableQuy);
-//		}
-//		List<Cf2Response> list = listReport.stream()
-//                .map(report -> {
-//                	Cf2Response response = new Cf2Response();
-//                	response.setId(report.getId());
-//                    response.setNetIncomeDANWC(report.getNetIncomeDANWC());
-//                    response.setNetIncomeDANWCCAPEX(report.getNetIncomeDANWCCAPEX());
-//                    response.setNetIncomeDANWCCAPEXRolling(report.getNetIncomeDANWCCAPEXRolling());
-//                    response.setNetIncomeDANWCRolling(report.getNetIncomeDANWCRolling());
-//                    return response;
-//                })
-//                .collect(Collectors.toList());
-//		 return new ResponseEntity<>(list, HttpStatus.OK);
-//	}
+	@GetMapping("/cf2/{stock}")
+	public ResponseEntity<?> cf2(@PathVariable String stock,@RequestParam(required = false,name = "type") String type) {
+		List<PTCReport> listReport = new ArrayList<PTCReport>();
+		if ("year".equals(type)) {
+			listReport =  ptcNamRepository.findByStockForPerf(stock,pageableNam);
+		} else {
+			listReport =	ptcQuyRepository.findByStockForPerf(stock,pageableQuy);
+		}
+		Collections.reverse(listReport);
+		CalculatorUtils.calculatePI54(listReport);
+		CalculatorUtils.calculatePI55(listReport);
+		List<Cf2Response> list = listReport.stream()
+                .map(report -> {
+                	Cf2Response response = new Cf2Response();
+                	response.setId(report.getId());
+                	response.setTitle(Constants.PTC_cf2);
+                    response.setNetIncomeDANWC(RoundNumber.lamTron(report.getNetIncomeDANWC()));
+                    response.setNetIncomeDANWCCAPEX(RoundNumber.lamTron(report.getNetIncomeDANWCCAPEX()));
+                    response.setNetIncomeDANWCCAPEXRolling(RoundNumber.lamTron(report.getNetIncomeDANWCCAPEXRolling()));
+                    response.setNetIncomeDANWCRolling(RoundNumber.lamTron(report.getNetIncomeDANWCRolling()));
+                    return response;
+                })
+                .collect(Collectors.toList());
+		 return new ResponseEntity<>(list, HttpStatus.OK);
+	}
 	
 	@GetMapping("/cf3/{stock}")
 	public ResponseEntity<?> cf3(@PathVariable String stock,@RequestParam(required = false,name = "type") String type) {
@@ -419,10 +455,12 @@ public class PTCReportController {
 		} else {
 			listReport =	ptcQuyRepository.findByStockForPerf(stock,pageableQuy);
 		}
+		Collections.reverse(listReport);
 		List<Cf3Response> list = listReport.stream()
                 .map(report -> {
                 	Cf3Response response = new Cf3Response();
                 	response.setId(report.getId());
+                	response.setTitle(Constants.PTC_cf3);
                     response.setDauTuNamGiuDenNgayDaoHan(RoundNumber.lamTron(report.getDauTuNamGiuDenNgayDaoHan()));
                     response.setGiaTriThuanDauTuNganHan(RoundNumber.lamTron(report.getGiaTriThuanDauTuNganHan()));
                     response.setNoVay(RoundNumber.lamTron(-report.getNoVay()));
@@ -442,10 +480,12 @@ public class PTCReportController {
 		} else {
 			listReport =	ptcQuyRepository.findByStockForPerf(stock,pageableQuy);
 		}
+		Collections.reverse(listReport);
 		List<Cf4Response> list = listReport.stream()
                 .map(report -> {
                 	Cf4Response response = new Cf4Response();
                 	response.setId(report.getId());
+                	response.setTitle(Constants.PTC_cf4);
                     response.setDoanhThuChuaThucHien(RoundNumber.lamTron(report.getDoanhThuChuaThucHien()));
                     response.setDoanhThuChuaThucHienNganHan(RoundNumber.lamTron(report.getDoanhThuChuaThucHienNganHan()));
                     response.setNguoiMuaTraTienTruoc(RoundNumber.lamTron(report.getNguoiMuaTraTienTruoc()));
