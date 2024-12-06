@@ -8,7 +8,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { Controller, useForm } from 'react-hook-form';
 import { FcReading } from 'react-icons/fc';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import { useSetRecoilState } from 'recoil';
 import { z } from 'zod';
@@ -43,6 +43,10 @@ const infoSchema = z.object({
 });
 
 function Header() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const initialValue = searchParams.get('code') || '';
+  const [inputValue, setInputValue] = useState(initialValue);
+
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [cookies, setCookie] = useCookies(['access_token', 'usrId']);
@@ -51,9 +55,15 @@ function Header() {
   const [showPop, setShowPop] = useState(false);
   const [tabDefault, setTabDefault] = useState('user');
   const [open, setOpen] = useState(false);
-  const [valueSearch, setValueSearch] = useState('');
+  const [valueChange, setValueChange] = useState(initialValue || '');
 
-  const setCodeValue = useSetRecoilState(CodeValue);
+  useEffect(() => {
+    if (inputValue) {
+      setSearchParams({ code: inputValue });
+    } else {
+      setSearchParams({});
+    }
+  }, [inputValue, setSearchParams]);
 
   const {
     handleSubmit,
@@ -190,11 +200,11 @@ function Header() {
               variant="outlined"
               size="small"
               placeholder="Tìm kiếm"
-              onChange={(e) => setValueSearch(e.target.value?.toUpperCase())}
-              value={valueSearch}
+              onChange={(e) => setValueChange(e.target.value?.toUpperCase())}
+              value={valueChange}
               onKeyDown={(e) => {
                 if (e.keyCode == 13) {
-                  setCodeValue(e.target.value?.toUpperCase());
+                  setInputValue(e.target.value?.toUpperCase());
                 }
               }}
             />
