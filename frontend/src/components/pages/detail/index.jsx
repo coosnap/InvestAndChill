@@ -94,7 +94,6 @@ function Detail() {
           >
             <SimpleTreeView defaultExpandedItems={['Overview']}>
               <CustomTreeItem itemId="Overview" label="A. Overview">
-                {console.log('e', businessDataFirst)}
                 {businessDataFirst.map(
                   (e) =>
                     e.label === 'A' && (
