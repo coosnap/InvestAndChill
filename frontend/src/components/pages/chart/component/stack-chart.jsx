@@ -1,8 +1,14 @@
 import Box from '@mui/material/Box';
-import { ChartsLegend, ChartsTooltip, ChartsYAxis, ScatterPlot } from '@mui/x-charts';
+import {
+  ChartsLegend,
+  ChartsReferenceLine,
+  ChartsTooltip,
+  ChartsYAxis,
+  ScatterPlot,
+} from '@mui/x-charts';
 import { BarPlot } from '@mui/x-charts/BarChart';
 import { ChartsXAxis } from '@mui/x-charts/ChartsXAxis';
-import { AreaPlot, LinePlot, MarkPlot } from '@mui/x-charts/LineChart';
+import { AreaPlot, LineHighlightPlot, LinePlot, MarkPlot } from '@mui/x-charts/LineChart';
 import { ResponsiveChartContainer } from '@mui/x-charts/ResponsiveChartContainer';
 
 export default function NoStackChart(data) {
@@ -79,9 +85,15 @@ export default function NoStackChart(data) {
         <ScatterPlot />
         <BarPlot />
         <LinePlot />
-        {data.data.series.map((e, index) => (e?.showMark ? <MarkPlot /> : <div key={index}></div>))}
+        <LineHighlightPlot />
         <AreaPlot />
         <ChartsXAxis />
+        {data.data.yAxis.left.showLineReference && (
+          <ChartsReferenceLine axisId={'leftAxis'} y={0} />
+        )}
+        {data.data.yAxis.right.showLineReference && (
+          <ChartsReferenceLine axisId={'rightAxis'} y={0} />
+        )}
         {data.data.yAxis.left.type == 'per' && (
           <ChartsYAxis
             disableLine

@@ -517,17 +517,16 @@ export const TabChart = () => {
         const tienDTNGDaoHan = dataChart.bal1.dataset.map((v) => v.tienDTNGDaoHan);
         const getPercents = (array) =>
           array.map((v, index) => {
-            const result = v
-              ? (100 * v) /
-                (giaTriRongTaiSanDauTu[index] ||
-                  0 + hangTonKhoRong[index] ||
-                  0 + phaiThu[index] ||
-                  0 + taiSanCoDinh[index] ||
-                  0 + taiSanDoDangDaiHan[index] ||
-                  0 + taiSanKhac[index] ||
-                  0 + tienDTNGDaoHan[index] ||
-                  0)
-              : 0;
+            const result =
+              (v /
+                (phaiThu[index] +
+                  tienDTNGDaoHan[index] +
+                  hangTonKhoRong[index] +
+                  taiSanCoDinh[index] +
+                  taiSanDoDangDaiHan[index] +
+                  giaTriRongTaiSanDauTu[index] +
+                  taiSanKhac[index])) *
+                100 || 0;
             return result;
           });
         customBalPTC1.series = [
@@ -589,7 +588,7 @@ export const TabChart = () => {
           },
         ];
         customBalPTC1.yAxis = {
-          left: { type: 'per', piecewise: false },
+          left: { type: 'per', piecewise: true },
           right: { type: 'bil', piecewise: false },
         };
       } else {
@@ -662,15 +661,14 @@ export const TabChart = () => {
         const noVay = dataChart.bal2.dataset.map((v) => v.noVay);
         const getPercents = (array) =>
           array.map((v, index) => {
-            const result = v
-              ? (100 * v) /
-                (vonGop[index] ||
-                  0 + laiChuaPhanPhoi[index] ||
-                  0 + vcshKhac[index] ||
-                  0 + noChiemDung[index] ||
-                  0 + noVay[index] ||
-                  0)
-              : 0;
+            const result =
+              (v /
+                (vonGop[index] +
+                  laiChuaPhanPhoi[index] +
+                  vcshKhac[index] +
+                  noChiemDung[index] +
+                  noVay[index])) *
+                100 || 0;
             return result;
           });
         customBalPTC2.series = [
@@ -717,7 +715,7 @@ export const TabChart = () => {
         ];
         customBalPTC2.yAxis = {
           left: { type: 'per', piecewise: false },
-          right: { type: 'per', piecewise: false },
+          right: { type: 'per', piecewise: true },
         };
       } else {
         customBalPTC2.series = [

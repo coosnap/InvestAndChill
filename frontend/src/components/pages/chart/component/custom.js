@@ -30,7 +30,7 @@ export let customPerfPTC1 = {
     },
   ],
   yAxis: {
-    left: { type: 'bil', piecewise: false },
+    left: { type: 'bil', piecewise: false, showLineReference: true },
     right: { type: 'per', piecewise: false },
   },
 };
@@ -69,7 +69,7 @@ export let customPerfPTC2 = {
   ],
   yAxis: {
     left: { type: 'per', piecewise: false },
-    right: { type: 'bil', piecewise: false },
+    right: { type: 'bil', piecewise: false, showLineReference: true },
   },
 };
 export let customPerfPTC3 = {
@@ -142,7 +142,7 @@ export let customPerfPTC4 = {
     },
   ],
   yAxis: {
-    left: { type: 'bil', piecewise: true },
+    left: { type: 'bil', piecewise: true, showLineReference: true },
     right: { type: 'per', piecewise: false },
   },
 };
@@ -173,7 +173,7 @@ export let customPerfPTC5 = {
   ],
   yAxis: {
     left: { type: 'bil', piecewise: false },
-    right: { type: 'bil', piecewise: false },
+    right: { type: 'bil', piecewise: false, showLineReference: true },
   },
 };
 export let customPerfPTC6 = {
@@ -201,7 +201,7 @@ export let customPerfPTC6 = {
     },
   ],
   yAxis: {
-    left: { type: 'bil', piecewise: false },
+    left: { type: 'bil', piecewise: false, showLineReference: true },
     right: { type: 'per', piecewise: false },
   },
 };
@@ -413,7 +413,7 @@ export let customBalPTC3 = {
   ],
   yAxis: {
     left: { type: 'per', piecewise: false },
-    right: { type: 'bil', piecewise: false },
+    right: { type: 'bil', piecewise: false, showLineReference: true },
   },
 };
 export let customBalPTC4 = {
@@ -542,7 +542,7 @@ export let customCFPTC1 = {
   ],
   yAxis: {
     left: { type: 'per', piecewise: false },
-    right: { type: 'bil', piecewise: false },
+    right: { type: 'bil', piecewise: false, showLineReference: true },
   },
 };
 export let customCFPTC2 = {
@@ -578,7 +578,7 @@ export let customCFPTC2 = {
   ],
   yAxis: {
     left: { type: 'bil', piecewise: false },
-    right: { type: 'bil', piecewise: false },
+    right: { type: 'bil', piecewise: false, showLineReference: true },
   },
 };
 export let customCFPTC3 = {
@@ -612,7 +612,7 @@ export let customCFPTC3 = {
   ],
   yAxis: {
     left: { type: 'bil', piecewise: false },
-    right: { type: 'bil', piecewise: false },
+    right: { type: 'bil', piecewise: false, showLineReference: true },
   },
 };
 export let customCFPTC4 = {
