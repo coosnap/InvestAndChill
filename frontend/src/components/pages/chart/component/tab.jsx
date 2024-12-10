@@ -13,86 +13,17 @@ import {
   customPerfPTC6,
   customPerfPTC7,
   customPerfPTC8,
+  customBalPTC1,
+  customBalPTC2,
+  customBalPTC3,
+  customBalPTC4,
+  customBalPTC5,
+  customBalPTC6,
   customCFPTC1,
   customCFPTC2,
+  customCFPTC3,
   customCFPTC4,
 } from './custom';
-
-const bal2 = {
-  dataset: [
-    { min: 12, max: 40, bar3: 1, bar2: 20, bar1: 7, month: '2019.Q4' },
-    { min: 11, max: 30, bar3: 1, bar2: 40, bar1: 6, month: '2020.Q1' },
-    { min: 6, max: 40, bar3: 1, bar2: 30, bar1: 6, month: '2020.Q2' },
-    { min: 1, max: 30, bar3: 1, bar2: 20, bar1: 16, month: '2020.Q3' },
-    { min: 8, max: 47, bar3: 1, bar2: 4, bar1: 15, month: '2020.Q4' },
-    { min: 15, max: 44, bar3: 1, bar2: 5, bar1: 14, month: '2021.Q1' },
-    { min: 18, max: 46, bar3: 1, bar2: 3, bar1: 16, month: '2021.Q2' },
-    { min: 17, max: 46, bar3: 1, bar2: 2, bar1: 15, month: '2021.Q3' },
-    { min: 13, max: 41, bar3: 1, bar2: 4, bar1: 10, month: '2021.Q4' },
-    { min: 6, max: 43, bar3: -5, bar2: 5, bar1: 6, month: '2022.Q1' },
-    { min: 0, max: 60, bar3: -5, bar2: 6, bar1: 3, month: '2022.Q2' },
-    { min: 8, max: 40, bar3: -5, bar2: 3, bar1: 3, month: '2022.Q3' },
-    { min: 1, max: 40, bar3: -5, bar2: 2, bar1: 13, month: '2022.Q4' },
-    { min: 10, max: 50, bar3: -5, bar2: 4, bar1: 5, month: '2023.Q1' },
-    { min: 8, max: 40, bar3: -5, bar2: 5, bar1: 3, month: '2023.Q2' },
-    { min: 7, max: 40, bar3: 1, bar2: 6, bar1: 3, month: '2023.Q3' },
-    { min: 1, max: 50, bar3: 1, bar2: 4, bar1: 3, month: '2023.Q4' },
-    { min: 8, max: 40, bar3: 1, bar2: 2, bar1: 11, month: '2024.Q1' },
-    { min: 10, max: 41, bar3: 1, bar2: 2, bar1: 33, month: '2024.Q2' },
-    { min: 8, max: 40, bar3: 1, bar2: 2, bar1: 11, month: '2024.Q3' },
-    { min: 8, max: 51, bar3: 1, bar2: 2, bar1: 5, month: '2024.Q4' },
-  ],
-  series: [
-    {
-      type: 'line',
-      label: 'max',
-      dataKey: 'max',
-      color: '#C10404',
-      yAxisId: 'rightAxis',
-      area: true,
-      stack: 'total',
-      showMark: false,
-    },
-    {
-      type: 'line',
-      label: 'bar1',
-      dataKey: 'bar1',
-      color: '#3B64AD',
-      yAxisId: 'rightAxis',
-      area: true,
-      stack: 'total',
-      showMark: false,
-    },
-    {
-      type: 'line',
-      label: 'bar2',
-      dataKey: 'bar2',
-      color: '#929292',
-      yAxisId: 'rightAxis',
-      area: true,
-      stack: 'total',
-      showMark: false,
-    },
-  ],
-  xAxis: {
-    scaleType: 'band',
-    dataKey: 'month',
-    tickInterval: (value) => value.includes('Q1') && Number(value.split('.')[0]) % 2 === 0,
-    valueFormatter: (value, context) => (context.location === 'tick' ? value.split('.')[0] : value),
-    tickLabelStyle: {
-      // angle: 270,
-      textAnchor: 'end',
-      // fontSize: 14,
-      // fontWeight: 600,
-    },
-    categoryGapRatio: 0.5,
-    // barGapRatio: -1.005,
-  },
-  yAxis: {
-    left: { type: 'bil' },
-    right: { type: 'per' },
-  },
-};
 
 export const TabChart = () => {
   const [value, setValue] = useState(0);
@@ -106,8 +37,17 @@ export const TabChart = () => {
     perf4: true,
     perf5: true,
     perf7: true,
+    bal1: true,
+    bal1ajust: true,
+    bal2: true,
+    bal2ajust: true,
+    bal3: true,
+    bal4: true,
+    bal6: true,
     cf1: true,
     cf2: true,
+    cf3: true,
+    cf3adjust: true,
     cf4: true,
   });
 
@@ -224,8 +164,16 @@ export const TabChart = () => {
             let perf7 = await mapDataChart(customPerfPTC7);
             let perf8 = await mapDataChart(customPerfPTC8);
 
+            let bal1 = await mapDataChart(customBalPTC1);
+            let bal2 = await mapDataChart(customBalPTC2);
+            let bal3 = await mapDataChart(customBalPTC3);
+            let bal4 = await mapDataChart(customBalPTC4);
+            let bal5 = await mapDataChart(customBalPTC5);
+            let bal6 = await mapDataChart(customBalPTC6);
+
             let cf1 = await mapDataChart(customCFPTC1);
             let cf2 = await mapDataChart(customCFPTC2);
+            let cf3 = await mapDataChart(customCFPTC3);
             let cf4 = await mapDataChart(customCFPTC4);
 
             if (
@@ -237,8 +185,15 @@ export const TabChart = () => {
               perf6 &&
               perf7 &&
               perf8 &&
+              bal1 &&
+              bal2 &&
+              bal3 &&
+              bal4 &&
+              bal5 &&
+              bal6 &&
               cf1 &&
               cf2 &&
+              cf3 &&
               cf4
             ) {
               setDataChart({
@@ -250,8 +205,15 @@ export const TabChart = () => {
                 perf6: perf6,
                 perf7: perf7,
                 perf8: perf8,
+                bal1: bal1,
+                bal2: bal2,
+                bal3: bal3,
+                bal4: bal4,
+                bal5: bal5,
+                bal6: bal6,
                 cf1: cf1,
                 cf2: cf2,
+                cf3: cf3,
                 cf4: cf4,
               });
             }
@@ -493,7 +455,6 @@ export const TabChart = () => {
           yAxisId: 'leftAxis',
         };
         let newPerf = await mapDataChart(customPerfPTC4);
-        console.log('newPerf', newPerf);
         setDataChart((prev) => ({ ...prev, perf4: newPerf }));
         setChecked((prev) => ({ ...prev, perf4: !prev.perf4 }));
       } else {
@@ -539,6 +500,296 @@ export const TabChart = () => {
       setDataChart((prev) => ({ ...prev, perf7: newPerf }));
       setChecked((prev) => ({ ...prev, perf7: !prev.perf7 }));
     }
+    if (typeChart === 'bal1') {
+      customBalPTC1.year = checked.bal1;
+      let newPerf = await mapDataChart(customBalPTC1);
+      setDataChart((prev) => ({ ...prev, bal1: newPerf }));
+      setChecked((prev) => ({ ...prev, bal1: !prev.bal1 }));
+    }
+    if (typeChart === 'bal1ajust') {
+      if (checked.bal1ajust) {
+        const giaTriRongTaiSanDauTu = dataChart.bal1.dataset.map((v) => v.giaTriRongTaiSanDauTu);
+        const hangTonKhoRong = dataChart.bal1.dataset.map((v) => v.hangTonKhoRong);
+        const phaiThu = dataChart.bal1.dataset.map((v) => v.phaiThu);
+        const taiSanCoDinh = dataChart.bal1.dataset.map((v) => v.taiSanCoDinh);
+        const taiSanDoDangDaiHan = dataChart.bal1.dataset.map((v) => v.taiSanDoDangDaiHan);
+        const taiSanKhac = dataChart.bal1.dataset.map((v) => v.taiSanKhac);
+        const tienDTNGDaoHan = dataChart.bal1.dataset.map((v) => v.tienDTNGDaoHan);
+        const getPercents = (array) =>
+          array.map((v, index) => {
+            const result = v
+              ? (100 * v) /
+                (giaTriRongTaiSanDauTu[index] ||
+                  0 + hangTonKhoRong[index] ||
+                  0 + phaiThu[index] ||
+                  0 + taiSanCoDinh[index] ||
+                  0 + taiSanDoDangDaiHan[index] ||
+                  0 + taiSanKhac[index] ||
+                  0 + tienDTNGDaoHan[index] ||
+                  0)
+              : 0;
+            return result;
+          });
+        customBalPTC1.series = [
+          {
+            data: getPercents(tienDTNGDaoHan),
+            type: 'line',
+            label: 'Tiền',
+            area: true,
+            stack: 'total',
+            yAxisId: 'leftAxis',
+          },
+          {
+            data: getPercents(phaiThu),
+            type: 'line',
+            label: 'Phải thu',
+            area: true,
+            stack: 'total',
+            yAxisId: 'leftAxis',
+          },
+          {
+            data: getPercents(hangTonKhoRong),
+            type: 'line',
+            label: 'Hàng tồn kho',
+            area: true,
+            stack: 'total',
+            yAxisId: 'leftAxis',
+          },
+          {
+            data: getPercents(taiSanCoDinh),
+            type: 'line',
+            label: 'Tài sản cố định',
+            area: true,
+            stack: 'total',
+            yAxisId: 'leftAxis',
+          },
+          {
+            data: getPercents(taiSanDoDangDaiHan),
+            type: 'line',
+            label: 'Tài sản dở dang',
+            area: true,
+            stack: 'total',
+            yAxisId: 'leftAxis',
+          },
+          {
+            data: getPercents(giaTriRongTaiSanDauTu),
+            type: 'line',
+            label: 'Bất động sản đầu tư',
+            area: true,
+            stack: 'total',
+            yAxisId: 'leftAxis',
+          },
+          {
+            data: getPercents(taiSanKhac),
+            type: 'line',
+            label: 'Tài sản khác',
+            area: true,
+            stack: 'total',
+            yAxisId: 'leftAxis',
+          },
+        ];
+        customBalPTC1.yAxis = {
+          left: { type: 'per', piecewise: false },
+          right: { type: 'bil', piecewise: false },
+        };
+      } else {
+        customBalPTC1.series = [
+          {
+            type: 'bar',
+            label: 'Tiền',
+            dataKey: 'tienDTNGDaoHan',
+            yAxisId: 'leftAxis',
+            stack: 'stack',
+          },
+          {
+            type: 'bar',
+            label: 'Phải thu',
+            dataKey: 'phaiThu',
+            yAxisId: 'leftAxis',
+            stack: 'stack',
+          },
+          {
+            type: 'bar',
+            label: 'Hàng tồn kho',
+            dataKey: 'hangTonKhoRong',
+            yAxisId: 'leftAxis',
+            stack: 'stack',
+          },
+          {
+            type: 'bar',
+            label: 'Tài sản cố định',
+            dataKey: 'taiSanCoDinh',
+            yAxisId: 'leftAxis',
+            stack: 'stack',
+          },
+          {
+            type: 'bar',
+            label: 'Tài sản dở dang',
+            dataKey: 'taiSanDoDangDaiHan',
+            yAxisId: 'leftAxis',
+            stack: 'stack',
+          },
+          {
+            type: 'bar',
+            label: 'Bất động sản đầu tư',
+            dataKey: 'giaTriRongTaiSanDauTu',
+            yAxisId: 'leftAxis',
+            stack: 'stack',
+          },
+          {
+            type: 'bar',
+            label: 'Tài sản khác',
+            dataKey: 'taiSanKhac',
+            yAxisId: 'leftAxis',
+            stack: 'stack',
+          },
+        ];
+        customBalPTC1.yAxis = {
+          left: { type: 'bil', piecewise: false },
+          right: { type: 'bil', piecewise: false },
+        };
+      }
+      let newPerf = await mapDataChart(customBalPTC1);
+      setDataChart((prev) => ({ ...prev, bal1: newPerf }));
+      setChecked((prev) => ({ ...prev, bal1ajust: !prev.bal1ajust }));
+    }
+    if (typeChart === 'bal2ajust') {
+      if (checked.bal2ajust) {
+        const vonGop = dataChart.bal2.dataset.map((v) => v.vonGop);
+        const laiChuaPhanPhoi = dataChart.bal2.dataset.map((v) => v.laiChuaPhanPhoi);
+        const vcshKhac = dataChart.bal2.dataset.map((v) => v.vcshKhac);
+        const noChiemDung = dataChart.bal2.dataset.map((v) => v.noChiemDung);
+        const noVay = dataChart.bal2.dataset.map((v) => v.noVay);
+        const getPercents = (array) =>
+          array.map((v, index) => {
+            const result = v
+              ? (100 * v) /
+                (vonGop[index] ||
+                  0 + laiChuaPhanPhoi[index] ||
+                  0 + vcshKhac[index] ||
+                  0 + noChiemDung[index] ||
+                  0 + noVay[index] ||
+                  0)
+              : 0;
+            return result;
+          });
+        customBalPTC2.series = [
+          {
+            data: getPercents(vonGop),
+            type: 'line',
+            label: 'Vốn góp của Chủ sở hữu',
+            area: true,
+            stack: 'total',
+            yAxisId: 'rightAxis',
+          },
+          {
+            data: getPercents(laiChuaPhanPhoi),
+            type: 'line',
+            label: 'LNST chưa phân phối',
+            area: true,
+            stack: 'total',
+            yAxisId: 'rightAxis',
+          },
+          {
+            data: getPercents(vcshKhac),
+            type: 'line',
+            label: 'Vốn chủ sở hữu khác',
+            area: true,
+            stack: 'total',
+            yAxisId: 'rightAxis',
+          },
+          {
+            data: getPercents(noChiemDung),
+            type: 'line',
+            label: 'Nợ chiếm dụng',
+            area: true,
+            stack: 'total',
+            yAxisId: 'rightAxis',
+          },
+          {
+            data: getPercents(noVay),
+            type: 'line',
+            label: 'Nợ vay',
+            area: true,
+            stack: 'total',
+            yAxisId: 'rightAxis',
+          },
+        ];
+        customBalPTC2.yAxis = {
+          left: { type: 'per', piecewise: false },
+          right: { type: 'per', piecewise: false },
+        };
+      } else {
+        customBalPTC2.series = [
+          {
+            type: 'bar',
+            label: 'Vốn góp của Chủ sở hữu',
+            dataKey: 'vonGop',
+            yAxisId: 'rightAxis',
+            stack: 'stack',
+          },
+          {
+            type: 'bar',
+            label: 'LNST chưa phân phối',
+            dataKey: 'laiChuaPhanPhoi',
+            yAxisId: 'rightAxis',
+            stack: 'stack',
+          },
+          {
+            type: 'bar',
+            label: 'Vốn chủ sở hữu khác',
+            dataKey: 'vcshKhac',
+            yAxisId: 'rightAxis',
+            stack: 'stack',
+          },
+          {
+            type: 'bar',
+            label: 'Nợ chiếm dụng',
+            dataKey: 'noChiemDung',
+            yAxisId: 'rightAxis',
+            stack: 'stack',
+          },
+          {
+            type: 'bar',
+            label: 'Nợ vay',
+            dataKey: 'noVay',
+            yAxisId: 'rightAxis',
+            stack: 'stack',
+          },
+        ];
+        customBalPTC2.yAxis = {
+          left: { type: 'per', piecewise: false },
+          right: { type: 'bil', piecewise: false },
+        };
+      }
+      let newPerf = await mapDataChart(customBalPTC2);
+      setDataChart((prev) => ({ ...prev, bal2: newPerf }));
+      setChecked((prev) => ({ ...prev, bal2ajust: !prev.bal2ajust }));
+    }
+    if (typeChart === 'bal2') {
+      customBalPTC2.year = checked.bal2;
+      let newPerf = await mapDataChart(customBalPTC2);
+      setDataChart((prev) => ({ ...prev, bal2: newPerf }));
+      setChecked((prev) => ({ ...prev, bal2: !prev.bal2 }));
+    }
+    if (typeChart === 'bal3') {
+      customBalPTC3.year = checked.bal3;
+      let newPerf = await mapDataChart(customBalPTC3);
+      setDataChart((prev) => ({ ...prev, bal3: newPerf }));
+      setChecked((prev) => ({ ...prev, bal3: !prev.bal3 }));
+    }
+    if (typeChart === 'bal4') {
+      customBalPTC4.year = checked.bal4;
+      let newPerf = await mapDataChart(customBalPTC4);
+      setDataChart((prev) => ({ ...prev, bal4: newPerf }));
+      setChecked((prev) => ({ ...prev, bal4: !prev.bal4 }));
+    }
+    if (typeChart === 'bal6') {
+      customBalPTC6.year = checked.bal6;
+      let newPerf = await mapDataChart(customBalPTC6);
+      setDataChart((prev) => ({ ...prev, bal6: newPerf }));
+      setChecked((prev) => ({ ...prev, bal6: !prev.bal6 }));
+    }
     if (typeChart === 'cf1') {
       customCFPTC1.year = checked.cf1;
       let newPerf = await mapDataChart(customCFPTC1);
@@ -550,6 +801,31 @@ export const TabChart = () => {
       let newPerf = await mapDataChart(customCFPTC2);
       setDataChart((prev) => ({ ...prev, cf2: newPerf }));
       setChecked((prev) => ({ ...prev, cf2: !prev.cf2 }));
+    }
+    if (typeChart === 'cf3') {
+      customCFPTC3.year = checked.cf3;
+      let newPerf = await mapDataChart(customCFPTC3);
+      setDataChart((prev) => ({ ...prev, cf3: newPerf }));
+      setChecked((prev) => ({ ...prev, cf3: !prev.cf3 }));
+    }
+    if (typeChart === 'cf3adjust') {
+      if (checked.cf3adjust) {
+        customCFPTC3.series.pop();
+        let newPerf = await mapDataChart(customCFPTC3);
+        console.log('newPerf', newPerf);
+        setDataChart((prev) => ({ ...prev, cf3: newPerf }));
+        setChecked((prev) => ({ ...prev, cf3adjust: !prev.cf3adjust }));
+      } else {
+        customCFPTC3.series.push({
+          type: 'bar',
+          label: 'Tiền cho vay',
+          dataKey: 'tienLongTrongPhaiThuChoVay',
+          yAxisId: 'rightAxis',
+        });
+        let newPerf = await mapDataChart(customCFPTC3);
+        setDataChart((prev) => ({ ...prev, cf3: newPerf }));
+        setChecked((prev) => ({ ...prev, cf3adjust: !prev.cf3adjust }));
+      }
     }
     if (typeChart === 'cf4') {
       customCFPTC4.year = checked.cf4;
@@ -715,6 +991,137 @@ export const TabChart = () => {
               </div>
             )}
           </CustomTabPanel>
+          <CustomTabPanel value={value} index={1}>
+            {codeValue && (
+              <div className="flex flex-col gap-8">
+                <div className="flex gap-8">
+                  <div className="lg:w-1/2 md:w-full">
+                    <div className="mb-4">
+                      <div className="flex">
+                        <div className="flex flex-1 font-bold">{dataChart?.bal1?.title || ''}</div>
+                        <Stack
+                          direction="row"
+                          spacing={1}
+                          sx={{ alignItems: 'center', marginRight: '16px' }}
+                        >
+                          <Typography>Adjust</Typography>
+                          <FormControlLabel
+                            checked={checked.bal1ajust}
+                            onChange={() => handleToggle('bal1ajust')}
+                            control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
+                          />
+                          <Typography>Non Adjust</Typography>
+                        </Stack>
+                        <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
+                          <Typography>Năm</Typography>
+                          <FormControlLabel
+                            checked={checked.bal1}
+                            onChange={() => handleToggle('bal1')}
+                            control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
+                          />
+                          <Typography>Quý</Typography>
+                        </Stack>
+                      </div>
+                    </div>
+                    {dataChart && dataChart.bal1 && <StackChart data={dataChart.bal1} />}
+                  </div>
+                  <div className="lg:w-1/2 md:w-full">
+                    <div className="mb-4">
+                      <div className="flex">
+                        <div className="flex flex-1 font-bold">{dataChart?.bal2?.title || ''}</div>
+                        <Stack
+                          direction="row"
+                          spacing={1}
+                          sx={{ alignItems: 'center', marginRight: '16px' }}
+                        >
+                          <Typography>Adjust</Typography>
+                          <FormControlLabel
+                            checked={checked.bal2ajust}
+                            onChange={() => handleToggle('bal2ajust')}
+                            control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
+                          />
+                          <Typography>No Adjust</Typography>
+                        </Stack>
+                        <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
+                          <Typography>Năm</Typography>
+                          <FormControlLabel
+                            checked={checked.bal2}
+                            onChange={() => handleToggle('bal2')}
+                            control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
+                          />
+                          <Typography>Quý</Typography>
+                        </Stack>
+                      </div>
+                    </div>
+                    {dataChart && dataChart.bal2 && <StackChart data={dataChart.bal2} />}
+                  </div>
+                </div>
+                <div className="flex gap-8">
+                  <div className="lg:w-1/2 md:w-full">
+                    <div className="mb-4">
+                      <div className="flex">
+                        <div className="flex flex-1 font-bold">{dataChart?.bal3?.title || ''}</div>
+                        <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
+                          <Typography>Năm</Typography>
+                          <FormControlLabel
+                            checked={checked.bal3}
+                            onChange={() => handleToggle('bal3')}
+                            control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
+                          />
+                          <Typography>Quý</Typography>
+                        </Stack>
+                      </div>
+                    </div>
+                    {dataChart && dataChart.bal3 && <StackChart data={dataChart.bal3} />}
+                  </div>
+                  <div className="lg:w-1/2 md:w-full">
+                    <div className="mb-4">
+                      <div className="flex">
+                        <div className="flex flex-1 font-bold">{dataChart?.bal4?.title || ''}</div>
+                        <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
+                          <Typography>Năm</Typography>
+                          <FormControlLabel
+                            checked={checked.bal4}
+                            onChange={() => handleToggle('bal4')}
+                            control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
+                          />
+                          <Typography>Quý</Typography>
+                        </Stack>
+                      </div>
+                    </div>
+                    {dataChart && dataChart.bal4 && <StackChart data={dataChart.bal4} />}
+                  </div>
+                </div>
+                <div className="flex gap-8">
+                  <div className="lg:w-1/2 md:w-full">
+                    <div className="mb-4">
+                      <div className="flex">
+                        <div className="flex flex-1 font-bold">{dataChart?.bal5?.title || ''}</div>
+                      </div>
+                    </div>
+                    {dataChart && dataChart.bal5 && <StackChart data={dataChart.bal5} />}
+                  </div>
+                  <div className="lg:w-1/2 md:w-full">
+                    <div className="mb-4">
+                      <div className="flex">
+                        <div className="flex flex-1 font-bold">{dataChart?.bal6?.title || ''}</div>
+                        <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
+                          <Typography>Năm</Typography>
+                          <FormControlLabel
+                            checked={checked.bal6}
+                            onChange={() => handleToggle('bal6')}
+                            control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
+                          />
+                          <Typography>Quý</Typography>
+                        </Stack>
+                      </div>
+                    </div>
+                    {dataChart && dataChart.bal6 && <StackChart data={dataChart.bal6} />}
+                  </div>
+                </div>
+              </div>
+            )}
+          </CustomTabPanel>
           <CustomTabPanel value={value} index={2}>
             <div className="flex gap-8">
               <div className="lg:w-1/2 md:w-full">
@@ -746,80 +1153,94 @@ export const TabChart = () => {
             </div>
           </CustomTabPanel>
           <CustomTabPanel value={value} index={3}>
-            <div className="flex gap-8">
-              <div className="lg:w-1/2 md:w-full">
-                <div className="mb-4">
-                  <div className="flex">
-                    <div className="flex flex-1 font-bold">{dataChart?.cf1?.title || ''}</div>
-                    <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-                      <Typography>Năm</Typography>
-                      <FormControlLabel
-                        checked={checked.cf1}
-                        onChange={() => handleToggle('cf1')}
-                        control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
-                      />
-                      <Typography>Quý</Typography>
-                    </Stack>
+            <div className="flex flex-col gap-8">
+              <div className="flex gap-8">
+                <div className="lg:w-1/2 md:w-full">
+                  <div className="mb-4">
+                    <div className="flex">
+                      <div className="flex flex-1 font-bold">{dataChart?.cf1?.title || ''}</div>
+                      <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
+                        <Typography>Năm</Typography>
+                        <FormControlLabel
+                          checked={checked.cf1}
+                          onChange={() => handleToggle('cf1')}
+                          control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
+                        />
+                        <Typography>Quý</Typography>
+                      </Stack>
+                    </div>
                   </div>
+                  {dataChart && dataChart.cf1 && <StackChart data={dataChart.cf1} />}
                 </div>
-                {dataChart && dataChart.cf1 && <StackChart data={dataChart.cf1} />}
+                <div className="lg:w-1/2 md:w-full">
+                  <div className="mb-4">
+                    <div className="flex">
+                      <div className="flex flex-1 font-bold">{dataChart?.perf8?.title || ''}</div>
+                      <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
+                        <Typography>Năm</Typography>
+                        <FormControlLabel
+                          checked={checked.cf2}
+                          onChange={() => handleToggle('cf2')}
+                          control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
+                        />
+                        <Typography>Quý</Typography>
+                      </Stack>
+                    </div>
+                  </div>
+                  {dataChart && dataChart.cf2 && <StackChart data={dataChart.cf2} />}
+                </div>
               </div>
-              <div className="lg:w-1/2 md:w-full">
-                <div className="mb-4">
-                  <div className="flex">
-                    <div className="flex flex-1 font-bold">{dataChart?.perf8?.title || ''}</div>
-                    <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-                      <Typography>Năm</Typography>
-                      <FormControlLabel
-                        checked={checked.cf2}
-                        onChange={() => handleToggle('cf2')}
-                        control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
-                      />
-                      <Typography>Quý</Typography>
-                    </Stack>
+              <div className="flex gap-8">
+                <div className="lg:w-1/2 md:w-full">
+                  <div className="mb-4">
+                    <div className="flex">
+                      <div className="flex flex-1 font-bold">{dataChart?.cf3?.title || ''}</div>
+                      <Stack
+                        direction="row"
+                        spacing={1}
+                        sx={{ alignItems: 'center', marginRight: '16px' }}
+                      >
+                        <Typography>Off</Typography>
+                        <FormControlLabel
+                          checked={checked.cf3adjust}
+                          onChange={() => handleToggle('cf3adjust')}
+                          control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
+                        />
+                        <Typography>On</Typography>
+                      </Stack>
+                      <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
+                        <Typography>Năm</Typography>
+                        <FormControlLabel
+                          checked={checked.cf3}
+                          onChange={() => handleToggle('cf3')}
+                          control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
+                        />
+                        <Typography>Quý</Typography>
+                      </Stack>
+                    </div>
                   </div>
+                  {dataChart && dataChart.cf3 && <StackChart data={dataChart.cf3} />}
                 </div>
-                {dataChart && dataChart.cf2 && <StackChart data={dataChart.cf2} />}
-              </div>
-            </div>
-            <div className="flex gap-8">
-              <div className="lg:w-1/2 md:w-full">
-                <div className="mb-4">
-                  <div className="flex">
-                    <div className="flex flex-1 font-bold">{dataChart?.cf1?.title || ''}</div>
-                    <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-                      <Typography>Năm</Typography>
-                      <FormControlLabel
-                        checked={checked.cf1}
-                        onChange={() => handleToggle('cf1')}
-                        control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
-                      />
-                      <Typography>Quý</Typography>
-                    </Stack>
+                <div className="lg:w-1/2 md:w-full">
+                  <div className="mb-4">
+                    <div className="flex">
+                      <div className="flex flex-1 font-bold">{dataChart?.perf8?.title || ''}</div>
+                      <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
+                        <Typography>Năm</Typography>
+                        <FormControlLabel
+                          checked={checked.cf4}
+                          onChange={() => handleToggle('cf4')}
+                          control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
+                        />
+                        <Typography>Quý</Typography>
+                      </Stack>
+                    </div>
                   </div>
+                  {dataChart && dataChart.cf4 && <StackChart data={dataChart.cf4} />}
                 </div>
-                {/* {dataChart && dataChart.cf1 && <StackChart data={dataChart.cf1} />} */}
-              </div>
-              <div className="lg:w-1/2 md:w-full">
-                <div className="mb-4">
-                  <div className="flex">
-                    <div className="flex flex-1 font-bold">{dataChart?.perf8?.title || ''}</div>
-                    <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-                      <Typography>Năm</Typography>
-                      <FormControlLabel
-                        checked={checked.cf4}
-                        onChange={() => handleToggle('cf4')}
-                        control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
-                      />
-                      <Typography>Quý</Typography>
-                    </Stack>
-                  </div>
-                </div>
-                {dataChart && dataChart.cf4 && <StackChart data={dataChart.cf4} />}
               </div>
             </div>
           </CustomTabPanel>
-          {/* <StackChart data={bal2} /> */}
         </>
       )}
       {tabType === 'ChungKhoan' && (
