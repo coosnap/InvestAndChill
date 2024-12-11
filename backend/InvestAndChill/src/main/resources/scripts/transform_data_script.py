@@ -387,7 +387,7 @@ def phi_tai_chinh_calculate_data(rs: List[Dict], combine_data: List[Dict]) -> Li
             item['p_i_13'] = (item['p_b_10'] or 0) + (item['p_b_29'] or 0)
             item['p_i_15'] = (item['p_b_66'] or 0) - (item['p_i_11'] or 0) - (item['p_i_12'] or 0) - (item['p_b_18'] or 0) - (item['p_b_36'] or 0) - (item['p_b_47'] or 0) - (item['p_b_50'] or 0)
             item['p_i_16'] = (item['p_b_78'] or 0) + (item['p_b_91'] or 0)
-            item['p_i_17'] = (item['p_i_16'] or 0) - (item['p_b_67'] or 0)
+            item['p_i_17'] = (item['p_b_67'] or 0) - (item['p_i_16'] or 0)
             item['p_i_18'] = (item['p_b_69'] or 0) + (item['p_b_84'] or 0)
             item['p_i_19'] = (item['p_b_98'] or 0) - (item['p_b_100'] or 0) - (item['p_b_113'] or 0)
             item['p_i_20'] = (item['p_b_98'] or 0) - (item['p_b_116'] or 0)
