@@ -221,7 +221,7 @@ def phi_tai_chinh_calculate_data(rs: List[Dict], combine_data: List[Dict]) -> Li
 
             i_17_1 = item['p_i_16'] or 0
             i_17_2 = item['p_b_67'] or 0
-            item['p_i_17'] = i_17_1 - i_17_2
+            item['p_i_17'] = i_17_2 - i_17_1
 
             i_18_1 = item['p_b_69'] or 0
             i_18_2 = item['p_b_84'] or 0
