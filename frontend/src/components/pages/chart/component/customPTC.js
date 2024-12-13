@@ -337,7 +337,7 @@ export let customBalPTC1 = {
     },
   ],
   yAxis: {
-    left: { type: 'bil', piecewise: false },
+    left: { type: 'bil', piecewise: false, showLineReference: true },
     right: { type: 'bil', piecewise: false },
   },
 };
@@ -383,7 +383,7 @@ export let customBalPTC2 = {
   ],
   yAxis: {
     left: { type: 'per', piecewise: false },
-    right: { type: 'bil', piecewise: false },
+    right: { type: 'bil', piecewise: false, showLineReference: true },
   },
 };
 export let customBalPTC3 = {
@@ -435,7 +435,7 @@ export let customBalPTC4 = {
   ],
   yAxis: {
     left: { type: 'per', piecewise: false },
-    right: { type: 'bil', piecewise: false },
+    right: { type: 'bil', piecewise: false, showLineReference: true },
   },
 };
 export let customBalPTC5 = {
@@ -465,7 +465,7 @@ export let customBalPTC5 = {
   ],
   yAxis: {
     left: { type: 'per', piecewise: false },
-    right: { type: 'bil', piecewise: false },
+    right: { type: 'time', piecewise: false },
   },
 };
 export let customBalPTC6 = {

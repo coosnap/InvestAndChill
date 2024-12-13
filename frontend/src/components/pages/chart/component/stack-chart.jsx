@@ -13,7 +13,7 @@ import { ResponsiveChartContainer } from '@mui/x-charts/ResponsiveChartContainer
 
 export default function NoStackChart(data) {
   function extend(value, step) {
-    if (value > 0) {
+    if (Number(value) && value > 0) {
       return step * Math.ceil(value / step);
     }
     return step * Math.floor(value / step);
@@ -38,20 +38,17 @@ export default function NoStackChart(data) {
                 domainLimit:
                   data.data.yAxis.left.type == 'bil'
                     ? (min, max) => ({
-                        min: extend(min, 10),
-                        max: extend(max, 10),
+                        min: extend(min, min < 0 ? (min + max) / 2 : (min + max) / 10),
+                        max: extend(max, (min + max) / 10),
                       })
-                    : 'strict',
+                    : (min, max) => ({
+                        min: extend(min, (min + max) / 10),
+                        max: extend(max, (min + max) / 10),
+                      }),
               }
             : {
                 id: 'leftAxis',
-                domainLimit:
-                  data.data.yAxis.left.type == 'bil'
-                    ? (min, max) => ({
-                        min: extend(min, 10),
-                        max: extend(max, 10),
-                      })
-                    : 'nice',
+                domainLimit: 'nice',
               },
           data.data.yAxis.right?.piecewise
             ? {
@@ -59,20 +56,17 @@ export default function NoStackChart(data) {
                 domainLimit:
                   data.data.yAxis.right.type == 'bil'
                     ? (min, max) => ({
-                        min: extend(min, 10),
-                        max: extend(max, 10),
+                        min: extend(min, (min + max) / 10),
+                        max: extend(max, (min + max) / 10),
                       })
-                    : 'nice',
+                    : (min, max) => ({
+                        min: extend(min, min < 0 ? (min + max) / 10 : -2),
+                        max: extend(max, min < 0 ? (min + max) / 10 : -2),
+                      }),
               }
             : {
                 id: 'rightAxis',
-                domainLimit:
-                  data.data.yAxis.right.type == 'bil'
-                    ? (min, max) => ({
-                        min: extend(min, 10),
-                        max: extend(max, 10),
-                      })
-                    : 'nice',
+                domainLimit: 'nice',
               },
         ]}
         height={400}
@@ -89,7 +83,11 @@ export default function NoStackChart(data) {
         <AreaPlot />
         <ChartsXAxis />
         {data.data.yAxis.left.showLineReference && (
-          <ChartsReferenceLine axisId={'leftAxis'} y={0} />
+          <ChartsReferenceLine
+            axisId={'leftAxis'}
+            y={0}
+            lineStyle={{ strokeWidth: '1px !important' }}
+          />
         )}
         {data.data.yAxis.right.showLineReference && (
           <ChartsReferenceLine axisId={'rightAxis'} y={0} />
@@ -118,7 +116,7 @@ export default function NoStackChart(data) {
             disableTicks
             sx={{
               '.MuiChartsAxis-label': {
-                transform: 'translate(-24px, -154px)',
+                transform: 'translate(-31px, -154px)',
               },
             }}
           />
@@ -144,7 +142,7 @@ export default function NoStackChart(data) {
             label="tỷ đồng"
             disableLine
             disableTicks
-            sx={{ '.MuiChartsAxis-label': { transform: 'translate(25px, -139px)' } }}
+            sx={{ '.MuiChartsAxis-label': { transform: 'translate(31px, -139px)' } }}
           />
         )}
         {data.data.yAxis.right.type == 'per' && (

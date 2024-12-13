@@ -31,3 +31,15 @@ export async function getDataChartStock(type, code, year) {
   }
   return;
 }
+
+export async function getDataChartBank(type, code, year) {
+  const response = await axiosInstance.get(
+    `${import.meta.env.VITE_REACT_APP_API}/api/report/nganhang/${type}/${code}${
+      year ? '?type=year' : ''
+    }`
+  );
+  if (response.status === 200) {
+    return response.data;
+  }
+  return;
+}
