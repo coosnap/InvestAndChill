@@ -44,14 +44,6 @@ const routes = [
     ),
   },
   {
-    path: '/login',
-    element: (
-      <PublicRoute>
-        <Login />
-      </PublicRoute>
-    ),
-  },
-  {
     path: '/chart',
     element: (
       <PublicRoute>
@@ -157,14 +149,14 @@ function App() {
   useEffect(() => {
     if (cookies?.access_token && jwtDecode(cookies?.access_token).exp < Date.now() / 1000) {
       setCookie('access_token', '', {});
-      window.location.href = '/login';
+      window.location.href = '/';
     }
   }, [cookies]);
 
   return (
     <ThemeProvider defaultTheme="light" theme={theme} storageKey="vite-ui-theme">
       <div className="App">
-        {pathname.includes('/post') ? <></> : <Layout hideHeaderPaths={['/', '/login']} />}
+        {pathname.includes('/post') ? <></> : <Layout hideHeaderPaths={['/']} />}
         {routesElement}
       </div>
     </ThemeProvider>
