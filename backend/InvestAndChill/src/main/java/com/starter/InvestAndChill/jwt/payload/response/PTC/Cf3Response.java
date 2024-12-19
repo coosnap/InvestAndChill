@@ -3,39 +3,39 @@ package com.starter.InvestAndChill.jwt.payload.response.PTC;
 import com.starter.InvestAndChill.jwt.payload.response.ReportReponse;
 
 public class Cf3Response extends ReportReponse{
-	private Integer noVay;
-	private Integer giaTriThuanDauTuNganHan;
-	private Integer tienVaTuongDuongTien;
-	private Integer dauTuNamGiuDenNgayDaoHan;
-	private Integer tienLongTrongPhaiThuChoVay;
-	public Integer getNoVay() {
+	private Double noVay;
+	private Double giaTriThuanDauTuNganHan;
+	private Double tienVaTuongDuongTien;
+	private Double dauTuNamGiuDenNgayDaoHan;
+	private Double tienLongTrongPhaiThuChoVay;
+	public Double getNoVay() {
 		return noVay;
 	}
-	public void setNoVay(Integer noVay) {
+	public void setNoVay(Double noVay) {
 		this.noVay = noVay;
 	}
-	public Integer getGiaTriThuanDauTuNganHan() {
+	public Double getGiaTriThuanDauTuNganHan() {
 		return giaTriThuanDauTuNganHan;
 	}
-	public void setGiaTriThuanDauTuNganHan(Integer giaTriThuanDauTuNganHan) {
+	public void setGiaTriThuanDauTuNganHan(Double giaTriThuanDauTuNganHan) {
 		this.giaTriThuanDauTuNganHan = giaTriThuanDauTuNganHan;
 	}
-	public Integer getTienVaTuongDuongTien() {
+	public Double getTienVaTuongDuongTien() {
 		return tienVaTuongDuongTien;
 	}
-	public void setTienVaTuongDuongTien(Integer tienVaTuongDuongTien) {
+	public void setTienVaTuongDuongTien(Double tienVaTuongDuongTien) {
 		this.tienVaTuongDuongTien = tienVaTuongDuongTien;
 	}
-	public Integer getDauTuNamGiuDenNgayDaoHan() {
+	public Double getDauTuNamGiuDenNgayDaoHan() {
 		return dauTuNamGiuDenNgayDaoHan;
 	}
-	public void setDauTuNamGiuDenNgayDaoHan(Integer dauTuNamGiuDenNgayDaoHan) {
+	public void setDauTuNamGiuDenNgayDaoHan(Double dauTuNamGiuDenNgayDaoHan) {
 		this.dauTuNamGiuDenNgayDaoHan = dauTuNamGiuDenNgayDaoHan;
 	}
-	public Integer getTienLongTrongPhaiThuChoVay() {
+	public Double getTienLongTrongPhaiThuChoVay() {
 		return tienLongTrongPhaiThuChoVay;
 	}
-	public void setTienLongTrongPhaiThuChoVay(Integer tienLongTrongPhaiThuChoVay) {
+	public void setTienLongTrongPhaiThuChoVay(Double tienLongTrongPhaiThuChoVay) {
 		this.tienLongTrongPhaiThuChoVay = tienLongTrongPhaiThuChoVay;
 	}
 	

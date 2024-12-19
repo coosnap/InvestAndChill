@@ -6,39 +6,39 @@ import com.starter.InvestAndChill.jwt.payload.response.ReportReponse;
 
 public class Bal12Response extends ReportReponse{
 
-	private Integer doanhNghiepNhaNuocTG;
-	private Integer doanhNghiepTuNhanTG;
-	private Integer doanhNghiepNuocNgoaiTG;
-	private Integer caNhanTG;
-	private Integer khacTG;
-	public Integer getDoanhNghiepNhaNuocTG() {
+	private Double doanhNghiepNhaNuocTG;
+	private Double doanhNghiepTuNhanTG;
+	private Double doanhNghiepNuocNgoaiTG;
+	private Double caNhanTG;
+	private Double khacTG;
+	public Double getDoanhNghiepNhaNuocTG() {
 		return doanhNghiepNhaNuocTG;
 	}
-	public void setDoanhNghiepNhaNuocTG(Integer doanhNghiepNhaNuocTG) {
+	public void setDoanhNghiepNhaNuocTG(Double doanhNghiepNhaNuocTG) {
 		this.doanhNghiepNhaNuocTG = doanhNghiepNhaNuocTG;
 	}
-	public Integer getDoanhNghiepTuNhanTG() {
+	public Double getDoanhNghiepTuNhanTG() {
 		return doanhNghiepTuNhanTG;
 	}
-	public void setDoanhNghiepTuNhanTG(Integer doanhNghiepTuNhanTG) {
+	public void setDoanhNghiepTuNhanTG(Double doanhNghiepTuNhanTG) {
 		this.doanhNghiepTuNhanTG = doanhNghiepTuNhanTG;
 	}
-	public Integer getDoanhNghiepNuocNgoaiTG() {
+	public Double getDoanhNghiepNuocNgoaiTG() {
 		return doanhNghiepNuocNgoaiTG;
 	}
-	public void setDoanhNghiepNuocNgoaiTG(Integer doanhNghiepNuocNgoaiTG) {
+	public void setDoanhNghiepNuocNgoaiTG(Double doanhNghiepNuocNgoaiTG) {
 		this.doanhNghiepNuocNgoaiTG = doanhNghiepNuocNgoaiTG;
 	}
-	public Integer getCaNhanTG() {
+	public Double getCaNhanTG() {
 		return caNhanTG;
 	}
-	public void setCaNhanTG(Integer caNhanTG) {
+	public void setCaNhanTG(Double caNhanTG) {
 		this.caNhanTG = caNhanTG;
 	}
-	public Integer getKhacTG() {
+	public Double getKhacTG() {
 		return khacTG;
 	}
-	public void setKhacTG(Integer khacTG) {
+	public void setKhacTG(Double khacTG) {
 		this.khacTG = khacTG;
 	}
 

@@ -3,39 +3,39 @@ package com.starter.InvestAndChill.jwt.payload.response.PTC;
 import com.starter.InvestAndChill.jwt.payload.response.ReportReponse;
 
 public class Perf4Response extends ReportReponse{
-	private Integer EBITTrailing;
-	private Integer NetFinanceialTrailing;
-	private Integer NetFinancialAdjustTrailing;
-	private Integer NImgTrailing;
-	private Integer EBITmTrailing;
-	public Integer getEBITTrailing() {
+	private Double EBITTrailing;
+	private Double NetFinanceialTrailing;
+	private Double NetFinancialAdjustTrailing;
+	private Double NImgTrailing;
+	private Double EBITmTrailing;
+	public Double getEBITTrailing() {
 		return EBITTrailing;
 	}
-	public void setEBITTrailing(Integer eBITTrailing) {
+	public void setEBITTrailing(Double eBITTrailing) {
 		EBITTrailing = eBITTrailing;
 	}
-	public Integer getNetFinanceialTrailing() {
+	public Double getNetFinanceialTrailing() {
 		return NetFinanceialTrailing;
 	}
-	public void setNetFinanceialTrailing(Integer netFinanceialTrailing) {
+	public void setNetFinanceialTrailing(Double netFinanceialTrailing) {
 		NetFinanceialTrailing = netFinanceialTrailing;
 	}
-	public Integer getNetFinancialAdjustTrailing() {
+	public Double getNetFinancialAdjustTrailing() {
 		return NetFinancialAdjustTrailing;
 	}
-	public void setNetFinancialAdjustTrailing(Integer netFinancialAdjustTrailing) {
+	public void setNetFinancialAdjustTrailing(Double netFinancialAdjustTrailing) {
 		NetFinancialAdjustTrailing = netFinancialAdjustTrailing;
 	}
-	public Integer getNImgTrailing() {
+	public Double getNImgTrailing() {
 		return NImgTrailing;
 	}
-	public void setNImgTrailing(Integer nImgTrailing) {
+	public void setNImgTrailing(Double nImgTrailing) {
 		NImgTrailing = nImgTrailing;
 	}
-	public Integer getEBITmTrailing() {
+	public Double getEBITmTrailing() {
 		return EBITmTrailing;
 	}
-	public void setEBITmTrailing(Integer eBITmTrailing) {
+	public void setEBITmTrailing(Double eBITmTrailing) {
 		EBITmTrailing = eBITmTrailing;
 	}
 	

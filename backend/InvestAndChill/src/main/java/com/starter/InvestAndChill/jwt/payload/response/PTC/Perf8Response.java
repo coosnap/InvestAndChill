@@ -7,8 +7,8 @@ public class Perf8Response extends ReportReponse{
 	private Double AssetTurnover;
 	private Double Leverage;
 	private Double DEE;
-	private Integer roe;
-	private Integer NImgTrailing;
+	private Double roe;
+	private Double NImgTrailing;
 	public Double getAssetTurnover() {
 		return AssetTurnover;
 	}
@@ -27,16 +27,16 @@ public class Perf8Response extends ReportReponse{
 	public void setDEE(Double dEE) {
 		DEE = dEE;
 	}
-	public Integer getRoe() {
+	public Double getRoe() {
 		return roe;
 	}
-	public void setRoe(Integer roe) {
+	public void setRoe(Double roe) {
 		this.roe = roe;
 	}
-	public Integer getNImgTrailing() {
+	public Double getNImgTrailing() {
 		return NImgTrailing;
 	}
-	public void setNImgTrailing(Integer nImgTrailing) {
+	public void setNImgTrailing(Double nImgTrailing) {
 		NImgTrailing = nImgTrailing;
 	}
 	

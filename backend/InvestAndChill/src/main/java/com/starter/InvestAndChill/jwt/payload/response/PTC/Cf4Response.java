@@ -4,32 +4,32 @@ import com.starter.InvestAndChill.jwt.payload.response.ReportReponse;
 
 public class Cf4Response extends ReportReponse{
 
-	private Integer nguoiMuaTraTienTruoc;
-	private Integer doanhThuChuaThucHienNganHan;
-	private Integer nguoiMuaTraTienTruocDaiHan;
-	private Integer doanhThuChuaThucHien;
-	public Integer getNguoiMuaTraTienTruoc() {
+	private Double nguoiMuaTraTienTruoc;
+	private Double doanhThuChuaThucHienNganHan;
+	private Double nguoiMuaTraTienTruocDaiHan;
+	private Double doanhThuChuaThucHien;
+	public Double getNguoiMuaTraTienTruoc() {
 		return nguoiMuaTraTienTruoc;
 	}
-	public void setNguoiMuaTraTienTruoc(Integer nguoiMuaTraTienTruoc) {
+	public void setNguoiMuaTraTienTruoc(Double nguoiMuaTraTienTruoc) {
 		this.nguoiMuaTraTienTruoc = nguoiMuaTraTienTruoc;
 	}
-	public Integer getDoanhThuChuaThucHienNganHan() {
+	public Double getDoanhThuChuaThucHienNganHan() {
 		return doanhThuChuaThucHienNganHan;
 	}
-	public void setDoanhThuChuaThucHienNganHan(Integer doanhThuChuaThucHienNganHan) {
+	public void setDoanhThuChuaThucHienNganHan(Double doanhThuChuaThucHienNganHan) {
 		this.doanhThuChuaThucHienNganHan = doanhThuChuaThucHienNganHan;
 	}
-	public Integer getNguoiMuaTraTienTruocDaiHan() {
+	public Double getNguoiMuaTraTienTruocDaiHan() {
 		return nguoiMuaTraTienTruocDaiHan;
 	}
-	public void setNguoiMuaTraTienTruocDaiHan(Integer nguoiMuaTraTienTruocDaiHan) {
+	public void setNguoiMuaTraTienTruocDaiHan(Double nguoiMuaTraTienTruocDaiHan) {
 		this.nguoiMuaTraTienTruocDaiHan = nguoiMuaTraTienTruocDaiHan;
 	}
-	public Integer getDoanhThuChuaThucHien() {
+	public Double getDoanhThuChuaThucHien() {
 		return doanhThuChuaThucHien;
 	}
-	public void setDoanhThuChuaThucHien(Integer doanhThuChuaThucHien) {
+	public void setDoanhThuChuaThucHien(Double doanhThuChuaThucHien) {
 		this.doanhThuChuaThucHien = doanhThuChuaThucHien;
 	}
 	

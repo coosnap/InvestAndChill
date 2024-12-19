@@ -3,18 +3,18 @@ package com.starter.InvestAndChill.jwt.payload.response.nganhang;
 import com.starter.InvestAndChill.jwt.payload.response.ReportReponse;
 
 public class Bal3Response extends ReportReponse{
-	private Integer tinDungSVDauNam;
-	private Integer huyDongSVDauNam;
-	public Integer getTinDungSVDauNam() {
+	private Double tinDungSVDauNam;
+	private Double huyDongSVDauNam;
+	public Double getTinDungSVDauNam() {
 		return tinDungSVDauNam;
 	}
-	public void setTinDungSVDauNam(Integer tinDungSVDauNam) {
+	public void setTinDungSVDauNam(Double tinDungSVDauNam) {
 		this.tinDungSVDauNam = tinDungSVDauNam;
 	}
-	public Integer getHuyDongSVDauNam() {
+	public Double getHuyDongSVDauNam() {
 		return huyDongSVDauNam;
 	}
-	public void setHuyDongSVDauNam(Integer huyDongSVDauNam) {
+	public void setHuyDongSVDauNam(Double huyDongSVDauNam) {
 		this.huyDongSVDauNam = huyDongSVDauNam;
 	}
 }

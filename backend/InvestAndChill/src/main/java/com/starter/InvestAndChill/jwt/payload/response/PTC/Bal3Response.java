@@ -4,25 +4,25 @@ import com.starter.InvestAndChill.jwt.payload.response.ReportReponse;
 
 public class Bal3Response extends ReportReponse{
 
-	private Integer GrossPPE;
-	private Integer DAPPE;
-	private Integer xayDungCoBanDoDang;
-	public Integer getGrossPPE() {
+	private Double GrossPPE;
+	private Double DAPPE;
+	private Double xayDungCoBanDoDang;
+	public Double getGrossPPE() {
 		return GrossPPE;
 	}
-	public void setGrossPPE(Integer grossPPE) {
+	public void setGrossPPE(Double grossPPE) {
 		GrossPPE = grossPPE;
 	}
-	public Integer getDAPPE() {
+	public Double getDAPPE() {
 		return DAPPE;
 	}
-	public void setDAPPE(Integer dAPPE) {
+	public void setDAPPE(Double dAPPE) {
 		DAPPE = dAPPE;
 	}
-	public Integer getXayDungCoBanDoDang() {
+	public Double getXayDungCoBanDoDang() {
 		return xayDungCoBanDoDang;
 	}
-	public void setXayDungCoBanDoDang(Integer xayDungCoBanDoDang) {
+	public void setXayDungCoBanDoDang(Double xayDungCoBanDoDang) {
 		this.xayDungCoBanDoDang = xayDungCoBanDoDang;
 	}
 	

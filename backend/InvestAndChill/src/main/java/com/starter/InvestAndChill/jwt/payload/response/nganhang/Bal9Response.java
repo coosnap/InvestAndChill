@@ -4,26 +4,26 @@ import com.starter.InvestAndChill.jwt.payload.response.ReportReponse;
 
 public class Bal9Response extends ReportReponse{
 
-	private Integer choVayNganHan;
-	private Integer choVayTrungHan;
-	public Integer getChoVayNganHan() {
+	private Double choVayNganHan;
+	private Double choVayTrungHan;
+	public Double getChoVayNganHan() {
 		return choVayNganHan;
 	}
-	public void setChoVayNganHan(Integer choVayNganHan) {
+	public void setChoVayNganHan(Double choVayNganHan) {
 		this.choVayNganHan = choVayNganHan;
 	}
-	public Integer getChoVayTrungHan() {
+	public Double getChoVayTrungHan() {
 		return choVayTrungHan;
 	}
-	public void setChoVayTrungHan(Integer choVayTrungHan) {
+	public void setChoVayTrungHan(Double choVayTrungHan) {
 		this.choVayTrungHan = choVayTrungHan;
 	}
-	public Integer getChoVayDaiHan() {
+	public Double getChoVayDaiHan() {
 		return choVayDaiHan;
 	}
-	public void setChoVayDaiHan(Integer choVayDaiHan) {
+	public void setChoVayDaiHan(Double choVayDaiHan) {
 		this.choVayDaiHan = choVayDaiHan;
 	}
-	private Integer choVayDaiHan;
+	private Double choVayDaiHan;
 
 }

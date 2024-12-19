@@ -1,35 +1,9 @@
-INSERT INTO roles(name) VALUES('ROLE_ADMIN');
-INSERT INTO roles(name) VALUES('ROLE_MODERATOR');
-INSERT INTO roles(name) VALUES('ROLE_USER');
-INSERT INTO roles(name) VALUES('ROLE_MODERATOR_USER');
-INSERT INTO roles(name) VALUES('ROLE_MODERATOR_ARTICLE');
+Tạo DB:
+CREATE DATABASE investnchilldb;
+Dang nhap bang postgres:
+sudo -i -u postgres
 
-INSERT INTO article(id,content,title,url) VALUES(1,'abcd ','Giá vàng và dầu tăng cao đang nói lên điều gì?','https://cafef.vn/gia-vang-va-dau-tang-cao-dang-noi-len-dieu-gi-18824041106150055.chn');
-INSERT INTO article(id,content,title,url) VALUES(2,'abcd ','Tỷ phú Trần Đình Long: Tôi đang rút dần khỏi Hòa Phát','https://cafebiz.vn/ty-phu-tran-dinh-long-toi-dang-rut-dan-khoi-hoa-phat-176240411091458102.chn');
-INSERT INTO article(id,content,title,url) VALUES(3,'abcde','Lần đầu tiên trong lịch sử, Apple sản xuất lượng iPhone trị giá tới 14 tỷ USD ở một quốc gia châu Á khác không phải Trung Quốc ','https://cafebiz.vn/lan-dau-tien-trong-lich-su-apple-san-xuat-luong-iphone-tri-gia-toi-14-ty-usd-o-mot-quoc-gia-chau-a-khac-khong-phai-trung-quoc-176240411094341019.chn');
-
-
-insert into question values (1,'cau tra loi 1','cau hoi 1');
-insert into question values (2,'cau tra loi 2','cau hoi 2');
-insert into question values (3,'cau tra loi 3','cau hoi 3');
-
-insert into stocksymbol(id,symbol,company_name,note) values (1,'MWG','CÔNG TY CỔ PHẦN THẾ GIỚI DI ĐỘNG','ghi chu cho MWG');
-insert into stocksymbol(id,symbol,company_name,note) values (2,'HPG','Tập đoàn Hòa Phát','ghi chu cho HPG');
-insert into stocksymbol(id,symbol,company_name,note) values (3,'FPT','Tập đoàn FPT','ghi chu cho FPT');
-
-INSERT INTO product (acount_fee_for_website, bonus, commitment_time, description, minimum_budget, name, nav_fee, profit_rate_commitment) VALUES ('5', 'Không', '12', 'Khách hàng sau khi được tư vấn về thu nhập và chi tiêu sẽ quyết định đầu tư vào hàng tháng một lượng vốn. Duy trì trong 12 tháng, dòng tiền nạp đều.', '10000000', 'Star-T', '1', '15');
-INSERT INTO product (acount_fee_for_website, bonus, commitment_time, description, minimum_budget, name, nav_fee, profit_rate_commitment) VALUES ('5', 'Vượt 7% chia 30% trên phần vượt', '3', 'Khách hàng sau khi được tư vấn về thu nhập và chi tiêu sẽ quyết định đầu tư vào một lượng vốn. Duy trì trong 3 tháng.', '300000000', 'Star-Trial', '2', '7');
-INSERT INTO product (acount_fee_for_website, bonus, commitment_time, description, minimum_budget, name, nav_fee, profit_rate_commitment) VALUES ('5', 'Vượt 12% chia 30% trên phần vượt','6', 'Khách hàng sau khi được tư vấn về thu nhập và chi tiêu sẽ quyết định đầu tư vào một lượng vốn. Duy trì trong 6 tháng.', '100000000', 'Invest', '2', '12');
-INSERT INTO product (acount_fee_for_website, bonus, commitment_time, description, minimum_budget, name, nav_fee, profit_rate_commitment) VALUES ('0', 'Vượt 25% chia 25% trên phần vượt', '12', 'Khách hàng sau khi được tư vấn về thu nhập và chi tiêu sẽ quyết định đầu tư vào một lượng vốn. Duy trì trong 12 tháng.', '100000000', 'InvestN', '2', '25');
-INSERT INTO product (acount_fee_for_website, bonus, commitment_time, description, minimum_budget, name, nav_fee, profit_rate_commitment) VALUES ('0', 'Vượt 90% chia 20% trên phần vượt', '36', 'Khách hàng sau khi được tư vấn về thu nhập và chi tiêu sẽ quyết định đầu tư vào một lượng vốn. Duy trì trong 36 tháng.', '100000000', 'InvastNChill', '2', '90');
-
-
-
-drop  table public.refreshtoken;
-drop  table public.user_roles ;
-drop table public.users;
-drop table public.article; 
-drop table public.stocksymbol; 
-commit;
+psql -U postgres -d investnchilldb -f /var/tmp/dump-d1re3fkrj0ginj-202412021525.sql
+pg_restore -U postgres -d investnchilldb /var/tmp/dump-d1re3fkrj0ginj-202412021525.sql
 
 

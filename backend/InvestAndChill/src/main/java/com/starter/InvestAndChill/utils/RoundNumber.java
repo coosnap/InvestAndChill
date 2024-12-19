@@ -2,30 +2,28 @@ package com.starter.InvestAndChill.utils;
 
 public class RoundNumber {
 	public static void main(String[] args) {
-		double number = 5.6789;
-		System.out.println(lamTronLan(number));
+		double number = 0.56789;
+		System.out.println(lamTronPhanTram(number));
     }
 	
-	public static Integer lamTron(Double tyDong) {
+	public static Double lamTron(Double tyDong) {
 		if (tyDong == null)
 			return null;
-		long rounded = Math.round(tyDong);
-		Integer integerValue = (int) rounded; 
-		return integerValue;
+		double rounded = Math.round(tyDong * 10.0) / 10.0; // Làm tròn đến 1 chữ số thập phân
+		return rounded;
 	}
 	
-	public static Integer lamTronPhanTram(Double tyDong) {
+	public static Double lamTronPhanTram(Double tyDong) {
 		if (tyDong == null)
 			return null;
-		long rounded = Math.round(tyDong*100);
-		Integer integerValue = (int) rounded; 
-		return integerValue;
+		double rounded = Math.round(tyDong * 100 * 10.0) / 10.0; // Làm tròn đến 1 chữ số thập phân
+		return rounded;
 	}
 	
 	public static Double lamTronLan(Double tyDong) {
 		if (tyDong == null)
 			return null;
-		double rounded = Math.round(tyDong * 10.0) / 10.0;  // Làm tròn đến 1 chữ số thập phân
+		double rounded = Math.round(tyDong * 100.0) / 100.0; // Làm tròn đến 2 chữ số thập phân
 		return rounded;
 	}
 	

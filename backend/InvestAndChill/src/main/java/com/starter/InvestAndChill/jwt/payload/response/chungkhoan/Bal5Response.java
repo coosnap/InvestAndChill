@@ -3,53 +3,53 @@ package com.starter.InvestAndChill.jwt.payload.response.chungkhoan;
 import com.starter.InvestAndChill.jwt.payload.response.ReportReponse;
 
 public class Bal5Response extends ReportReponse{
-	public Integer getGPFVTPL() {
+	public Double getGPFVTPL() {
 		return GPFVTPL;
 	}
-	public void setGPFVTPL(Integer gPFVTPL) {
+	public void setGPFVTPL(Double gPFVTPL) {
 		GPFVTPL = gPFVTPL;
 	}
-	public Integer getGPCVMargin() {
+	public Double getGPCVMargin() {
 		return GPCVMargin;
 	}
-	public void setGPCVMargin(Integer gPCVMargin) {
+	public void setGPCVMargin(Double gPCVMargin) {
 		GPCVMargin = gPCVMargin;
 	}
-	public Integer getGPMoiGioi() {
+	public Double getGPMoiGioi() {
 		return GPMoiGioi;
 	}
-	public void setGPMoiGioi(Integer gPMoiGioi) {
+	public void setGPMoiGioi(Double gPMoiGioi) {
 		GPMoiGioi = gPMoiGioi;
 	}
-	public Integer getGPHTM() {
+	public Double getGPHTM() {
 		return GPHTM;
 	}
-	public void setGPHTM(Integer gPHTM) {
+	public void setGPHTM(Double gPHTM) {
 		GPHTM = gPHTM;
 	}
-	public Integer getGPAFS() {
+	public Double getGPAFS() {
 		return GPAFS;
 	}
-	public void setGPAFS(Integer gPAFS) {
+	public void setGPAFS(Double gPAFS) {
 		GPAFS = gPAFS;
 	}
-	public Integer getGPBaoLanhPhatHanh() {
+	public Double getGPBaoLanhPhatHanh() {
 		return GPBaoLanhPhatHanh;
 	}
-	public void setGPBaoLanhPhatHanh(Integer gPBaoLanhPhatHanh) {
+	public void setGPBaoLanhPhatHanh(Double gPBaoLanhPhatHanh) {
 		GPBaoLanhPhatHanh = gPBaoLanhPhatHanh;
 	}
-	public Integer getGPKhac() {
+	public Double getGPKhac() {
 		return GPKhac;
 	}
-	public void setGPKhac(Integer gPKhac) {
+	public void setGPKhac(Double gPKhac) {
 		GPKhac = gPKhac;
 	}
-	private Integer GPFVTPL;
-	private Integer GPCVMargin;
-	private Integer GPMoiGioi;
-	private Integer GPHTM;
-	private Integer GPAFS;
-	private Integer GPBaoLanhPhatHanh;
-	private Integer GPKhac;
+	private Double GPFVTPL;
+	private Double GPCVMargin;
+	private Double GPMoiGioi;
+	private Double GPHTM;
+	private Double GPAFS;
+	private Double GPBaoLanhPhatHanh;
+	private Double GPKhac;
 }

@@ -3,32 +3,32 @@ package com.starter.InvestAndChill.jwt.payload.response.PTC;
 import com.starter.InvestAndChill.jwt.payload.response.ReportReponse;
 
 public class Perf1Response extends ReportReponse {
-	private Integer doanhSoThuan;
-	private Integer loiNhuanCuaCoDongCongTyMe;
-	private Integer bienLaiGop;
-	private Integer bienLaiRong;
-	public Integer getDoanhSoThuan() {
+	private Double doanhSoThuan;
+	private Double loiNhuanCuaCoDongCongTyMe;
+	private Double bienLaiGop;
+	private Double bienLaiRong;
+	public Double getDoanhSoThuan() {
 		return doanhSoThuan;
 	}
-	public void setDoanhSoThuan(Integer doanhSoThuan) {
+	public void setDoanhSoThuan(Double doanhSoThuan) {
 		this.doanhSoThuan = doanhSoThuan;
 	}
-	public Integer getLoiNhuanCuaCoDongCongTyMe() {
+	public Double getLoiNhuanCuaCoDongCongTyMe() {
 		return loiNhuanCuaCoDongCongTyMe;
 	}
-	public void setLoiNhuanCuaCoDongCongTyMe(Integer loiNhuanCuaCoDongCongTyMe) {
+	public void setLoiNhuanCuaCoDongCongTyMe(Double loiNhuanCuaCoDongCongTyMe) {
 		this.loiNhuanCuaCoDongCongTyMe = loiNhuanCuaCoDongCongTyMe;
 	}
-	public Integer getBienLaiGop() {
+	public Double getBienLaiGop() {
 		return bienLaiGop;
 	}
-	public void setBienLaiGop(Integer bienLaiGop) {
+	public void setBienLaiGop(Double bienLaiGop) {
 		this.bienLaiGop = bienLaiGop;
 	}
-	public Integer getBienLaiRong() {
+	public Double getBienLaiRong() {
 		return bienLaiRong;
 	}
-	public void setBienLaiRong(Integer bienLaiRong) {
+	public void setBienLaiRong(Double bienLaiRong) {
 		this.bienLaiRong = bienLaiRong;
 	}
 
