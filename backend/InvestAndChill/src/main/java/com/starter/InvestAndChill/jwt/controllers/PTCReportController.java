@@ -65,6 +65,7 @@ public class PTCReportController {
 	@Autowired
 	ValuationRepository valuationRepository;
 	
+	Pageable pageableValuation = PageRequest.of(0, 41); 
 	
 	@GetMapping("/perf1/{stock}")
 	public ResponseEntity<?> perf1(@PathVariable String stock, @RequestParam(required = false,name = "type") String type) {
@@ -508,7 +509,7 @@ public class PTCReportController {
 	public ResponseEntity<?> val3(@PathVariable String stock) {
 		List<Valuation> listValuation = new ArrayList<Valuation>();
 		
-		listValuation =  valuationRepository.findTopRankedDataByStockCode(stock, pageableToanQuy);
+		listValuation =  valuationRepository.findTopRankedDataByStockCode(stock, pageableValuation);
 
 		Collections.reverse(listValuation);
 		List<Val3Response> list = listValuation.stream()
@@ -528,7 +529,7 @@ public class PTCReportController {
 	public ResponseEntity<?> val5(@PathVariable String stock) {
 		List<Valuation> listValuation = new ArrayList<Valuation>();
 		
-		listValuation =  valuationRepository.findTopRankedDataByStockCode(stock, pageableToanQuy);
+		listValuation =  valuationRepository.findTopRankedDataByStockCode(stock, pageableValuation);
 
 		Collections.reverse(listValuation);
 		List<Val5Response> list = listValuation.stream()
@@ -548,7 +549,7 @@ public class PTCReportController {
 	public ResponseEntity<?> val8(@PathVariable String stock) {
 		List<Valuation> listValuation = new ArrayList<Valuation>();
 		
-		listValuation =  valuationRepository.findTopRankedDataByStockCode(stock, pageableToanQuy);
+		listValuation =  valuationRepository.findTopRankedDataByStockCode(stock, pageableValuation);
 
 		Collections.reverse(listValuation);
 		List<Val8Response> list = listValuation.stream()
