@@ -99,7 +99,7 @@ function Header() {
     setCookie('access_token', '', {});
     setCookie('usrId', '', {});
     setCookie('roles', '', {});
-    navigate('/login');
+    navigate('/');
   }
 
   const handleUpdateUser = async () => {
@@ -176,7 +176,7 @@ function Header() {
   }, []);
 
   useEffect(() => {
-    if (!cookies?.usrId?.usrNm) navigate('/login');
+    if (!cookies?.usrId?.usrNm) navigate('/');
   }, []);
 
   const onTabChange = (value) => {

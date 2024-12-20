@@ -60,6 +60,8 @@ import {
 } from './customPTC';
 import StackChart from './stack-chart';
 
+import './style.scss';
+
 export const TabChart = () => {
   const [value, setValue] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
@@ -89,63 +91,150 @@ export const TabChart = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const codeValue = searchParams.get('code') || '';
 
-  const IOSSwitch = styled((props) => <Switch {...props} />)(({ theme }) => ({
-    width: 38,
-    height: 18,
+  const IOSSwitch = styled((props) => <Switch {...props} />)(() => ({
+    width: 74,
+    height: 30,
     padding: 2,
     '& .MuiSwitch-switchBase': {
       padding: 0,
       margin: 0,
-      // transform: 'translateX(2px)',
+      transform: 'translate(7px, 7px)',
       '&.Mui-checked': {
-        transform: 'translateX(20px)',
+        transform: 'translate(35px, 7px)',
       },
     },
     '& .MuiSwitch-thumb': {
-      width: 17.5,
-      height: 17.5,
+      width: 32,
+      height: 16,
+      borderRadius: 50,
+      backgroundColor: 'gray',
+    },
+    '& .MuiSwitch-track::before': {
+      content: `'Năm'`,
+      position: 'absolute',
+      top: '5px',
+      left: '9px',
+      color: 'gray',
+      fontSize: 11,
+      fontWeight: 'bold',
+    },
+    '& .MuiSwitch-track::after': {
+      content: `'Quý'`,
+      position: 'absolute',
+      top: '5px',
+      right: '10px',
+      color: 'gray',
+      fontSize: 11,
+      fontWeight: 'bold',
+    },
+    '& .MuiSwitch-switchBase.Mui-checked': {
+      color: 'gray',
+    },
+    '& .MuiSwitch-switchBase.Mui-checked+.MuiSwitch-track': {
+      backgroundColor: 'gray',
     },
     '& .MuiSwitch-track': {
-      borderRadius: 26 / 2,
-    },
-    '& .css-byenzh-MuiButtonBase-root-MuiSwitch-switchBase.Mui-checked': {
-      color: 'grey',
-    },
-    '& .css-byenzh-MuiButtonBase-root-MuiSwitch-switchBase.Mui-checked+.MuiSwitch-track': {
-      backgroundColor: 'grey',
-    },
-    '& .css-jsexje-MuiSwitch-thumb': {
-      backgroundColor: 'grey',
-    },
-    '& .css-1yjjitx-MuiSwitch-track': {
-      backgroundColor: 'grey',
+      borderRadius: 50,
+      opacity: '1 !important',
+      border: '3px solid gray',
+      backgroundColor: 'transparent !important',
     },
   }));
 
-  const IOSSwitchSum = styled((props) => <Switch {...props} />)(({ theme }) => ({
-    width: 38,
-    height: 18,
+  const IOSSwitchAdjust = styled((props) => <Switch {...props} />)(() => ({
+    width: 64,
+    height: 30,
     padding: 2,
     '& .MuiSwitch-switchBase': {
       padding: 0,
       margin: 0,
-      // transform: 'translateX(2px)',
+      transform: 'translate(7px, 7px)',
       '&.Mui-checked': {
-        transform: 'translateX(20px)',
+        width: '45px !important',
+        transform: 'translate(20px, 7px)',
       },
     },
     '& .MuiSwitch-thumb': {
-      width: 17.5,
-      height: 17.5,
+      width: 30,
+      height: 16,
+      borderRadius: 50,
+      backgroundColor: 'gray',
+    },
+    '& .MuiSwitch-track::before': {
+      content: `'On'`,
+      position: 'absolute',
+      top: '5px',
+      left: '9px',
+      color: 'gray',
+      fontSize: 11,
+      fontWeight: 'bold',
+    },
+    '& .MuiSwitch-track::after': {
+      content: `'Off'`,
+      position: 'absolute',
+      top: '5px',
+      right: '9px',
+      color: 'gray',
+      fontSize: 11,
+      fontWeight: 'bold',
+    },
+    '& .MuiSwitch-switchBase.Mui-checked': {
+      color: 'gray',
+    },
+    '& .MuiSwitch-switchBase.Mui-checked+.MuiSwitch-track': {
+      backgroundColor: 'gray',
     },
     '& .MuiSwitch-track': {
-      borderRadius: 26 / 2,
+      borderRadius: 50,
+      opacity: '1 !important',
+      border: '3px solid gray',
+      backgroundColor: 'transparent !important',
     },
-    '& .css-byenzh-MuiButtonBase-root-MuiSwitch-switchBase.Mui-checked': {
+  }));
+
+  const IOSSwitchSum = styled((props) => <Switch {...props} />)(() => ({
+    width: 74,
+    height: 25,
+    padding: 2,
+    '& .MuiSwitch-switchBase': {
+      padding: 0,
+      margin: 0,
+      transform: 'translate(2.5px, 0)',
+      '&.Mui-checked': {
+        transform: 'translate(37.5px, 0)',
+      },
+    },
+    '& .MuiSwitch-thumb': {
+      width: 36,
+      height: 25,
+      borderRadius: '4px',
+      backgroundColor: 'red !important',
+      border: '2px solid #FFF4C7',
+    },
+    '& .MuiSwitch-track::before': {
+      content: `'Năm'`,
+      position: 'absolute',
+      top: '1px',
+      left: '6px',
       color: 'red',
+      fontSize: 13,
+      fontWeight: 500,
     },
-    '& .css-byenzh-MuiButtonBase-root-MuiSwitch-switchBase.Mui-checked+.MuiSwitch-track': {
-      backgroundColor: 'red',
+    '& .MuiSwitch-track::after': {
+      content: `'Quý'`,
+      position: 'absolute',
+      top: '1px',
+      right: '8px',
+      color: 'red',
+      fontSize: 13,
+      fontWeight: 500,
+    },
+    '& .MuiButtonBase-root.MuiSwitch-switchBase': {
+      color: 'gray',
+    },
+    '& .MuiSwitch-track': {
+      border: '2px solid red',
+      backgroundColor: 'transparent !important',
     },
   }));
 
@@ -172,23 +261,25 @@ export const TabChart = () => {
     if (type === 'NganHang') {
       result = await getDataChartBank(custom.type, codeValue, custom.year);
     }
-    let format = await formatData(result);
-    let perf = {
-      ...format,
-      series: custom.series,
-      xAxis: {
-        scaleType: 'band',
-        dataKey: 'month',
-        tickInterval: (value) =>
-          !custom.year ? value.includes('Q1') && Number(value.split('.')[0]) % 2 === 0 : value,
-        valueFormatter: (value, context) =>
-          context.location === 'tick' ? value.split('.')[0] : value,
-        categoryGapRatio: xAxis ? xAxis.categoryGapRatio : 0.5,
-        barGapRatio: xAxis ? xAxis.barGapRatio : 0.5,
-      },
-      yAxis: custom.yAxis,
-    };
-    return perf;
+    if (result) {
+      let format = await formatData(result);
+      let perf = {
+        ...format,
+        series: custom.series,
+        xAxis: {
+          scaleType: 'band',
+          dataKey: 'month',
+          tickInterval: (value) =>
+            !custom.year ? value.includes('Q1') && Number(value.split('.')[0]) % 2 === 0 : value,
+          valueFormatter: (value, context) =>
+            context.location === 'tick' ? value.split('.')[0] : value,
+          categoryGapRatio: xAxis ? xAxis.categoryGapRatio : 0.5,
+          barGapRatio: xAxis ? xAxis.barGapRatio : 0.5,
+        },
+        yAxis: custom.yAxis,
+      };
+      return perf;
+    }
   };
 
   useEffect(() => {
@@ -200,74 +291,145 @@ export const TabChart = () => {
           const type = await getTypeDataChart(codeValue);
           setTabType(type.type);
           if (type.type === 'PTC') {
+            let perf1, perf2, perf3, perf4, perf5, perf6, perf7, perf8;
+            let bal1, bal2, bal3, bal4, bal5, bal6;
+            let cf1, cf2, cf3, cf4;
             try {
-              let perf1 = await mapDataChart(customPerfPTC1, type.type);
-              let perf2 = await mapDataChart(customPerfPTC2, type.type);
-              let perf3 = await mapDataChart(customPerfPTC3, type.type);
-              let perf4 = await mapDataChart(customPerfPTC4, type.type);
-              let perf5 = await mapDataChart(customPerfPTC5, type.type);
-              let perf6 = await mapDataChart(customPerfPTC6, type.type);
-              let perf7 = await mapDataChart(customPerfPTC7, type.type);
-              let perf8 = await mapDataChart(customPerfPTC8, type.type);
-
-              let bal1 = await mapDataChart(customBalPTC1, type.type);
-              let bal2 = await mapDataChart(customBalPTC2, type.type);
-              let bal3 = await mapDataChart(customBalPTC3, type.type);
-              let bal4 = await mapDataChart(customBalPTC4, type.type);
-              let bal5 = await mapDataChart(customBalPTC5, type.type);
-              let bal6 = await mapDataChart(customBalPTC6, type.type);
-
-              let cf1 = await mapDataChart(customCFPTC1, type.type);
-              let cf2 = await mapDataChart(customCFPTC2, type.type);
-              let cf3 = await mapDataChart(customCFPTC3, type.type);
-              let cf4 = await mapDataChart(customCFPTC4, type.type);
-
-              if (
-                perf1 &&
-                perf2 &&
-                perf3 &&
-                perf4 &&
-                perf5 &&
-                perf6 &&
-                perf7 &&
-                perf8 &&
-                bal1 &&
-                bal2 &&
-                bal3 &&
-                bal4 &&
-                bal5 &&
-                bal6 &&
-                cf1 &&
-                cf2 &&
-                cf3 &&
-                cf4
-              ) {
-                setDataChart({
-                  perf1: perf1,
-                  perf2: perf2,
-                  perf3: perf3,
-                  perf4: perf4,
-                  perf5: perf5,
-                  perf6: perf6,
-                  perf7: perf7,
-                  perf8: perf8,
-                  bal1: bal1,
-                  bal2: bal2,
-                  bal3: bal3,
-                  bal4: bal4,
-                  bal5: bal5,
-                  bal6: bal6,
-                  cf1: cf1,
-                  cf2: cf2,
-                  cf3: cf3,
-                  cf4: cf4,
-                });
-              }
-              setValue(0);
-              setIsLoading(false);
+              perf1 = await mapDataChart(customPerfPTC1, type.type);
             } catch (error) {
-              console.log(error);
+              console.log('error', error);
             }
+            try {
+              perf2 = await mapDataChart(customPerfPTC2, type.type);
+            } catch (error) {
+              console.log('error', error);
+            }
+            try {
+              perf3 = await mapDataChart(customPerfPTC3, type.type);
+            } catch (error) {
+              console.log('error', error);
+            }
+            try {
+              perf4 = await mapDataChart(customPerfPTC4, type.type);
+            } catch (error) {
+              console.log('error', error);
+            }
+            try {
+              perf5 = await mapDataChart(customPerfPTC5, type.type);
+            } catch (error) {
+              console.log('error', error);
+            }
+            try {
+              perf6 = await mapDataChart(customPerfPTC6, type.type);
+            } catch (error) {
+              console.log('error', error);
+            }
+            try {
+              perf7 = await mapDataChart(customPerfPTC7, type.type);
+            } catch (error) {
+              console.log('error', error);
+            }
+            try {
+              perf8 = await mapDataChart(customPerfPTC8, type.type);
+            } catch (error) {
+              console.log('error', error);
+            }
+
+            try {
+              bal1 = await mapDataChart(customBalPTC1, type.type);
+            } catch (error) {
+              console.log('error', error);
+            }
+            try {
+              bal2 = await mapDataChart(customBalPTC2, type.type);
+            } catch (error) {
+              console.log('error', error);
+            }
+            try {
+              bal3 = await mapDataChart(customBalPTC3, type.type);
+            } catch (error) {
+              console.log('error', error);
+            }
+            try {
+              bal4 = await mapDataChart(customBalPTC4, type.type);
+            } catch (error) {
+              console.log('error', error);
+            }
+            try {
+              bal5 = await mapDataChart(customBalPTC5, type.type);
+            } catch (error) {
+              console.log('error', error);
+            }
+            try {
+              bal6 = await mapDataChart(customBalPTC6, type.type);
+            } catch (error) {
+              console.log('error', error);
+            }
+
+            try {
+              cf1 = await mapDataChart(customCFPTC1, type.type);
+            } catch (error) {
+              console.log('error', error);
+            }
+            try {
+              cf2 = await mapDataChart(customCFPTC2, type.type);
+            } catch (error) {
+              console.log('error', error);
+            }
+            try {
+              cf3 = await mapDataChart(customCFPTC3, type.type);
+            } catch (error) {
+              console.log('error', error);
+            }
+            try {
+              cf4 = await mapDataChart(customCFPTC4, type.type);
+            } catch (error) {
+              console.log('error', error);
+            }
+
+            if (
+              perf1 ||
+              perf2 ||
+              perf3 ||
+              perf4 ||
+              perf5 ||
+              perf6 ||
+              perf7 ||
+              perf8 ||
+              bal1 ||
+              bal2 ||
+              bal3 ||
+              bal4 ||
+              bal5 ||
+              bal6 ||
+              cf1 ||
+              cf2 ||
+              cf3 ||
+              cf4
+            ) {
+              setDataChart({
+                perf1: perf1,
+                perf2: perf2,
+                perf3: perf3,
+                perf4: perf4,
+                perf5: perf5,
+                perf6: perf6,
+                perf7: perf7,
+                perf8: perf8,
+                bal1: bal1,
+                bal2: bal2,
+                bal3: bal3,
+                bal4: bal4,
+                bal5: bal5,
+                bal6: bal6,
+                cf1: cf1,
+                cf2: cf2,
+                cf3: cf3,
+                cf4: cf4,
+              });
+            }
+            setValue(0);
+            setIsLoading(false);
           }
           if (type.type === 'ChungKhoan') {
             try {
@@ -399,13 +561,13 @@ export const TabChart = () => {
     if (tabType === 'PTC') {
       if (typeChart === 'perf1') {
         customPerfPTC1.year = checked.perf1;
-        let newPerf = await mapDataChart(customPerfPTC1);
+        let newPerf = await mapDataChart(customPerfPTC1, tabType);
         setDataChart((prev) => ({ ...prev, perf1: newPerf }));
         setChecked((prev) => ({ ...prev, perf1: !prev.perf1 }));
       }
       if (typeChart === 'perf2') {
         customPerfPTC2.year = checked.perf2;
-        let newPerf = await mapDataChart(customPerfPTC2);
+        let newPerf = await mapDataChart(customPerfPTC2, tabType);
         setDataChart((prev) => ({ ...prev, perf2: newPerf }));
         setChecked((prev) => ({ ...prev, perf2: !prev.perf2 }));
       }
@@ -417,7 +579,7 @@ export const TabChart = () => {
             dataKey: 'netFinancialAdjustTrailing',
             yAxisId: 'leftAxis',
           };
-          let newPerf = await mapDataChart(customPerfPTC4);
+          let newPerf = await mapDataChart(customPerfPTC4, tabType);
           setDataChart((prev) => ({ ...prev, perf4: newPerf }));
           setChecked((prev) => ({ ...prev, perf4: !prev.perf4 }));
         } else {
@@ -427,7 +589,7 @@ export const TabChart = () => {
             dataKey: 'netFinanceialTrailing',
             yAxisId: 'leftAxis',
           };
-          let newPerf = await mapDataChart(customPerfPTC4);
+          let newPerf = await mapDataChart(customPerfPTC4, tabType);
           setDataChart((prev) => ({ ...prev, perf4: newPerf }));
           setChecked((prev) => ({ ...prev, perf4: !prev.perf4 }));
         }
@@ -441,31 +603,28 @@ export const TabChart = () => {
             yAxisId: 'rightAxis',
             stack: 'stack',
           };
-          let newPerf = await mapDataChart(customPerfPTC5);
-          setDataChart((prev) => ({ ...prev, perf5: newPerf }));
-          setChecked((prev) => ({ ...prev, perf5: !prev.perf5 }));
         } else {
-          customPerfPTC5.series[1] = {
+          customPerfPTC5.series[0] = {
             type: 'bar',
             label: 'Lợi nhuận ròng TTM',
             dataKey: 'nitrailing',
             yAxisId: 'rightAxis',
             stack: 'stack',
           };
-          let newPerf = await mapDataChart(customPerfPTC5);
-          setDataChart((prev) => ({ ...prev, perf5: newPerf }));
-          setChecked((prev) => ({ ...prev, perf5: !prev.perf4 }));
         }
+        let newPerf = await mapDataChart(customPerfPTC5, tabType);
+        setDataChart((prev) => ({ ...prev, perf5: newPerf }));
+        setChecked((prev) => ({ ...prev, perf5: !prev.perf5 }));
       }
       if (typeChart === 'perf7') {
         customPerfPTC7.year = checked.perf7;
-        let newPerf = await mapDataChart(customPerfPTC7);
+        let newPerf = await mapDataChart(customPerfPTC7, tabType);
         setDataChart((prev) => ({ ...prev, perf7: newPerf }));
         setChecked((prev) => ({ ...prev, perf7: !prev.perf7 }));
       }
       if (typeChart === 'bal1') {
         customBalPTC1.year = checked.bal1;
-        let newPerf = await mapDataChart(customBalPTC1);
+        let newPerf = await mapDataChart(customBalPTC1, tabType);
         setDataChart((prev) => ({ ...prev, bal1: newPerf }));
         setChecked((prev) => ({ ...prev, bal1: !prev.bal1 }));
       }
@@ -611,9 +770,15 @@ export const TabChart = () => {
             right: { type: 'bil', piecewise: false },
           };
         }
-        let newPerf = await mapDataChart(customBalPTC1);
+        let newPerf = await mapDataChart(customBalPTC1, tabType);
         setDataChart((prev) => ({ ...prev, bal1: newPerf }));
         setChecked((prev) => ({ ...prev, bal1ajust: !prev.bal1ajust }));
+      }
+      if (typeChart === 'bal2') {
+        customBalPTC2.year = checked.bal2;
+        let newPerf = await mapDataChart(customBalPTC2, tabType);
+        setDataChart((prev) => ({ ...prev, bal2: newPerf }));
+        setChecked((prev) => ({ ...prev, bal2: !prev.bal2 }));
       }
       if (typeChart === 'bal2ajust') {
         if (checked.bal2ajust) {
@@ -622,18 +787,26 @@ export const TabChart = () => {
           const vcshKhac = dataChart.bal2.dataset.map((v) => v.vcshKhac);
           const noChiemDung = dataChart.bal2.dataset.map((v) => v.noChiemDung);
           const noVay = dataChart.bal2.dataset.map((v) => v.noVay);
-          const getPercents = (array) =>
+          let result;
+          const getPercents = (array) => {
             array.map((v, index) => {
-              const result =
-                (v /
-                  (vonGop[index] +
-                    laiChuaPhanPhoi[index] +
-                    vcshKhac[index] +
-                    noChiemDung[index] +
-                    noVay[index])) *
-                  100 || 0;
+              if (laiChuaPhanPhoi[index] > 0) {
+                result =
+                  (v /
+                    (vonGop[index] +
+                      laiChuaPhanPhoi[index] +
+                      vcshKhac[index] +
+                      noChiemDung[index] +
+                      noVay[index])) *
+                    100 || 0;
+              } else {
+                result =
+                  (v / (vonGop[index] + vcshKhac[index] + noChiemDung[index] + noVay[index])) *
+                    100 || 0;
+              }
               return result;
             });
+          };
           customBalPTC2.series = [
             {
               data: getPercents(vonGop),
@@ -723,56 +896,50 @@ export const TabChart = () => {
             right: { type: 'bil', piecewise: false },
           };
         }
-        let newPerf = await mapDataChart(customBalPTC2);
+        let newPerf = await mapDataChart(customBalPTC2, tabType);
         setDataChart((prev) => ({ ...prev, bal2: newPerf }));
         setChecked((prev) => ({ ...prev, bal2ajust: !prev.bal2ajust }));
       }
-      if (typeChart === 'bal2') {
-        customBalPTC2.year = checked.bal2;
-        let newPerf = await mapDataChart(customBalPTC2);
-        setDataChart((prev) => ({ ...prev, bal2: newPerf }));
-        setChecked((prev) => ({ ...prev, bal2: !prev.bal2 }));
-      }
       if (typeChart === 'bal3') {
         customBalPTC3.year = checked.bal3;
-        let newPerf = await mapDataChart(customBalPTC3);
+        let newPerf = await mapDataChart(customBalPTC3, tabType);
         setDataChart((prev) => ({ ...prev, bal3: newPerf }));
         setChecked((prev) => ({ ...prev, bal3: !prev.bal3 }));
       }
       if (typeChart === 'bal4') {
         customBalPTC4.year = checked.bal4;
-        let newPerf = await mapDataChart(customBalPTC4);
+        let newPerf = await mapDataChart(customBalPTC4, tabType);
         setDataChart((prev) => ({ ...prev, bal4: newPerf }));
         setChecked((prev) => ({ ...prev, bal4: !prev.bal4 }));
       }
       if (typeChart === 'bal6') {
         customBalPTC6.year = checked.bal6;
-        let newPerf = await mapDataChart(customBalPTC6);
+        let newPerf = await mapDataChart(customBalPTC6, tabType);
         setDataChart((prev) => ({ ...prev, bal6: newPerf }));
         setChecked((prev) => ({ ...prev, bal6: !prev.bal6 }));
       }
       if (typeChart === 'cf1') {
         customCFPTC1.year = checked.cf1;
-        let newPerf = await mapDataChart(customCFPTC1);
+        let newPerf = await mapDataChart(customCFPTC1, tabType);
         setDataChart((prev) => ({ ...prev, cf1: newPerf }));
         setChecked((prev) => ({ ...prev, cf1: !prev.cf1 }));
       }
       if (typeChart === 'cf2') {
         customCFPTC2.year = checked.cf2;
-        let newPerf = await mapDataChart(customCFPTC2);
+        let newPerf = await mapDataChart(customCFPTC2, tabType);
         setDataChart((prev) => ({ ...prev, cf2: newPerf }));
         setChecked((prev) => ({ ...prev, cf2: !prev.cf2 }));
       }
       if (typeChart === 'cf3') {
         customCFPTC3.year = checked.cf3;
-        let newPerf = await mapDataChart(customCFPTC3);
+        let newPerf = await mapDataChart(customCFPTC3, tabType);
         setDataChart((prev) => ({ ...prev, cf3: newPerf }));
         setChecked((prev) => ({ ...prev, cf3: !prev.cf3 }));
       }
       if (typeChart === 'cf3adjust') {
         if (checked.cf3adjust) {
           customCFPTC3.series.pop();
-          let newPerf = await mapDataChart(customCFPTC3);
+          let newPerf = await mapDataChart(customCFPTC3, tabType);
           console.log('newPerf', newPerf);
           setDataChart((prev) => ({ ...prev, cf3: newPerf }));
           setChecked((prev) => ({ ...prev, cf3adjust: !prev.cf3adjust }));
@@ -783,14 +950,14 @@ export const TabChart = () => {
             dataKey: 'tienLongTrongPhaiThuChoVay',
             yAxisId: 'rightAxis',
           });
-          let newPerf = await mapDataChart(customCFPTC3);
+          let newPerf = await mapDataChart(customCFPTC3, tabType);
           setDataChart((prev) => ({ ...prev, cf3: newPerf }));
           setChecked((prev) => ({ ...prev, cf3adjust: !prev.cf3adjust }));
         }
       }
       if (typeChart === 'cf4') {
         customCFPTC4.year = checked.cf4;
-        let newPerf = await mapDataChart(customCFPTC4);
+        let newPerf = await mapDataChart(customCFPTC4, tabType);
         setDataChart((prev) => ({ ...prev, cf4: newPerf }));
         setChecked((prev) => ({ ...prev, cf4: !prev.cf4 }));
       }
@@ -807,6 +974,37 @@ export const TabChart = () => {
   if (isLoading) {
     return <></>;
   }
+
+  const ChartItem = (dataChart, checked, type, year, addjust, checkedAdjust) => {
+    return (
+      <div className="lg:w-1/2 md:w-full">
+        <div className="flex">
+          <div className={`flex flex-1 font-bold text-xl ${!year && !addjust ? 'mb-[18px]' : ''}`}>
+            {dataChart?.title || ''}
+          </div>
+          {addjust && (
+            <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
+              <FormControlLabel
+                checked={!checkedAdjust}
+                onChange={() => handleToggle(addjust)}
+                control={<IOSSwitchAdjust sx={{ m: 1 }} defaultChecked disableRipple />}
+              />
+            </Stack>
+          )}
+          {year && (
+            <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
+              <FormControlLabel
+                checked={!checked}
+                onChange={() => handleToggle(type)}
+                control={<IOSSwitch sx={{ m: 1 }} defaultChecked disableRipple />}
+              />
+            </Stack>
+          )}
+        </div>
+        {dataChart && <StackChart data={dataChart} />}
+      </div>
+    );
+  };
 
   return (
     <Box sx={{ width: '98%', margin: 'auto' }}>
@@ -842,7 +1040,7 @@ export const TabChart = () => {
                 'Chi phí và Sinh lời',
                 'Tài sản & Nguồn vốn',
                 'Hiệu quả đồng vốn',
-                'Cash flow',
+                'Dòng tiền',
                 'Định giá',
               ].map((e, index) => <Tab key={e} label={e} {...a11yProps(index)} />)}
             {tabType === 'ChungKhoan' &&
@@ -855,9 +1053,9 @@ export const TabChart = () => {
               ))}
           </Tabs>
           <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-            <Typography>Năm</Typography>
-            <FormControlLabel control={<IOSSwitchSum sx={{ m: 1 }} defaultChecked />} />
-            <Typography>Quý</Typography>
+            <FormControlLabel
+              control={<IOSSwitchSum sx={{ m: 1 }} defaultChecked disableRipple />}
+            />
           </Stack>
         </div>
       </Box>
@@ -867,106 +1065,16 @@ export const TabChart = () => {
             {codeValue && (
               <div className="flex flex-col gap-8">
                 <div className="flex gap-8">
-                  <div className="lg:w-1/2 md:w-full">
-                    <div className="mb-4">
-                      <div className="flex">
-                        <div className="flex flex-1 font-bold text-xl">
-                          {dataChart?.perf1?.title || ''}
-                        </div>
-                        <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-                          <Typography>Năm</Typography>
-                          <FormControlLabel
-                            checked={checked.perf1}
-                            onChange={() => handleToggle('perf1')}
-                            control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
-                          />
-                          <Typography>Quý</Typography>
-                        </Stack>
-                      </div>
-                    </div>
-                    {dataChart && dataChart.perf1 && <StackChart data={dataChart.perf1} />}
-                  </div>
-                  <div className="lg:w-1/2 md:w-full">
-                    <div className="mb-4">
-                      <div className="flex">
-                        <div className="flex flex-1 font-bold text-xl">
-                          {dataChart?.perf2?.title || ''}
-                        </div>
-                        <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-                          <Typography>Năm</Typography>
-                          <FormControlLabel
-                            checked={checked.perf2}
-                            onChange={() => handleToggle('perf2')}
-                            control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
-                          />
-                          <Typography>Quý</Typography>
-                        </Stack>
-                      </div>
-                    </div>
-                    {dataChart && dataChart.perf2 && <StackChart data={dataChart.perf2} />}
-                  </div>
+                  {ChartItem(dataChart?.perf1, checked?.perf1, 'perf1', true)}
+                  {ChartItem(dataChart?.perf2, checked?.perf2, 'perf2', true)}
                 </div>
                 <div className="flex gap-8">
-                  <div className="lg:w-1/2 md:w-full">
-                    <div className="mb-4">
-                      <div className="flex">
-                        <div className="flex flex-1 font-bold text-xl">
-                          {dataChart?.perf3?.title || ''}
-                        </div>
-                      </div>
-                    </div>
-                    {dataChart && dataChart.perf3 && <StackChart data={dataChart.perf3} />}
-                  </div>
-                  <div className="lg:w-1/2 md:w-full">
-                    <div className="mb-4">
-                      <div className="flex">
-                        <div className="flex flex-1 font-bold text-xl">
-                          {dataChart?.perf4?.title || ''}
-                        </div>
-                        <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-                          <Typography>Adjust</Typography>
-                          <FormControlLabel
-                            checked={checked.perf4}
-                            onChange={() => handleToggle('perf4')}
-                            control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
-                          />
-                          <Typography>No Adjust</Typography>
-                        </Stack>
-                      </div>
-                    </div>
-                    {dataChart && dataChart.perf4 && <StackChart data={dataChart.perf4} />}
-                  </div>
+                  {ChartItem(dataChart?.perf3, checked?.perf3, 'perf3')}
+                  {ChartItem(dataChart?.perf4, null, 'perf4', null, 'perf4', checked?.perf4)}
                 </div>
                 <div className="flex gap-8">
-                  <div className="lg:w-1/2 md:w-full">
-                    <div className="mb-4">
-                      <div className="flex">
-                        <div className="flex flex-1 font-bold text-xl">
-                          {dataChart?.perf5?.title || ''}
-                        </div>
-                        <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-                          <Typography>Adjust</Typography>
-                          <FormControlLabel
-                            checked={checked.perf5}
-                            onChange={() => handleToggle('perf5')}
-                            control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
-                          />
-                          <Typography>No Adjust</Typography>
-                        </Stack>
-                      </div>
-                    </div>
-                    {dataChart && dataChart.perf5 && <StackChart data={dataChart.perf5} />}
-                  </div>
-                  <div className="lg:w-1/2 md:w-full">
-                    <div className="mb-4">
-                      <div className="flex">
-                        <div className="flex flex-1 font-bold text-xl">
-                          {dataChart?.perf6?.title || ''}
-                        </div>
-                      </div>
-                    </div>
-                    {dataChart && dataChart.perf6 && <StackChart data={dataChart.perf6} />}
-                  </div>
+                  {ChartItem(dataChart?.perf5, null, 'perf5', null, 'perf5', checked?.perf5)}
+                  {ChartItem(dataChart?.perf6, checked?.perf6, 'perf6')}
                 </div>
               </div>
             )}
@@ -975,273 +1083,56 @@ export const TabChart = () => {
             {codeValue && (
               <div className="flex flex-col gap-8">
                 <div className="flex gap-8">
-                  <div className="lg:w-1/2 md:w-full">
-                    <div className="mb-4">
-                      <div className="flex">
-                        <div className="flex flex-1 font-bold text-xl">
-                          {dataChart?.bal1?.title || ''}
-                        </div>
-                        <Stack
-                          direction="row"
-                          spacing={1}
-                          sx={{ alignItems: 'center', marginRight: '16px' }}
-                        >
-                          <Typography>Adjust</Typography>
-                          <FormControlLabel
-                            checked={checked.bal1ajust}
-                            onChange={() => handleToggle('bal1ajust')}
-                            control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
-                          />
-                          <Typography>Non Adjust</Typography>
-                        </Stack>
-                        <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-                          <Typography>Năm</Typography>
-                          <FormControlLabel
-                            checked={checked.bal1}
-                            onChange={() => handleToggle('bal1')}
-                            control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
-                          />
-                          <Typography>Quý</Typography>
-                        </Stack>
-                      </div>
-                    </div>
-                    {dataChart && dataChart.bal1 && <StackChart data={dataChart.bal1} />}
-                  </div>
-                  <div className="lg:w-1/2 md:w-full">
-                    <div className="mb-4">
-                      <div className="flex">
-                        <div className="flex flex-1 font-bold text-xl">
-                          {dataChart?.bal2?.title || ''}
-                        </div>
-                        <Stack
-                          direction="row"
-                          spacing={1}
-                          sx={{ alignItems: 'center', marginRight: '16px' }}
-                        >
-                          <Typography>Adjust</Typography>
-                          <FormControlLabel
-                            checked={checked.bal2ajust}
-                            onChange={() => handleToggle('bal2ajust')}
-                            control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
-                          />
-                          <Typography>No Adjust</Typography>
-                        </Stack>
-                        <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-                          <Typography>Năm</Typography>
-                          <FormControlLabel
-                            checked={checked.bal2}
-                            onChange={() => handleToggle('bal2')}
-                            control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
-                          />
-                          <Typography>Quý</Typography>
-                        </Stack>
-                      </div>
-                    </div>
-                    {dataChart && dataChart.bal2 && <StackChart data={dataChart.bal2} />}
-                  </div>
+                  {ChartItem(
+                    dataChart?.bal1,
+                    checked?.bal1,
+                    'bal1',
+                    true,
+                    'bal1ajust',
+                    checked?.bal1ajust
+                  )}
+                  {ChartItem(
+                    dataChart?.bal2,
+                    checked?.bal2,
+                    'bal2',
+                    true,
+                    'bal2ajust',
+                    checked?.bal2ajust
+                  )}
                 </div>
                 <div className="flex gap-8">
-                  <div className="lg:w-1/2 md:w-full">
-                    <div className="mb-4">
-                      <div className="flex">
-                        <div className="flex flex-1 font-bold text-xl">
-                          {dataChart?.bal3?.title || ''}
-                        </div>
-                        <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-                          <Typography>Năm</Typography>
-                          <FormControlLabel
-                            checked={checked.bal3}
-                            onChange={() => handleToggle('bal3')}
-                            control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
-                          />
-                          <Typography>Quý</Typography>
-                        </Stack>
-                      </div>
-                    </div>
-                    {dataChart && dataChart.bal3 && <StackChart data={dataChart.bal3} />}
-                  </div>
-                  <div className="lg:w-1/2 md:w-full">
-                    <div className="mb-4">
-                      <div className="flex">
-                        <div className="flex flex-1 font-bold text-xl">
-                          {dataChart?.bal4?.title || ''}
-                        </div>
-                        <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-                          <Typography>Năm</Typography>
-                          <FormControlLabel
-                            checked={checked.bal4}
-                            onChange={() => handleToggle('bal4')}
-                            control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
-                          />
-                          <Typography>Quý</Typography>
-                        </Stack>
-                      </div>
-                    </div>
-                    {dataChart && dataChart.bal4 && <StackChart data={dataChart.bal4} />}
-                  </div>
+                  {ChartItem(dataChart?.bal3, checked?.bal3, 'bal3', true)}
+                  {ChartItem(dataChart?.bal4, checked?.bal4, 'bal4', true)}
                 </div>
                 <div className="flex gap-8">
-                  <div className="lg:w-1/2 md:w-full">
-                    <div className="mb-4">
-                      <div className="flex">
-                        <div className="flex flex-1 font-bold text-xl">
-                          {dataChart?.bal5?.title || ''}
-                        </div>
-                      </div>
-                    </div>
-                    {dataChart && dataChart.bal5 && <StackChart data={dataChart.bal5} />}
-                  </div>
-                  <div className="lg:w-1/2 md:w-full">
-                    <div className="mb-4">
-                      <div className="flex">
-                        <div className="flex flex-1 font-bold text-xl">
-                          {dataChart?.bal6?.title || ''}
-                        </div>
-                        <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-                          <Typography>Năm</Typography>
-                          <FormControlLabel
-                            checked={checked.bal6}
-                            onChange={() => handleToggle('bal6')}
-                            control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
-                          />
-                          <Typography>Quý</Typography>
-                        </Stack>
-                      </div>
-                    </div>
-                    {dataChart && dataChart.bal6 && <StackChart data={dataChart.bal6} />}
-                  </div>
+                  {ChartItem(dataChart?.bal5, checked?.bal5, 'bal5')}
+                  {ChartItem(dataChart?.bal6, checked?.bal6, 'bal6', true)}
                 </div>
               </div>
             )}
           </CustomTabPanel>
           <CustomTabPanel value={value} index={2}>
             <div className="flex gap-8">
-              <div className="lg:w-1/2 md:w-full">
-                <div className="mb-4">
-                  <div className="flex">
-                    <div className="flex flex-1 font-bold text-xl">
-                      {dataChart?.perf7?.title || ''}
-                    </div>
-                    <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-                      <Typography>Năm</Typography>
-                      <FormControlLabel
-                        checked={checked.perf7}
-                        onChange={() => handleToggle('perf7')}
-                        control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
-                      />
-                      <Typography>Quý</Typography>
-                    </Stack>
-                  </div>
-                </div>
-                {dataChart && dataChart.perf7 && <StackChart data={dataChart.perf7} />}
-              </div>
-              <div className="lg:w-1/2 md:w-full">
-                <div className="mb-4">
-                  <div className="flex">
-                    <div className="flex flex-1 font-bold text-xl">
-                      {dataChart?.perf8?.title || ''}
-                    </div>
-                  </div>
-                </div>
-                {/* <StackChart data={bal2} /> */}
-                {dataChart && dataChart.perf8 && <StackChart data={dataChart.perf8} />}
-              </div>
+              {ChartItem(dataChart?.perf7, checked?.perf7, 'perf7', true)}
+              {ChartItem(dataChart?.perf8, checked?.perf8, 'perf8')}
             </div>
           </CustomTabPanel>
           <CustomTabPanel value={value} index={3}>
             <div className="flex flex-col gap-8">
               <div className="flex gap-8">
-                <div className="lg:w-1/2 md:w-full">
-                  <div className="mb-4">
-                    <div className="flex">
-                      <div className="flex flex-1 font-bold text-xl">
-                        {dataChart?.cf1?.title || ''}
-                      </div>
-                      <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-                        <Typography>Năm</Typography>
-                        <FormControlLabel
-                          checked={checked.cf1}
-                          onChange={() => handleToggle('cf1')}
-                          control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
-                        />
-                        <Typography>Quý</Typography>
-                      </Stack>
-                    </div>
-                  </div>
-                  {dataChart && dataChart.cf1 && <StackChart data={dataChart.cf1} />}
-                </div>
-                <div className="lg:w-1/2 md:w-full">
-                  <div className="mb-4">
-                    <div className="flex">
-                      <div className="flex flex-1 font-bold text-xl">
-                        {dataChart?.perf8?.title || ''}
-                      </div>
-                      <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-                        <Typography>Năm</Typography>
-                        <FormControlLabel
-                          checked={checked.cf2}
-                          onChange={() => handleToggle('cf2')}
-                          control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
-                        />
-                        <Typography>Quý</Typography>
-                      </Stack>
-                    </div>
-                  </div>
-                  {dataChart && dataChart.cf2 && <StackChart data={dataChart.cf2} />}
-                </div>
+                {ChartItem(dataChart?.cf1, checked?.cf1, 'cf1', true)}
+                {ChartItem(dataChart?.cf2, checked?.cf2, 'cf2', true)}
               </div>
               <div className="flex gap-8">
-                <div className="lg:w-1/2 md:w-full">
-                  <div className="mb-4">
-                    <div className="flex">
-                      <div className="flex flex-1 font-bold text-xl">
-                        {dataChart?.cf3?.title || ''}
-                      </div>
-                      <Stack
-                        direction="row"
-                        spacing={1}
-                        sx={{ alignItems: 'center', marginRight: '16px' }}
-                      >
-                        <Typography>Off</Typography>
-                        <FormControlLabel
-                          checked={checked.cf3adjust}
-                          onChange={() => handleToggle('cf3adjust')}
-                          control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
-                        />
-                        <Typography>On</Typography>
-                      </Stack>
-                      <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-                        <Typography>Năm</Typography>
-                        <FormControlLabel
-                          checked={checked.cf3}
-                          onChange={() => handleToggle('cf3')}
-                          control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
-                        />
-                        <Typography>Quý</Typography>
-                      </Stack>
-                    </div>
-                  </div>
-                  {dataChart && dataChart.cf3 && <StackChart data={dataChart.cf3} />}
-                </div>
-                <div className="lg:w-1/2 md:w-full">
-                  <div className="mb-4">
-                    <div className="flex">
-                      <div className="flex flex-1 font-bold text-xl">
-                        {dataChart?.perf8?.title || ''}
-                      </div>
-                      <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-                        <Typography>Năm</Typography>
-                        <FormControlLabel
-                          checked={checked.cf4}
-                          onChange={() => handleToggle('cf4')}
-                          control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
-                        />
-                        <Typography>Quý</Typography>
-                      </Stack>
-                    </div>
-                  </div>
-                  {dataChart && dataChart.cf4 && <StackChart data={dataChart.cf4} />}
-                </div>
+                {ChartItem(
+                  dataChart?.cf3,
+                  checked?.cf3,
+                  'cf3',
+                  true,
+                  'cf3adjust',
+                  checked?.cf3adjust
+                )}
+                {ChartItem(dataChart?.cf4, checked?.cf4, 'cf4', true)}
               </div>
             </div>
           </CustomTabPanel>
@@ -1253,75 +1144,15 @@ export const TabChart = () => {
             {codeValue && (
               <div className="flex flex-col gap-8">
                 <div className="flex gap-8">
-                  <div className="lg:w-1/2 md:w-full">
-                    <div className="mb-4">
-                      <div className="flex">
-                        <div className="flex flex-1 font-bold text-xl">
-                          {dataChart?.perf1?.title || ''}
-                        </div>
-                        <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-                          <Typography>Năm</Typography>
-                          <FormControlLabel control={<IOSSwitch sx={{ m: 1 }} defaultChecked />} />
-                          <Typography>Quý</Typography>
-                        </Stack>
-                      </div>
-                    </div>
-                    {dataChart && dataChart.perf1 && <StackChart data={dataChart.perf1} />}
-                  </div>
-                  <div className="lg:w-1/2 md:w-full">
-                    <div className="mb-4">
-                      <div className="flex">
-                        <div className="flex flex-1 font-bold text-xl">
-                          {dataChart?.perf2?.title || ''}
-                        </div>
-                        <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-                          <Typography>Năm</Typography>
-                          <FormControlLabel control={<IOSSwitch sx={{ m: 1 }} defaultChecked />} />
-                          <Typography>Quý</Typography>
-                        </Stack>
-                      </div>
-                    </div>
-                    {dataChart && dataChart.perf2 && <StackChart data={dataChart.perf2} />}
-                  </div>
+                  {ChartItem(dataChart?.perf1, checked?.perf1, 'perf1', true)}
+                  {ChartItem(dataChart?.perf2, checked?.perf2, 'perf2', true)}
                 </div>
                 <div className="flex gap-8">
-                  <div className="lg:w-1/2 md:w-full">
-                    <div className="mb-4">
-                      <div className="flex">
-                        <div className="flex flex-1 font-bold text-xl">
-                          {dataChart?.perf3?.title || ''}
-                        </div>
-                        <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-                          <Typography>Năm</Typography>
-                          <FormControlLabel control={<IOSSwitch sx={{ m: 1 }} defaultChecked />} />
-                          <Typography>Quý</Typography>
-                        </Stack>
-                      </div>
-                    </div>
-                    {dataChart && dataChart.perf3 && <StackChart data={dataChart.perf3} />}
-                  </div>
-                  <div className="lg:w-1/2 md:w-full">
-                    <div className="mb-4">
-                      <div className="flex">
-                        <div className="flex flex-1 font-bold text-xl">
-                          {dataChart?.perf4?.title || ''}
-                        </div>
-                      </div>
-                    </div>
-                    {dataChart && dataChart.perf4 && <StackChart data={dataChart.perf4} />}
-                  </div>
+                  {ChartItem(dataChart?.perf3, checked?.perf3, 'perf3', true)}
+                  {ChartItem(dataChart?.perf4, checked?.perf4, 'perf4')}
                 </div>
                 <div className="flex gap-8">
-                  <div className="lg:w-1/2 md:w-full">
-                    <div className="mb-4">
-                      <div className="flex">
-                        <div className="flex flex-1 font-bold text-xl">
-                          {dataChart?.perf5?.title || ''}
-                        </div>
-                      </div>
-                    </div>
-                    {dataChart && dataChart.perf5 && <StackChart data={dataChart.perf5} />}
-                  </div>
+                  {ChartItem(dataChart?.perf5, checked?.perf5, 'perf5')}
                 </div>
               </div>
             )}
@@ -1330,85 +1161,15 @@ export const TabChart = () => {
             {codeValue && (
               <div className="flex flex-col gap-8">
                 <div className="flex gap-8">
-                  <div className="lg:w-1/2 md:w-full">
-                    <div className="mb-4">
-                      <div className="flex">
-                        <div className="flex flex-1 font-bold text-xl">
-                          {dataChart?.bal1?.title || ''}
-                        </div>
-                        <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-                          <Typography>Năm</Typography>
-                          <FormControlLabel control={<IOSSwitch sx={{ m: 1 }} defaultChecked />} />
-                          <Typography>Quý</Typography>
-                        </Stack>
-                      </div>
-                    </div>
-                    {dataChart && dataChart.bal1 && <StackChart data={dataChart.bal1} />}
-                  </div>
-                  <div className="lg:w-1/2 md:w-full">
-                    <div className="mb-4">
-                      <div className="flex">
-                        <div className="flex flex-1 font-bold text-xl">
-                          {dataChart?.bal2?.title || ''}
-                        </div>
-                        <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-                          <Typography>Năm</Typography>
-                          <FormControlLabel control={<IOSSwitch sx={{ m: 1 }} defaultChecked />} />
-                          <Typography>Quý</Typography>
-                        </Stack>
-                      </div>
-                    </div>
-                    {dataChart && dataChart.bal2 && <StackChart data={dataChart.bal2} />}
-                  </div>
+                  {ChartItem(dataChart?.bal1, checked?.bal1, 'bal1', true)}
+                  {ChartItem(dataChart?.bal2, checked?.bal2, 'bal2', true)}
                 </div>
                 <div className="flex gap-8">
-                  <div className="lg:w-1/2 md:w-full">
-                    <div className="mb-4">
-                      <div className="flex">
-                        <div className="flex flex-1 font-bold text-xl">
-                          {dataChart?.bal3?.title || ''}
-                        </div>
-                        <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-                          <Typography>Năm</Typography>
-                          <FormControlLabel control={<IOSSwitch sx={{ m: 1 }} defaultChecked />} />
-                          <Typography>Quý</Typography>
-                        </Stack>
-                      </div>
-                    </div>
-                    {dataChart && dataChart.bal3 && <StackChart data={dataChart.bal3} />}
-                  </div>
-                  <div className="lg:w-1/2 md:w-full">
-                    <div className="mb-4">
-                      <div className="flex">
-                        <div className="flex flex-1 font-bold text-xl">
-                          {dataChart?.bal4?.title || ''}
-                        </div>
-                        <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-                          <Typography>Năm</Typography>
-                          <FormControlLabel control={<IOSSwitch sx={{ m: 1 }} defaultChecked />} />
-                          <Typography>Quý</Typography>
-                        </Stack>
-                      </div>
-                    </div>
-                    {dataChart && dataChart.bal4 && <StackChart data={dataChart.bal4} />}
-                  </div>
+                  {ChartItem(dataChart?.bal3, checked?.bal3, 'bal3', true)}
+                  {ChartItem(dataChart?.bal4, checked?.bal4, 'bal4', true)}
                 </div>
                 <div className="flex gap-8">
-                  <div className="lg:w-1/2 md:w-full">
-                    <div className="mb-4">
-                      <div className="flex">
-                        <div className="flex flex-1 font-bold text-xl">
-                          {dataChart?.bal5?.title || ''}
-                        </div>
-                        <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-                          <Typography>Năm</Typography>
-                          <FormControlLabel control={<IOSSwitch sx={{ m: 1 }} defaultChecked />} />
-                          <Typography>Quý</Typography>
-                        </Stack>
-                      </div>
-                    </div>
-                    {dataChart && dataChart.bal5 && <StackChart data={dataChart.bal5} />}
-                  </div>
+                  {ChartItem(dataChart?.bal5, checked?.bal5, 'bal5', true)}
                 </div>
               </div>
             )}
@@ -1421,75 +1182,15 @@ export const TabChart = () => {
             {codeValue && (
               <div className="flex flex-col gap-8">
                 <div className="flex gap-8">
-                  <div className="lg:w-1/2 md:w-full">
-                    <div className="mb-4">
-                      <div className="flex">
-                        <div className="flex flex-1 font-bold text-xl">
-                          {dataChart?.perf1?.title || ''}
-                        </div>
-                        <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-                          <Typography>Năm</Typography>
-                          <FormControlLabel control={<IOSSwitch sx={{ m: 1 }} defaultChecked />} />
-                          <Typography>Quý</Typography>
-                        </Stack>
-                      </div>
-                    </div>
-                    {dataChart && dataChart.perf1 && <StackChart data={dataChart.perf1} />}
-                  </div>
-                  <div className="lg:w-1/2 md:w-full">
-                    <div className="mb-4">
-                      <div className="flex">
-                        <div className="flex flex-1 font-bold text-xl">
-                          {dataChart?.perf2?.title || ''}
-                        </div>
-                        <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-                          <Typography>Năm</Typography>
-                          <FormControlLabel control={<IOSSwitch sx={{ m: 1 }} defaultChecked />} />
-                          <Typography>Quý</Typography>
-                        </Stack>
-                      </div>
-                    </div>
-                    {dataChart && dataChart.perf2 && <StackChart data={dataChart.perf2} />}
-                  </div>
+                  {ChartItem(dataChart?.perf1, checked?.perf1, 'perf1', true)}
+                  {ChartItem(dataChart?.perf2, checked?.perf2, 'perf2', true)}
                 </div>
                 <div className="flex gap-8">
-                  <div className="lg:w-1/2 md:w-full">
-                    <div className="mb-4">
-                      <div className="flex">
-                        <div className="flex flex-1 font-bold text-xl">
-                          {dataChart?.perf3?.title || ''}
-                        </div>
-                        <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-                          <Typography>Năm</Typography>
-                          <FormControlLabel control={<IOSSwitch sx={{ m: 1 }} defaultChecked />} />
-                          <Typography>Quý</Typography>
-                        </Stack>
-                      </div>
-                    </div>
-                    {dataChart && dataChart.perf3 && <StackChart data={dataChart.perf3} />}
-                  </div>
-                  <div className="lg:w-1/2 md:w-full">
-                    <div className="mb-4">
-                      <div className="flex">
-                        <div className="flex flex-1 font-bold text-xl">
-                          {dataChart?.perf4?.title || ''}
-                        </div>
-                      </div>
-                    </div>
-                    {dataChart && dataChart.perf4 && <StackChart data={dataChart.perf4} />}
-                  </div>
+                  {ChartItem(dataChart?.perf3, checked?.perf3, 'perf3', true)}
+                  {ChartItem(dataChart?.perf4, checked?.perf4, 'perf4')}
                 </div>
                 <div className="flex gap-8">
-                  <div className="lg:w-1/2 md:w-full">
-                    <div className="mb-4">
-                      <div className="flex">
-                        <div className="flex flex-1 font-bold text-xl">
-                          {dataChart?.perf5?.title || ''}
-                        </div>
-                      </div>
-                    </div>
-                    {dataChart && dataChart.perf5 && <StackChart data={dataChart.perf5} />}
-                  </div>
+                  {ChartItem(dataChart?.perf5, checked?.perf5, 'perf5')}
                 </div>
               </div>
             )}
@@ -1498,107 +1199,20 @@ export const TabChart = () => {
             {codeValue && (
               <div className="flex flex-col gap-8">
                 <div className="flex gap-8">
-                  <div className="lg:w-1/2 md:w-full">
-                    <div className="mb-4">
-                      <div className="flex">
-                        <div className="flex flex-1 font-bold text-xl">
-                          {dataChart?.bal1?.title || ''}
-                        </div>
-                        <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-                          <Typography>Năm</Typography>
-                          <FormControlLabel control={<IOSSwitch sx={{ m: 1 }} defaultChecked />} />
-                          <Typography>Quý</Typography>
-                        </Stack>
-                      </div>
-                    </div>
-                    {dataChart && dataChart.bal1 && <StackChart data={dataChart.bal1} />}
-                  </div>
-                  <div className="lg:w-1/2 md:w-full">
-                    <div className="mb-4">
-                      <div className="flex">
-                        <div className="flex flex-1 font-bold text-xl">
-                          {dataChart?.bal2?.title || ''}
-                        </div>
-                        <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-                          <Typography>Năm</Typography>
-                          <FormControlLabel control={<IOSSwitch sx={{ m: 1 }} defaultChecked />} />
-                          <Typography>Quý</Typography>
-                        </Stack>
-                      </div>
-                    </div>
-                    {dataChart && dataChart.bal2 && <StackChart data={dataChart.bal2} />}
-                  </div>
+                  {ChartItem(dataChart?.bal1, checked?.bal1, 'bal1', true)}
+                  {ChartItem(dataChart?.bal2, checked?.bal2, 'bal2', true)}
                 </div>
                 <div className="flex gap-8">
-                  <div className="lg:w-1/2 md:w-full">
-                    <div className="mb-4">
-                      <div className="flex">
-                        <div className="flex flex-1 font-bold text-xl">
-                          {dataChart?.bal3?.title || ''}
-                        </div>
-                        <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-                          <Typography>Năm</Typography>
-                          <FormControlLabel control={<IOSSwitch sx={{ m: 1 }} defaultChecked />} />
-                          <Typography>Quý</Typography>
-                        </Stack>
-                      </div>
-                    </div>
-                    {dataChart && dataChart.bal3 && <StackChart data={dataChart.bal3} />}
-                  </div>
-                  <div className="lg:w-1/2 md:w-full">
-                    <div className="mb-4">
-                      <div className="flex">
-                        <div className="flex flex-1 font-bold text-xl">
-                          {dataChart?.bal4?.title || ''}
-                        </div>
-                      </div>
-                    </div>
-                    {dataChart && dataChart.bal4 && <StackChart data={dataChart.bal4} />}
-                  </div>
+                  {ChartItem(dataChart?.bal3, checked?.bal3, 'bal3', true)}
+                  {ChartItem(dataChart?.bal4, checked?.bal4, 'bal4')}
                 </div>
                 <div className="flex gap-8">
-                  <div className="lg:w-1/2 md:w-full">
-                    <div className="mb-4">
-                      <div className="flex">
-                        <div className="flex flex-1 font-bold text-xl">
-                          {dataChart?.bal5?.title || ''}
-                        </div>
-                      </div>
-                    </div>
-                    {dataChart && dataChart.bal5 && <StackChart data={dataChart.bal5} />}
-                  </div>
-                  <div className="lg:w-1/2 md:w-full">
-                    <div className="mb-4">
-                      <div className="flex">
-                        <div className="flex flex-1 font-bold text-xl">
-                          {dataChart?.bal6?.title || ''}
-                        </div>
-                      </div>
-                    </div>
-                    {dataChart && dataChart.bal6 && <StackChart data={dataChart.bal6} />}
-                  </div>
+                  {ChartItem(dataChart?.bal5, checked?.bal5, 'bal5')}
+                  {ChartItem(dataChart?.bal6, checked?.bal6, 'bal6')}
                 </div>
                 <div className="flex gap-8">
-                  <div className="lg:w-1/2 md:w-full">
-                    <div className="mb-4">
-                      <div className="flex">
-                        <div className="flex flex-1 font-bold text-xl">
-                          {dataChart?.bal7?.title || ''}
-                        </div>
-                      </div>
-                    </div>
-                    {dataChart && dataChart.bal7 && <StackChart data={dataChart.bal7} />}
-                  </div>
-                  <div className="lg:w-1/2 md:w-full">
-                    <div className="mb-4">
-                      <div className="flex">
-                        <div className="flex flex-1 font-bold text-xl">
-                          {dataChart?.bal8?.title || ''}
-                        </div>
-                      </div>
-                    </div>
-                    {dataChart && dataChart.bal8 && <StackChart data={dataChart.bal8} />}
-                  </div>
+                  {ChartItem(dataChart?.bal7, checked?.bal7, 'bal7')}
+                  {ChartItem(dataChart?.bal8, checked?.bal8, 'bal8')}
                 </div>
               </div>
             )}
@@ -1607,68 +1221,12 @@ export const TabChart = () => {
             {codeValue && (
               <div className="flex flex-col gap-8">
                 <div className="flex gap-8">
-                  <div className="lg:w-1/2 md:w-full">
-                    <div className="mb-4">
-                      <div className="flex">
-                        <div className="flex flex-1 font-bold text-xl">
-                          {dataChart?.bal9?.title || ''}
-                        </div>
-                        <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-                          <Typography>Năm</Typography>
-                          <FormControlLabel control={<IOSSwitch sx={{ m: 1 }} defaultChecked />} />
-                          <Typography>Quý</Typography>
-                        </Stack>
-                      </div>
-                    </div>
-                    {dataChart && dataChart.bal9 && <StackChart data={dataChart.bal9} />}
-                  </div>
-                  <div className="lg:w-1/2 md:w-full">
-                    <div className="mb-4">
-                      <div className="flex">
-                        <div className="flex flex-1 font-bold text-xl">
-                          {dataChart?.bal10?.title || ''}
-                        </div>
-                        <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-                          <Typography>Năm</Typography>
-                          <FormControlLabel control={<IOSSwitch sx={{ m: 1 }} defaultChecked />} />
-                          <Typography>Quý</Typography>
-                        </Stack>
-                      </div>
-                    </div>
-                    {dataChart && dataChart.bal10 && <StackChart data={dataChart.bal10} />}
-                  </div>
+                  {ChartItem(dataChart?.bal9, checked?.bal9, 'bal9', true)}
+                  {ChartItem(dataChart?.bal10, checked?.bal10, 'bal10', true)}
                 </div>
                 <div className="flex gap-8">
-                  <div className="lg:w-1/2 md:w-full">
-                    <div className="mb-4">
-                      <div className="flex">
-                        <div className="flex flex-1 font-bold text-xl">
-                          {dataChart?.bal11?.title || ''}
-                        </div>
-                        <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-                          <Typography>Năm</Typography>
-                          <FormControlLabel control={<IOSSwitch sx={{ m: 1 }} defaultChecked />} />
-                          <Typography>Quý</Typography>
-                        </Stack>
-                      </div>
-                    </div>
-                    {dataChart && dataChart.bal11 && <StackChart data={dataChart.bal11} />}
-                  </div>
-                  <div className="lg:w-1/2 md:w-full">
-                    <div className="mb-4">
-                      <div className="flex">
-                        <div className="flex flex-1 font-bold text-xl">
-                          {dataChart?.bal12?.title || ''}
-                        </div>
-                        <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-                          <Typography>Năm</Typography>
-                          <FormControlLabel control={<IOSSwitch sx={{ m: 1 }} defaultChecked />} />
-                          <Typography>Quý</Typography>
-                        </Stack>
-                      </div>
-                    </div>
-                    {dataChart && dataChart.bal12 && <StackChart data={dataChart.bal12} />}
-                  </div>
+                  {ChartItem(dataChart?.bal11, checked?.bal11, 'bal11', true)}
+                  {ChartItem(dataChart?.bal12, checked?.bal12, 'bal12', true)}
                 </div>
               </div>
             )}

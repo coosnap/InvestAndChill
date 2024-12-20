@@ -1,13 +1,6 @@
-.recharts-legend-wrapper {
-    width: 100% !important;
-}
-
-.MuiSwitch-track {
-    opacity: 1 !important;
-    background-color: #FFF4C7 !important;
-    border: 2px solid #1976D2 !important;
-}
-
-.MuiSwitch-colorPrimary {
-    color: #1976D2 !important;
+.MuiChartsReferenceLine-line {
+  stroke: grey !important;
+  clip-path: stroke-box !important;
+  stroke-width: 0.8px !important;
+  opacity: 0.5 !important;
 }

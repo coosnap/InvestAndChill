@@ -8,11 +8,14 @@ import {
 } from '@mui/x-charts';
 import { BarPlot } from '@mui/x-charts/BarChart';
 import { ChartsXAxis } from '@mui/x-charts/ChartsXAxis';
-import { AreaPlot, LineHighlightPlot, LinePlot, MarkPlot } from '@mui/x-charts/LineChart';
+import { AreaPlot, LineHighlightPlot, LinePlot } from '@mui/x-charts/LineChart';
 import { ResponsiveChartContainer } from '@mui/x-charts/ResponsiveChartContainer';
 
 export default function NoStackChart(data) {
   function extend(value, step) {
+    if (Number(value) && value <= 0) {
+      return step * Math.floor(value / step);
+    }
     if (Number(value) && value > 0) {
       return step * Math.ceil(value / step);
     }
@@ -38,12 +41,12 @@ export default function NoStackChart(data) {
                 domainLimit:
                   data.data.yAxis.left.type == 'bil'
                     ? (min, max) => ({
-                        min: extend(min, min < 0 ? (min + max) / 2 : (min + max) / 10),
-                        max: extend(max, (min + max) / 10),
+                        min: extend(min, 10),
+                        max: extend(max, 10),
                       })
                     : (min, max) => ({
-                        min: extend(min, (min + max) / 10),
-                        max: extend(max, (min + max) / 10),
+                        min: extend(min, min <= 0 ? -0.1 : 0.1),
+                        max: extend(max, 0.1),
                       }),
               }
             : {
@@ -56,12 +59,12 @@ export default function NoStackChart(data) {
                 domainLimit:
                   data.data.yAxis.right.type == 'bil'
                     ? (min, max) => ({
-                        min: extend(min, (min + max) / 10),
-                        max: extend(max, (min + max) / 10),
+                        min: extend(min, 10),
+                        max: extend(max, 10),
                       })
                     : (min, max) => ({
-                        min: extend(min, min < 0 ? (min + max) / 10 : -2),
-                        max: extend(max, min < 0 ? (min + max) / 10 : -2),
+                        min: extend(min, min <= 0 ? -0.1 : 0.1),
+                        max: extend(max, 0.1),
                       }),
               }
             : {
@@ -69,10 +72,11 @@ export default function NoStackChart(data) {
                 domainLimit: 'nice',
               },
         ]}
-        height={400}
+        height={450}
         margin={{
           left: data.data.yAxis.left.type == 'per' ? 50 : 70,
           right: data.data.yAxis.right.type == 'bil' ? 70 : 50,
+          top: 80,
           bottom: 35,
         }}
       >
@@ -174,7 +178,18 @@ export default function NoStackChart(data) {
             }}
           />
         )}
-        <ChartsLegend padding={{ bottom: 0, top: 10 }} labelStyle={{ fontSize: 14 }} />
+        <ChartsLegend
+          padding={{ bottom: 0, top: 10 }}
+          labelStyle={{ fontSize: 12 }}
+          slotProps={{
+            legend: {
+              itemMarkHeight: 15,
+              itemMarkWidth: 15,
+              markGap: 2,
+              itemGap: 8,
+            },
+          }}
+        />
         <ChartsTooltip />
       </ResponsiveChartContainer>
     </Box>

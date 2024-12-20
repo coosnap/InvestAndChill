@@ -190,7 +190,7 @@ function Login() {
         infoSignIn.roles.includes('ROLE_ADMIN') ||
         infoSignIn.roles.includes('ROLE_MODERATOR_ARTICLE') ||
         infoSignIn.roles.includes('ROLE_MODERATOR_USER')
-          ? (window.location.href = '/login')
+          ? (window.location.href = '/')
           : (window.location.href = '/invest');
       } else {
         // setIsLoading(false);
@@ -220,7 +220,7 @@ function Login() {
 
   useEffect(() => {
     getData();
-    if (cookie.access_token && (location.pathname == '/' || location.pathname == '/login')) {
+    if (cookie.access_token && location.pathname == '/') {
       if (
         cookie.roles.includes('ROLE_ADMIN') ||
         cookie.roles.includes('ROLE_MODERATOR_USER') ||
