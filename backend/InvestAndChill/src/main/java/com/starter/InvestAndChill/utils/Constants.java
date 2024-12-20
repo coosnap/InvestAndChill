@@ -22,6 +22,10 @@ public class Constants {
 	 public static final String PTC_cf3 = "Diễn biến nợ ròng";
 	 public static final String PTC_cf4 = "Chiếm dụng vốn";
 	 
+	 public static final String PTC_val3 = "Tương quan Doanh thu - Vốn hóa";
+	 public static final String PTC_val5 = "Tương quan Lợi Nhuận - Vốn hóa";
+	 public static final String PTC_val8 = "Tương quan Vốn Chủ sở hữu - Vốn hóa";
+	 
 	 public static final String NganHang_perf1 = "Doanh thu và Lợi nhuận";
 	 public static final String NganHang_perf2 = "Cấu trúc chi phí";
 	 public static final String NganHang_perf3 = "Cấu trúc lợi nhuận";

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.starter.InvestAndChill.jwt.models.PTCReport;
+import com.starter.InvestAndChill.jwt.models.Valuation;
 import com.starter.InvestAndChill.jwt.payload.response.PTC.Bal1Response;
 import com.starter.InvestAndChill.jwt.payload.response.PTC.Bal2Response;
 import com.starter.InvestAndChill.jwt.payload.response.PTC.Bal3Response;
@@ -36,8 +37,12 @@ import com.starter.InvestAndChill.jwt.payload.response.PTC.Perf5Response;
 import com.starter.InvestAndChill.jwt.payload.response.PTC.Perf6Response;
 import com.starter.InvestAndChill.jwt.payload.response.PTC.Perf7Response;
 import com.starter.InvestAndChill.jwt.payload.response.PTC.Perf8Response;
+import com.starter.InvestAndChill.jwt.payload.response.PTC.Val3Response;
+import com.starter.InvestAndChill.jwt.payload.response.PTC.Val5Response;
+import com.starter.InvestAndChill.jwt.payload.response.PTC.Val8Response;
 import com.starter.InvestAndChill.jwt.repository.PTCRepositoryNam;
 import com.starter.InvestAndChill.jwt.repository.PTCRepositoryQuy;
+import com.starter.InvestAndChill.jwt.repository.ValuationRepository;
 import com.starter.InvestAndChill.utils.CalculatorUtils;
 import com.starter.InvestAndChill.utils.Constants;
 import com.starter.InvestAndChill.utils.RoundNumber;
@@ -56,6 +61,9 @@ public class PTCReportController {
 	@Autowired
 	PTCRepositoryNam ptcNamRepository;
 	Pageable pageableNam = PageRequest.of(0, 10); 
+	
+	@Autowired
+	ValuationRepository valuationRepository;
 	
 	
 	@GetMapping("/perf1/{stock}")
@@ -495,50 +503,65 @@ public class PTCReportController {
                 .collect(Collectors.toList());
 		 return new ResponseEntity<>(list, HttpStatus.OK);
 	} 
-//	
-//	@GetMapping("/other1/{stock}")
-//	public ResponseEntity<?> other1(@PathVariable String stock,@RequestParam(required = false,name = "type") String type) {
-//		List<PTCReport> listReport = new ArrayList<PTCReport>();
-//		if ("year".equals(type)) {
-//			listReport =  ptcNamRepository.findByStockForPerf(stock,pageableNam);
-//		} else {
-//			listReport =	ptcQuyRepository.findByStockForPerf(stock,pageableQuy);
-//		}
-//		List<Other1Response> list = listReport.stream()
-//                .map(report -> {
-//                	Other1Response response = new Other1Response();
-//                	response.setId(report.getId());
-//                    response.setNguoiMuaTraTienTruoc(report.getNguoiMuaTraTienTruoc());
-//                    response.setDoanhThuChuaThucHienNganHan(report.getDoanhThuChuaThucHienNganHan());
-//                    response.setNguoiMuaTraTienTruocDaiHan(report.getNguoiMuaTraTienTruocDaiHan());
-//                    response.setDoanhThuChuaThucHien(report.getDoanhThuChuaThucHien());
-//                    return response;
-//                })
-//                .collect(Collectors.toList());
-//		 return new ResponseEntity<>(list, HttpStatus.OK);
-//	}
-//	
-//	@GetMapping("/other2/{stock}")
-//	public ResponseEntity<?> other2(@PathVariable String stock,@RequestParam(required = false,name = "type") String type) {
-//		List<PTCReport> listReport = new ArrayList<PTCReport>();
-//		if ("year".equals(type)) {
-//			listReport =  ptcNamRepository.findByStockForPerf(stock,pageableNam);
-//		} else {
-//			listReport =	ptcQuyRepository.findByStockForPerf(stock,pageableQuy);
-//		}
-//		List<Other2Response> list = listReport.stream()
-//                .map(report -> {
-//                	Other2Response response = new Other2Response();
-//                	response.setId(report.getId());
-//                    response.setTienDTNGDaoHan(report.getTienDTNGDaoHan());
-//                    response.setPhaiThu(report.getPhaiThu());
-//                    response.setHangTonKhoRong(report.getHangTonKhoRong());
-//                    response.setTaiSanCoDinh(report.getTaiSanCoDinh());
-//                    response.setGiaTriRongTaiSanDauTu(report.getGiaTriRongTaiSanDauTu());
-//                    response.setTaiSanDoDangDaiHan(report.getTaiSanDoDangDaiHan());
-//                    return response;
-//                })
-//                .collect(Collectors.toList());
-//		 return new ResponseEntity<>(list, HttpStatus.OK);
-//	}
+	
+	@GetMapping("/val3/{stock}")
+	public ResponseEntity<?> val3(@PathVariable String stock) {
+		List<Valuation> listValuation = new ArrayList<Valuation>();
+		
+		listValuation =  valuationRepository.findTopRankedDataByStockCode(stock, pageableToanQuy);
+
+		Collections.reverse(listValuation);
+		List<Val3Response> list = listValuation.stream()
+                .map(report -> {
+                	Val3Response response = new Val3Response();
+                	response.setId(report.getId());
+                	response.setTitle(Constants.PTC_val3);
+                	response.setSalettm(RoundNumber.lamTron(report.getSalettm()));
+                	response.setMarketcap(RoundNumber.lamTron(report.getMarketcap()));
+                    return response;
+                })
+                .collect(Collectors.toList());
+		 return new ResponseEntity<>(list, HttpStatus.OK);
+	} 
+	
+	@GetMapping("/val5/{stock}")
+	public ResponseEntity<?> val5(@PathVariable String stock) {
+		List<Valuation> listValuation = new ArrayList<Valuation>();
+		
+		listValuation =  valuationRepository.findTopRankedDataByStockCode(stock, pageableToanQuy);
+
+		Collections.reverse(listValuation);
+		List<Val5Response> list = listValuation.stream()
+                .map(report -> {
+                	Val5Response response = new Val5Response();
+                	response.setId(report.getId());
+                	response.setTitle(Constants.PTC_val5);
+                	response.setNittm(RoundNumber.lamTron(report.getNittm()));
+                	response.setMarketcap(RoundNumber.lamTron(report.getMarketcap()));
+                    return response;
+                })
+                .collect(Collectors.toList());
+		 return new ResponseEntity<>(list, HttpStatus.OK);
+	} 
+	
+	@GetMapping("/val8/{stock}")
+	public ResponseEntity<?> val8(@PathVariable String stock) {
+		List<Valuation> listValuation = new ArrayList<Valuation>();
+		
+		listValuation =  valuationRepository.findTopRankedDataByStockCode(stock, pageableToanQuy);
+
+		Collections.reverse(listValuation);
+		List<Val8Response> list = listValuation.stream()
+                .map(report -> {
+                	Val8Response response = new Val8Response();
+                	response.setId(report.getId());
+                	response.setTitle(Constants.PTC_val8);
+                	response.setCapital(RoundNumber.lamTron(report.getCapital()));
+                	response.setMarketcap(RoundNumber.lamTron(report.getMarketcap()));
+                    return response;
+                })
+                .collect(Collectors.toList());
+		 return new ResponseEntity<>(list, HttpStatus.OK);
+	} 
+
 }
