@@ -30,7 +30,7 @@ export let customPerfPTC1 = {
     },
   ],
   yAxis: {
-    left: { type: 'bil', piecewise: false, showLineReference: true },
+    left: { type: 'bil', piecewise: true, showLineReference: true },
     right: { type: 'per', piecewise: false },
   },
 };
@@ -202,7 +202,7 @@ export let customPerfPTC6 = {
   ],
   yAxis: {
     left: { type: 'bil', piecewise: false, showLineReference: true },
-    right: { type: 'per', piecewise: false },
+    right: { type: 'bil', piecewise: true },
   },
 };
 export let customPerfPTC7 = {
@@ -542,7 +542,7 @@ export let customCFPTC1 = {
   ],
   yAxis: {
     left: { type: 'per', piecewise: false },
-    right: { type: 'bil', piecewise: false, showLineReference: true },
+    right: { type: 'bil', piecewise: true, showLineReference: true },
   },
 };
 export let customCFPTC2 = {
@@ -578,7 +578,7 @@ export let customCFPTC2 = {
   ],
   yAxis: {
     left: { type: 'bil', piecewise: false },
-    right: { type: 'bil', piecewise: false, showLineReference: true },
+    right: { type: 'bil', piecewise: true, showLineReference: true },
   },
 };
 export let customCFPTC3 = {
@@ -612,7 +612,7 @@ export let customCFPTC3 = {
   ],
   yAxis: {
     left: { type: 'bil', piecewise: false },
-    right: { type: 'bil', piecewise: false, showLineReference: true },
+    right: { type: 'bil', piecewise: true, showLineReference: true },
   },
 };
 export let customCFPTC4 = {
@@ -654,6 +654,37 @@ export let customCFPTC4 = {
   },
 };
 
+export let customValPTC2 = {
+  type: 'val2',
+  year: false,
+  series: [
+    {
+      type: 'line',
+      label: 'ROE',
+      dataKey: 'roe',
+      curve: 'linear',
+      yAxisId: 'leftAxis',
+    },
+    {
+      type: 'line',
+      label: 'P/B',
+      dataKey: 'pb',
+      curve: 'linear',
+      yAxisId: 'rightAxis',
+    },
+    {
+      type: 'line',
+      label: 'P/B trung vị',
+      dataKey: 'pbMedian',
+      curve: 'linear',
+      yAxisId: 'rightAxis',
+    },
+  ],
+  yAxis: {
+    left: { type: 'per', piecewise: false },
+    right: { type: 'time', piecewise: false, dash: true },
+  },
+};
 export let customValPTC3 = {
   type: 'val3',
   year: false,
@@ -677,6 +708,36 @@ export let customValPTC3 = {
     right: { type: 'bil', piecewise: false, dash: true },
   },
 };
+export let customValPTC4 = {
+  type: 'val4',
+  year: false,
+  series: [
+    {
+      type: 'bar',
+      label: 'Doanh thu thuần TTM',
+      dataKey: 'salettm',
+      yAxisId: 'leftAxis',
+    },
+    {
+      type: 'line',
+      label: 'P/S',
+      dataKey: 'ps',
+      curve: 'linear',
+      yAxisId: 'rightAxis',
+    },
+    {
+      type: 'line',
+      label: 'P/S trung vị',
+      dataKey: 'psMedian',
+      curve: 'linear',
+      yAxisId: 'rightAxis',
+    },
+  ],
+  yAxis: {
+    left: { type: 'bil', piecewise: false },
+    right: { type: 'time', piecewise: false, dash: true },
+  },
+};
 export let customValPTC5 = {
   type: 'val5',
   year: false,
@@ -698,6 +759,36 @@ export let customValPTC5 = {
   yAxis: {
     left: { type: 'bil', piecewise: false },
     right: { type: 'bil', piecewise: false },
+  },
+};
+export let customValPTC6 = {
+  type: 'val6',
+  year: false,
+  series: [
+    {
+      type: 'bar',
+      label: 'Lợi nhuận ròng TTM',
+      dataKey: 'nittm',
+      yAxisId: 'leftAxis',
+    },
+    {
+      type: 'line',
+      label: 'P/E',
+      dataKey: 'pe',
+      curve: 'linear',
+      yAxisId: 'rightAxis',
+    },
+    {
+      type: 'line',
+      label: 'P/E trung vị',
+      dataKey: 'peMedian',
+      curve: 'linear',
+      yAxisId: 'rightAxis',
+    },
+  ],
+  yAxis: {
+    left: { type: 'bil', piecewise: false },
+    right: { type: 'time', piecewise: false, dash: true },
   },
 };
 export let customValPTC8 = {
