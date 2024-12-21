@@ -23,6 +23,12 @@ public interface ValuationRepository extends JpaRepository<Valuation, ValuationK
 		                nittm,
 		                salettm,
 		                capital,
+		                evebitda,
+		                pe,
+		                pb,
+		                ps,
+		                roe,
+		                ebitdattm,
 		                ROW_NUMBER() OVER (
 		                    PARTITION BY stock_code, year, quarter
 		                    ORDER BY date DESC                                 

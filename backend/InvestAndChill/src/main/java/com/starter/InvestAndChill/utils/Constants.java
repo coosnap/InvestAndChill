@@ -22,8 +22,13 @@ public class Constants {
 	 public static final String PTC_cf3 = "Diễn biến nợ ròng";
 	 public static final String PTC_cf4 = "Chiếm dụng vốn";
 	 
+	 public static final String PTC_val1 = "PE & EV / EBITDA";
+	 public static final String PTC_val2 = "PB & ROE";
 	 public static final String PTC_val3 = "Tương quan Doanh thu - Vốn hóa";
+	 public static final String PTC_val4 = "PS";
 	 public static final String PTC_val5 = "Tương quan Lợi Nhuận - Vốn hóa";
+	 public static final String PTC_val6 = "PE";
+	 public static final String PTC_val7 = "EV / EBITDA";
 	 public static final String PTC_val8 = "Tương quan Vốn Chủ sở hữu - Vốn hóa";
 	 
 	 public static final String NganHang_perf1 = "Doanh thu và Lợi nhuận";

@@ -37,8 +37,13 @@ import com.starter.InvestAndChill.jwt.payload.response.PTC.Perf5Response;
 import com.starter.InvestAndChill.jwt.payload.response.PTC.Perf6Response;
 import com.starter.InvestAndChill.jwt.payload.response.PTC.Perf7Response;
 import com.starter.InvestAndChill.jwt.payload.response.PTC.Perf8Response;
+import com.starter.InvestAndChill.jwt.payload.response.PTC.Val1Response;
+import com.starter.InvestAndChill.jwt.payload.response.PTC.Val2Response;
 import com.starter.InvestAndChill.jwt.payload.response.PTC.Val3Response;
+import com.starter.InvestAndChill.jwt.payload.response.PTC.Val4Response;
 import com.starter.InvestAndChill.jwt.payload.response.PTC.Val5Response;
+import com.starter.InvestAndChill.jwt.payload.response.PTC.Val6Response;
+import com.starter.InvestAndChill.jwt.payload.response.PTC.Val7Response;
 import com.starter.InvestAndChill.jwt.payload.response.PTC.Val8Response;
 import com.starter.InvestAndChill.jwt.repository.PTCRepositoryNam;
 import com.starter.InvestAndChill.jwt.repository.PTCRepositoryQuy;
@@ -503,6 +508,54 @@ public class PTCReportController {
                 })
                 .collect(Collectors.toList());
 		 return new ResponseEntity<>(list, HttpStatus.OK);
+	}
+	
+	@GetMapping("/val1/{stock}")
+	public ResponseEntity<?> val1(@PathVariable String stock) {
+		List<Valuation> listValuation = new ArrayList<Valuation>();
+		
+		listValuation =  valuationRepository.findTopRankedDataByStockCode(stock, pageableValuation);
+
+		Collections.reverse(listValuation);
+		List<Val1Response> list = new ArrayList<Val1Response>();
+		for (int i=0;i< listValuation.size();i++) {
+			Valuation report = listValuation.get(i);
+			Val1Response response = new Val1Response();
+			response.setId(report.getId());
+			response.setTitle(Constants.PTC_val1);
+			CalculatorUtils.calculateMedianForOne(listValuation,report.getId(),"PE");
+			CalculatorUtils.calculateMedianForOne(listValuation,report.getId(),"evebitda");
+			response.setPe(RoundNumber.lamTronLan(report.getPe()));
+			response.setEvebitda(RoundNumber.lamTronLan(report.getEvebitda()));
+			response.setPeMedian(RoundNumber.lamTronLan(report.getPeMedian()));
+			response.setEvebitdaMedian(RoundNumber.lamTronLan(report.getEvebitdaMedian()));
+			list.add(response);
+		}
+		
+		return new ResponseEntity<>(list, HttpStatus.OK);
+	} 
+	
+	@GetMapping("/val2/{stock}")
+	public ResponseEntity<?> val2(@PathVariable String stock) {
+		List<Valuation> listValuation = new ArrayList<Valuation>();
+		
+		listValuation =  valuationRepository.findTopRankedDataByStockCode(stock, pageableValuation);
+
+		Collections.reverse(listValuation);
+		List<Val2Response> list = new ArrayList<Val2Response>();
+		for (int i=0;i< listValuation.size();i++) {
+			Valuation report = listValuation.get(i);
+			Val2Response response = new Val2Response();
+			response.setId(report.getId());
+			response.setTitle(Constants.PTC_val2);
+			CalculatorUtils.calculateMedianForOne(listValuation,report.getId(),"PB");
+			response.setRoe(RoundNumber.lamTronPhanTram(report.getRoe()));
+			response.setPb(RoundNumber.lamTronLan(report.getPb()));
+			response.setPbMedian(RoundNumber.lamTronLan(report.getPbMedian()));
+			list.add(response);
+		}
+		
+		return new ResponseEntity<>(list, HttpStatus.OK);
 	} 
 	
 	@GetMapping("/val3/{stock}")
@@ -525,6 +578,29 @@ public class PTCReportController {
 		 return new ResponseEntity<>(list, HttpStatus.OK);
 	} 
 	
+	@GetMapping("/val4/{stock}")
+	public ResponseEntity<?> val4(@PathVariable String stock) {
+		List<Valuation> listValuation = new ArrayList<Valuation>();
+		
+		listValuation =  valuationRepository.findTopRankedDataByStockCode(stock, pageableValuation);
+
+		Collections.reverse(listValuation);
+		List<Val4Response> list = new ArrayList<Val4Response>();
+		for (int i=0;i< listValuation.size();i++) {
+			Valuation report = listValuation.get(i);
+			Val4Response response = new Val4Response();
+			response.setId(report.getId());
+			response.setTitle(Constants.PTC_val4);
+			CalculatorUtils.calculateMedianForOne(listValuation,report.getId(),"PS");
+			response.setSalettm(RoundNumber.lamTron(report.getSalettm()));
+			response.setPs(RoundNumber.lamTronLan(report.getPs()));
+			response.setPsMedian(RoundNumber.lamTronLan(report.getPsMedian()));
+			list.add(response);
+		}
+		
+		return new ResponseEntity<>(list, HttpStatus.OK);
+	} 
+	
 	@GetMapping("/val5/{stock}")
 	public ResponseEntity<?> val5(@PathVariable String stock) {
 		List<Valuation> listValuation = new ArrayList<Valuation>();
@@ -543,6 +619,52 @@ public class PTCReportController {
                 })
                 .collect(Collectors.toList());
 		 return new ResponseEntity<>(list, HttpStatus.OK);
+	} 
+	
+	@GetMapping("/val6/{stock}")
+	public ResponseEntity<?> val6(@PathVariable String stock) {
+		List<Valuation> listValuation = new ArrayList<Valuation>();
+		
+		listValuation =  valuationRepository.findTopRankedDataByStockCode(stock, pageableValuation);
+
+		Collections.reverse(listValuation);
+		List<Val6Response> list = new ArrayList<Val6Response>();
+		for (int i=0;i< listValuation.size();i++) {
+			Valuation report = listValuation.get(i);
+			Val6Response response = new Val6Response();
+			response.setId(report.getId());
+			response.setTitle(Constants.PTC_val6);
+			CalculatorUtils.calculateMedianForOne(listValuation,report.getId(),"PE");
+			response.setNittm(RoundNumber.lamTron(report.getNittm()));
+			response.setPe(RoundNumber.lamTronLan(report.getPe()));
+			response.setPeMedian(RoundNumber.lamTronLan(report.getPeMedian()));
+			list.add(response);
+		}
+		
+		return new ResponseEntity<>(list, HttpStatus.OK);
+	} 
+	
+	@GetMapping("/val7/{stock}")
+	public ResponseEntity<?> val7(@PathVariable String stock) {
+		List<Valuation> listValuation = new ArrayList<Valuation>();
+		
+		listValuation =  valuationRepository.findTopRankedDataByStockCode(stock, pageableValuation);
+
+		Collections.reverse(listValuation);
+		List<Val7Response> list = new ArrayList<Val7Response>();
+		for (int i=0;i< listValuation.size();i++) {
+			Valuation report = listValuation.get(i);
+			Val7Response response = new Val7Response();
+			response.setId(report.getId());
+			response.setTitle(Constants.PTC_val7);
+			CalculatorUtils.calculateMedianForOne(listValuation,report.getId(),"evebitda");
+			response.setEbitdattm(RoundNumber.lamTron(report.getEbitdattm()));
+			response.setEvebitda(RoundNumber.lamTronLan(report.getEvebitda()));
+			response.setEvebitdaMedian(RoundNumber.lamTronLan(report.getEvebitdaMedian()));
+			list.add(response);
+		}
+		
+		return new ResponseEntity<>(list, HttpStatus.OK);
 	} 
 	
 	@GetMapping("/val8/{stock}")
