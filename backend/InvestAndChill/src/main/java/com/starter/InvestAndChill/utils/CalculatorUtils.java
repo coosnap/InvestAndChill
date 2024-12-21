@@ -70,37 +70,30 @@ public class CalculatorUtils {
 	
 	public static void calculateMedianForOne(List<Valuation> listValuation, ValuationKey key,String type) {
 		List<Double> listMedian = initListFull(listValuation, type);
-		
-		int stt;
-		List<Double> listTemp;
+		Collections.sort(listMedian);
 		Double trungVi;
+		int size = listMedian.size();
 		
-		for (int i = 0; i < listValuation.size() ; i++) {
-			if (listValuation.get(i).getId().equals(key)) {
-				stt = i;
-				listTemp = listMedian.subList(0, stt+1);
-				Collections.sort(listTemp);
-				
-				int size = listTemp.size();
-				if (size % 2 == 1) {
-					 trungVi =  listTemp.get(size / 2);
-		        } else {
-		            Double middle1 = listTemp.get(size / 2 - 1);
-		            Double middle2 = listTemp.get(size / 2);
-		            trungVi = (middle1 + middle2) / 2.0;
-		        }
-				if (type.equalsIgnoreCase("PE")) {
-					listValuation.get(i).setPeMedian(trungVi);
-				} else if (type.equalsIgnoreCase("evebitda")) {
-					listValuation.get(i).setEvebitdaMedian(trungVi);
-				} else if (type.equalsIgnoreCase("PB")) {
-					listValuation.get(i).setPbMedian(trungVi);
-				} else if (type.equalsIgnoreCase("PS")) {
-					listValuation.get(i).setPsMedian(trungVi);
-				}
-				
+		if (size % 2 == 1) {
+			trungVi = listMedian.get(size / 2);
+		} else {
+			Double middle1 = listMedian.get(size / 2 - 1);
+			Double middle2 = listMedian.get(size / 2);
+			trungVi = (middle1 + middle2) / 2.0;
+		}
+		
+		for (int i=0; i < listValuation.size() ; i++) {
+			if (type.equalsIgnoreCase("PE")) {
+				listValuation.get(i).setPeMedian(trungVi);
+			} else if (type.equalsIgnoreCase("evebitda")) {
+				listValuation.get(i).setEvebitdaMedian(trungVi);
+			} else if (type.equalsIgnoreCase("PB")) {
+				listValuation.get(i).setPbMedian(trungVi);
+			} else if (type.equalsIgnoreCase("PS")) {
+				listValuation.get(i).setPsMedian(trungVi);
 			}
 		}
+		
 		
 		
 		
