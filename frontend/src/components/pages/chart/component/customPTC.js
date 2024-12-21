@@ -653,3 +653,73 @@ export let customCFPTC4 = {
     right: { type: 'bil', piecewise: false },
   },
 };
+
+export let customValPTC3 = {
+  type: 'val3',
+  year: false,
+  series: [
+    {
+      type: 'bar',
+      label: 'Doanh thu thuần TTM',
+      dataKey: 'salettm',
+      yAxisId: 'leftAxis',
+    },
+    {
+      type: 'line',
+      label: 'Vốn hóa',
+      dataKey: 'marketcap',
+      curve: 'linear',
+      yAxisId: 'rightAxis',
+    },
+  ],
+  yAxis: {
+    left: { type: 'bil', piecewise: false },
+    right: { type: 'bil', piecewise: false, dash: true },
+  },
+};
+export let customValPTC5 = {
+  type: 'val5',
+  year: false,
+  series: [
+    {
+      type: 'bar',
+      label: 'Lợi nhuận ròng TTM',
+      dataKey: 'nittm',
+      yAxisId: 'leftAxis',
+    },
+    {
+      type: 'line',
+      label: 'Vốn hóa',
+      dataKey: 'marketcap',
+      curve: 'linear',
+      yAxisId: 'rightAxis',
+    },
+  ],
+  yAxis: {
+    left: { type: 'bil', piecewise: false },
+    right: { type: 'bil', piecewise: false },
+  },
+};
+export let customValPTC8 = {
+  type: 'val8',
+  year: false,
+  series: [
+    {
+      type: 'bar',
+      label: 'Vốn chủ sở hữu',
+      dataKey: 'capital',
+      yAxisId: 'leftAxis',
+    },
+    {
+      type: 'line',
+      label: 'Vốn hóa',
+      dataKey: 'marketcap',
+      curve: 'linear',
+      yAxisId: 'rightAxis',
+    },
+  ],
+  yAxis: {
+    left: { type: 'bil', piecewise: false },
+    right: { type: 'bil', piecewise: false },
+  },
+};

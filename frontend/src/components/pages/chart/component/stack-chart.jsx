@@ -14,7 +14,7 @@ import { ResponsiveChartContainer } from '@mui/x-charts/ResponsiveChartContainer
 export default function NoStackChart(data) {
   function extend(value, step) {
     if (Number(value) && value <= 0) {
-      return step * Math.floor(value / step);
+      return step * Math.ceil(value / step) - 20;
     }
     if (Number(value) && value > 0) {
       return step * Math.ceil(value / step);
@@ -79,6 +79,11 @@ export default function NoStackChart(data) {
           top: 80,
           bottom: 35,
         }}
+        sx={{
+          '.MuiLineElement-series-auto-generated-id-1': {
+            strokeDasharray: data.data.yAxis.right.dash ? '5 5' : null,
+          },
+        }}
       >
         <ScatterPlot />
         <BarPlot />
@@ -105,7 +110,7 @@ export default function NoStackChart(data) {
             label="%"
             sx={{
               '.MuiChartsAxis-label': {
-                transform: 'translate(-9px, -158px)',
+                transform: 'translate(-9px, -167px)',
                 writingMode: 'vertical-rl',
               },
             }}
@@ -120,7 +125,10 @@ export default function NoStackChart(data) {
             disableTicks
             sx={{
               '.MuiChartsAxis-label': {
-                transform: 'translate(-31px, -154px)',
+                transform: 'translate(-3px, -186px) scale(-1, 1)',
+                '& text': {
+                  transform: 'translate(0px, 1px) rotate3d(0, 28, 0, 197.5deg)',
+                },
               },
             }}
           />
@@ -146,7 +154,14 @@ export default function NoStackChart(data) {
             label="tỷ đồng"
             disableLine
             disableTicks
-            sx={{ '.MuiChartsAxis-label': { transform: 'translate(31px, -139px)' } }}
+            sx={{
+              '.MuiChartsAxis-label': {
+                transform: 'translate(5px, -186px) scale(-1, 1)',
+                '& text': {
+                  transform: 'translate(0px, 1px) rotate3d(0, 28, 0, 197.5deg)',
+                },
+              },
+            }}
           />
         )}
         {data.data.yAxis.right.type == 'per' && (
@@ -158,7 +173,7 @@ export default function NoStackChart(data) {
             label="%"
             sx={{
               '.MuiChartsAxis-label': {
-                transform: 'translate(8px, -159px)',
+                transform: 'translate(8px, -167px)',
                 writingMode: 'vertical-rl',
               },
             }}
@@ -173,18 +188,18 @@ export default function NoStackChart(data) {
             disableTicks
             sx={{
               '.MuiChartsAxis-label': {
-                transform: 'translate(5px, -154px)',
+                transform: 'translate(5px, -164px)',
               },
             }}
           />
         )}
         <ChartsLegend
-          padding={{ bottom: 0, top: 10 }}
+          padding={{ bottom: 0, top: 10, left: 35, right: 35 }}
           labelStyle={{ fontSize: 12 }}
           slotProps={{
             legend: {
-              itemMarkHeight: 15,
-              itemMarkWidth: 15,
+              itemMarkHeight: 10,
+              itemMarkWidth: 10,
               markGap: 2,
               itemGap: 8,
             },

@@ -57,6 +57,9 @@ import {
   customPerfPTC6,
   customPerfPTC7,
   customPerfPTC8,
+  customValPTC3,
+  customValPTC5,
+  customValPTC8,
 } from './customPTC';
 import StackChart from './stack-chart';
 
@@ -86,6 +89,32 @@ export const TabChart = () => {
     cf3: true,
     cf3adjust: true,
     cf4: true,
+  });
+  const [checkedCK, setCheckedCK] = useState({
+    chart: true,
+    perf1: true,
+    perf2: true,
+    perf3: true,
+    bal1: true,
+    bal2: true,
+    bal3: true,
+    bal4: true,
+    bal5: true,
+  });
+  const [checkedBank, setCheckedBank] = useState({
+    chart: true,
+    perf1: true,
+    perf2: true,
+    perf3: true,
+    perf4: true,
+    bal1: true,
+    bal2: true,
+    bal3: true,
+    bal4: true,
+    bal5: true,
+    bal6: true,
+    bal7: true,
+    bal8: true,
   });
 
   const [searchParams, setSearchParams] = useSearchParams();
@@ -193,46 +222,44 @@ export const TabChart = () => {
   }));
 
   const IOSSwitchSum = styled((props) => <Switch {...props} />)(() => ({
-    width: 74,
-    height: 25,
+    width: 89,
+    height: 30,
     padding: 2,
     '& .MuiSwitch-switchBase': {
       padding: 0,
       margin: 0,
-      transform: 'translate(2.5px, 0)',
+      transform: 'translate(2px, 0)',
       '&.Mui-checked': {
-        transform: 'translate(37.5px, 0)',
+        transform: 'translate(44px, 0)',
       },
     },
     '& .MuiSwitch-thumb': {
-      width: 36,
-      height: 25,
+      width: 43,
+      height: 30,
       borderRadius: '4px',
       backgroundColor: 'red !important',
-      border: '2px solid #FFF4C7',
+      // border: '2px solid #FFF4C7',
     },
     '& .MuiSwitch-track::before': {
       content: `'Năm'`,
       position: 'absolute',
-      top: '1px',
-      left: '6px',
+      top: '4px',
+      left: '8px',
       color: 'red',
-      fontSize: 13,
+      fontSize: 14,
       fontWeight: 500,
     },
     '& .MuiSwitch-track::after': {
       content: `'Quý'`,
       position: 'absolute',
-      top: '1px',
-      right: '8px',
+      top: '4px',
+      right: '10px',
       color: 'red',
-      fontSize: 13,
+      fontSize: 14,
       fontWeight: 500,
     },
-    '& .MuiButtonBase-root.MuiSwitch-switchBase': {
-      color: 'gray',
-    },
     '& .MuiSwitch-track': {
+      opacity: '0.8 !important',
       border: '2px solid red',
       backgroundColor: 'transparent !important',
     },
@@ -294,6 +321,7 @@ export const TabChart = () => {
             let perf1, perf2, perf3, perf4, perf5, perf6, perf7, perf8;
             let bal1, bal2, bal3, bal4, bal5, bal6;
             let cf1, cf2, cf3, cf4;
+            let val3, val5, val8;
             try {
               perf1 = await mapDataChart(customPerfPTC1, type.type);
             } catch (error) {
@@ -387,6 +415,22 @@ export const TabChart = () => {
               console.log('error', error);
             }
 
+            try {
+              val3 = await mapDataChart(customValPTC3, type.type);
+            } catch (error) {
+              console.log('error', error);
+            }
+            try {
+              val5 = await mapDataChart(customValPTC5, type.type);
+            } catch (error) {
+              console.log('error', error);
+            }
+            try {
+              val8 = await mapDataChart(customValPTC8, type.type);
+            } catch (error) {
+              console.log('error', error);
+            }
+
             if (
               perf1 ||
               perf2 ||
@@ -405,27 +449,33 @@ export const TabChart = () => {
               cf1 ||
               cf2 ||
               cf3 ||
-              cf4
+              cf4 ||
+              val3 ||
+              val5 ||
+              val8
             ) {
               setDataChart({
-                perf1: perf1,
-                perf2: perf2,
-                perf3: perf3,
-                perf4: perf4,
-                perf5: perf5,
-                perf6: perf6,
-                perf7: perf7,
-                perf8: perf8,
-                bal1: bal1,
-                bal2: bal2,
-                bal3: bal3,
-                bal4: bal4,
-                bal5: bal5,
-                bal6: bal6,
-                cf1: cf1,
-                cf2: cf2,
-                cf3: cf3,
-                cf4: cf4,
+                perf1,
+                perf2,
+                perf3,
+                perf4,
+                perf5,
+                perf6,
+                perf7,
+                perf8,
+                bal1,
+                bal2,
+                bal3,
+                bal4,
+                bal5,
+                bal6,
+                cf1,
+                cf2,
+                cf3,
+                cf4,
+                val3,
+                val5,
+                val8,
               });
             }
             setValue(0);
@@ -962,6 +1012,130 @@ export const TabChart = () => {
         setChecked((prev) => ({ ...prev, cf4: !prev.cf4 }));
       }
     }
+    if (tabType === 'ChungKhoan') {
+      if (typeChart === 'perf1') {
+        customPerfCK1.year = checkedCK.perf1;
+        let newPerf = await mapDataChart(customPerfCK1, tabType);
+        setDataChart((prev) => ({ ...prev, perf1: newPerf }));
+        setCheckedCK((prev) => ({ ...prev, perf1: !prev.perf1 }));
+      }
+      if (typeChart === 'perf2') {
+        customPerfCK2.year = checkedCK.perf2;
+        let newPerf = await mapDataChart(customPerfCK2, tabType);
+        setDataChart((prev) => ({ ...prev, perf2: newPerf }));
+        setCheckedCK((prev) => ({ ...prev, perf2: !prev.perf2 }));
+      }
+      if (typeChart === 'perf3') {
+        customPerfCK3.year = checkedCK.perf3;
+        let newPerf = await mapDataChart(customPerfCK3, tabType);
+        setDataChart((prev) => ({ ...prev, perf3: newPerf }));
+        setCheckedCK((prev) => ({ ...prev, perf3: !prev.perf3 }));
+      }
+      if (typeChart === 'bal1') {
+        customBalCK1.year = checkedCK.bal1;
+        let newPerf = await mapDataChart(customBalCK1, tabType);
+        setDataChart((prev) => ({ ...prev, bal1: newPerf }));
+        setCheckedCK((prev) => ({ ...prev, bal1: !prev.bal1 }));
+      }
+      if (typeChart === 'bal2') {
+        customBalCK2.year = checkedCK.bal2;
+        let newPerf = await mapDataChart(customBalCK2, tabType);
+        setDataChart((prev) => ({ ...prev, bal2: newPerf }));
+        setCheckedCK((prev) => ({ ...prev, bal2: !prev.bal2 }));
+      }
+      if (typeChart === 'bal3') {
+        customBalCK3.year = checkedCK.bal3;
+        let newPerf = await mapDataChart(customBalCK3, tabType);
+        setDataChart((prev) => ({ ...prev, bal3: newPerf }));
+        setCheckedCK((prev) => ({ ...prev, bal3: !prev.bal3 }));
+      }
+      if (typeChart === 'bal4') {
+        customBalCK4.year = checkedCK.bal4;
+        let newPerf = await mapDataChart(customBalCK4, tabType);
+        setDataChart((prev) => ({ ...prev, bal4: newPerf }));
+        setCheckedCK((prev) => ({ ...prev, bal4: !prev.bal4 }));
+      }
+      if (typeChart === 'bal5') {
+        customBalCK5.year = checkedCK.bal5;
+        let newPerf = await mapDataChart(customBalCK5, tabType);
+        setDataChart((prev) => ({ ...prev, bal5: newPerf }));
+        setCheckedCK((prev) => ({ ...prev, bal5: !prev.bal5 }));
+      }
+    }
+    if (tabType === 'NganHang') {
+      if (typeChart === 'perf1') {
+        customNHPerf1.year = checkedBank.perf1;
+        let newPerf = await mapDataChart(customNHPerf1, tabType);
+        setDataChart((prev) => ({ ...prev, perf1: newPerf }));
+        setCheckedBank((prev) => ({ ...prev, perf1: !prev.perf1 }));
+      }
+      if (typeChart === 'perf2') {
+        customNHPerf2.year = checkedBank.perf2;
+        let newPerf = await mapDataChart(customNHPerf2, tabType);
+        setDataChart((prev) => ({ ...prev, perf2: newPerf }));
+        setCheckedBank((prev) => ({ ...prev, perf2: !prev.perf2 }));
+      }
+      if (typeChart === 'perf3') {
+        customNHPerf3.year = checkedBank.perf3;
+        let newPerf = await mapDataChart(customNHPerf3, tabType);
+        setDataChart((prev) => ({ ...prev, perf3: newPerf }));
+        setCheckedBank((prev) => ({ ...prev, perf3: !prev.perf3 }));
+      }
+      if (typeChart === 'perf4') {
+        customNHPerf4.year = checkedBank.perf4;
+        let newPerf = await mapDataChart(customNHPerf4, tabType);
+        setDataChart((prev) => ({ ...prev, perf4: newPerf }));
+        setCheckedBank((prev) => ({ ...prev, perf4: !prev.perf4 }));
+      }
+      if (typeChart === 'bal1') {
+        customNHBal1.year = checkedBank.bal1;
+        let newPerf = await mapDataChart(customNHBal1, tabType);
+        setDataChart((prev) => ({ ...prev, bal1: newPerf }));
+        setCheckedBank((prev) => ({ ...prev, bal1: !prev.bal1 }));
+      }
+      if (typeChart === 'bal2') {
+        customNHBal2.year = checkedBank.bal2;
+        let newPerf = await mapDataChart(customNHBal2, tabType);
+        setDataChart((prev) => ({ ...prev, bal2: newPerf }));
+        setCheckedBank((prev) => ({ ...prev, bal2: !prev.bal2 }));
+      }
+      if (typeChart === 'bal3') {
+        customNHBal3.year = checkedBank.bal3;
+        let newPerf = await mapDataChart(customNHBal3, tabType);
+        setDataChart((prev) => ({ ...prev, bal3: newPerf }));
+        setCheckedBank((prev) => ({ ...prev, bal3: !prev.bal3 }));
+      }
+      if (typeChart === 'bal4') {
+        customNHBal4.year = checkedBank.bal4;
+        let newPerf = await mapDataChart(customNHBal4, tabType);
+        setDataChart((prev) => ({ ...prev, bal4: newPerf }));
+        setCheckedBank((prev) => ({ ...prev, bal4: !prev.bal4 }));
+      }
+      if (typeChart === 'bal5') {
+        customNHBal5.year = checkedBank.bal5;
+        let newPerf = await mapDataChart(customNHBal5, tabType);
+        setDataChart((prev) => ({ ...prev, bal5: newPerf }));
+        setCheckedBank((prev) => ({ ...prev, bal5: !prev.bal5 }));
+      }
+      if (typeChart === 'bal6') {
+        customNHBal6.year = checkedBank.bal6;
+        let newPerf = await mapDataChart(customNHBal6, tabType);
+        setDataChart((prev) => ({ ...prev, bal6: newPerf }));
+        setCheckedBank((prev) => ({ ...prev, bal6: !prev.bal6 }));
+      }
+      if (typeChart === 'bal7') {
+        customNHBal7.year = checkedBank.bal7;
+        let newPerf = await mapDataChart(customNHBal7, tabType);
+        setDataChart((prev) => ({ ...prev, bal7: newPerf }));
+        setCheckedBank((prev) => ({ ...prev, bal7: !prev.bal7 }));
+      }
+      if (typeChart === 'bal8') {
+        customNHBal8.year = checkedBank.bal8;
+        let newPerf = await mapDataChart(customNHBal8, tabType);
+        setDataChart((prev) => ({ ...prev, bal8: newPerf }));
+        setCheckedBank((prev) => ({ ...prev, bal8: !prev.bal8 }));
+      }
+    }
   };
 
   useEffect(() => {
@@ -1136,6 +1310,15 @@ export const TabChart = () => {
               </div>
             </div>
           </CustomTabPanel>
+          <CustomTabPanel value={value} index={4}>
+            <div className="flex flex-col gap-8">
+              <div className="flex gap-8">
+                {ChartItem(dataChart?.val3, checked?.val3, 'val3')}
+                {ChartItem(dataChart?.val5, checked?.val5, 'val5')}
+              </div>
+              <div className="flex gap-8">{ChartItem(dataChart?.val8, checked?.val8, 'val8')}</div>
+            </div>
+          </CustomTabPanel>
         </>
       )}
       {tabType === 'ChungKhoan' && (
@@ -1144,16 +1327,14 @@ export const TabChart = () => {
             {codeValue && (
               <div className="flex flex-col gap-8">
                 <div className="flex gap-8">
-                  {ChartItem(dataChart?.perf1, checked?.perf1, 'perf1', true)}
-                  {ChartItem(dataChart?.perf2, checked?.perf2, 'perf2', true)}
+                  {ChartItem(dataChart?.perf1, checkedCK?.perf1, 'perf1', true)}
+                  {ChartItem(dataChart?.perf2, checkedCK?.perf2, 'perf2', true)}
                 </div>
                 <div className="flex gap-8">
-                  {ChartItem(dataChart?.perf3, checked?.perf3, 'perf3', true)}
-                  {ChartItem(dataChart?.perf4, checked?.perf4, 'perf4')}
+                  {ChartItem(dataChart?.perf3, checkedCK?.perf3, 'perf3', true)}
+                  {ChartItem(dataChart?.perf4, null, 'perf4')}
                 </div>
-                <div className="flex gap-8">
-                  {ChartItem(dataChart?.perf5, checked?.perf5, 'perf5')}
-                </div>
+                <div className="flex gap-8">{ChartItem(dataChart?.perf5, null, 'perf5')}</div>
               </div>
             )}
           </CustomTabPanel>
@@ -1161,15 +1342,15 @@ export const TabChart = () => {
             {codeValue && (
               <div className="flex flex-col gap-8">
                 <div className="flex gap-8">
-                  {ChartItem(dataChart?.bal1, checked?.bal1, 'bal1', true)}
-                  {ChartItem(dataChart?.bal2, checked?.bal2, 'bal2', true)}
+                  {ChartItem(dataChart?.bal1, checkedCK?.bal1, 'bal1', true)}
+                  {ChartItem(dataChart?.bal2, checkedCK?.bal2, 'bal2', true)}
                 </div>
                 <div className="flex gap-8">
-                  {ChartItem(dataChart?.bal3, checked?.bal3, 'bal3', true)}
-                  {ChartItem(dataChart?.bal4, checked?.bal4, 'bal4', true)}
+                  {ChartItem(dataChart?.bal3, checkedCK?.bal3, 'bal3', true)}
+                  {ChartItem(dataChart?.bal4, checkedCK?.bal4, 'bal4', true)}
                 </div>
                 <div className="flex gap-8">
-                  {ChartItem(dataChart?.bal5, checked?.bal5, 'bal5', true)}
+                  {ChartItem(dataChart?.bal5, checkedCK?.bal5, 'bal5', true)}
                 </div>
               </div>
             )}
@@ -1182,15 +1363,12 @@ export const TabChart = () => {
             {codeValue && (
               <div className="flex flex-col gap-8">
                 <div className="flex gap-8">
-                  {ChartItem(dataChart?.perf1, checked?.perf1, 'perf1', true)}
-                  {ChartItem(dataChart?.perf2, checked?.perf2, 'perf2', true)}
+                  {ChartItem(dataChart?.perf1, checkedBank?.perf1, 'perf1', true)}
+                  {ChartItem(dataChart?.perf2, checkedBank?.perf2, 'perf2', true)}
                 </div>
                 <div className="flex gap-8">
-                  {ChartItem(dataChart?.perf3, checked?.perf3, 'perf3', true)}
-                  {ChartItem(dataChart?.perf4, checked?.perf4, 'perf4')}
-                </div>
-                <div className="flex gap-8">
-                  {ChartItem(dataChart?.perf5, checked?.perf5, 'perf5')}
+                  {ChartItem(dataChart?.perf3, checkedBank?.perf3, 'perf3', true)}
+                  {ChartItem(dataChart?.perf4, checkedBank?.perf4, 'perf4', true)}
                 </div>
               </div>
             )}
@@ -1199,20 +1377,20 @@ export const TabChart = () => {
             {codeValue && (
               <div className="flex flex-col gap-8">
                 <div className="flex gap-8">
-                  {ChartItem(dataChart?.bal1, checked?.bal1, 'bal1', true)}
-                  {ChartItem(dataChart?.bal2, checked?.bal2, 'bal2', true)}
+                  {ChartItem(dataChart?.bal1, checkedBank?.bal1, 'bal1', true)}
+                  {ChartItem(dataChart?.bal2, checkedBank?.bal2, 'bal2', true)}
                 </div>
                 <div className="flex gap-8">
-                  {ChartItem(dataChart?.bal3, checked?.bal3, 'bal3', true)}
-                  {ChartItem(dataChart?.bal4, checked?.bal4, 'bal4')}
+                  {ChartItem(dataChart?.bal3, checkedBank?.bal3, 'bal3', true)}
+                  {ChartItem(dataChart?.bal4, checkedBank?.bal4, 'bal4', true)}
                 </div>
                 <div className="flex gap-8">
-                  {ChartItem(dataChart?.bal5, checked?.bal5, 'bal5')}
-                  {ChartItem(dataChart?.bal6, checked?.bal6, 'bal6')}
+                  {ChartItem(dataChart?.bal5, checkedBank?.bal5, 'bal5', true)}
+                  {ChartItem(dataChart?.bal6, checkedBank?.bal6, 'bal6', true)}
                 </div>
                 <div className="flex gap-8">
-                  {ChartItem(dataChart?.bal7, checked?.bal7, 'bal7')}
-                  {ChartItem(dataChart?.bal8, checked?.bal8, 'bal8')}
+                  {ChartItem(dataChart?.bal7, checkedBank?.bal7, 'bal7', true)}
+                  {ChartItem(dataChart?.bal8, checkedBank?.bal8, 'bal8', true)}
                 </div>
               </div>
             )}
@@ -1221,12 +1399,12 @@ export const TabChart = () => {
             {codeValue && (
               <div className="flex flex-col gap-8">
                 <div className="flex gap-8">
-                  {ChartItem(dataChart?.bal9, checked?.bal9, 'bal9', true)}
-                  {ChartItem(dataChart?.bal10, checked?.bal10, 'bal10', true)}
+                  {ChartItem(dataChart?.bal9, null, 'bal9')}
+                  {ChartItem(dataChart?.bal10, null, 'bal10')}
                 </div>
                 <div className="flex gap-8">
-                  {ChartItem(dataChart?.bal11, checked?.bal11, 'bal11', true)}
-                  {ChartItem(dataChart?.bal12, checked?.bal12, 'bal12', true)}
+                  {ChartItem(dataChart?.bal11, null, 'bal11')}
+                  {ChartItem(dataChart?.bal12, null, 'bal12')}
                 </div>
               </div>
             )}
