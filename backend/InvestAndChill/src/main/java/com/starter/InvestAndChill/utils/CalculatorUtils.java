@@ -68,8 +68,15 @@ public class CalculatorUtils {
 	
 	
 	
-	public static void calculateMedianForOne(List<Valuation> listValuation, ValuationKey key,String type) {
+	public static void calculateMedianForOne(List<Valuation> listValuation,String type) {
 		List<Double> listMedian = initListFull(listValuation, type);
+		
+		for (int i=0;i<listMedian.size();i++) {
+			if (listMedian.get(i) == null) {
+				return;
+			}
+		}
+		
 		Collections.sort(listMedian);
 		Double trungVi;
 		int size = listMedian.size();

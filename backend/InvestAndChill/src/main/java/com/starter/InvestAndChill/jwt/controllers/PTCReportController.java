@@ -517,14 +517,15 @@ public class PTCReportController {
 		listValuation =  valuationRepository.findTopRankedDataByStockCode(stock, pageableValuation);
 
 		Collections.reverse(listValuation);
+		CalculatorUtils.calculateMedianForOne(listValuation,"PE");
+		CalculatorUtils.calculateMedianForOne(listValuation,"evebitda");
 		List<Val1Response> list = new ArrayList<Val1Response>();
 		for (int i=0;i< listValuation.size();i++) {
 			Valuation report = listValuation.get(i);
 			Val1Response response = new Val1Response();
 			response.setId(report.getId());
 			response.setTitle(Constants.PTC_val1);
-			CalculatorUtils.calculateMedianForOne(listValuation,report.getId(),"PE");
-			CalculatorUtils.calculateMedianForOne(listValuation,report.getId(),"evebitda");
+			
 			response.setPe(RoundNumber.lamTronLan(report.getPe()));
 			response.setEvebitda(RoundNumber.lamTronLan(report.getEvebitda()));
 			response.setPeMedian(RoundNumber.lamTronLan(report.getPeMedian()));
@@ -542,13 +543,14 @@ public class PTCReportController {
 		listValuation =  valuationRepository.findTopRankedDataByStockCode(stock, pageableValuation);
 
 		Collections.reverse(listValuation);
+		CalculatorUtils.calculateMedianForOne(listValuation,"PB");
+		
 		List<Val2Response> list = new ArrayList<Val2Response>();
 		for (int i=0;i< listValuation.size();i++) {
 			Valuation report = listValuation.get(i);
 			Val2Response response = new Val2Response();
 			response.setId(report.getId());
 			response.setTitle(Constants.PTC_val2);
-			CalculatorUtils.calculateMedianForOne(listValuation,report.getId(),"PB");
 			response.setRoe(RoundNumber.lamTronPhanTram(report.getRoe()));
 			response.setPb(RoundNumber.lamTronLan(report.getPb()));
 			response.setPbMedian(RoundNumber.lamTronLan(report.getPbMedian()));
@@ -585,13 +587,14 @@ public class PTCReportController {
 		listValuation =  valuationRepository.findTopRankedDataByStockCode(stock, pageableValuation);
 
 		Collections.reverse(listValuation);
+		CalculatorUtils.calculateMedianForOne(listValuation,"PS");
+		
 		List<Val4Response> list = new ArrayList<Val4Response>();
 		for (int i=0;i< listValuation.size();i++) {
 			Valuation report = listValuation.get(i);
 			Val4Response response = new Val4Response();
 			response.setId(report.getId());
 			response.setTitle(Constants.PTC_val4);
-			CalculatorUtils.calculateMedianForOne(listValuation,report.getId(),"PS");
 			response.setSalettm(RoundNumber.lamTron(report.getSalettm()));
 			response.setPs(RoundNumber.lamTronLan(report.getPs()));
 			response.setPsMedian(RoundNumber.lamTronLan(report.getPsMedian()));
@@ -628,13 +631,14 @@ public class PTCReportController {
 		listValuation =  valuationRepository.findTopRankedDataByStockCode(stock, pageableValuation);
 
 		Collections.reverse(listValuation);
+		CalculatorUtils.calculateMedianForOne(listValuation,"PE");
+		
 		List<Val6Response> list = new ArrayList<Val6Response>();
 		for (int i=0;i< listValuation.size();i++) {
 			Valuation report = listValuation.get(i);
 			Val6Response response = new Val6Response();
 			response.setId(report.getId());
 			response.setTitle(Constants.PTC_val6);
-			CalculatorUtils.calculateMedianForOne(listValuation,report.getId(),"PE");
 			response.setNittm(RoundNumber.lamTron(report.getNittm()));
 			response.setPe(RoundNumber.lamTronLan(report.getPe()));
 			response.setPeMedian(RoundNumber.lamTronLan(report.getPeMedian()));
@@ -651,13 +655,15 @@ public class PTCReportController {
 		listValuation =  valuationRepository.findTopRankedDataByStockCode(stock, pageableValuation);
 
 		Collections.reverse(listValuation);
+		CalculatorUtils.calculateMedianForOne(listValuation,"evebitda");
+		
 		List<Val7Response> list = new ArrayList<Val7Response>();
 		for (int i=0;i< listValuation.size();i++) {
 			Valuation report = listValuation.get(i);
 			Val7Response response = new Val7Response();
 			response.setId(report.getId());
 			response.setTitle(Constants.PTC_val7);
-			CalculatorUtils.calculateMedianForOne(listValuation,report.getId(),"evebitda");
+			
 			response.setEbitdattm(RoundNumber.lamTron(report.getEbitdattm()));
 			response.setEvebitda(RoundNumber.lamTronLan(report.getEvebitda()));
 			response.setEvebitdaMedian(RoundNumber.lamTronLan(report.getEvebitdaMedian()));
