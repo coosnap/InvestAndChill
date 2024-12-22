@@ -12,33 +12,81 @@ import { AreaPlot, LineHighlightPlot, LinePlot } from '@mui/x-charts/LineChart';
 import { ResponsiveChartContainer } from '@mui/x-charts/ResponsiveChartContainer';
 
 export default function NoStackChart(data) {
-  function extend(value, type) {
-    if (type === 'min') {
-      console.log('value', value);
-      if (Number(value) && value < 0) {
-        console.log('value', value);
+  function extend(value, great, type, max) {
+    if (type === 'bil') {
+      if (value === 0) {
+        if (Math.ceil(Math.abs(max)).toString().length === 1) return value - Math.pow(10, 0);
+        if (Math.ceil(Math.abs(max)).toString().length === 2) return value - Math.pow(10, 1);
+        if (Math.ceil(Math.abs(max)).toString().length === 3) {
+          return value - Math.pow(10, 2) / 2;
+        }
+        if (Math.ceil(Math.abs(max)).toString().length === 4) {
+          return value - Math.pow(10, 3) / 3;
+        }
+        if (Math.ceil(Math.abs(max)).toString().length === 5) {
+          return value - Math.pow(10, 4) / 4;
+        }
+        if (Math.ceil(Math.abs(max)).toString().length === 6) {
+          return value - Math.pow(10, 5) / 5;
+        }
+      }
+      if (great === 'min') {
+        if (Number(value) && value < 0) {
+          if (Math.ceil(Math.abs(value)).toString().length === 1)
+            return value - Math.pow(10, 0) / 2;
+          if (Math.ceil(Math.abs(value)).toString().length === 2)
+            return value - Math.pow(10, 1) / 2;
+          if (Math.ceil(Math.abs(value)).toString().length === 3) {
+            return value - Math.pow(10, 2) / 2;
+          }
+          if (Math.ceil(Math.abs(value)).toString().length === 4) {
+            return value - Math.pow(10, 3) / 3;
+          }
+          if (Math.ceil(Math.abs(value)).toString().length === 5) {
+            return value - Math.pow(10, 4) / 4;
+          }
+          if (Math.ceil(Math.abs(value)).toString().length === 6) {
+            return value - Math.pow(10, 5) / 5;
+          }
+        } else if (Number(value) && value > 0) {
+          if (Math.ceil(Math.abs(value)).toString().length === 1) return value - Math.pow(10, 0);
+          if (Math.ceil(Math.abs(value)).toString().length === 2) return value - Math.pow(10, 1);
+          if (Math.ceil(Math.abs(value)).toString().length === 3)
+            return value - Math.pow(10, 2) / 2;
+          if (Math.ceil(Math.abs(value)).toString().length === 4)
+            return value - Math.pow(10, 3) / 3;
+          if (Math.ceil(Math.abs(value)).toString().length === 5)
+            return value - Math.pow(10, 4) / 4;
+          if (Math.ceil(Math.abs(value)).toString().length === 6)
+            return value - Math.pow(10, 5) / 5;
+        } else {
+          return value;
+        }
+      } else {
         if (Math.ceil(Math.abs(value)).toString().length === 1) return value - Math.pow(10, 0);
         if (Math.ceil(Math.abs(value)).toString().length === 2) return value - Math.pow(10, 1);
         if (Math.ceil(Math.abs(value)).toString().length === 3) return value - Math.pow(10, 2) / 2;
         if (Math.ceil(Math.abs(value)).toString().length === 4) return value - Math.pow(10, 3) / 3;
         if (Math.ceil(Math.abs(value)).toString().length === 5) return value - Math.pow(10, 4) / 4;
-        if (Math.ceil(Math.abs(value)).toString().length === 6) return value - Math.pow(10, 5) / 5;
-      } else if (Number(value) && value > 0) {
-        if (Math.ceil(Math.abs(value)).toString().length === 1) return value + Math.pow(10, 0);
-        if (Math.ceil(Math.abs(value)).toString().length === 2) return value + Math.pow(10, 1);
-        if (Math.ceil(Math.abs(value)).toString().length === 3) return value + Math.pow(10, 2) / 2;
-        if (Math.ceil(Math.abs(value)).toString().length === 4) return value + Math.pow(10, 3) / 3;
-        if (Math.ceil(Math.abs(value)).toString().length === 5) return value + Math.pow(10, 4) / 4;
-        if (Math.ceil(Math.abs(value)).toString().length === 6) return value + Math.pow(10, 5) / 5;
-      } else {
-        return value;
       }
     } else {
-      if (Math.ceil(Math.abs(value)).toString().length === 1) return value + Math.pow(10, 0);
-      if (Math.ceil(Math.abs(value)).toString().length === 2) return value + Math.pow(10, 1);
-      if (Math.ceil(Math.abs(value)).toString().length === 3) return value + Math.pow(10, 2) / 2;
-      if (Math.ceil(Math.abs(value)).toString().length === 4) return value + Math.pow(10, 3) / 3;
-      if (Math.ceil(Math.abs(value)).toString().length === 5) return value + Math.pow(10, 4) / 4;
+      if (value === 0) {
+        if (great === 'min') {
+          if (Math.ceil(Math.abs(max)).toString().length === 1) return value - 0.5;
+          if (Math.ceil(Math.abs(max)).toString().length === 2) return value - 5;
+          if (Math.ceil(Math.abs(max)).toString().length === 3) return value - 10;
+        } else {
+          return value - 0.5;
+        }
+      } else {
+        if (great === 'min') {
+          if (Math.ceil(Math.abs(max)).toString().length === 1) return value - 0.5;
+          if (Math.ceil(Math.abs(max)).toString().length === 2) return value - 5;
+          if (Math.ceil(Math.abs(max)).toString().length === 3) return value - 10;
+        } else {
+          return value - 0.5;
+        }
+      }
     }
   }
 
@@ -61,13 +109,13 @@ export default function NoStackChart(data) {
                 domainLimit:
                   data.data.yAxis.left.type === 'bil'
                     ? (min, max) => ({
-                        min: extend(min, 'min'),
-                        max: extend(max, 'max'),
+                        min: extend(min, 'min', 'bil', max),
+                        max: extend(max, 'max', 'bil'),
                       })
-                    : {
-                        id: 'rightAxis',
-                        domainLimit: 'nice',
-                      },
+                    : (min, max) => ({
+                        min: extend(min, 'min', 'other', max),
+                        max: extend(max, 'max', 'other'),
+                      }),
               }
             : {
                 id: 'leftAxis',
@@ -79,13 +127,13 @@ export default function NoStackChart(data) {
                 domainLimit:
                   data.data.yAxis.right.type === 'bil'
                     ? (min, max) => ({
-                        min: extend(min, 'min'),
-                        max: extend(max, 'max'),
+                        min: extend(min, 'min', 'bil', max),
+                        max: extend(max, 'max', 'bil'),
                       })
-                    : {
-                        id: 'rightAxis',
-                        domainLimit: 'nice',
-                      },
+                    : (min, max) => ({
+                        min: extend(min, 'min', 'other', max),
+                        max: extend(max, 'max', 'other'),
+                      }),
               }
             : {
                 id: 'rightAxis',
@@ -96,7 +144,7 @@ export default function NoStackChart(data) {
         margin={{
           left: data.data.yAxis.left.type == 'per' ? 50 : 70,
           right: data.data.yAxis.right.type == 'bil' ? 70 : 50,
-          top: 80,
+          top: 130,
           bottom: 35,
         }}
         sx={{
@@ -162,7 +210,7 @@ export default function NoStackChart(data) {
             disableTicks
             sx={{
               '.MuiChartsAxis-label': {
-                transform: 'translate(-24px, -139px)',
+                transform: 'translate(-24px, -164px)',
               },
             }}
           />

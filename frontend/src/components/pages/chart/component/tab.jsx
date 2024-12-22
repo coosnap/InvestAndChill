@@ -57,11 +57,13 @@ import {
   customPerfPTC6,
   customPerfPTC7,
   customPerfPTC8,
+  customValPTC1,
   customValPTC2,
   customValPTC3,
   customValPTC4,
   customValPTC5,
   customValPTC6,
+  customValPTC7,
   customValPTC8,
 } from './customPTC';
 import StackChart from './stack-chart';
@@ -324,7 +326,7 @@ export const TabChart = () => {
             let perf1, perf2, perf3, perf4, perf5, perf6, perf7, perf8;
             let bal1, bal2, bal3, bal4, bal5, bal6;
             let cf1, cf2, cf3, cf4;
-            let val2, val3, val4, val5, val6, val8;
+            let val1, val2, val3, val4, val5, val6, val7, val8;
             try {
               perf1 = await mapDataChart(customPerfPTC1, type.type);
             } catch (error) {
@@ -419,6 +421,11 @@ export const TabChart = () => {
             }
 
             try {
+              val1 = await mapDataChart(customValPTC1, type.type);
+            } catch (error) {
+              console.log('error', error);
+            }
+            try {
               val2 = await mapDataChart(customValPTC2, type.type);
             } catch (error) {
               console.log('error', error);
@@ -440,6 +447,11 @@ export const TabChart = () => {
             }
             try {
               val6 = await mapDataChart(customValPTC6, type.type);
+            } catch (error) {
+              console.log('error', error);
+            }
+            try {
+              val7 = await mapDataChart(customValPTC7, type.type);
             } catch (error) {
               console.log('error', error);
             }
@@ -468,11 +480,13 @@ export const TabChart = () => {
               cf2 ||
               cf3 ||
               cf4 ||
+              val1 ||
               val2 ||
               val3 ||
               val4 ||
               val5 ||
               val6 ||
+              val7 ||
               val8
             ) {
               setDataChart({
@@ -494,11 +508,13 @@ export const TabChart = () => {
                 cf2,
                 cf3,
                 cf4,
+                val1,
                 val2,
                 val3,
                 val4,
                 val5,
                 val6,
+                val7,
                 val8,
               });
             }
@@ -628,6 +644,232 @@ export const TabChart = () => {
       setShow(true);
     } else {
       setShow(false);
+    }
+  };
+
+  const handleToggleSum = async (typeChart) => {
+    if (tabType === 'PTC') {
+      setChecked((prev) => ({ ...prev, chart: !prev.chart }));
+      try {
+        customPerfPTC1.year = checked.perf1;
+        let newPerf1 = await mapDataChart(customPerfPTC1, tabType);
+        setDataChart((prev) => ({ ...prev, perf1: newPerf1 }));
+        setChecked((prev) => ({ ...prev, perf1: !prev.perf1 }));
+      } catch (error) {
+        console.log(error);
+      }
+      try {
+        customPerfPTC2.year = checked.perf2;
+        let newPerf2 = await mapDataChart(customPerfPTC2, tabType);
+        setDataChart((prev) => ({ ...prev, perf2: newPerf2 }));
+        setChecked((prev) => ({ ...prev, perf2: !prev.perf2 }));
+      } catch (error) {
+        console.log(error);
+      }
+      try {
+        customPerfPTC7.year = checked.perf7;
+        let newPerf7 = await mapDataChart(customPerfPTC7, tabType);
+        setDataChart((prev) => ({ ...prev, perf7: newPerf7 }));
+        setChecked((prev) => ({ ...prev, perf7: !prev.perf7 }));
+      } catch (error) {
+        console.log(error);
+      }
+      try {
+        customBalPTC1.year = checked.bal1;
+        let newBal1 = await mapDataChart(customBalPTC1, tabType);
+        setDataChart((prev) => ({ ...prev, bal1: newBal1 }));
+        setChecked((prev) => ({ ...prev, bal1: !prev.bal1 }));
+      } catch (error) {
+        console.log(error);
+      }
+      try {
+        customBalPTC2.year = checked.bal2;
+        let newBal2 = await mapDataChart(customBalPTC2, tabType);
+        setDataChart((prev) => ({ ...prev, bal2: newBal2 }));
+        setChecked((prev) => ({ ...prev, bal2: !prev.bal2 }));
+      } catch (error) {
+        console.log(error);
+      }
+      try {
+        customBalPTC3.year = checked.bal3;
+        let newBal3 = await mapDataChart(customBalPTC3, tabType);
+        setDataChart((prev) => ({ ...prev, bal3: newBal3 }));
+        setChecked((prev) => ({ ...prev, bal3: !prev.bal3 }));
+      } catch (error) {
+        console.log(error);
+      }
+      try {
+        customBalPTC4.year = checked.bal4;
+        let newBal4 = await mapDataChart(customBalPTC4, tabType);
+        setDataChart((prev) => ({ ...prev, bal4: newBal4 }));
+        setChecked((prev) => ({ ...prev, bal4: !prev.bal4 }));
+      } catch (error) {
+        console.log(error);
+      }
+      try {
+        customBalPTC6.year = checked.bal6;
+        let newBal6 = await mapDataChart(customBalPTC6, tabType);
+        setDataChart((prev) => ({ ...prev, bal6: newBal6 }));
+        setChecked((prev) => ({ ...prev, bal6: !prev.bal6 }));
+      } catch (error) {
+        console.log(error);
+      }
+      try {
+        customCFPTC1.year = checked.cf1;
+        let newCf1 = await mapDataChart(customCFPTC1, tabType);
+        setDataChart((prev) => ({ ...prev, cf1: newCf1 }));
+        setChecked((prev) => ({ ...prev, cf1: !prev.cf1 }));
+      } catch (error) {
+        console.log(error);
+      }
+      try {
+        customCFPTC2.year = checked.cf2;
+        let newCf2 = await mapDataChart(customCFPTC2, tabType);
+        setDataChart((prev) => ({ ...prev, cf2: newCf2 }));
+        setChecked((prev) => ({ ...prev, cf2: !prev.cf2 }));
+      } catch (error) {
+        console.log(error);
+      }
+      try {
+        customCFPTC3.year = checked.cf3;
+        let newCf3 = await mapDataChart(customCFPTC3, tabType);
+        setDataChart((prev) => ({ ...prev, cf3: newCf3 }));
+        setChecked((prev) => ({ ...prev, cf3: !prev.cf3 }));
+      } catch (error) {
+        console.log(error);
+      }
+      try {
+        customCFPTC4.year = checked.cf4;
+        let newCf4 = await mapDataChart(customCFPTC4, tabType);
+        setDataChart((prev) => ({ ...prev, cf4: newCf4 }));
+        setChecked((prev) => ({ ...prev, cf4: !prev.cf4 }));
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    if (tabType === 'ChungKhoan') {
+      if (typeChart === 'perf1') {
+        customPerfCK1.year = checkedCK.perf1;
+        let newPerf = await mapDataChart(customPerfCK1, tabType);
+        setDataChart((prev) => ({ ...prev, perf1: newPerf }));
+        setCheckedCK((prev) => ({ ...prev, perf1: !prev.perf1 }));
+      }
+      if (typeChart === 'perf2') {
+        customPerfCK2.year = checkedCK.perf2;
+        let newPerf = await mapDataChart(customPerfCK2, tabType);
+        setDataChart((prev) => ({ ...prev, perf2: newPerf }));
+        setCheckedCK((prev) => ({ ...prev, perf2: !prev.perf2 }));
+      }
+      if (typeChart === 'perf3') {
+        customPerfCK3.year = checkedCK.perf3;
+        let newPerf = await mapDataChart(customPerfCK3, tabType);
+        setDataChart((prev) => ({ ...prev, perf3: newPerf }));
+        setCheckedCK((prev) => ({ ...prev, perf3: !prev.perf3 }));
+      }
+      if (typeChart === 'bal1') {
+        customBalCK1.year = checkedCK.bal1;
+        let newPerf = await mapDataChart(customBalCK1, tabType);
+        setDataChart((prev) => ({ ...prev, bal1: newPerf }));
+        setCheckedCK((prev) => ({ ...prev, bal1: !prev.bal1 }));
+      }
+      if (typeChart === 'bal2') {
+        customBalCK2.year = checkedCK.bal2;
+        let newPerf = await mapDataChart(customBalCK2, tabType);
+        setDataChart((prev) => ({ ...prev, bal2: newPerf }));
+        setCheckedCK((prev) => ({ ...prev, bal2: !prev.bal2 }));
+      }
+      if (typeChart === 'bal3') {
+        customBalCK3.year = checkedCK.bal3;
+        let newPerf = await mapDataChart(customBalCK3, tabType);
+        setDataChart((prev) => ({ ...prev, bal3: newPerf }));
+        setCheckedCK((prev) => ({ ...prev, bal3: !prev.bal3 }));
+      }
+      if (typeChart === 'bal4') {
+        customBalCK4.year = checkedCK.bal4;
+        let newPerf = await mapDataChart(customBalCK4, tabType);
+        setDataChart((prev) => ({ ...prev, bal4: newPerf }));
+        setCheckedCK((prev) => ({ ...prev, bal4: !prev.bal4 }));
+      }
+      if (typeChart === 'bal5') {
+        customBalCK5.year = checkedCK.bal5;
+        let newPerf = await mapDataChart(customBalCK5, tabType);
+        setDataChart((prev) => ({ ...prev, bal5: newPerf }));
+        setCheckedCK((prev) => ({ ...prev, bal5: !prev.bal5 }));
+      }
+    }
+    if (tabType === 'NganHang') {
+      if (typeChart === 'perf1') {
+        customNHPerf1.year = checkedBank.perf1;
+        let newPerf = await mapDataChart(customNHPerf1, tabType);
+        setDataChart((prev) => ({ ...prev, perf1: newPerf }));
+        setCheckedBank((prev) => ({ ...prev, perf1: !prev.perf1 }));
+      }
+      if (typeChart === 'perf2') {
+        customNHPerf2.year = checkedBank.perf2;
+        let newPerf = await mapDataChart(customNHPerf2, tabType);
+        setDataChart((prev) => ({ ...prev, perf2: newPerf }));
+        setCheckedBank((prev) => ({ ...prev, perf2: !prev.perf2 }));
+      }
+      if (typeChart === 'perf3') {
+        customNHPerf3.year = checkedBank.perf3;
+        let newPerf = await mapDataChart(customNHPerf3, tabType);
+        setDataChart((prev) => ({ ...prev, perf3: newPerf }));
+        setCheckedBank((prev) => ({ ...prev, perf3: !prev.perf3 }));
+      }
+      if (typeChart === 'perf4') {
+        customNHPerf4.year = checkedBank.perf4;
+        let newPerf = await mapDataChart(customNHPerf4, tabType);
+        setDataChart((prev) => ({ ...prev, perf4: newPerf }));
+        setCheckedBank((prev) => ({ ...prev, perf4: !prev.perf4 }));
+      }
+      if (typeChart === 'bal1') {
+        customNHBal1.year = checkedBank.bal1;
+        let newPerf = await mapDataChart(customNHBal1, tabType);
+        setDataChart((prev) => ({ ...prev, bal1: newPerf }));
+        setCheckedBank((prev) => ({ ...prev, bal1: !prev.bal1 }));
+      }
+      if (typeChart === 'bal2') {
+        customNHBal2.year = checkedBank.bal2;
+        let newPerf = await mapDataChart(customNHBal2, tabType);
+        setDataChart((prev) => ({ ...prev, bal2: newPerf }));
+        setCheckedBank((prev) => ({ ...prev, bal2: !prev.bal2 }));
+      }
+      if (typeChart === 'bal3') {
+        customNHBal3.year = checkedBank.bal3;
+        let newPerf = await mapDataChart(customNHBal3, tabType);
+        setDataChart((prev) => ({ ...prev, bal3: newPerf }));
+        setCheckedBank((prev) => ({ ...prev, bal3: !prev.bal3 }));
+      }
+      if (typeChart === 'bal4') {
+        customNHBal4.year = checkedBank.bal4;
+        let newPerf = await mapDataChart(customNHBal4, tabType);
+        setDataChart((prev) => ({ ...prev, bal4: newPerf }));
+        setCheckedBank((prev) => ({ ...prev, bal4: !prev.bal4 }));
+      }
+      if (typeChart === 'bal5') {
+        customNHBal5.year = checkedBank.bal5;
+        let newPerf = await mapDataChart(customNHBal5, tabType);
+        setDataChart((prev) => ({ ...prev, bal5: newPerf }));
+        setCheckedBank((prev) => ({ ...prev, bal5: !prev.bal5 }));
+      }
+      if (typeChart === 'bal6') {
+        customNHBal6.year = checkedBank.bal6;
+        let newPerf = await mapDataChart(customNHBal6, tabType);
+        setDataChart((prev) => ({ ...prev, bal6: newPerf }));
+        setCheckedBank((prev) => ({ ...prev, bal6: !prev.bal6 }));
+      }
+      if (typeChart === 'bal7') {
+        customNHBal7.year = checkedBank.bal7;
+        let newPerf = await mapDataChart(customNHBal7, tabType);
+        setDataChart((prev) => ({ ...prev, bal7: newPerf }));
+        setCheckedBank((prev) => ({ ...prev, bal7: !prev.bal7 }));
+      }
+      if (typeChart === 'bal8') {
+        customNHBal8.year = checkedBank.bal8;
+        let newPerf = await mapDataChart(customNHBal8, tabType);
+        setDataChart((prev) => ({ ...prev, bal8: newPerf }));
+        setCheckedBank((prev) => ({ ...prev, bal8: !prev.bal8 }));
+      }
     }
   };
 
@@ -1243,9 +1485,27 @@ export const TabChart = () => {
               ))}
           </Tabs>
           <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-            <FormControlLabel
-              control={<IOSSwitchSum sx={{ m: 1 }} defaultChecked disableRipple />}
-            />
+            {tabType === 'PTC' && (
+              <FormControlLabel
+                checked={!checked.chart}
+                onChange={() => handleToggleSum(tabType)}
+                control={<IOSSwitchSum sx={{ m: 1 }} defaultChecked disableRipple />}
+              />
+            )}
+            {tabType === 'ChungKhoan' && (
+              <FormControlLabel
+                checked={!checkedCK.chart}
+                onChange={() => handleToggleSum(tabType)}
+                control={<IOSSwitchSum sx={{ m: 1 }} defaultChecked disableRipple />}
+              />
+            )}
+            {tabType === 'NganHang' && (
+              <FormControlLabel
+                checked={!checkedBank.chart}
+                onChange={() => handleToggleSum(tabType)}
+                control={<IOSSwitchSum sx={{ m: 1 }} defaultChecked disableRipple />}
+              />
+            )}
           </Stack>
         </div>
       </Box>
@@ -1328,7 +1588,10 @@ export const TabChart = () => {
           </CustomTabPanel>
           <CustomTabPanel value={value} index={4}>
             <div className="flex flex-col gap-8">
-              <div className="flex gap-8">{ChartItem(dataChart?.val2, checked?.val2, 'val2')}</div>
+              <div className="flex gap-8">
+                {ChartItem(dataChart?.val1, checked?.val1, 'val1')}
+                {ChartItem(dataChart?.val2, checked?.val2, 'val2')}
+              </div>
               <div className="flex gap-8">
                 {ChartItem(dataChart?.val3, checked?.val3, 'val3')}
                 {ChartItem(dataChart?.val4, checked?.val4, 'val4')}
@@ -1337,7 +1600,10 @@ export const TabChart = () => {
                 {ChartItem(dataChart?.val5, checked?.val5, 'val5')}
                 {ChartItem(dataChart?.val6, checked?.val6, 'val6')}
               </div>
-              <div className="flex gap-8">{ChartItem(dataChart?.val8, checked?.val8, 'val8')}</div>
+              <div className="flex gap-8">
+                {ChartItem(dataChart?.val7, checked?.val7, 'val7')}
+                {ChartItem(dataChart?.val8, checked?.val8, 'val8')}
+              </div>
             </div>
           </CustomTabPanel>
         </>
