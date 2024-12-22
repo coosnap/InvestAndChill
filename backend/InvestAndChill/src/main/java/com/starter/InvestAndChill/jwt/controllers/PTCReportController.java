@@ -235,7 +235,7 @@ public class PTCReportController {
                     response.setTitle(Constants.PTC_perf7);
                     response.setRoe(RoundNumber.lamTronPhanTram(report.getRoe()));
                     response.setRoic(RoundNumber.lamTronPhanTram(report.getRoic()));
-                    response.setLaiVay(RoundNumber.lamTronLan(report.getLaiVay() *100 ));
+                    response.setLaiVay(RoundNumber.lamTronPhanTram(report.getLaiVay()));
                     return response;
                 })
                 .collect(Collectors.toList());
