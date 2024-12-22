@@ -92,7 +92,7 @@ export let customPerfCK3 = {
     },
   ],
   yAxis: {
-    left: { type: 'bil', piecewise: false },
+    left: { type: 'bil', piecewise: true },
     right: { type: 'per', piecewise: false },
   },
 };
