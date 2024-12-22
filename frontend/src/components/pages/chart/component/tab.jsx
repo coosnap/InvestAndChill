@@ -57,8 +57,11 @@ import {
   customPerfPTC6,
   customPerfPTC7,
   customPerfPTC8,
+  customValPTC2,
   customValPTC3,
+  customValPTC4,
   customValPTC5,
+  customValPTC6,
   customValPTC8,
 } from './customPTC';
 import StackChart from './stack-chart';
@@ -321,7 +324,7 @@ export const TabChart = () => {
             let perf1, perf2, perf3, perf4, perf5, perf6, perf7, perf8;
             let bal1, bal2, bal3, bal4, bal5, bal6;
             let cf1, cf2, cf3, cf4;
-            let val3, val5, val8;
+            let val2, val3, val4, val5, val6, val8;
             try {
               perf1 = await mapDataChart(customPerfPTC1, type.type);
             } catch (error) {
@@ -416,12 +419,27 @@ export const TabChart = () => {
             }
 
             try {
+              val2 = await mapDataChart(customValPTC2, type.type);
+            } catch (error) {
+              console.log('error', error);
+            }
+            try {
               val3 = await mapDataChart(customValPTC3, type.type);
             } catch (error) {
               console.log('error', error);
             }
             try {
+              val4 = await mapDataChart(customValPTC4, type.type);
+            } catch (error) {
+              console.log('error', error);
+            }
+            try {
               val5 = await mapDataChart(customValPTC5, type.type);
+            } catch (error) {
+              console.log('error', error);
+            }
+            try {
+              val6 = await mapDataChart(customValPTC6, type.type);
             } catch (error) {
               console.log('error', error);
             }
@@ -450,8 +468,11 @@ export const TabChart = () => {
               cf2 ||
               cf3 ||
               cf4 ||
+              val2 ||
               val3 ||
+              val4 ||
               val5 ||
+              val6 ||
               val8
             ) {
               setDataChart({
@@ -473,8 +494,11 @@ export const TabChart = () => {
                 cf2,
                 cf3,
                 cf4,
+                val2,
                 val3,
+                val4,
                 val5,
+                val6,
                 val8,
               });
             }
@@ -837,29 +861,21 @@ export const TabChart = () => {
           const vcshKhac = dataChart.bal2.dataset.map((v) => v.vcshKhac);
           const noChiemDung = dataChart.bal2.dataset.map((v) => v.noChiemDung);
           const noVay = dataChart.bal2.dataset.map((v) => v.noVay);
-          let result;
-          const getPercents = (array) => {
+          const getPercentsBal2 = (array) =>
             array.map((v, index) => {
-              if (laiChuaPhanPhoi[index] > 0) {
-                result =
-                  (v /
-                    (vonGop[index] +
-                      laiChuaPhanPhoi[index] +
-                      vcshKhac[index] +
-                      noChiemDung[index] +
-                      noVay[index])) *
-                    100 || 0;
-              } else {
-                result =
-                  (v / (vonGop[index] + vcshKhac[index] + noChiemDung[index] + noVay[index])) *
-                    100 || 0;
-              }
+              const result =
+                (v /
+                  (vonGop[index] +
+                    laiChuaPhanPhoi[index] +
+                    vcshKhac[index] +
+                    noChiemDung[index] +
+                    noVay[index])) *
+                  100 || 0;
               return result;
             });
-          };
           customBalPTC2.series = [
             {
-              data: getPercents(vonGop),
+              data: getPercentsBal2(vonGop),
               type: 'line',
               label: 'Vốn góp của Chủ sở hữu',
               area: true,
@@ -867,36 +883,36 @@ export const TabChart = () => {
               yAxisId: 'rightAxis',
             },
             {
-              data: getPercents(laiChuaPhanPhoi),
+              data: getPercentsBal2(laiChuaPhanPhoi),
               type: 'line',
               label: 'LNST chưa phân phối',
+              yAxisId: 'rightAxis',
               area: true,
               stack: 'total',
-              yAxisId: 'rightAxis',
             },
             {
-              data: getPercents(vcshKhac),
+              data: getPercentsBal2(vcshKhac),
               type: 'line',
               label: 'Vốn chủ sở hữu khác',
+              yAxisId: 'rightAxis',
               area: true,
               stack: 'total',
-              yAxisId: 'rightAxis',
             },
             {
-              data: getPercents(noChiemDung),
+              data: getPercentsBal2(noChiemDung),
               type: 'line',
               label: 'Nợ chiếm dụng',
+              yAxisId: 'rightAxis',
               area: true,
               stack: 'total',
-              yAxisId: 'rightAxis',
             },
             {
-              data: getPercents(noVay),
+              data: getPercentsBal2(noVay),
               type: 'line',
               label: 'Nợ vay',
+              yAxisId: 'rightAxis',
               area: true,
               stack: 'total',
-              yAxisId: 'rightAxis',
             },
           ];
           customBalPTC2.yAxis = {
@@ -1312,9 +1328,14 @@ export const TabChart = () => {
           </CustomTabPanel>
           <CustomTabPanel value={value} index={4}>
             <div className="flex flex-col gap-8">
+              <div className="flex gap-8">{ChartItem(dataChart?.val2, checked?.val2, 'val2')}</div>
               <div className="flex gap-8">
                 {ChartItem(dataChart?.val3, checked?.val3, 'val3')}
+                {ChartItem(dataChart?.val4, checked?.val4, 'val4')}
+              </div>
+              <div className="flex gap-8">
                 {ChartItem(dataChart?.val5, checked?.val5, 'val5')}
+                {ChartItem(dataChart?.val6, checked?.val6, 'val6')}
               </div>
               <div className="flex gap-8">{ChartItem(dataChart?.val8, checked?.val8, 'val8')}</div>
             </div>

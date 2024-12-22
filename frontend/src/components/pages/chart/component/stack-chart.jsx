@@ -12,14 +12,34 @@ import { AreaPlot, LineHighlightPlot, LinePlot } from '@mui/x-charts/LineChart';
 import { ResponsiveChartContainer } from '@mui/x-charts/ResponsiveChartContainer';
 
 export default function NoStackChart(data) {
-  function extend(value, step) {
-    if (Number(value) && value <= 0) {
-      return step * Math.ceil(value / step) - 20;
+  function extend(value, type) {
+    if (type === 'min') {
+      console.log('value', value);
+      if (Number(value) && value < 0) {
+        console.log('value', value);
+        if (Math.ceil(Math.abs(value)).toString().length === 1) return value - Math.pow(10, 0);
+        if (Math.ceil(Math.abs(value)).toString().length === 2) return value - Math.pow(10, 1);
+        if (Math.ceil(Math.abs(value)).toString().length === 3) return value - Math.pow(10, 2) / 2;
+        if (Math.ceil(Math.abs(value)).toString().length === 4) return value - Math.pow(10, 3) / 3;
+        if (Math.ceil(Math.abs(value)).toString().length === 5) return value - Math.pow(10, 4) / 4;
+        if (Math.ceil(Math.abs(value)).toString().length === 6) return value - Math.pow(10, 5) / 5;
+      } else if (Number(value) && value > 0) {
+        if (Math.ceil(Math.abs(value)).toString().length === 1) return value + Math.pow(10, 0);
+        if (Math.ceil(Math.abs(value)).toString().length === 2) return value + Math.pow(10, 1);
+        if (Math.ceil(Math.abs(value)).toString().length === 3) return value + Math.pow(10, 2) / 2;
+        if (Math.ceil(Math.abs(value)).toString().length === 4) return value + Math.pow(10, 3) / 3;
+        if (Math.ceil(Math.abs(value)).toString().length === 5) return value + Math.pow(10, 4) / 4;
+        if (Math.ceil(Math.abs(value)).toString().length === 6) return value + Math.pow(10, 5) / 5;
+      } else {
+        return value;
+      }
+    } else {
+      if (Math.ceil(Math.abs(value)).toString().length === 1) return value + Math.pow(10, 0);
+      if (Math.ceil(Math.abs(value)).toString().length === 2) return value + Math.pow(10, 1);
+      if (Math.ceil(Math.abs(value)).toString().length === 3) return value + Math.pow(10, 2) / 2;
+      if (Math.ceil(Math.abs(value)).toString().length === 4) return value + Math.pow(10, 3) / 3;
+      if (Math.ceil(Math.abs(value)).toString().length === 5) return value + Math.pow(10, 4) / 4;
     }
-    if (Number(value) && value > 0) {
-      return step * Math.ceil(value / step);
-    }
-    return step * Math.floor(value / step);
   }
 
   return (
@@ -39,15 +59,15 @@ export default function NoStackChart(data) {
             ? {
                 id: 'leftAxis',
                 domainLimit:
-                  data.data.yAxis.left.type == 'bil'
+                  data.data.yAxis.left.type === 'bil'
                     ? (min, max) => ({
-                        min: extend(min, 10),
-                        max: extend(max, 10),
+                        min: extend(min, 'min'),
+                        max: extend(max, 'max'),
                       })
-                    : (min, max) => ({
-                        min: extend(min, min <= 0 ? -0.1 : 0.1),
-                        max: extend(max, 0.1),
-                      }),
+                    : {
+                        id: 'rightAxis',
+                        domainLimit: 'nice',
+                      },
               }
             : {
                 id: 'leftAxis',
@@ -57,15 +77,15 @@ export default function NoStackChart(data) {
             ? {
                 id: 'rightAxis',
                 domainLimit:
-                  data.data.yAxis.right.type == 'bil'
+                  data.data.yAxis.right.type === 'bil'
                     ? (min, max) => ({
-                        min: extend(min, 10),
-                        max: extend(max, 10),
+                        min: extend(min, 'min'),
+                        max: extend(max, 'max'),
                       })
-                    : (min, max) => ({
-                        min: extend(min, min <= 0 ? -0.1 : 0.1),
-                        max: extend(max, 0.1),
-                      }),
+                    : {
+                        id: 'rightAxis',
+                        domainLimit: 'nice',
+                      },
               }
             : {
                 id: 'rightAxis',
