@@ -374,7 +374,7 @@ def phi_tai_chinh_calculate_data(rs: List[Dict], combine_data: List[Dict]) -> Li
 
             item['p_i_62'] = (item['p_b_38'] or 0) + (item['p_b_48'] or 0)
             item['p_i_63'] = (item['p_b_39'] or 0) - (item['p_b_49'] or 0)
-            item['p_i_64'] = (item['p_p_22'] or 0) - (item['p_m_2'] or 0) - (item['p_m_3'] or 0)
+            item['p_i_64'] = (item['p_p_23'] or 0) - (item['p_m_2'] or 0) - (item['p_m_3'] or 0)
             item['p_i_65'] = extract_sum_previous_quarters(item, combine_data, 'p_i_64')
             item['p_i_66'] = (item['p_i_26'] or 0) - (item['p_m_2'] or 0)
             item['p_i_67'] = extract_sum_previous_quarters(item, combine_data, 'p_i_66')
