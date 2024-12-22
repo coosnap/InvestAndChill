@@ -522,109 +522,197 @@ export const TabChart = () => {
             setIsLoading(false);
           }
           if (type.type === 'ChungKhoan') {
+            let perf1, perf2, perf3, perf4, perf5;
+            let bal1, bal2, bal3, bal4, bal5;
             try {
-              let perf1 = await mapDataChart(customPerfCK1, type.type);
-              let perf2 = await mapDataChart(customPerfCK2, type.type);
-              let perf3 = await mapDataChart(customPerfCK3, type.type);
-              let perf4 = await mapDataChart(customPerfCK4, type.type);
-              let perf5 = await mapDataChart(customPerfCK5, type.type);
-
-              let bal1 = await mapDataChart(customBalCK1, type.type);
-              let bal2 = await mapDataChart(customBalCK2, type.type);
-              let bal3 = await mapDataChart(customBalCK3, type.type);
-              let bal4 = await mapDataChart(customBalCK4, type.type);
-              let bal5 = await mapDataChart(customBalCK5, type.type);
-
-              if (
-                perf1 &&
-                perf2 &&
-                perf3 &&
-                perf4 &&
-                perf5 &&
-                bal1 &&
-                bal2 &&
-                bal3 &&
-                bal4 &&
-                bal5
-              ) {
-                setDataChart({
-                  perf1,
-                  perf2,
-                  perf3,
-                  perf4,
-                  perf5,
-
-                  bal1,
-                  bal2,
-                  bal3,
-                  bal4,
-                  bal5,
-                });
-              }
+              perf1 = await mapDataChart(customPerfCK1, type.type);
             } catch (error) {
-              console.log(error);
+              console.log('perf1', error);
+            }
+            try {
+              perf2 = await mapDataChart(customPerfCK2, type.type);
+            } catch (error) {
+              console.log('perf2', error);
+            }
+            try {
+              perf3 = await mapDataChart(customPerfCK3, type.type);
+            } catch (error) {
+              console.log('perf3', error);
+            }
+            try {
+              perf4 = await mapDataChart(customPerfCK4, type.type);
+            } catch (error) {
+              console.log('perf4', error);
+            }
+            try {
+              perf5 = await mapDataChart(customPerfCK5, type.type);
+            } catch (error) {
+              console.log('perf5', error);
+            }
+
+            try {
+              bal1 = await mapDataChart(customBalCK1, type.type);
+            } catch (error) {
+              console.log('bal1', error);
+            }
+            try {
+              bal2 = await mapDataChart(customBalCK2, type.type);
+            } catch (error) {
+              console.log('bal2', error);
+            }
+            try {
+              bal3 = await mapDataChart(customBalCK3, type.type);
+            } catch (error) {
+              console.log('bal3', error);
+            }
+            try {
+              bal4 = await mapDataChart(customBalCK4, type.type);
+            } catch (error) {
+              console.log('bal4', error);
+            }
+            try {
+              bal5 = await mapDataChart(customBalCK5, type.type);
+            } catch (error) {
+              console.log('bal5', error);
+            }
+            if (perf1 && perf2 && perf3 && perf4 && perf5 && bal1 && bal2 && bal3 && bal4 && bal5) {
+              setDataChart({
+                perf1,
+                perf2,
+                perf3,
+                perf4,
+                perf5,
+
+                bal1,
+                bal2,
+                bal3,
+                bal4,
+                bal5,
+              });
             }
             setIsLoading(false);
           }
           if (type.type === 'NganHang') {
+            let perf1, perf2, perf3, perf4;
+            let bal1, bal2, bal3, bal4, bal5, bal6, bal7, bal8, bal9, bal10, bal11, bal12;
             try {
-              let perf1 = await mapDataChart(customNHPerf1, type.type);
-              let perf2 = await mapDataChart(customNHPerf2, type.type);
-              let perf3 = await mapDataChart(customNHPerf3, type.type);
-              let perf4 = await mapDataChart(customNHPerf4, type.type);
-
-              let bal1 = await mapDataChart(customNHBal1, type.type);
-              let bal2 = await mapDataChart(customNHBal2, type.type);
-              let bal3 = await mapDataChart(customNHBal3, type.type);
-              let bal4 = await mapDataChart(customNHBal4, type.type);
-              let bal5 = await mapDataChart(customNHBal5, type.type);
-              let bal6 = await mapDataChart(customNHBal6, type.type);
-              let bal7 = await mapDataChart(customNHBal7, type.type);
-              let bal8 = await mapDataChart(customNHBal8, type.type);
-              let bal9 = await mapDataChart(customNHBal9, type.type);
-              let bal10 = await mapDataChart(customNHBal10, type.type);
-              let bal11 = await mapDataChart(customNHBal11, type.type);
-              let bal12 = await mapDataChart(customNHBal12, type.type);
-
-              if (
-                perf1 &&
-                perf2 &&
-                perf3 &&
-                perf4 &&
-                bal1 &&
-                bal2 &&
-                bal3 &&
-                bal4 &&
-                bal5 &&
-                bal6 &&
-                bal7 &&
-                bal8 &&
-                bal9 &&
-                bal10 &&
-                bal11 &&
-                bal12
-              ) {
-                setDataChart({
-                  perf1,
-                  perf2,
-                  perf3,
-                  perf4,
-                  bal1,
-                  bal2,
-                  bal3,
-                  bal4,
-                  bal5,
-                  bal6,
-                  bal7,
-                  bal8,
-                  bal9,
-                  bal10,
-                  bal11,
-                  bal12,
-                });
-              }
+              perf1 = await mapDataChart(customNHPerf1, type.type);
             } catch (error) {
-              console.log(error);
+              console.log('perf1', error);
+            }
+            try {
+              perf2 = await mapDataChart(customNHPerf2, type.type);
+            } catch (error) {
+              console.log('perf2', error);
+            }
+            try {
+              perf3 = await mapDataChart(customNHPerf3, type.type);
+            } catch (error) {
+              console.log('perf3', error);
+            }
+            try {
+              perf4 = await mapDataChart(customNHPerf4, type.type);
+            } catch (error) {
+              console.log('perf4', error);
+            }
+
+            try {
+              bal1 = await mapDataChart(customNHBal1, type.type);
+            } catch (error) {
+              console.log('bal1', error);
+            }
+            try {
+              bal2 = await mapDataChart(customNHBal2, type.type);
+            } catch (error) {
+              console.log('bal2', error);
+            }
+            try {
+              bal3 = await mapDataChart(customNHBal3, type.type);
+            } catch (error) {
+              console.log('bal3', error);
+            }
+            try {
+              bal4 = await mapDataChart(customNHBal4, type.type);
+            } catch (error) {
+              console.log('bal4', error);
+            }
+            try {
+              bal5 = await mapDataChart(customNHBal5, type.type);
+            } catch (error) {
+              console.log('bal5', error);
+            }
+            try {
+              bal6 = await mapDataChart(customNHBal6, type.type);
+            } catch (error) {
+              console.log('bal6', error);
+            }
+            try {
+              bal7 = await mapDataChart(customNHBal7, type.type);
+            } catch (error) {
+              console.log('bal7', error);
+            }
+            try {
+              bal8 = await mapDataChart(customNHBal8, type.type);
+            } catch (error) {
+              console.log('bal8', error);
+            }
+            try {
+              bal9 = await mapDataChart(customNHBal9, type.type);
+            } catch (error) {
+              console.log('bal9', error);
+            }
+            try {
+              bal10 = await mapDataChart(customNHBal10, type.type);
+            } catch (error) {
+              console.log('bal10', error);
+            }
+            try {
+              bal11 = await mapDataChart(customNHBal11, type.type);
+            } catch (error) {
+              console.log('bal11', error);
+            }
+            try {
+              bal12 = await mapDataChart(customNHBal12, type.type);
+            } catch (error) {
+              console.log('bal12', error);
+            }
+
+            if (
+              perf1 &&
+              perf2 &&
+              perf3 &&
+              perf4 &&
+              bal1 &&
+              bal2 &&
+              bal3 &&
+              bal4 &&
+              bal5 &&
+              bal6 &&
+              bal7 &&
+              bal8 &&
+              bal9 &&
+              bal10 &&
+              bal11 &&
+              bal12
+            ) {
+              setDataChart({
+                perf1,
+                perf2,
+                perf3,
+                perf4,
+                bal1,
+                bal2,
+                bal3,
+                bal4,
+                bal5,
+                bal6,
+                bal7,
+                bal8,
+                bal9,
+                bal10,
+                bal11,
+                bal12,
+              });
             }
             setIsLoading(false);
           }
@@ -656,7 +744,7 @@ export const TabChart = () => {
         setDataChart((prev) => ({ ...prev, perf1: newPerf1 }));
         setChecked((prev) => ({ ...prev, perf1: !prev.perf1 }));
       } catch (error) {
-        console.log(error);
+        console.log('perf1', error);
       }
       try {
         customPerfPTC2.year = checked.perf2;
@@ -664,7 +752,7 @@ export const TabChart = () => {
         setDataChart((prev) => ({ ...prev, perf2: newPerf2 }));
         setChecked((prev) => ({ ...prev, perf2: !prev.perf2 }));
       } catch (error) {
-        console.log(error);
+        console.log('perf2', error);
       }
       try {
         customPerfPTC7.year = checked.perf7;
@@ -672,7 +760,7 @@ export const TabChart = () => {
         setDataChart((prev) => ({ ...prev, perf7: newPerf7 }));
         setChecked((prev) => ({ ...prev, perf7: !prev.perf7 }));
       } catch (error) {
-        console.log(error);
+        console.log('perf7', error);
       }
       try {
         customBalPTC1.year = checked.bal1;
@@ -680,7 +768,7 @@ export const TabChart = () => {
         setDataChart((prev) => ({ ...prev, bal1: newBal1 }));
         setChecked((prev) => ({ ...prev, bal1: !prev.bal1 }));
       } catch (error) {
-        console.log(error);
+        console.log('bal1', error);
       }
       try {
         customBalPTC2.year = checked.bal2;
@@ -688,7 +776,7 @@ export const TabChart = () => {
         setDataChart((prev) => ({ ...prev, bal2: newBal2 }));
         setChecked((prev) => ({ ...prev, bal2: !prev.bal2 }));
       } catch (error) {
-        console.log(error);
+        console.log('bal2', error);
       }
       try {
         customBalPTC3.year = checked.bal3;
@@ -696,7 +784,7 @@ export const TabChart = () => {
         setDataChart((prev) => ({ ...prev, bal3: newBal3 }));
         setChecked((prev) => ({ ...prev, bal3: !prev.bal3 }));
       } catch (error) {
-        console.log(error);
+        console.log('bal3', error);
       }
       try {
         customBalPTC4.year = checked.bal4;
@@ -704,7 +792,7 @@ export const TabChart = () => {
         setDataChart((prev) => ({ ...prev, bal4: newBal4 }));
         setChecked((prev) => ({ ...prev, bal4: !prev.bal4 }));
       } catch (error) {
-        console.log(error);
+        console.log('bal4', error);
       }
       try {
         customBalPTC6.year = checked.bal6;
@@ -712,7 +800,7 @@ export const TabChart = () => {
         setDataChart((prev) => ({ ...prev, bal6: newBal6 }));
         setChecked((prev) => ({ ...prev, bal6: !prev.bal6 }));
       } catch (error) {
-        console.log(error);
+        console.log('bal6', error);
       }
       try {
         customCFPTC1.year = checked.cf1;
@@ -720,7 +808,7 @@ export const TabChart = () => {
         setDataChart((prev) => ({ ...prev, cf1: newCf1 }));
         setChecked((prev) => ({ ...prev, cf1: !prev.cf1 }));
       } catch (error) {
-        console.log(error);
+        console.log('bal6', error);
       }
       try {
         customCFPTC2.year = checked.cf2;
@@ -728,7 +816,7 @@ export const TabChart = () => {
         setDataChart((prev) => ({ ...prev, cf2: newCf2 }));
         setChecked((prev) => ({ ...prev, cf2: !prev.cf2 }));
       } catch (error) {
-        console.log(error);
+        console.log('cf2', error);
       }
       try {
         customCFPTC3.year = checked.cf3;
@@ -736,7 +824,7 @@ export const TabChart = () => {
         setDataChart((prev) => ({ ...prev, cf3: newCf3 }));
         setChecked((prev) => ({ ...prev, cf3: !prev.cf3 }));
       } catch (error) {
-        console.log(error);
+        console.log('cf3', error);
       }
       try {
         customCFPTC4.year = checked.cf4;
@@ -744,131 +832,175 @@ export const TabChart = () => {
         setDataChart((prev) => ({ ...prev, cf4: newCf4 }));
         setChecked((prev) => ({ ...prev, cf4: !prev.cf4 }));
       } catch (error) {
-        console.log(error);
+        console.log('cf4', error);
       }
     }
     if (tabType === 'ChungKhoan') {
-      if (typeChart === 'perf1') {
+      setCheckedCK((prev) => ({ ...prev, chart: !prev.chart }));
+      try {
         customPerfCK1.year = checkedCK.perf1;
-        let newPerf = await mapDataChart(customPerfCK1, tabType);
-        setDataChart((prev) => ({ ...prev, perf1: newPerf }));
+        let newPerf1 = await mapDataChart(customPerfCK1, tabType);
+        setDataChart((prev) => ({ ...prev, perf1: newPerf1 }));
         setCheckedCK((prev) => ({ ...prev, perf1: !prev.perf1 }));
+      } catch (error) {
+        console.log('perf1', error);
       }
-      if (typeChart === 'perf2') {
+      try {
         customPerfCK2.year = checkedCK.perf2;
-        let newPerf = await mapDataChart(customPerfCK2, tabType);
-        setDataChart((prev) => ({ ...prev, perf2: newPerf }));
+        let newPerf2 = await mapDataChart(customPerfCK2, tabType);
+        setDataChart((prev) => ({ ...prev, perf2: newPerf2 }));
         setCheckedCK((prev) => ({ ...prev, perf2: !prev.perf2 }));
+      } catch (error) {
+        console.log('perf2', error);
       }
-      if (typeChart === 'perf3') {
+      try {
         customPerfCK3.year = checkedCK.perf3;
-        let newPerf = await mapDataChart(customPerfCK3, tabType);
-        setDataChart((prev) => ({ ...prev, perf3: newPerf }));
+        let newPerf3 = await mapDataChart(customPerfCK3, tabType);
+        setDataChart((prev) => ({ ...prev, perf3: newPerf3 }));
         setCheckedCK((prev) => ({ ...prev, perf3: !prev.perf3 }));
+      } catch (error) {
+        console.log('perf3', error);
       }
-      if (typeChart === 'bal1') {
+
+      try {
         customBalCK1.year = checkedCK.bal1;
-        let newPerf = await mapDataChart(customBalCK1, tabType);
-        setDataChart((prev) => ({ ...prev, bal1: newPerf }));
+        let newBal1 = await mapDataChart(customBalCK1, tabType);
+        setDataChart((prev) => ({ ...prev, bal1: newBal1 }));
         setCheckedCK((prev) => ({ ...prev, bal1: !prev.bal1 }));
+      } catch (error) {
+        console.log('bal1', error);
       }
-      if (typeChart === 'bal2') {
+      try {
         customBalCK2.year = checkedCK.bal2;
-        let newPerf = await mapDataChart(customBalCK2, tabType);
-        setDataChart((prev) => ({ ...prev, bal2: newPerf }));
+        let newBal2 = await mapDataChart(customBalCK2, tabType);
+        setDataChart((prev) => ({ ...prev, bal2: newBal2 }));
         setCheckedCK((prev) => ({ ...prev, bal2: !prev.bal2 }));
+      } catch (error) {
+        console.log('bal2', error);
       }
-      if (typeChart === 'bal3') {
+      try {
         customBalCK3.year = checkedCK.bal3;
-        let newPerf = await mapDataChart(customBalCK3, tabType);
-        setDataChart((prev) => ({ ...prev, bal3: newPerf }));
+        let newBal3 = await mapDataChart(customBalCK3, tabType);
+        setDataChart((prev) => ({ ...prev, bal3: newBal3 }));
         setCheckedCK((prev) => ({ ...prev, bal3: !prev.bal3 }));
+      } catch (error) {
+        console.log('bal3', error);
       }
-      if (typeChart === 'bal4') {
+      try {
         customBalCK4.year = checkedCK.bal4;
-        let newPerf = await mapDataChart(customBalCK4, tabType);
-        setDataChart((prev) => ({ ...prev, bal4: newPerf }));
+        let newBal4 = await mapDataChart(customBalCK4, tabType);
+        setDataChart((prev) => ({ ...prev, bal4: newBal4 }));
         setCheckedCK((prev) => ({ ...prev, bal4: !prev.bal4 }));
+      } catch (error) {
+        console.log('bal4', error);
       }
-      if (typeChart === 'bal5') {
+      try {
         customBalCK5.year = checkedCK.bal5;
-        let newPerf = await mapDataChart(customBalCK5, tabType);
-        setDataChart((prev) => ({ ...prev, bal5: newPerf }));
+        let newBal5 = await mapDataChart(customBalCK5, tabType);
+        setDataChart((prev) => ({ ...prev, bal5: newBal5 }));
         setCheckedCK((prev) => ({ ...prev, bal5: !prev.bal5 }));
+      } catch (error) {
+        console.log('bal5', error);
       }
     }
     if (tabType === 'NganHang') {
-      if (typeChart === 'perf1') {
+      setCheckedBank((prev) => ({ ...prev, chart: !prev.chart }));
+      try {
         customNHPerf1.year = checkedBank.perf1;
         let newPerf = await mapDataChart(customNHPerf1, tabType);
         setDataChart((prev) => ({ ...prev, perf1: newPerf }));
         setCheckedBank((prev) => ({ ...prev, perf1: !prev.perf1 }));
+      } catch (error) {
+        console.log('perf1', error);
       }
-      if (typeChart === 'perf2') {
+      try {
         customNHPerf2.year = checkedBank.perf2;
         let newPerf = await mapDataChart(customNHPerf2, tabType);
         setDataChart((prev) => ({ ...prev, perf2: newPerf }));
         setCheckedBank((prev) => ({ ...prev, perf2: !prev.perf2 }));
+      } catch (error) {
+        console.log('perf2', error);
       }
-      if (typeChart === 'perf3') {
+      try {
         customNHPerf3.year = checkedBank.perf3;
         let newPerf = await mapDataChart(customNHPerf3, tabType);
         setDataChart((prev) => ({ ...prev, perf3: newPerf }));
         setCheckedBank((prev) => ({ ...prev, perf3: !prev.perf3 }));
+      } catch (error) {
+        console.log('perf3', error);
       }
-      if (typeChart === 'perf4') {
+      try {
         customNHPerf4.year = checkedBank.perf4;
         let newPerf = await mapDataChart(customNHPerf4, tabType);
         setDataChart((prev) => ({ ...prev, perf4: newPerf }));
         setCheckedBank((prev) => ({ ...prev, perf4: !prev.perf4 }));
+      } catch (error) {
+        console.log('perf4', error);
       }
-      if (typeChart === 'bal1') {
+
+      try {
         customNHBal1.year = checkedBank.bal1;
         let newPerf = await mapDataChart(customNHBal1, tabType);
         setDataChart((prev) => ({ ...prev, bal1: newPerf }));
         setCheckedBank((prev) => ({ ...prev, bal1: !prev.bal1 }));
+      } catch (error) {
+        console.log('bal1', error);
       }
-      if (typeChart === 'bal2') {
+      try {
         customNHBal2.year = checkedBank.bal2;
         let newPerf = await mapDataChart(customNHBal2, tabType);
         setDataChart((prev) => ({ ...prev, bal2: newPerf }));
         setCheckedBank((prev) => ({ ...prev, bal2: !prev.bal2 }));
+      } catch (error) {
+        console.log('bal2', error);
       }
-      if (typeChart === 'bal3') {
+      try {
         customNHBal3.year = checkedBank.bal3;
         let newPerf = await mapDataChart(customNHBal3, tabType);
         setDataChart((prev) => ({ ...prev, bal3: newPerf }));
         setCheckedBank((prev) => ({ ...prev, bal3: !prev.bal3 }));
+      } catch (error) {
+        console.log('bal3', error);
       }
-      if (typeChart === 'bal4') {
+      try {
         customNHBal4.year = checkedBank.bal4;
         let newPerf = await mapDataChart(customNHBal4, tabType);
         setDataChart((prev) => ({ ...prev, bal4: newPerf }));
         setCheckedBank((prev) => ({ ...prev, bal4: !prev.bal4 }));
+      } catch (error) {
+        console.log('bal4', error);
       }
-      if (typeChart === 'bal5') {
+      try {
         customNHBal5.year = checkedBank.bal5;
         let newPerf = await mapDataChart(customNHBal5, tabType);
         setDataChart((prev) => ({ ...prev, bal5: newPerf }));
         setCheckedBank((prev) => ({ ...prev, bal5: !prev.bal5 }));
+      } catch (error) {
+        console.log('bal5', error);
       }
-      if (typeChart === 'bal6') {
+      try {
         customNHBal6.year = checkedBank.bal6;
         let newPerf = await mapDataChart(customNHBal6, tabType);
         setDataChart((prev) => ({ ...prev, bal6: newPerf }));
         setCheckedBank((prev) => ({ ...prev, bal6: !prev.bal6 }));
+      } catch (error) {
+        console.log('bal6', error);
       }
-      if (typeChart === 'bal7') {
+      try {
         customNHBal7.year = checkedBank.bal7;
         let newPerf = await mapDataChart(customNHBal7, tabType);
         setDataChart((prev) => ({ ...prev, bal7: newPerf }));
         setCheckedBank((prev) => ({ ...prev, bal7: !prev.bal7 }));
+      } catch (error) {
+        console.log('bal7', error);
       }
-      if (typeChart === 'bal8') {
+      try {
         customNHBal8.year = checkedBank.bal8;
         let newPerf = await mapDataChart(customNHBal8, tabType);
         setDataChart((prev) => ({ ...prev, bal8: newPerf }));
         setCheckedBank((prev) => ({ ...prev, bal8: !prev.bal8 }));
+      } catch (error) {
+        console.log('bal8', error);
       }
     }
   };
