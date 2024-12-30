@@ -12,45 +12,14 @@ import { AreaPlot, LineHighlightPlot, LinePlot } from '@mui/x-charts/LineChart';
 import { ResponsiveChartContainer } from '@mui/x-charts/ResponsiveChartContainer';
 
 export default function NoStackChart(data) {
-  function extend(value, great, type, max) {
+  function extend(value, max) {
     if (max) {
-      if (type === 'bil') {
-        if (great === 'min') {
-          if (Math.ceil(value + max).toString().length === 1) return value - Math.pow(10, 0) / 2;
-          if (Math.ceil(value + max).toString().length === 2) return value - Math.pow(10, 1) / 2;
-          if (Math.ceil(value + max).toString().length === 3) {
-            return value - Math.pow(10, 2) / 2;
-          }
-          if (Math.ceil(value + max).toString().length === 4) {
-            return value - Math.pow(10, 3) / 3;
-          }
-          if (Math.ceil(value + max).toString().length === 5) {
-            return value - Math.pow(10, 4) / 4;
-          }
-          if (Math.ceil(value + max).toString().length === 6) {
-            return value - Math.pow(10, 5) / 5;
-          }
-        } else {
-          return value;
-        }
-      } else {
-        if (value === 0) {
-          if (great === 'min') {
-            if (Math.ceil(Math.abs(max)).toString().length === 1) return value - 0.5;
-            if (Math.ceil(Math.abs(max)).toString().length === 2) return value - 5;
-            if (Math.ceil(Math.abs(max)).toString().length === 3) return value - 10;
-          } else {
-            return value - 0.5;
-          }
-        } else {
-          if (great === 'min') {
-            if (Math.ceil(Math.abs(max)).toString().length === 1) return value - 0.5;
-            if (Math.ceil(Math.abs(max)).toString().length === 2) return value - 5;
-            if (Math.ceil(Math.abs(max)).toString().length === 3) return value - 10;
-          } else {
-            return value - 0.5;
-          }
-        }
+      if (Math.abs(value) > max) {
+        return value - Math.abs(value) / 10;
+      } else if (value < 0 || value > 0) {
+        return value - (value + max) / 10;
+      } else if (value === 0) {
+        if ((value, max)) return value - (value + max) / 10;
       }
     } else {
       return value;
@@ -76,12 +45,12 @@ export default function NoStackChart(data) {
                 domainLimit:
                   data.data.yAxis.left.type === 'bil'
                     ? (min, max) => ({
-                        min: extend(min, 'min', 'bil', max),
-                        max: extend(max, 'max', 'bil'),
+                        min: extend(min, max),
+                        max: extend(max),
                       })
                     : (min, max) => ({
-                        min: extend(min, 'min', 'other', max),
-                        max: extend(max, 'max', 'other'),
+                        min: extend(min, max),
+                        max: extend(max),
                       }),
               }
             : {
@@ -94,12 +63,12 @@ export default function NoStackChart(data) {
                 domainLimit:
                   data.data.yAxis.right.type === 'bil'
                     ? (min, max) => ({
-                        min: extend(min, 'min', 'bil', max),
-                        max: extend(max, 'max', 'bil'),
+                        min: extend(min, max),
+                        max: extend(max),
                       })
                     : (min, max) => ({
-                        min: extend(min, 'min', 'other', max),
-                        max: extend(max, 'max', 'other'),
+                        min: extend(min, max),
+                        max: extend(max),
                       }),
               }
             : {
@@ -147,7 +116,11 @@ export default function NoStackChart(data) {
           />
         )}
         {data.data.yAxis.right.showLineReference && (
-          <ChartsReferenceLine axisId={'rightAxis'} y={0} />
+          <ChartsReferenceLine
+            axisId={'rightAxis'}
+            y={0}
+            lineStyle={{ strokeWidth: '1px !important' }}
+          />
         )}
         {data.data.yAxis.left.type == 'per' && (
           <ChartsYAxis

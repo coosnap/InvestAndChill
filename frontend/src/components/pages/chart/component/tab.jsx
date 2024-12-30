@@ -1617,13 +1617,16 @@ export const TabChart = () => {
                 'Định giá',
               ].map((e, index) => <Tab key={e} label={e} {...a11yProps(index)} />)}
             {tabType === 'ChungKhoan' &&
-              ['Performance', 'Balance', 'Other', 'Value'].map((e, index) => (
-                <Tab key={e} label={e} {...a11yProps(index)} />
-              ))}
+              ['Hiệu quả kinh doanh', 'Tài sản và nguồn vốn', 'Hiểu quả đồng vốn', 'Định giá'].map(
+                (e, index) => <Tab key={e} label={e} {...a11yProps(index)} />
+              )}
             {tabType === 'NganHang' &&
-              ['Performance', 'Balance', 'Other', 'Value'].map((e, index) => (
-                <Tab key={e} label={e} {...a11yProps(index)} />
-              ))}
+              [
+                'Hiệu quả kinh doanh',
+                'Tài sản và nguồn vốn',
+                'Cơ cấu tiền gửi và cho vay',
+                'Định giá',
+              ].map((e, index) => <Tab key={e} label={e} {...a11yProps(index)} />)}
           </Tabs>
           <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
             {tabType === 'PTC' && (
@@ -1652,7 +1655,7 @@ export const TabChart = () => {
       </Box>
       {tabType === 'PTC' && (
         <>
-          <CustomTabPanel value={value} index={0}>
+          <CustomTabPanel value={tab ? Number(tab) : value} index={0}>
             {codeValue && (
               <div className="flex flex-col gap-8">
                 <div className="flex gap-8">
@@ -1670,7 +1673,7 @@ export const TabChart = () => {
               </div>
             )}
           </CustomTabPanel>
-          <CustomTabPanel value={value} index={1}>
+          <CustomTabPanel value={tab ? Number(tab) : value} index={1}>
             {codeValue && (
               <div className="flex flex-col gap-8">
                 <div className="flex gap-8">
@@ -1702,13 +1705,13 @@ export const TabChart = () => {
               </div>
             )}
           </CustomTabPanel>
-          <CustomTabPanel value={value} index={2}>
+          <CustomTabPanel value={tab ? Number(tab) : value} index={2}>
             <div className="flex gap-8">
               {ChartItem(dataChart?.perf7, checked?.perf7, 'perf7', true)}
               {ChartItem(dataChart?.perf8, checked?.perf8, 'perf8')}
             </div>
           </CustomTabPanel>
-          <CustomTabPanel value={value} index={3}>
+          <CustomTabPanel value={tab ? Number(tab) : value} index={3}>
             <div className="flex flex-col gap-8">
               <div className="flex gap-8">
                 {ChartItem(dataChart?.cf1, checked?.cf1, 'cf1', true)}
@@ -1727,7 +1730,7 @@ export const TabChart = () => {
               </div>
             </div>
           </CustomTabPanel>
-          <CustomTabPanel value={value} index={4}>
+          <CustomTabPanel value={tab ? Number(tab) : value} index={4}>
             <div className="flex flex-col gap-8">
               <div className="flex gap-8">
                 {ChartItem(dataChart?.val1, checked?.val1, 'val1')}
@@ -1751,34 +1754,40 @@ export const TabChart = () => {
       )}
       {tabType === 'ChungKhoan' && (
         <>
-          <CustomTabPanel value={value} index={0}>
+          <CustomTabPanel value={tab ? Number(tab) : value} index={0}>
             {codeValue && (
               <div className="flex flex-col gap-8">
                 <div className="flex gap-8">
                   {ChartItem(dataChart?.perf1, checkedCK?.perf1, 'perf1', true)}
-                  {ChartItem(dataChart?.perf2, checkedCK?.perf2, 'perf2', true)}
+                  {ChartItem(dataChart?.perf3, checkedCK?.perf3, 'perf3', true)}
                 </div>
                 <div className="flex gap-8">
-                  {ChartItem(dataChart?.perf3, checkedCK?.perf3, 'perf3', true)}
-                  {ChartItem(dataChart?.perf4, null, 'perf4')}
+                  {ChartItem(dataChart?.bal4, checkedCK?.bal4, 'bal4', true)}
+                  {ChartItem(dataChart?.bal5, checkedCK?.bal5, 'bal5', true)}
                 </div>
-                <div className="flex gap-8">{ChartItem(dataChart?.perf5, null, 'perf5')}</div>
+                <div className="flex gap-8">{ChartItem(dataChart?.perf4, null, 'perf4')}</div>
               </div>
             )}
           </CustomTabPanel>
-          <CustomTabPanel value={value} index={1}>
+          <CustomTabPanel value={tab ? Number(tab) : value} index={1}>
             {codeValue && (
               <div className="flex flex-col gap-8">
                 <div className="flex gap-8">
-                  {ChartItem(dataChart?.bal1, checkedCK?.bal1, 'bal1', true)}
                   {ChartItem(dataChart?.bal2, checkedCK?.bal2, 'bal2', true)}
-                </div>
-                <div className="flex gap-8">
                   {ChartItem(dataChart?.bal3, checkedCK?.bal3, 'bal3', true)}
-                  {ChartItem(dataChart?.bal4, checkedCK?.bal4, 'bal4', true)}
                 </div>
                 <div className="flex gap-8">
-                  {ChartItem(dataChart?.bal5, checkedCK?.bal5, 'bal5', true)}
+                  {ChartItem(dataChart?.bal1, checkedCK?.bal1, 'bal1', true)}
+                </div>
+              </div>
+            )}
+          </CustomTabPanel>
+          <CustomTabPanel value={tab ? Number(tab) : value} index={2}>
+            {codeValue && (
+              <div className="flex flex-col gap-8">
+                <div className="flex gap-8">
+                  {ChartItem(dataChart?.perf2, checkedCK?.perf2, 'perf2', true)}
+                  {ChartItem(dataChart?.perf5, null, 'perf5')}
                 </div>
               </div>
             )}
@@ -1787,7 +1796,7 @@ export const TabChart = () => {
       )}
       {tabType === 'NganHang' && (
         <>
-          <CustomTabPanel value={value} index={0}>
+          <CustomTabPanel value={tab ? Number(tab) : value} index={0}>
             {codeValue && (
               <div className="flex flex-col gap-8">
                 <div className="flex gap-8">
@@ -1801,7 +1810,7 @@ export const TabChart = () => {
               </div>
             )}
           </CustomTabPanel>
-          <CustomTabPanel value={value} index={1}>
+          <CustomTabPanel value={tab ? Number(tab) : value} index={1}>
             {codeValue && (
               <div className="flex flex-col gap-8">
                 <div className="flex gap-8">
@@ -1823,7 +1832,7 @@ export const TabChart = () => {
               </div>
             )}
           </CustomTabPanel>
-          <CustomTabPanel value={value} index={2}>
+          <CustomTabPanel value={tab ? Number(tab) : value} index={2}>
             {codeValue && (
               <div className="flex flex-col gap-8">
                 <div className="flex gap-8">
