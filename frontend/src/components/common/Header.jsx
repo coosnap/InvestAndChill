@@ -1,7 +1,6 @@
 import { changePassword, getUserDetail, updateUser } from '@/api/user';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { CodeValue } from '@/store/common';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
 import { useCallback, useEffect, useState } from 'react';
@@ -10,7 +9,6 @@ import { Controller, useForm } from 'react-hook-form';
 import { FcReading } from 'react-icons/fc';
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
-import { useSetRecoilState } from 'recoil';
 import { z } from 'zod';
 import { Label } from '../ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
@@ -41,6 +39,22 @@ const infoSchema = z.object({
   fullName: z.string(),
   password: z.string().min(1, { message: 'Vui lòng điền mật khẩu' }),
 });
+
+function stringToSlug(str) {
+  var from = 'àáãảạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệđùúủũụưừứửữựòóỏõọôồốổỗộơờớởỡợìíỉĩịäëïîöüûñçýỳỹỵỷ',
+    to = 'aaaaaaaaaaaaaaaaaeeeeeeeeeeeduuuuuuuuuuuoooooooooooooooooiiiiiaeiiouuncyyyyy';
+  for (var i = 0, l = from.length; i < l; i++) {
+    str = str.replace(RegExp(from[i], 'gi'), to[i]);
+  }
+
+  str = str
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\-]/g, '-')
+    .replace(/-+/g, '-');
+
+  return str.toUpperCase();
+}
 
 function Header() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -200,7 +214,7 @@ function Header() {
               variant="outlined"
               size="small"
               placeholder="Tìm kiếm"
-              onChange={(e) => setValueChange(e.target.value?.toUpperCase())}
+              onChange={(e) => setValueChange(stringToSlug(e.target.value))}
               value={valueChange}
               onKeyDown={(e) => {
                 if (e.keyCode == 13) {

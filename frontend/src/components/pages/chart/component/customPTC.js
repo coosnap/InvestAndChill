@@ -7,12 +7,14 @@ export let customPerfPTC1 = {
       label: 'Doanh thu thuần',
       dataKey: 'doanhSoThuan',
       yAxisId: 'leftAxis',
+      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
       type: 'bar',
       label: 'Lợi nhuận ròng',
       dataKey: 'loiNhuanCuaCoDongCongTyMe',
       yAxisId: 'leftAxis',
+      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
       type: 'line',
@@ -20,6 +22,7 @@ export let customPerfPTC1 = {
       dataKey: 'bienLaiGop',
       curve: 'linear',
       yAxisId: 'rightAxis',
+      valueFormatter: (v) => (v === null ? '' : v + ' %'),
     },
     {
       type: 'line',
@@ -27,6 +30,7 @@ export let customPerfPTC1 = {
       dataKey: 'bienLaiRong',
       curve: 'linear',
       yAxisId: 'rightAxis',
+      valueFormatter: (v) => (v === null ? '' : v + ' %'),
     },
   ],
   yAxis: {
@@ -44,6 +48,7 @@ export let customPerfPTC2 = {
       dataKey: 'loiNhuanCotLoi',
       yAxisId: 'rightAxis',
       stack: 'stack',
+      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -51,6 +56,7 @@ export let customPerfPTC2 = {
       dataKey: 'loiNhuanTaiChinh',
       yAxisId: 'rightAxis',
       stack: 'stack',
+      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -58,6 +64,7 @@ export let customPerfPTC2 = {
       dataKey: 'thuNhapKhac',
       yAxisId: 'rightAxis',
       stack: 'stack',
+      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -65,11 +72,12 @@ export let customPerfPTC2 = {
       dataKey: 'laiLoTuCongTyLienDoanh',
       yAxisId: 'rightAxis',
       stack: 'stack',
+      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
   ],
   yAxis: {
     left: { type: 'per', piecewise: false },
-    right: { type: 'bil', piecewise: false, showLineReference: true },
+    right: { type: 'bil', piecewise: true, showLineReference: true },
   },
 };
 export let customPerfPTC3 = {
@@ -82,6 +90,7 @@ export let customPerfPTC3 = {
       dataKey: 'salesTrailing',
       yAxisId: 'leftAxis',
       stack: 'stack',
+      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
       type: 'line',
@@ -89,6 +98,7 @@ export let customPerfPTC3 = {
       dataKey: 'gpmtrailing',
       curve: 'linear',
       yAxisId: 'rightAxis',
+      valueFormatter: (v) => (v === null ? '' : v + ' %'),
     },
     {
       type: 'line',
@@ -96,6 +106,7 @@ export let customPerfPTC3 = {
       dataKey: 'sgamtrailing',
       curve: 'linear',
       yAxisId: 'rightAxis',
+      valueFormatter: (v) => (v === null ? '' : v + ' %'),
     },
     {
       type: 'line',
@@ -103,6 +114,7 @@ export let customPerfPTC3 = {
       dataKey: 'ebitmTrailing',
       curve: 'linear',
       yAxisId: 'rightAxis',
+      valueFormatter: (v) => (v === null ? '' : v + ' %'),
     },
   ],
   yAxis: {
@@ -119,12 +131,14 @@ export let customPerfPTC4 = {
       label: 'EBIT TTM',
       dataKey: 'ebittrailing',
       yAxisId: 'leftAxis',
+      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
       type: 'bar',
       label: 'Lợi nhuận tài chính TTM',
       dataKey: 'netFinanceialTrailing',
       yAxisId: 'leftAxis',
+      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
       type: 'line',
@@ -132,6 +146,7 @@ export let customPerfPTC4 = {
       dataKey: 'ebitmTrailing',
       curve: 'linear',
       yAxisId: 'rightAxis',
+      valueFormatter: (v) => (v === null ? '' : v + ' %'),
     },
     {
       type: 'line',
@@ -139,6 +154,7 @@ export let customPerfPTC4 = {
       dataKey: 'nimgTrailing',
       curve: 'linear',
       yAxisId: 'rightAxis',
+      valueFormatter: (v) => (v === null ? '' : v + ' %'),
     },
   ],
   yAxis: {
@@ -156,6 +172,7 @@ export let customPerfPTC5 = {
       dataKey: 'nitrailing',
       yAxisId: 'rightAxis',
       stack: 'stack',
+      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -163,17 +180,19 @@ export let customPerfPTC5 = {
       dataKey: 'minoritiesTrailing',
       yAxisId: 'rightAxis',
       stack: 'stack',
+      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
       type: 'bar',
       label: 'Lợi nhuận CTLDLK TTM',
       dataKey: 'associateTrailing',
       yAxisId: 'rightAxis',
+      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
   ],
   yAxis: {
     left: { type: 'bil', piecewise: false },
-    right: { type: 'bil', piecewise: false, showLineReference: true },
+    right: { type: 'bil', piecewise: true, showLineReference: true },
   },
 };
 export let customPerfPTC6 = {
@@ -185,12 +204,14 @@ export let customPerfPTC6 = {
       label: 'EBITDA TTM',
       dataKey: 'ebitdatrailing',
       yAxisId: 'leftAxis',
+      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
       type: 'bar',
       label: 'EBIT TTM',
       dataKey: 'ebittrailing',
       yAxisId: 'leftAxis',
+      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
       type: 'line',
@@ -198,11 +219,12 @@ export let customPerfPTC6 = {
       dataKey: 'interestExpenseTrailing',
       curve: 'linear',
       yAxisId: 'rightAxis',
+      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
   ],
   yAxis: {
-    left: { type: 'bil', piecewise: false, showLineReference: true },
-    right: { type: 'bil', piecewise: true },
+    left: { type: 'bil', piecewise: true, showLineReference: true },
+    right: { type: 'bil', piecewise: false },
   },
 };
 export let customPerfPTC7 = {
@@ -215,6 +237,7 @@ export let customPerfPTC7 = {
       dataKey: 'roe',
       curve: 'linear',
       yAxisId: 'leftAxis',
+      valueFormatter: (v) => (v === null ? '' : v + ' %'),
     },
     {
       type: 'line',
@@ -222,6 +245,7 @@ export let customPerfPTC7 = {
       dataKey: 'roic',
       curve: 'linear',
       yAxisId: 'leftAxis',
+      valueFormatter: (v) => (v === null ? '' : v + ' %'),
     },
     {
       type: 'line',
@@ -229,6 +253,7 @@ export let customPerfPTC7 = {
       dataKey: 'laiVay',
       curve: 'linear',
       yAxisId: 'rightAxis',
+      valueFormatter: (v) => (v === null ? '' : v + ' %'),
     },
   ],
   yAxis: {
@@ -246,6 +271,7 @@ export let customPerfPTC8 = {
       dataKey: 'roe',
       curve: 'linear',
       yAxisId: 'leftAxis',
+      valueFormatter: (v) => (v === null ? '' : v + ' %'),
     },
     {
       type: 'line',
@@ -253,6 +279,7 @@ export let customPerfPTC8 = {
       dataKey: 'assetTurnover',
       curve: 'linear',
       yAxisId: 'rightAxis',
+      valueFormatter: (v) => (v === null ? '' : v + ' lần'),
     },
     {
       type: 'line',
@@ -260,6 +287,7 @@ export let customPerfPTC8 = {
       dataKey: 'leverage',
       curve: 'linear',
       yAxisId: 'rightAxis',
+      valueFormatter: (v) => (v === null ? '' : v + ' lần'),
     },
     {
       type: 'line',
@@ -267,6 +295,7 @@ export let customPerfPTC8 = {
       dataKey: 'nimgTrailing',
       curve: 'linear',
       yAxisId: 'leftAxis',
+      valueFormatter: (v) => (v === null ? '' : v + ' %'),
     },
     {
       type: 'line',
@@ -274,6 +303,7 @@ export let customPerfPTC8 = {
       dataKey: 'dee',
       curve: 'linear',
       yAxisId: 'rightAxis',
+      valueFormatter: (v) => (v === null ? '' : v + ' lần'),
     },
   ],
   yAxis: {
@@ -688,8 +718,8 @@ export let customValPTC1 = {
     },
   ],
   yAxis: {
-    left: { type: 'time', piecewise: false },
-    right: { type: 'time', piecewise: false },
+    left: { type: 'time', piecewise: false, dash2: true },
+    right: { type: 'time', piecewise: false, dash2: true },
   },
 };
 export let customValPTC2 = {
@@ -720,7 +750,7 @@ export let customValPTC2 = {
   ],
   yAxis: {
     left: { type: 'per', piecewise: false },
-    right: { type: 'time', piecewise: false, dash: true },
+    right: { type: 'time', piecewise: false, dash2: true },
   },
 };
 export let customValPTC3 = {
@@ -773,7 +803,7 @@ export let customValPTC4 = {
   ],
   yAxis: {
     left: { type: 'bil', piecewise: false },
-    right: { type: 'time', piecewise: false, dash: true },
+    right: { type: 'time', piecewise: false, dash2: true },
   },
 };
 export let customValPTC5 = {
@@ -826,7 +856,7 @@ export let customValPTC6 = {
   ],
   yAxis: {
     left: { type: 'bil', piecewise: false },
-    right: { type: 'time', piecewise: false, dash: true },
+    right: { type: 'time', piecewise: false, dash2: true },
   },
 };
 export let customValPTC7 = {
@@ -841,22 +871,22 @@ export let customValPTC7 = {
     },
     {
       type: 'line',
-      label: 'EV/EBITDA trung vị',
-      dataKey: 'evebitdaMedian',
+      label: 'EV/EBITDA',
+      dataKey: 'evebitda',
       curve: 'linear',
       yAxisId: 'rightAxis',
     },
     {
       type: 'line',
-      label: 'EV/EBITDA',
-      dataKey: 'evebitda',
+      label: 'EV/EBITDA trung vị',
+      dataKey: 'evebitdaMedian',
       curve: 'linear',
       yAxisId: 'rightAxis',
     },
   ],
   yAxis: {
     left: { type: 'bil', piecewise: false },
-    right: { type: 'time', piecewise: false, dash: true },
+    right: { type: 'time', piecewise: false, dash2: true },
   },
 };
 export let customValPTC8 = {

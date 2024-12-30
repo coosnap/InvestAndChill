@@ -118,6 +118,16 @@ const routes = [
     ),
   },
   {
+    path: '/admin/:id',
+    element: (
+      <AdminRoute>
+        <Suspense>
+          <Admin />
+        </Suspense>
+      </AdminRoute>
+    ),
+  },
+  {
     path: '/admin',
     element: (
       <AdminRoute>

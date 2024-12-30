@@ -5,7 +5,7 @@ import {
   getTypeDataChart,
 } from '@/api/chart';
 import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
-import { Box, FormControlLabel, Stack, styled, Switch, Tab, Tabs, Typography } from '@mui/material';
+import { Box, FormControlLabel, Stack, styled, Switch, Tab, Tabs } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import {
@@ -142,6 +142,7 @@ export const TabChart = () => {
       height: 16,
       borderRadius: 50,
       backgroundColor: 'gray',
+      boxShadow: 'none',
     },
     '& .MuiSwitch-track::before': {
       content: `'Năm'`,
@@ -193,6 +194,7 @@ export const TabChart = () => {
       height: 16,
       borderRadius: 50,
       backgroundColor: 'gray',
+      boxShadow: 'none',
     },
     '& .MuiSwitch-track::before': {
       content: `'On'`,
@@ -243,6 +245,7 @@ export const TabChart = () => {
       height: 30,
       borderRadius: '4px',
       backgroundColor: 'red !important',
+      boxShadow: 'none',
       // border: '2px solid #FFF4C7',
     },
     '& .MuiSwitch-track::before': {
@@ -301,10 +304,13 @@ export const TabChart = () => {
         xAxis: {
           scaleType: 'band',
           dataKey: 'month',
-          tickInterval: (value) =>
-            !custom.year ? value.includes('Q1') && Number(value.split('.')[0]) % 2 === 0 : value,
+          tickInterval: (value) => (!custom.year ? value.includes('Q1') : value),
           valueFormatter: (value, context) =>
-            context.location === 'tick' ? value.split('.')[0] : value,
+            context.location === 'tick'
+              ? value.split('.')[0]
+              : custom.year
+              ? value.split('.')[0]
+              : value,
           categoryGapRatio: xAxis ? xAxis.categoryGapRatio : 0.5,
           barGapRatio: xAxis ? xAxis.barGapRatio : 0.5,
         },

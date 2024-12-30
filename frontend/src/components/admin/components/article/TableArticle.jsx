@@ -33,7 +33,7 @@ export default function TableArticle() {
 
   const [articles, setArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [inputValue, setInputValue] = useState('');
+  // const [inputValue, setInputValue] = useState('');
 
   const setTabDefault = useSetRecoilState(TabDefault);
 
@@ -62,7 +62,7 @@ export default function TableArticle() {
   }
 
   async function handleEditArtical(id) {
-    navigate(`/admin?articalId=${id}`);
+    navigate(`/admin/${id}`);
     setTabDefault('add-article');
   }
 

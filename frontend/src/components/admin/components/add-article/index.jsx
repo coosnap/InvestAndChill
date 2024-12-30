@@ -14,11 +14,12 @@ import { useSetRecoilState } from 'recoil';
 
 import './style.scss';
 import { toast, ToastContainer } from 'react-toastify';
+import { useParams } from 'react-router-dom';
 
 export const AddArticleEditor = () => {
   const ref = useRef(null);
-  const query = new URLSearchParams(window.location.search);
-  const articalId = query.get('articalId');
+  const params = useParams();
+  const articleId = params.id;
 
   const [content, setContent] = useState('');
   const [article, setArticle] = useState({});
@@ -63,6 +64,9 @@ export const AddArticleEditor = () => {
     '|',
     'source',
     'lineHeight',
+    '|',
+    'undo',
+    'redo',
   ];
 
   const editorConfig = {
@@ -110,9 +114,9 @@ export const AddArticleEditor = () => {
       url: article.url,
       label: article.label,
     };
-    if (articalId) {
+    if (articleId) {
       try {
-        let result = await updateArticle({ ...formData, id: articalId });
+        let result = await updateArticle({ ...formData, id: articleId });
         if (result) {
           await saveTypeAndStock(article);
         }
@@ -145,12 +149,12 @@ export const AddArticleEditor = () => {
   }
 
   async function getArticle() {
-    const result = await getArticleDetail(articalId);
+    const result = await getArticleDetail(articleId);
     if (result) {
       setContent(result?.content);
       setArticle((prev) => ({
         ...prev,
-        id: articalId,
+        id: articleId,
         content: result?.content || '',
         stockId: result?.stockId?.id || '',
         label: result?.label || '',
@@ -161,7 +165,7 @@ export const AddArticleEditor = () => {
   }
 
   useEffect(() => {
-    if (articalId) {
+    if (articleId) {
       getArticle();
     }
     getData();
