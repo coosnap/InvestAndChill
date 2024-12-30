@@ -273,7 +273,10 @@ export const TabChart = () => {
     },
   }));
 
+  const tab = window.localStorage.getItem('tab');
+
   const handleChange = (event, newValue) => {
+    window.localStorage.setItem('tab', newValue);
     setValue(newValue);
   };
 
@@ -1601,7 +1604,7 @@ export const TabChart = () => {
         <div className="flex justify-between">
           <Tabs
             sx={{ '.css-1h9z7r5-MuiButtonBase-root-MuiTab-root': { fontWeight: 'bold' } }}
-            value={value}
+            value={tab ? Number(tab) : value}
             onChange={handleChange}
             aria-label="basic tabs example"
           >

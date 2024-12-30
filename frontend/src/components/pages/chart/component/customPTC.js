@@ -718,8 +718,8 @@ export let customValPTC1 = {
     },
   ],
   yAxis: {
-    left: { type: 'time', piecewise: false, dash2: true },
-    right: { type: 'time', piecewise: false, dash2: true },
+    left: { type: 'time', piecewise: false, dash1: true },
+    right: { type: 'time', piecewise: false, dash3: true },
   },
 };
 export let customValPTC2 = {

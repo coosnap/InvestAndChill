@@ -115,6 +115,10 @@ export default function NoStackChart(data) {
           bottom: 35,
         }}
         sx={{
+          '.MuiLineElement-series-auto-generated-id-0': {
+            strokeDasharray:
+              data.data.yAxis.right.dash0 || data.data.yAxis.left.dash0 ? '5 5' : null,
+          },
           '.MuiLineElement-series-auto-generated-id-1': {
             strokeDasharray:
               data.data.yAxis.right.dash1 || data.data.yAxis.left.dash1 ? '5 5' : null,
@@ -122,6 +126,10 @@ export default function NoStackChart(data) {
           '.MuiLineElement-series-auto-generated-id-2': {
             strokeDasharray:
               data.data.yAxis.right.dash2 || data.data.yAxis.left.dash2 ? '5 5' : null,
+          },
+          '.MuiLineElement-series-auto-generated-id-3': {
+            strokeDasharray:
+              data.data.yAxis.right.dash3 || data.data.yAxis.left.dash3 ? '5 5' : null,
           },
         }}
       >
