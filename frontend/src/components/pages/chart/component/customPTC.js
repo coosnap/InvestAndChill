@@ -119,7 +119,7 @@ export let customPerfPTC3 = {
   ],
   yAxis: {
     left: { type: 'bil', piecewise: false },
-    right: { type: 'per', piecewise: false },
+    right: { type: 'per', piecewise: true },
   },
 };
 export let customPerfPTC4 = {
@@ -470,7 +470,7 @@ export let customBalPTC4 = {
   ],
   yAxis: {
     left: { type: 'per', piecewise: false },
-    right: { type: 'bil', piecewise: false, showLineReference: true },
+    right: { type: 'bil', piecewise: true, showLineReference: true },
   },
 };
 export let customBalPTC5 = {

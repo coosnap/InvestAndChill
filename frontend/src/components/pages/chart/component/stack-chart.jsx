@@ -10,7 +10,9 @@ export default function NoStackChart(data) {
     if (max) {
       if (Math.abs(value) > max) {
         return value - Math.abs(value) / 10;
-      } else if (value < 0 || value > 0) {
+      } else if (value < 0) {
+        return value + value / 10;
+      } else if (value > 0) {
         return value - (value + max) / 10;
       } else if (value === 0) {
         if ((value, max)) return value - (value + max) / 10;
