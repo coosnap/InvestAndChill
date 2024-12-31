@@ -7,6 +7,7 @@ import java.util.List;
 import com.starter.InvestAndChill.jwt.models.PTCReport;
 import com.starter.InvestAndChill.jwt.models.Valuation;
 import com.starter.InvestAndChill.jwt.models.ValuationKey;
+import com.starter.InvestAndChill.jwt.payload.response.ReportReponse;
 
 public class CalculatorUtils {
 	public static void calculatePI54(List<PTCReport> listReport) {
@@ -99,17 +100,10 @@ public class CalculatorUtils {
 			} else if (type.equalsIgnoreCase("PS")) {
 				listValuation.get(i).setPsMedian(trungVi);
 			}
-		}
-		
-		
-		
-		
-		
-		
+		}		
 	}
 	
 	public static List<Double> initListFull(List<Valuation> listValuation,String type) {
-		
 		List<Double> list = new ArrayList<Double>();
 		for (int i = 0; i < listValuation.size(); i++) {
 			if (type.equalsIgnoreCase("PE")) {
@@ -124,4 +118,10 @@ public class CalculatorUtils {
 		}
 		return list;
 	}
+	
+	public static void changeColToArea(ReportReponse rs) {
+		System.out.print("test");
+	}
+	
+	
 }

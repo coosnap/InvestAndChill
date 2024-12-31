@@ -279,6 +279,9 @@ public class PTCReportController {
 		List<Bal1Response> list = listReport.stream()
                 .map(report -> {
                 	Bal1Response response = new Bal1Response();
+                	
+                	//CalculatorUtils.changeColToArea(response);
+                	
                 	response.setId(report.getId());
                 	response.setTitle(Constants.PTC_bal1);
                     response.setTienDTNGDaoHan(RoundNumber.lamTron(report.getTienDTNGDaoHan()));
@@ -291,6 +294,9 @@ public class PTCReportController {
                     return response;
                 })
                 .collect(Collectors.toList());
+		
+		
+		
 		 return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 	
@@ -333,7 +339,7 @@ public class PTCReportController {
                 	Bal3Response response = new Bal3Response();
                 	response.setId(report.getId());
                 	response.setTitle(Constants.PTC_bal3);
-                    response.setDAPPE(RoundNumber.lamTron(report.getDAPPE()));
+                    response.setDAPPE(RoundNumber.lamTron(-report.getDAPPE()));
                     response.setGrossPPE(RoundNumber.lamTron(report.getGrossPPE()));
                     response.setXayDungCoBanDoDang(RoundNumber.lamTron(report.getXayDungCoBanDoDang()));
                     return response;
@@ -480,6 +486,7 @@ public class PTCReportController {
                     response.setNoVay(RoundNumber.lamTron(-report.getNoVay()));
                     response.setTienLongTrongPhaiThuChoVay(RoundNumber.lamTron(report.getTienLongTrongPhaiThuChoVay()));
                     response.setTienVaTuongDuongTien(RoundNumber.lamTron(report.getTienVaTuongDuongTien()));
+                    response.setNetDebt(RoundNumber.lamTron(report.getNetDebt()));
                     return response;
                 })
                 .collect(Collectors.toList());

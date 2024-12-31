@@ -8,6 +8,13 @@ public class Cf3Response extends ReportReponse{
 	private Double tienVaTuongDuongTien;
 	private Double dauTuNamGiuDenNgayDaoHan;
 	private Double tienLongTrongPhaiThuChoVay;
+	private Double NetDebt;
+	public Double getNetDebt() {
+		return NetDebt;
+	}
+	public void setNetDebt(Double netDebt) {
+		NetDebt = netDebt;
+	}
 	public Double getNoVay() {
 		return noVay;
 	}

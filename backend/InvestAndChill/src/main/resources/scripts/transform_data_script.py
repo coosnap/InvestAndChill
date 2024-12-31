@@ -373,7 +373,7 @@ def phi_tai_chinh_calculate_data(rs: List[Dict], combine_data: List[Dict]) -> Li
             item['p_i_61'] = extract_sum_previous_quarters(item, combine_data, 'p_p_8')
 
             item['p_i_62'] = (item['p_b_38'] or 0) + (item['p_b_48'] or 0)
-            item['p_i_63'] = (item['p_b_39'] or 0) - (item['p_b_49'] or 0)
+            item['p_i_63'] = (item['p_b_39'] or 0) + (item['p_b_49'] or 0)
             item['p_i_64'] = (item['p_p_23'] or 0) - (item['p_m_2'] or 0) - (item['p_m_3'] or 0)
             item['p_i_65'] = extract_sum_previous_quarters(item, combine_data, 'p_i_64')
             item['p_i_66'] = (item['p_i_26'] or 0) - (item['p_m_2'] or 0)
@@ -464,6 +464,10 @@ def phi_tai_chinh_calculate_data(rs: List[Dict], combine_data: List[Dict]) -> Li
 
             # item['p_i_54'] = extract_sum_previous_years(item, combine_data, 'p_i_33', 9)
             # item['p_i_55'] = extract_sum_previous_years(item, combine_data, 'p_i_53', 9)
+            
+            #bo sung
+            item['p_i_62'] = (item['p_b_38'] or 0) + (item['p_b_48'] or 0)
+            item['p_i_63'] = (item['p_b_39'] or 0) + (item['p_b_49'] or 0)
 
     return rs
 
@@ -513,7 +517,7 @@ def ngan_hang_calculate_data(rs: List[Dict], combine_data: List[Dict]):
             item['b_i_22'] = item['b_f_67'] / item['b_b_13'] if item['b_f_67'] is not None and item['b_b_13'] != 0 and item['b_b_13'] is not None else None
             item['b_i_23'] = item['b_i_12'] / item['b_b_13'] if item['b_i_12'] is not None and item['b_b_13'] != 0 and item['b_b_13'] is not None else None
             item['b_i_24'] = -item['b_b_14'] / item['b_i_12'] if item['b_b_14'] is not None and item['b_i_12'] != 0 and item['b_i_12'] is not None else None
-            item['b_i_25'] = item['b_b_44'] / item['b_b_13'] if item['b_b_44'] is not None and item['b_b_13'] != 0 and item['b_b_13'] is not None else None
+            item['b_i_25'] = item['b_b_44'] / item['b_p_3'] if item['b_b_44'] is not None and item['b_p_3'] != 0 and item['b_p_3'] is not None else None
             item['b_i_26'] = ((item['b_i_12'] or 0) + (item['b_f_67'] or 0)) / item['b_b_64'] if item['b_b_64'] != 0 and item['b_b_64'] is not None else None
             item['b_i_27'] = item['b_b_42'] / item['b_b_1'] if item['b_b_42'] is not None and item['b_b_1'] != 0 and item['b_b_1'] is not None else None
             item['b_i_28'] = item['b_b_1'] / item['b_b_64'] if item['b_b_1'] is not None and item['b_b_64'] != 0 and item['b_b_64'] is not None else None
@@ -577,7 +581,7 @@ def ngan_hang_calculate_data(rs: List[Dict], combine_data: List[Dict]):
             item['b_i_22'] = item['b_f_67'] / item['b_b_13'] if item['b_f_67'] is not None and item['b_b_13'] != 0 and item['b_b_13'] is not None else None
             item['b_i_23'] = item['b_i_12'] / item['b_b_13'] if item['b_i_12'] is not None and item['b_b_13'] != 0 and item['b_b_13'] is not None else None
             item['b_i_24'] = -item['b_b_14'] / item['b_i_12'] if item['b_b_14'] is not None and item['b_i_12'] != 0 and item['b_i_12'] is not None else None
-            item['b_i_25'] = item['b_b_44'] / item['b_b_13'] if item['b_b_44'] is not None and item['b_b_13'] != 0 and item['b_b_13'] is not None else None
+            item['b_i_25'] = item['b_b_44'] / item['b_p_3'] if item['b_b_44'] is not None and item['b_p_3'] != 0 and item['b_p_3'] is not None else None
             item['b_i_26'] = ((item['b_i_12'] or 0) + (item['b_f_67'] or 0)) / item['b_b_64'] if item['b_b_64'] != 0 and item['b_b_64'] is not None else None
             item['b_i_27'] = item['b_b_42'] / item['b_b_1'] if item['b_b_42'] is not None and item['b_b_1'] != 0 and item['b_b_1'] is not None else None
             item['b_i_28'] = item['b_b_1'] / item['b_b_64'] if item['b_b_1'] is not None and item['b_b_64'] != 0 and item['b_b_64'] is not None else None

@@ -69,7 +69,7 @@ public class BankReportController {
 	                    response.setTitle(Constants.NganHang_perf1);
 	                    response.setBienLaiRong(RoundNumber.lamTron(report.getBienLaiRong()));
 	                    response.setCoDongCuaCongTyMe(RoundNumber.lamTron(report.getCoDongCuaCongTyMe()));
-	                    response.setBienLaiRong(RoundNumber.lamTronPhanTram(report.getBienLaiRong()));
+	                    response.setTongThuNhapHoatDong(RoundNumber.lamTron(report.getTongThuNhapHoatDong()));
 	                    return response;
 	                })
 	                .collect(Collectors.toList());
@@ -330,7 +330,7 @@ public class BankReportController {
 	                	response.setId(report.getId());
 	                	response.setTitle(Constants.NganHang_bal7);
 	                    response.setDuPhongBaoNoXau(RoundNumber.lamTronPhanTram(report.getDuPhongBaoNoXau()));
-	                    response.setDuPhongRuiRoChoVayKhachHang(RoundNumber.lamTron(report.getDuPhongRuiRoChoVayKhachHang()));
+	                    response.setDuPhongRuiRoChoVayKhachHang(RoundNumber.lamTron(-report.getDuPhongRuiRoChoVayKhachHang()));
 	                    response.setNoXau(RoundNumber.lamTron(report.getNoXau()));
 	                    return response;
 	                })
