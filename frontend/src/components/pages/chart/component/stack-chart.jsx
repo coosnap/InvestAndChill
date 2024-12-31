@@ -1,14 +1,8 @@
 import Box from '@mui/material/Box';
-import {
-  ChartsLegend,
-  ChartsReferenceLine,
-  ChartsTooltip,
-  ChartsYAxis,
-  ScatterPlot,
-} from '@mui/x-charts';
+import { ChartsLegend, ChartsReferenceLine, ChartsTooltip, ChartsYAxis } from '@mui/x-charts';
 import { BarPlot } from '@mui/x-charts/BarChart';
 import { ChartsXAxis } from '@mui/x-charts/ChartsXAxis';
-import { AreaPlot, LineHighlightPlot, LinePlot } from '@mui/x-charts/LineChart';
+import { AreaPlot, LineHighlightPlot, LinePlot, MarkPlot } from '@mui/x-charts/LineChart';
 import { ResponsiveChartContainer } from '@mui/x-charts/ResponsiveChartContainer';
 
 export default function NoStackChart(data) {
@@ -87,27 +81,67 @@ export default function NoStackChart(data) {
           '.MuiLineElement-series-auto-generated-id-0': {
             strokeDasharray:
               data.data.yAxis.right.dash0 || data.data.yAxis.left.dash0 ? '5 5' : null,
+            display:
+              data.data.yAxis.right.marker || data.data.yAxis.left.marker === 0 ? 'none' : 'block',
           },
+          '.MuiMarkElement-series-auto-generated-id-0': {
+            display:
+              data.data.yAxis.right.marker || data.data.yAxis.left.marker === 0 ? 'block' : 'none',
+          },
+          '.MuiBarElement-series-auto-generated-id-0': {
+            opacity: data.data.yAxis.right.opacity === 0 ? 0.5 : 1,
+          },
+
           '.MuiLineElement-series-auto-generated-id-1': {
             strokeDasharray:
               data.data.yAxis.right.dash1 || data.data.yAxis.left.dash1 ? '5 5' : null,
+            display:
+              data.data.yAxis.right.marker || data.data.yAxis.left.marker === 1 ? 'none' : 'block',
           },
+          '.MuiMarkElement-series-auto-generated-id-1': {
+            display:
+              data.data.yAxis.right.marker || data.data.yAxis.left.marker === 1 ? 'block' : 'none',
+          },
+          '.MuiBarElement-series-auto-generated-id-1': {
+            opacity: data.data.yAxis.right.opacity === 1 ? 0.5 : 1,
+          },
+
           '.MuiLineElement-series-auto-generated-id-2': {
             strokeDasharray:
               data.data.yAxis.right.dash2 || data.data.yAxis.left.dash2 ? '5 5' : null,
+            display:
+              data.data.yAxis.right.marker || data.data.yAxis.left.marker === 2 ? 'none' : 'block',
           },
+          '.MuiMarkElement-series-auto-generated-id-2': {
+            display:
+              data.data.yAxis.right.marker || data.data.yAxis.left.marker === 2 ? 'block' : 'none',
+          },
+          '.MuiBarElement-series-auto-generated-id-2': {
+            opacity: data.data.yAxis.right.opacity === 2 ? 0.5 : 1,
+          },
+
           '.MuiLineElement-series-auto-generated-id-3': {
             strokeDasharray:
               data.data.yAxis.right.dash3 || data.data.yAxis.left.dash3 ? '5 5' : null,
+            display:
+              data.data.yAxis.right.marker || data.data.yAxis.left.marker === 3 ? 'none' : 'block',
+          },
+          '.MuiMarkElement-series-auto-generated-id-3': {
+            display:
+              data.data.yAxis.right.marker || data.data.yAxis.left.marker === 3 ? 'block' : 'none',
+          },
+          '.MuiBarElement-series-auto-generated-id-3': {
+            opacity: data.data.yAxis.right.opacity === 3 ? 0.5 : 1,
           },
         }}
       >
-        <ScatterPlot />
         <BarPlot />
         <LinePlot />
         <LineHighlightPlot />
         <AreaPlot />
         <ChartsXAxis />
+        {data.data.yAxis.left.marker && <MarkPlot />}
+
         {data.data.yAxis.left.showLineReference && (
           <ChartsReferenceLine
             axisId={'leftAxis'}

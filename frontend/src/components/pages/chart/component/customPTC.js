@@ -192,7 +192,7 @@ export let customPerfPTC5 = {
   ],
   yAxis: {
     left: { type: 'bil', piecewise: false },
-    right: { type: 'bil', piecewise: true, showLineReference: true },
+    right: { type: 'bil', piecewise: true, showLineReference: true, opacity: 2 },
   },
 };
 export let customPerfPTC6 = {
@@ -425,6 +425,7 @@ export let customBalPTC3 = {
       label: 'Nguyên giá tài sản cố định',
       dataKey: 'grossPPE',
       yAxisId: 'rightAxis',
+      stack: 'stack',
       valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
@@ -432,7 +433,6 @@ export let customBalPTC3 = {
       label: 'Khấu hao lũy kế',
       dataKey: 'dappe',
       yAxisId: 'rightAxis',
-      stack: 'stack',
       valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
@@ -446,7 +446,7 @@ export let customBalPTC3 = {
   ],
   yAxis: {
     left: { type: 'per', piecewise: false },
-    right: { type: 'bil', piecewise: true, showLineReference: true },
+    right: { type: 'bil', piecewise: true, showLineReference: true, opacity: 2 },
   },
 };
 export let customBalPTC4 = {
@@ -544,7 +544,7 @@ export let customBalPTC6 = {
     },
   ],
   yAxis: {
-    left: { type: 'per', piecewise: true },
+    left: { type: 'per', piecewise: true, marker: 2 },
     right: { type: 'per', piecewise: true },
   },
 };

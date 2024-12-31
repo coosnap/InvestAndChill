@@ -36,7 +36,7 @@ export let customNHPerf2 = {
   series: [
     {
       type: 'bar',
-      label: 'Chi phí hoạt động/TTN HĐ',
+      label: '%Chi phí hoạt động',
       dataKey: 'cphoatDongTTNHD',
       yAxisId: 'leftAxis',
       stack: 'stack',
@@ -44,7 +44,7 @@ export let customNHPerf2 = {
     },
     {
       type: 'bar',
-      label: 'Chi phí dự phòng/TTN HĐ',
+      label: '%Chi phí dự phòng',
       dataKey: 'cpduPhongTTNHD',
       yAxisId: 'leftAxis',
       stack: 'stack',
@@ -52,7 +52,7 @@ export let customNHPerf2 = {
     },
     {
       type: 'line',
-      label: 'Tổng chi phí/TTN HĐ',
+      label: '%Tổng chi phí',
       dataKey: 'tongCPTTNHD',
       yAxisId: 'leftAxis',
       curve: 'linear',
@@ -60,7 +60,7 @@ export let customNHPerf2 = {
     },
   ],
   yAxis: {
-    left: { type: 'per', piecewise: true },
+    left: { type: 'per', piecewise: true, marker: 2 },
     right: { type: 'per', piecewise: false },
   },
 };

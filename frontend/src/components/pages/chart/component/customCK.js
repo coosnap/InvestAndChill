@@ -58,14 +58,14 @@ export let customPerfCK2 = {
       yAxisId: 'rightAxis',
       valueFormatter: (v) => (v === null ? '' : v + ' %'),
     },
-    {
-      type: 'line',
-      label: 'ROIC',
-      dataKey: 'roic',
-      curve: 'linear',
-      yAxisId: 'leftAxis',
-      valueFormatter: (v) => (v === null ? '' : v + ' %'),
-    },
+    // {
+    //   type: 'line',
+    //   label: 'ROIC',
+    //   dataKey: 'roic',
+    //   curve: 'linear',
+    //   yAxisId: 'leftAxis',
+    //   valueFormatter: (v) => (v === null ? '' : v + ' %'),
+    // },
   ],
   yAxis: {
     left: { type: 'per', piecewise: true },
