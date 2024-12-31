@@ -34,11 +34,13 @@ function Detail() {
           setBusinessDataThirs(resultThirs);
           setIsLoading(false);
         } else {
-          setBusinessData([]);
+          setBusinessDataFirst([]);
+          setBusinessDataSecond([]);
           setIsLoading(false);
         }
       } catch (error) {
-        setBusinessData([]);
+        setBusinessDataFirst([]);
+        setBusinessDataSecond([]);
         setIsLoading(false);
       }
     };

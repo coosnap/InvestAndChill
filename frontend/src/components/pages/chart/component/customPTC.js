@@ -544,7 +544,7 @@ export let customBalPTC6 = {
     },
   ],
   yAxis: {
-    left: { type: 'per', piecewise: true, marker: 2 },
+    left: { type: 'per', piecewise: true, showLineReference: true, marker: 2 },
     right: { type: 'per', piecewise: true },
   },
 };
