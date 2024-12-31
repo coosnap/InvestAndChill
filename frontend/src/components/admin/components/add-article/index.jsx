@@ -12,9 +12,9 @@ import JoditEditor from 'jodit-react';
 import { useEffect, useRef, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 
-import './style.scss';
-import { toast, ToastContainer } from 'react-toastify';
 import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import './style.scss';
 
 export const AddArticleEditor = () => {
   const ref = useRef(null);
@@ -211,6 +211,10 @@ export const AddArticleEditor = () => {
         setPathImage('');
         toast.success('Hình ảnh đã tồn tại!', {
           position: 'top-right',
+          autoClose: true,
+          closeOnClick: true,
+          draggable: false,
+          toastId: 6,
         });
         return;
       }
@@ -221,6 +225,10 @@ export const AddArticleEditor = () => {
         setPathImage(src);
         toast.success('Upload thành công!', {
           position: 'top-right',
+          autoClose: true,
+          closeOnClick: true,
+          draggable: false,
+          toastId: 7,
         });
         return src;
       }
@@ -237,6 +245,10 @@ export const AddArticleEditor = () => {
       document.execCommand('copy');
       toast.success('Coppy thành công!', {
         position: 'top-right',
+        autoClose: true,
+        closeOnClick: true,
+        draggable: false,
+        toastId: 8,
       });
     } catch (err) {
       console.error('Unable to copy to clipboard', err);
@@ -397,7 +409,6 @@ export const AddArticleEditor = () => {
           </div>
         </>
       )}
-      <ToastContainer />
     </div>
   );
 };

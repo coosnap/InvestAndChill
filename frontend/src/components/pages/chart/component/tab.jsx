@@ -744,7 +744,7 @@ export const TabChart = () => {
     }
   };
 
-  const handleToggleSum = async (typeChart) => {
+  const handleToggleSum = async () => {
     if (tabType === 'PTC') {
       setChecked((prev) => ({ ...prev, chart: !prev.chart }));
       try {
@@ -1632,21 +1632,21 @@ export const TabChart = () => {
             {tabType === 'PTC' && (
               <FormControlLabel
                 checked={!checked.chart}
-                onChange={() => handleToggleSum(tabType)}
+                onChange={() => handleToggleSum()}
                 control={<IOSSwitchSum sx={{ m: 1 }} defaultChecked disableRipple />}
               />
             )}
             {tabType === 'ChungKhoan' && (
               <FormControlLabel
                 checked={!checkedCK.chart}
-                onChange={() => handleToggleSum(tabType)}
+                onChange={() => handleToggleSum()}
                 control={<IOSSwitchSum sx={{ m: 1 }} defaultChecked disableRipple />}
               />
             )}
             {tabType === 'NganHang' && (
               <FormControlLabel
                 checked={!checkedBank.chart}
-                onChange={() => handleToggleSum(tabType)}
+                onChange={() => handleToggleSum()}
                 control={<IOSSwitchSum sx={{ m: 1 }} defaultChecked disableRipple />}
               />
             )}

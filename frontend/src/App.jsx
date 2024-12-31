@@ -5,17 +5,18 @@ import { useCookies } from 'react-cookie';
 import { Outlet, useLocation, useRoutes } from 'react-router-dom';
 import './App.css';
 import { ThemeProvider } from './ThemeProvider';
+import Header from './components/common/Header';
+import Category from './components/pages/Category';
+import Investment from './components/pages/Investment';
+import Detail from './components/pages/detail';
 import Login from './components/pages/login';
 import AdminRoute from './components/router/admin-route';
 import PrivateRoute from './components/router/private-route';
 import PublicRoute from './components/router/public-route';
-import Detail from './components/pages/detail';
-import Header from './components/common/Header';
-import Category from './components/pages/Category';
-import Investment from './components/pages/Investment';
 
 import 'react-toastify/dist/ReactToastify.css';
 import { Charts } from './components/pages/chart';
+import { ToastContainer } from 'react-toastify';
 
 const Admin = React.lazy(() => import('./components/admin/Admin'));
 const Buy = React.lazy(() => import('./components/pages/Buy'));
@@ -168,6 +169,7 @@ function App() {
       <div className="App">
         {pathname.includes('/post') ? <></> : <Layout hideHeaderPaths={['/']} />}
         {routesElement}
+        <ToastContainer />
       </div>
     </ThemeProvider>
   );

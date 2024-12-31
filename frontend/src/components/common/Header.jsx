@@ -2,13 +2,22 @@ import { changePassword, getUserDetail, updateUser } from '@/api/user';
 import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
-import { useCallback, useEffect, useState } from 'react';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  InputAdornment,
+  TextField,
+} from '@mui/material';
+import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { Controller, useForm } from 'react-hook-form';
 import { FcReading } from 'react-icons/fc';
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { z } from 'zod';
 import { Label } from '../ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
@@ -70,6 +79,12 @@ function Header() {
   const [tabDefault, setTabDefault] = useState('user');
   const [open, setOpen] = useState(false);
   const [valueChange, setValueChange] = useState(initialValue || '');
+  const [showPassword, setShowPassword] = useState({
+    password: false,
+    old: false,
+    new: false,
+    conf: false,
+  });
 
   useEffect(() => {
     if (inputValue) {
@@ -137,7 +152,7 @@ function Header() {
     }
   };
 
-  const onSubmit = useCallback(async (values) => {
+  const onSubmit = async (values) => {
     const id = cookies.usrId.id;
     if (tabDefault === 'user') {
       let data = {
@@ -153,16 +168,38 @@ function Header() {
           setShowPop(false);
           toast.success('Update Successfully!', {
             position: 'top-right',
+            closeOnClick: true,
+            draggable: false,
+            toastId: 1,
           });
+          setTimeout(
+            (data = {
+              id: '',
+              phoneNumber: '',
+              username: '',
+              fullName: '',
+              password: '',
+            }),
+            navigate('/'),
+            2000
+          );
         } else {
           setShowPop(false);
           toast.error('Mật khẩu xác nhận không đúng!', {
             position: 'top-right',
+            autoClose: true,
+            closeOnClick: true,
+            draggable: false,
+            toastId: 2,
           });
         }
       } catch (error) {
         toast.error('Update Fail!', {
           position: 'top-right',
+          autoClose: true,
+          closeOnClick: true,
+          draggable: false,
+          toastId: 3,
         });
       }
     }
@@ -178,16 +215,33 @@ function Header() {
           setShowPop(false);
           toast.success('Update Successfully!', {
             position: 'top-right',
+            autoClose: true,
+            closeOnClick: true,
+            draggable: false,
+            toastId: 4,
           });
+          setTimeout(
+            (data = {
+              userName: '',
+              oldPassword: '',
+              newPassword: '',
+            }),
+            navigate('/'),
+            2000
+          );
         }
       } catch (error) {
         setShowPop(false);
         toast.error('Update Fail!', {
           position: 'top-right',
+          autoClose: true,
+          closeOnClick: true,
+          draggable: false,
+          toastId: 5,
         });
       }
     }
-  }, []);
+  };
 
   useEffect(() => {
     if (!cookies?.usrId?.usrNm) navigate('/');
@@ -363,11 +417,29 @@ function Header() {
                             className="w-full"
                             size="small"
                             label=""
-                            type="password"
+                            type={!showPassword.password ? 'password' : 'text'}
                             onChange={onChange}
                             value={value}
                             error={!!errorInfo?.password}
                             helperText={errorInfo?.password?.message}
+                            InputProps={{
+                              endAdornment: (
+                                <InputAdornment position="end">
+                                  <IconButton
+                                    aria-label="toggle password visibility"
+                                    onClick={() =>
+                                      setShowPassword((prev) => ({
+                                        ...prev,
+                                        password: !showPassword.password,
+                                      }))
+                                    }
+                                    edge="end"
+                                  >
+                                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                                  </IconButton>
+                                </InputAdornment>
+                              ),
+                            }}
                           />
                         )}
                       />
@@ -400,9 +472,24 @@ function Header() {
                           placeholder="Vui lòng nhập mật khẩu"
                           label=""
                           size="small"
-                          type="password"
+                          type={!showPassword.old ? 'password' : 'text'}
                           error={!!errors?.oldPassword}
                           helperText={errors?.oldPassword?.message}
+                          InputProps={{
+                            endAdornment: (
+                              <InputAdornment position="end">
+                                <IconButton
+                                  aria-label="toggle password visibility"
+                                  onClick={() =>
+                                    setShowPassword((prev) => ({ ...prev, old: !showPassword.old }))
+                                  }
+                                  edge="end"
+                                >
+                                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                                </IconButton>
+                              </InputAdornment>
+                            ),
+                          }}
                           {...field}
                         />
                       )}
@@ -426,9 +513,24 @@ function Header() {
                           placeholder="Vui lòng nhập mật khẩu mới"
                           label=""
                           size="small"
-                          type="password"
+                          type={!showPassword.new ? 'password' : 'text'}
                           error={!!errors?.newPassword}
                           helperText={errors?.newPassword?.message}
+                          InputProps={{
+                            endAdornment: (
+                              <InputAdornment position="end">
+                                <IconButton
+                                  aria-label="toggle password visibility"
+                                  onClick={() =>
+                                    setShowPassword((prev) => ({ ...prev, new: !showPassword.new }))
+                                  }
+                                  edge="end"
+                                >
+                                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                                </IconButton>
+                              </InputAdornment>
+                            ),
+                          }}
                           {...field}
                         />
                       )}
@@ -450,9 +552,27 @@ function Header() {
                           placeholder="Vui lòng nhập mật khẩu xác nhận"
                           label=""
                           size="small"
-                          type="password"
+                          type={!showPassword.conf ? 'password' : 'text'}
                           error={!!errors?.confirmPassword}
                           helperText={errors?.confirmPassword?.message}
+                          InputProps={{
+                            endAdornment: (
+                              <InputAdornment position="end">
+                                <IconButton
+                                  aria-label="toggle password visibility"
+                                  onClick={() =>
+                                    setShowPassword((prev) => ({
+                                      ...prev,
+                                      conf: !showPassword.conf,
+                                    }))
+                                  }
+                                  edge="end"
+                                >
+                                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                                </IconButton>
+                              </InputAdornment>
+                            ),
+                          }}
                           {...field}
                         />
                       )}
@@ -474,8 +594,6 @@ function Header() {
         </DialogContent>
         <DialogActions></DialogActions>
       </Dialog>
-
-      <ToastContainer />
     </div>
   );
 }

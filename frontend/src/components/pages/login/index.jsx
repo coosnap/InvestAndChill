@@ -29,7 +29,7 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel';
 import Autoplay from 'embla-carousel-autoplay';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import './styles.scss';
 
 const loginSchema = z.object({
@@ -136,12 +136,20 @@ function Login() {
       if (result) {
         toast.success('Send Email Successfully!', {
           position: 'top-right',
+          autoClose: true,
+          closeOnClick: true,
+          draggable: false,
+          toastId: 13,
         });
         setOpenForgot(false);
       }
     } catch (error) {
       toast.error('Send Email Fail!', {
         position: 'top-right',
+        autoClose: true,
+        closeOnClick: true,
+        draggable: false,
+        toastId: 14,
       });
     }
   }, []);
@@ -156,12 +164,20 @@ function Login() {
       if (response.message) {
         toast.success('Đăng ký thành công!', {
           position: 'top-right',
+          autoClose: true,
+          closeOnClick: true,
+          draggable: false,
+          toastId: 15,
         });
         setShowRegisterDialog(false);
       }
     } catch (error) {
       toast.error('Đăng ký thất bại!', {
         position: 'top-right',
+        autoClose: true,
+        closeOnClick: true,
+        draggable: false,
+        toastId: 16,
       });
     }
   }, []);
@@ -202,6 +218,10 @@ function Login() {
     } catch (error) {
       toast.error('Tên người dùng hoặc Mật khẩu không đúng.!', {
         position: 'top-right',
+        autoClose: true,
+        closeOnClick: true,
+        draggable: false,
+        toastId: 17,
       });
     }
   }, []);
@@ -591,8 +611,6 @@ function Login() {
           </form>
         </DialogContent>
       </Dialog>
-
-      <ToastContainer />
     </div>
   );
 }

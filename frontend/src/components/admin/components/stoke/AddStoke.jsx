@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { FaEdit } from 'react-icons/fa';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { useRecoilValue } from 'recoil';
 
 const sizeData = [
@@ -51,12 +51,20 @@ function AddStoke(props) {
         if (result) {
           toast.success('Update Successfully!', {
             position: 'top-right',
+            autoClose: true,
+            closeOnClick: true,
+            draggable: false,
+            toastId: 9,
           });
           props.render();
         }
       } catch (error) {
         toast.error('Update Fail!', {
           position: 'top-right',
+          autoClose: true,
+          closeOnClick: true,
+          draggable: false,
+          toastId: 10,
         });
       }
     }
@@ -67,12 +75,20 @@ function AddStoke(props) {
         if (result) {
           toast.success('Insert Successfully!', {
             position: 'top-right',
+            autoClose: true,
+            closeOnClick: true,
+            draggable: false,
+            toastId: 11,
           });
           props.render();
         }
       } catch (error) {
         toast.error('Insert Fail!', {
           position: 'top-right',
+          autoClose: true,
+          closeOnClick: true,
+          draggable: false,
+          toastId: 12,
         });
       }
     }
@@ -186,7 +202,6 @@ function AddStoke(props) {
           </Button>
         </DialogActions>
       </Dialog>
-      <ToastContainer />
     </>
   );
 }
