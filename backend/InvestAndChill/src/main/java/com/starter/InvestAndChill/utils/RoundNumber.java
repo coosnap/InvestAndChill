@@ -2,8 +2,8 @@ package com.starter.InvestAndChill.utils;
 
 public class RoundNumber {
 	public static void main(String[] args) {
-		double number = 0.56789;
-		System.out.println(lamTronPhanTram(number));
+		Double number = null;
+		System.out.println(lamTronPhanTram(number/100));
     }
 	
 	public static Double lamTron(Double tyDong) {
@@ -25,6 +25,13 @@ public class RoundNumber {
 			return null;
 		double rounded = Math.round(tyDong * 100.0) / 100.0; // Làm tròn đến 2 chữ số thập phân
 		return rounded;
+	}
+	
+	public static Double tinhPhanTram(Double sochia, Double tong) {
+		if ((sochia == null) || (tong == null)) 
+			return null;
+		else 
+			return sochia/tong;
 	}
 	
 }

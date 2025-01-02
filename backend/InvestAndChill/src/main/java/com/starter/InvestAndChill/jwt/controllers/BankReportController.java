@@ -36,6 +36,7 @@ import com.starter.InvestAndChill.jwt.payload.response.nganhang.Perf3Response;
 import com.starter.InvestAndChill.jwt.payload.response.nganhang.Perf4Response;
 import com.starter.InvestAndChill.jwt.repository.NganHangRepositoryNam;
 import com.starter.InvestAndChill.jwt.repository.NganHangRepositoryQuy;
+import com.starter.InvestAndChill.utils.CalculatorUtils;
 import com.starter.InvestAndChill.utils.Constants;
 import com.starter.InvestAndChill.utils.RoundNumber;
 
@@ -104,7 +105,7 @@ public class BankReportController {
 	}
 	
 	@GetMapping("/perf3/{stock}")
-	public ResponseEntity<?> perf3(@PathVariable String stock, @RequestParam(required = false,name = "type") String type) {
+	public ResponseEntity<?> perf3(@PathVariable String stock, @RequestParam(required = false,name = "type") String type,@RequestParam(required = false,name = "chart") String chart) {
 		List<NganHangReport> listReport = new ArrayList<NganHangReport>();
 		List<Perf3Response> list;
 	
@@ -122,6 +123,16 @@ public class BankReportController {
 	                    response.setLaiKhac(RoundNumber.lamTron(report.getLaiKhac()));
 	                    response.setLaiLoTHuanTuHoatDongDichVu(RoundNumber.lamTron(report.getLaiLoTHuanTuHoatDongDichVu()));
 	                    response.setThuNhapLaiThuan(RoundNumber.lamTron(report.getThuNhapLaiThuan()));
+	                    
+	                    if ("area".equals(chart)) {
+	                    	Double total = CalculatorUtils.calculateTotal(response);
+	                    	
+	                    	response.setLaiKhac(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getLaiKhac(), total)));
+		                    response.setLaiLoTHuanTuHoatDongDichVu(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getLaiLoTHuanTuHoatDongDichVu(),total)));
+		                    response.setThuNhapLaiThuan(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getThuNhapLaiThuan(), total)));
+	                    	
+	                    }
+	                    
 	                    return response;
 	                })
 	                .collect(Collectors.toList());
@@ -155,7 +166,7 @@ public class BankReportController {
 	}
 	
 	@GetMapping("/bal1/{stock}")
-	public ResponseEntity<?> bal1(@PathVariable String stock, @RequestParam(required = false,name = "type") String type) {
+	public ResponseEntity<?> bal1(@PathVariable String stock, @RequestParam(required = false,name = "type") String type,@RequestParam(required = false,name = "chart") String chart) {
 		List<NganHangReport> listReport = new ArrayList<NganHangReport>();
 		List<Bal1Response> list;
 	
@@ -174,6 +185,17 @@ public class BankReportController {
 	                    response.setChoVayKhachHang(RoundNumber.lamTron(report.getChoVayKhachHang()));
 	                    response.setChungKhoanTruocDP(RoundNumber.lamTron(report.getChungKhoanTruocDP()));
 	                    response.setTGVaChoVayCacTCTDKhacTruocDuPhong(RoundNumber.lamTron(report.getTGVaChoVayCacTCTDKhacTruocDuPhong()));
+	                    
+	                    if ("area".equals(chart)) {
+	                    	Double total = CalculatorUtils.calculateTotal(response);
+	                    	
+	                    	response.setCacTaiSanKhac(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getCacTaiSanKhac(),total)));
+	 	                    response.setChoVayKhachHang(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getChoVayKhachHang() ,total)));
+	 	                    response.setChungKhoanTruocDP(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getChungKhoanTruocDP() ,total)));
+	 	                    response.setTGVaChoVayCacTCTDKhacTruocDuPhong(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getTGVaChoVayCacTCTDKhacTruocDuPhong() ,total)));
+	                    	
+	                    }
+	                    
 	                    return response;
 	                })
 	                .collect(Collectors.toList());
@@ -182,7 +204,7 @@ public class BankReportController {
 	}
 	
 	@GetMapping("/bal2/{stock}")
-	public ResponseEntity<?> bal2(@PathVariable String stock, @RequestParam(required = false,name = "type") String type) {
+	public ResponseEntity<?> bal2(@PathVariable String stock, @RequestParam(required = false,name = "type") String type,@RequestParam(required = false,name = "chart") String chart) {
 		List<NganHangReport> listReport = new ArrayList<NganHangReport>();
 		List<Bal2Response> list;
 	
@@ -202,6 +224,18 @@ public class BankReportController {
 	                    response.setTienGuiCuaKhachHang(RoundNumber.lamTron(report.getTienGuiCuaKhachHang()));
 	                    response.setTienGuiVaVayCacToChucTinDung(RoundNumber.lamTron(report.getTienGuiVaVayCacToChucTinDung()));
 	                    response.setVonChuSoHuu(RoundNumber.lamTron(report.getVonChuSoHuu()));
+	                    
+	                    if ("area".equals(chart)) {
+	                    	Double total = CalculatorUtils.calculateTotal(response);
+	                    	
+	                    	response.setNoPhaiTraKhac(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getNoPhaiTraKhac() ,total)));
+		                    response.setPhatHanhGiayToCoGia(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getPhatHanhGiayToCoGia(),total)));
+		                    response.setTienGuiCuaKhachHang(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getTienGuiCuaKhachHang(),total)));
+		                    response.setTienGuiVaVayCacToChucTinDung(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getTienGuiVaVayCacToChucTinDung(),total)));
+		                    response.setVonChuSoHuu(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getVonChuSoHuu(),total)));
+	                    	
+	                    }
+	                    
 	                    return response;
 	                })
 	                .collect(Collectors.toList());
@@ -365,7 +399,7 @@ public class BankReportController {
 	}
 	
 	@GetMapping("/bal9/{stock}")
-	public ResponseEntity<?> bal9(@PathVariable String stock, @RequestParam(required = false,name = "type") String type) {
+	public ResponseEntity<?> bal9(@PathVariable String stock, @RequestParam(required = false,name = "type") String type,@RequestParam(required = false,name = "chart") String chart) {
 		List<NganHangReport> listReport = new ArrayList<NganHangReport>();
 		List<Bal9Response> list;
 	
@@ -380,9 +414,19 @@ public class BankReportController {
 	                	Bal9Response response = new Bal9Response();
 	                	response.setId(report.getId());
 	                	response.setTitle(Constants.NganHang_bal9);
-	                    response.setChoVayDaiHan(RoundNumber.lamTron(report.getChoVayDaiHan()));
+	                    response.setChoVayDaiHan(RoundNumber.lamTron(report.getChoVayDaiHan()));                                                       
 	                    response.setChoVayNganHan(RoundNumber.lamTron(report.getChoVayNganHan()));
 	                    response.setChoVayTrungHan(RoundNumber.lamTron(report.getChoVayTrungHan()));
+	                    
+	                    if ("area".equals(chart)) {
+	                    	Double total = CalculatorUtils.calculateTotal(response);
+	
+	                    	response.setChoVayDaiHan(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getChoVayDaiHan(),total)));
+		                    response.setChoVayNganHan(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getChoVayNganHan(),total)));
+		                    response.setChoVayTrungHan(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getChoVayTrungHan(),total)));
+	                    	
+	                    }
+	                    
 	                    return response;
 	                })
 	                .collect(Collectors.toList());
@@ -391,7 +435,7 @@ public class BankReportController {
 	}
 	
 	@GetMapping("/bal10/{stock}")
-	public ResponseEntity<?> bal10(@PathVariable String stock, @RequestParam(required = false,name = "type") String type) {
+	public ResponseEntity<?> bal10(@PathVariable String stock, @RequestParam(required = false,name = "type") String type,@RequestParam(required = false,name = "chart") String chart) {
 		List<NganHangReport> listReport = new ArrayList<NganHangReport>();
 		List<Bal10Response> list;
 	
@@ -412,6 +456,19 @@ public class BankReportController {
 	                    response.setDoanhNghiepNuocNgoai(RoundNumber.lamTron(report.getDoanhNghiepNuocNgoai()));
 	                    response.setHopTacXaVaCongTyTuNhan(RoundNumber.lamTron(report.getHopTacXaVaCongTyTuNhan()));
 	                    response.setKhac(RoundNumber.lamTron(report.getKhac()));
+	                    
+	                    if ("area".equals(chart)) {
+	                    	Double total = CalculatorUtils.calculateTotal(response);
+	                    	
+	                    	response.setCaNhan(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getCaNhan(),total)));
+		                    response.setCongTyTNHHVaCoPhan(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getCongTyTNHHVaCoPhan(),total)));
+		                    response.setDoanhNghiepNhaNuoc(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getDoanhNghiepNhaNuoc(),total)));
+		                    response.setDoanhNghiepNuocNgoai(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getDoanhNghiepNuocNgoai(),total)));
+		                    response.setHopTacXaVaCongTyTuNhan(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getHopTacXaVaCongTyTuNhan(),total)));
+		                    response.setKhac(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getKhac(),total)));
+	                    	
+	                    }
+	                    
 	                    return response;
 	                })
 	                .collect(Collectors.toList());
@@ -420,7 +477,7 @@ public class BankReportController {
 	}
 	
 	@GetMapping("/bal11/{stock}")
-	public ResponseEntity<?> bal11(@PathVariable String stock, @RequestParam(required = false,name = "type") String type) {
+	public ResponseEntity<?> bal11(@PathVariable String stock, @RequestParam(required = false,name = "type") String type,@RequestParam(required = false,name = "chart") String chart) {
 		List<NganHangReport> listReport = new ArrayList<NganHangReport>();
 		List<Bal11Response> list;
 	
@@ -440,6 +497,17 @@ public class BankReportController {
 	                    response.setTienGuiKhongKyHan(RoundNumber.lamTron(report.getTienGuiKhongKyHan()));
 	                    response.setTienGuiKyQuy(RoundNumber.lamTron(report.getTienGuiKyQuy()));
 	                    response.setTienGuiTietKiem(RoundNumber.lamTron(report.getTienGuiTietKiem()));
+	                    
+	                    if ("area".equals(chart)) {
+	                    	Double total = CalculatorUtils.calculateTotal(response);
+	                    	
+	                    	response.setTienGuiChoNhungMucDichRiengBiet(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getTienGuiChoNhungMucDichRiengBiet(),total)));
+		                    response.setTienGuiCoKyHan(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getTienGuiCoKyHan(),total)));
+		                    response.setTienGuiKhongKyHan(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getTienGuiKhongKyHan(),total)));
+		                    response.setTienGuiKyQuy(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getTienGuiKyQuy(),total)));
+		                    response.setTienGuiTietKiem(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getTienGuiTietKiem(),total)));
+	                    	
+	                    }
 	                    return response;
 	                })
 	                .collect(Collectors.toList());
@@ -448,7 +516,7 @@ public class BankReportController {
 	}
 	
 	@GetMapping("/bal12/{stock}")
-	public ResponseEntity<?> bal12(@PathVariable String stock, @RequestParam(required = false,name = "type") String type) {
+	public ResponseEntity<?> bal12(@PathVariable String stock, @RequestParam(required = false,name = "type") String type,@RequestParam(required = false,name = "chart") String chart) {
 		List<NganHangReport> listReport = new ArrayList<NganHangReport>();
 		List<Bal12Response> list;
 	
@@ -468,6 +536,18 @@ public class BankReportController {
 	                    response.setDoanhNghiepNuocNgoaiTG(RoundNumber.lamTron(report.getDoanhNghiepNuocNgoaiTG()));
 	                    response.setDoanhNghiepTuNhanTG(RoundNumber.lamTron(report.getDoanhNghiepTuNhanTG()));
 	                    response.setKhacTG(RoundNumber.lamTron(report.getKhacTG()));
+	                    
+	                    if ("area".equals(chart)) {
+	                    	Double total = CalculatorUtils.calculateTotal(response);
+	                    	
+	                    	response.setCaNhanTG(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getCaNhanTG(),total)));
+		                    response.setDoanhNghiepNhaNuocTG(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getDoanhNghiepNhaNuocTG(),total)));
+		                    response.setDoanhNghiepNuocNgoaiTG(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getDoanhNghiepNuocNgoaiTG(),total)));
+		                    response.setDoanhNghiepTuNhanTG(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getDoanhNghiepTuNhanTG(),total)));
+		                    response.setKhacTG(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getKhacTG(),total)));
+	                    	
+	                    }
+	                    
 	                    return response;
 	                })
 	                .collect(Collectors.toList());

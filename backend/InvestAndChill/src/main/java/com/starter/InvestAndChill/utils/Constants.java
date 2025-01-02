@@ -31,14 +31,14 @@ public class Constants {
 	 public static final String PTC_val7 = "EV / EBITDA";
 	 public static final String PTC_val8 = "Tương quan Vốn Chủ sở hữu - Vốn hóa";
 	 
-	 public static final String NganHang_perf1 = "Doanh thu và Lợi nhuận";
-	 public static final String NganHang_perf2 = "Cấu trúc chi phí";
+	 public static final String NganHang_perf1 = "Thu nhập hoạt động và lợi nhuận ròng";
+	 public static final String NganHang_perf2 = "Cấu trúc chi phí trên Tổng thu nhập hoạt động";
 	 public static final String NganHang_perf3 = "Cấu trúc lợi nhuận";
-	 public static final String NganHang_perf4 = "Hiệu quả";
+	 public static final String NganHang_perf4 = "Hiệu quả đồng vốn";
 	 
 	 public static final String NganHang_bal1 = "Cơ cấu tài sản";
 	 public static final String NganHang_bal2 = "Cơ cấu nguồn vốn";
-	 public static final String NganHang_bal3 = "Tăng trưởng tín dụng";
+	 public static final String NganHang_bal3 = "Tăng trưởng tín dụng và huy động vốn so với đầu năm";
 	 public static final String NganHang_bal4 = "COF - NIM - CASA";
 	 public static final String NganHang_bal5 = "Cơ cấu tài sản có khác";
 	 public static final String NganHang_bal6 = "Nợ quá hạn";

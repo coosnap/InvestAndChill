@@ -25,6 +25,7 @@ import com.starter.InvestAndChill.jwt.payload.response.chungkhoan.Bal5Response;
 import com.starter.InvestAndChill.jwt.payload.response.chungkhoan.Perf2Response;
 import com.starter.InvestAndChill.jwt.repository.CKRepositoryNam;
 import com.starter.InvestAndChill.jwt.repository.CKRepositoryQuy;
+import com.starter.InvestAndChill.utils.CalculatorUtils;
 import com.starter.InvestAndChill.utils.Constants;
 import com.starter.InvestAndChill.utils.RoundNumber;
 
@@ -203,7 +204,7 @@ public class CKReportController {
 	}
 	
 	@GetMapping("/bal2/{stock}")
-	public ResponseEntity<?> bal2(@PathVariable String stock, @RequestParam(required = false,name = "type") String type) {
+	public ResponseEntity<?> bal2(@PathVariable String stock, @RequestParam(required = false,name = "type") String type,@RequestParam(required = false,name = "chart") String chart) {
 		List<ChungKhoanReport> listReport = new ArrayList<ChungKhoanReport>();
 		List<Bal2Response> list;
 	
@@ -224,6 +225,19 @@ public class CKReportController {
 	                    response.setCacTaiSanTaiChinhThongQuaGhiNhanLaiLo(RoundNumber.lamTron(report.getCacTaiSanTaiChinhThongQuaGhiNhanLaiLo()));
 	                    response.setTaiSanKhac(RoundNumber.lamTron(report.getTaiSanKhac()));
 	                    response.setTienVaTaiSanTuongDuongTien(RoundNumber.lamTron(report.getTienVaTaiSanTuongDuongTien()));
+	                    
+	                    if ("area".equals(chart)) {
+	                    	Double total = CalculatorUtils.calculateTotal(response);
+	                    	
+	                    	response.setCacKhoanChoVay(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getCacKhoanChoVay(),total)));
+		                    response.setCacKhoanDauTuNamGiuDenNgayDaoHan(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getCacKhoanDauTuNamGiuDenNgayDaoHan(),total)));
+		                    response.setCacKhoanTaiChinhSanSangDeBan(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getCacKhoanTaiChinhSanSangDeBan(),total)));
+		                    response.setCacTaiSanTaiChinhThongQuaGhiNhanLaiLo(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getCacTaiSanTaiChinhThongQuaGhiNhanLaiLo(),total)));
+		                    response.setTaiSanKhac(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getTaiSanKhac(),total)));
+		                    response.setTienVaTaiSanTuongDuongTien(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getTienVaTaiSanTuongDuongTien(),total)));
+	                    	
+	                    }
+	                    
 	                    return response;
 	                })
 	                .collect(Collectors.toList());
@@ -232,7 +246,7 @@ public class CKReportController {
 	}
 	
 	@GetMapping("/bal3/{stock}")
-	public ResponseEntity<?> bal3(@PathVariable String stock, @RequestParam(required = false,name = "type") String type) {
+	public ResponseEntity<?> bal3(@PathVariable String stock, @RequestParam(required = false,name = "type") String type,@RequestParam(required = false,name = "chart") String chart) {
 		List<ChungKhoanReport> listReport = new ArrayList<ChungKhoanReport>();
 		List<Bal3Response> list;
 	
@@ -252,6 +266,18 @@ public class CKReportController {
 	                    response.setNoChiemDung(RoundNumber.lamTron(report.getNoChiemDung()));
 	                    response.setNoVay(RoundNumber.lamTron(report.getNoVay()));
 	                    response.setVcshKhac(RoundNumber.lamTron(report.getVcshKhac()));
+	                    
+	                    if ("area".equals(chart)) {
+	                    	Double total = CalculatorUtils.calculateTotal(response);
+	                    	
+	                    	response.setCoPhieuPhoThongCoQuyenBieuQuyet(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getCoPhieuPhoThongCoQuyenBieuQuyet(),total)));
+		                    response.setLoiNhuanChuaPhanPhoi(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getLoiNhuanChuaPhanPhoi(),total)));
+		                    response.setNoChiemDung(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getNoChiemDung(),total)));
+		                    response.setNoVay(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getNoVay(),total)));
+		                    response.setVcshKhac(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getVcshKhac(),total)));
+	                    	
+	                    }
+	                    
 	                    return response;
 	                })
 	                .collect(Collectors.toList());
@@ -260,7 +286,7 @@ public class CKReportController {
 	}
 	
 	@GetMapping("/bal4/{stock}")
-	public ResponseEntity<?> bal4(@PathVariable String stock, @RequestParam(required = false,name = "type") String type) {
+	public ResponseEntity<?> bal4(@PathVariable String stock, @RequestParam(required = false,name = "type") String type,@RequestParam(required = false,name = "chart") String chart) {
 		List<ChungKhoanReport> listReport = new ArrayList<ChungKhoanReport>();
 		List<Bal4Response> list;
 	
@@ -282,6 +308,20 @@ public class CKReportController {
 	                    response.setLaiTuCacTaiSanTaiChinhGhiNhanThongQuaLaiLo(RoundNumber.lamTron(report.getLaiTuCacTaiSanTaiChinhGhiNhanThongQuaLaiLo()));
 	                    response.setLaiTuCacTaiSanTaiChinhSanSangDeBan(RoundNumber.lamTron(report.getLaiTuCacTaiSanTaiChinhSanSangDeBan()));
 	                    response.setTongDoanhThuKhac(RoundNumber.lamTron(report.getTongDoanhThuKhac()));
+	                    
+	                    if ("area".equals(chart)) {
+	                    	Double total = CalculatorUtils.calculateTotal(response);
+	                    	
+	                    	response.setDoanhThuNghiepVuBaoLanhPhatHanhChungKhoan(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getDoanhThuNghiepVuBaoLanhPhatHanhChungKhoan(),total)));
+		                    response.setDoanhThuNghiepVuMoiGioiChungKhoan(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getDoanhThuNghiepVuMoiGioiChungKhoan(),total)));
+		                    response.setLaiTuCacKhoanChoVayVaPhaiThu(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getLaiTuCacKhoanChoVayVaPhaiThu(),total)));
+		                    response.setLaiTuCacKhoanDauTuNamGiuDenNgayDaoHan(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getLaiTuCacKhoanDauTuNamGiuDenNgayDaoHan(),total)));
+		                    response.setLaiTuCacTaiSanTaiChinhGhiNhanThongQuaLaiLo(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getLaiTuCacTaiSanTaiChinhGhiNhanThongQuaLaiLo(),total)));
+		                    response.setLaiTuCacTaiSanTaiChinhSanSangDeBan(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getLaiTuCacTaiSanTaiChinhSanSangDeBan(),total)));
+		                    response.setTongDoanhThuKhac(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getTongDoanhThuKhac(),total)));
+	                    	
+	                    }
+	                    
 	                    return response;
 	                })
 	                .collect(Collectors.toList());
@@ -290,7 +330,7 @@ public class CKReportController {
 	}
 	
 	@GetMapping("/bal5/{stock}")
-	public ResponseEntity<?> bal5(@PathVariable String stock, @RequestParam(required = false,name = "type") String type) {
+	public ResponseEntity<?> bal5(@PathVariable String stock, @RequestParam(required = false,name = "type") String type,@RequestParam(required = false,name = "chart") String chart) {
 		List<ChungKhoanReport> listReport = new ArrayList<ChungKhoanReport>();
 		List<Bal5Response> list;
 	
@@ -312,11 +352,50 @@ public class CKReportController {
 	                    response.setGPHTM(RoundNumber.lamTron(report.getGPHTM()));
 	                    response.setGPKhac(RoundNumber.lamTron(report.getGPKhac()));
 	                    response.setGPMoiGioi(RoundNumber.lamTron(report.getGPMoiGioi()));
+	                    
+	                    if ("area".equals(chart)) {
+	                    	Double total = CalculatorUtils.calculateTotal(response);
+
+		                    response.setGPAFS(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getGPAFS(),total)));
+		                    response.setGPBaoLanhPhatHanh(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getGPBaoLanhPhatHanh(),total)));
+		                    response.setGPCVMargin(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getGPCVMargin(),total)));
+		                    response.setGPFVTPL(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getGPFVTPL(),total)));
+		                    response.setGPHTM(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getGPHTM(),total)));
+		                    response.setGPKhac(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getGPKhac(),total)));
+		                    response.setGPMoiGioi(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getGPMoiGioi(),total)));
+	                    	
+	                    }
+	                    
 	                    return response;
 	                })
 	                .collect(Collectors.toList());
 			
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
+	
+//	@GetMapping("/val1/{stock}")
+//	public ResponseEntity<?> val1(@PathVariable String stock, @RequestParam(required = false,name = "type") String type) {
+//		List<ChungKhoanReport> listReport = new ArrayList<ChungKhoanReport>();
+//		List<com.starter.InvestAndChill.jwt.payload.response.chungkhoan.Val1Response> list;
+//	
+//		if ("year".equals(type)) {
+//			listReport =  ckNamRepository.findByStockForPerf(stock,pageableNam);
+//		} else {
+//			listReport =	ckQuyRepository.findByStockForPerf(stock,pageableQuy);
+//		}
+//		Collections.reverse(listReport);
+//		list = listReport.stream()
+//	                .map(report -> {
+//	                	com.starter.InvestAndChill.jwt.payload.response.chungkhoan.Val1Response response = new com.starter.InvestAndChill.jwt.payload.response.chungkhoan.Val1Response();
+//	                	response.setId(report.getId());
+//	                	response.setTitle(Constants.ChungKhoan_bal1);
+//	                    response.setLaiVay(RoundNumber.lamTronPhanTram(report.getLaiVay()));
+//	                    response.setVayVCSH(RoundNumber.lamTronPhanTram(report.getVayVCSH()));
+//	                    return response;
+//	                })
+//	                .collect(Collectors.toList());
+//			
+//		return new ResponseEntity<>(list, HttpStatus.OK);
+//	}
 
 }

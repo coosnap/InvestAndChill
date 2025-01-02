@@ -1,13 +1,12 @@
 package com.starter.InvestAndChill.utils;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import com.starter.InvestAndChill.jwt.models.PTCReport;
 import com.starter.InvestAndChill.jwt.models.Valuation;
-import com.starter.InvestAndChill.jwt.models.ValuationKey;
-import com.starter.InvestAndChill.jwt.payload.response.ReportReponse;
 
 public class CalculatorUtils {
 	public static void calculatePI54(List<PTCReport> listReport) {
@@ -119,8 +118,79 @@ public class CalculatorUtils {
 		return list;
 	}
 	
-	public static void changeColToArea(ReportReponse rs) {
-		System.out.print("test");
+	public static Double calculateTotal(Object obj) {
+		Double total = 0.0;
+		boolean isTotalNegav = true;
+		
+		if (obj == null) {
+            System.out.println("Object is null.");
+            return null;
+        }
+		
+		isTotalNegav = checkTotalNegative(obj);
+		//System.out.println(isTotalNegav);
+		
+		Class<?> clazz = obj.getClass();
+		Field[] fields = clazz.getDeclaredFields();
+		for (Field field : fields) {
+            field.setAccessible(true);
+            try {
+            	 if ("title".equals(field.getName())) {
+                 	continue;
+                 }
+                Object value = field.get(obj);
+                Double valueDouble = 0.0;
+                try {
+                    valueDouble = (Double)value;
+                    if (valueDouble == null) {
+                    	valueDouble = 0.0;
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Không thể chuyển đổi chuỗi thành Double.");
+                }
+                
+                
+               
+                
+                if (isTotalNegav) {
+                	total += valueDouble;
+                } else {
+                	if (valueDouble > 0) {
+                		total += valueDouble;
+                	}
+                }
+
+                
+            } catch (IllegalAccessException e) {
+                System.out.println("Cannot access field: " + field.getName());
+            }
+        }
+		return total;
+		
+        
+	}
+	
+	
+	public static boolean checkTotalNegative(Object obj) {
+		boolean isTotalNegav = true;
+		Class<?> clazz = obj.getClass();
+		Field[] fields = clazz.getDeclaredFields();
+		 for (Field field : fields) {
+	            field.setAccessible(true);
+	            try {
+	                Object value = field.get(obj);
+	                //System.out.println("Field: " + field.getName() + ", Value: " + value);
+	                
+	                if (!"title".equals(field.getName()) && (value != null) && ((Double)value > 0)) {
+	                	return false;
+	                }
+	                
+	            } catch (IllegalAccessException e) {
+	                System.out.println("Cannot access field: " + field.getName());
+	            }
+	        }
+		 return isTotalNegav;
+		
 	}
 	
 	

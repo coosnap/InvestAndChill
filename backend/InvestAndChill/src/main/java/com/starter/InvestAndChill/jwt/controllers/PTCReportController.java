@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.starter.InvestAndChill.jwt.models.PTCReport;
 import com.starter.InvestAndChill.jwt.models.Valuation;
+import com.starter.InvestAndChill.jwt.payload.response.MessageResponse;
 import com.starter.InvestAndChill.jwt.payload.response.PTC.Bal1Response;
 import com.starter.InvestAndChill.jwt.payload.response.PTC.Bal2Response;
 import com.starter.InvestAndChill.jwt.payload.response.PTC.Bal3Response;
@@ -268,7 +269,7 @@ public class PTCReportController {
 	}
 	
 	@GetMapping("/bal1/{stock}")
-	public ResponseEntity<?> bal1(@PathVariable String stock,@RequestParam(required = false,name = "type") String type) {
+	public ResponseEntity<?> bal1(@PathVariable String stock,@RequestParam(required = false,name = "type") String type, @RequestParam(required = false,name = "chart") String chart) {
 		List<PTCReport> listReport = new ArrayList<PTCReport>();
 		if ("year".equals(type)) {
 			listReport =  ptcNamRepository.findByStockForPerf(stock,pageableNam);
@@ -276,12 +277,10 @@ public class PTCReportController {
 			listReport =	ptcQuyRepository.findByStockForPerf(stock,pageableQuy);
 		}
 		Collections.reverse(listReport);
+		
 		List<Bal1Response> list = listReport.stream()
                 .map(report -> {
                 	Bal1Response response = new Bal1Response();
-                	
-                	//CalculatorUtils.changeColToArea(response);
-                	
                 	response.setId(report.getId());
                 	response.setTitle(Constants.PTC_bal1);
                     response.setTienDTNGDaoHan(RoundNumber.lamTron(report.getTienDTNGDaoHan()));
@@ -290,7 +289,23 @@ public class PTCReportController {
                     response.setTaiSanCoDinh(RoundNumber.lamTron(report.getTaiSanCoDinh()));
                     response.setTaiSanDoDangDaiHan(RoundNumber.lamTron(report.getTaiSanDoDangDaiHan()));
                     response.setGiaTriRongTaiSanDauTu(RoundNumber.lamTron(report.getGiaTriRongTaiSanDauTu()));
-                    response.setTaiSanKhac(RoundNumber.lamTron(report.getTaiSanKhac()));
+                    response.setTaiSanKhac(RoundNumber.lamTron(report.getTaiSanKhac())); 
+                    
+                    if ("area".equals(chart)) {
+                    	Double total = CalculatorUtils.calculateTotal(response);
+                    	
+                    	response.setTienDTNGDaoHan(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getTienDTNGDaoHan() , total )));
+                        response.setPhaiThu(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getPhaiThu() , total)));
+                        response.setHangTonKhoRong(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getHangTonKhoRong() , total)));
+                        response.setTaiSanCoDinh(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getTaiSanCoDinh() , total)));
+                        response.setTaiSanDoDangDaiHan(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getTaiSanDoDangDaiHan() , total)));
+                        response.setGiaTriRongTaiSanDauTu(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getGiaTriRongTaiSanDauTu() , total)));
+                        response.setTaiSanKhac(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getTaiSanKhac() , total)));
+                    	
+                    }
+                    
+                    
+                    
                     return response;
                 })
                 .collect(Collectors.toList());
@@ -301,7 +316,7 @@ public class PTCReportController {
 	}
 	
 	@GetMapping("/bal2/{stock}")
-	public ResponseEntity<?> bal2(@PathVariable String stock,@RequestParam(required = false,name = "type") String type) {
+	public ResponseEntity<?> bal2(@PathVariable String stock,@RequestParam(required = false,name = "type") String type,@RequestParam(required = false,name = "chart") String chart) {
 		List<PTCReport> listReport = new ArrayList<PTCReport>();
 		if ("year".equals(type)) {
 			listReport =  ptcNamRepository.findByStockForPerf(stock,pageableNam);
@@ -319,6 +334,18 @@ public class PTCReportController {
                     response.setVonGop(RoundNumber.lamTron(report.getVonGop()));
                     response.setLaiChuaPhanPhoi(RoundNumber.lamTron(report.getLaiChuaPhanPhoi()));
                     response.setVcshKhac(RoundNumber.lamTron(report.getVcshKhac()));
+                    
+                    if ("area".equals(chart)) {
+                    	Double total = CalculatorUtils.calculateTotal(response);
+                    	
+                    	response.setNoVay(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getNoVay() , total)));
+                        response.setNoChiemDung(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getNoChiemDung() , total)));
+                        response.setVonGop(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getVonGop() , total)));
+                        response.setLaiChuaPhanPhoi(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getLaiChuaPhanPhoi() , total)));
+                        response.setVcshKhac(RoundNumber.lamTronPhanTram(RoundNumber.tinhPhanTram(report.getVcshKhac() , total)));
+                    	
+                    }
+                    
                     return response;
                 })
                 .collect(Collectors.toList());
@@ -523,6 +550,10 @@ public class PTCReportController {
 		
 		listValuation =  valuationRepository.findTopRankedDataByStockCode(stock, pageableValuation);
 
+		if (listValuation.isEmpty()) {
+			return new ResponseEntity<>(new MessageResponse("Data is not available"), HttpStatus.OK);
+		}
+		
 		Collections.reverse(listValuation);
 		CalculatorUtils.calculateMedianForOne(listValuation,"PE");
 		CalculatorUtils.calculateMedianForOne(listValuation,"evebitda");
@@ -549,6 +580,10 @@ public class PTCReportController {
 		
 		listValuation =  valuationRepository.findTopRankedDataByStockCode(stock, pageableValuation);
 
+		if (listValuation.isEmpty()) {
+			return new ResponseEntity<>(new MessageResponse("Data is not available"), HttpStatus.OK);
+		}
+		
 		Collections.reverse(listValuation);
 		CalculatorUtils.calculateMedianForOne(listValuation,"PB");
 		

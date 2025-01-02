@@ -632,7 +632,7 @@ def chung_khoan_calculate_data(rs: List[Dict], combine_data: List[Dict]):
 
             item['c_i_8'] = (item['c_i_16'] or 0) - (item['c_i_11'] or 0)
 
-            item['c_i_17'] = (item['c_i_16'] or 0) - (item['c_b_93'] or 0)
+            item['c_i_17'] = (item['c_b_93'] or 0) - (item['c_i_16'] or 0)
             item['c_i_20'] = (item['c_b_142'] or 0) - (item['c_b_163'] or 0)
             item['c_i_21'] = (item['c_b_142'] or 0) + (item['c_i_8'] or 0)
             item['c_i_22'] = item['c_p_42'] / item['c_p_21'] if item['c_p_42'] is not None and item['c_p_21'] != 0 and item['c_p_21'] is not None else None
@@ -702,7 +702,7 @@ def chung_khoan_calculate_data(rs: List[Dict], combine_data: List[Dict]):
 
             item['c_i_8'] = (item['c_i_16'] or 0) - (item['c_i_11'] or 0)
 
-            item['c_i_17'] = (item['c_i_16'] or 0) - (item['c_b_93'] or 0)
+            item['c_i_17'] = (item['c_b_93'] or 0) - (item['c_i_16'] or 0)
             item['c_i_20'] = (item['c_b_142'] or 0) - (item['c_b_163'] or 0)
             item['c_i_21'] = (item['c_b_142'] or 0) + (item['c_i_8'] or 0)
             item['c_i_22'] = item['c_p_42'] / item['c_p_21'] if item['c_p_42'] is not None and item['c_p_21'] != 0 and item['c_p_21'] is not None else None
