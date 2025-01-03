@@ -19,4 +19,5 @@ public interface PTCRepositoryQuy extends JpaRepository<PTCReportQuy, ReportKey>
 	@Query("select count(*) from view_phi_tai_chinh_quy v where stock_code =:stock_code")
 	Long checkStockIsBelongTo(@Param("stock_code") String stock);
 	
+	
 }

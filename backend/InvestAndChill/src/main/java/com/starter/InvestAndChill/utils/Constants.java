@@ -49,6 +49,11 @@ public class Constants {
 	 public static final String NganHang_bal11 = "Cơ cấu tiền gửi theo kỳ hạn";
 	 public static final String NganHang_bal12 = "Cơ cấu tiền gửi theo đổi tượng khách hàng";
 	 
+	 public static final String NganHang_val1 = "PB & ROE";
+	 public static final String NganHang_val2 = "PE";
+	 public static final String NganHang_val3 = "Tương quan Lợi nhuận - Vốn hóa";
+	 public static final String NganHang_val4 = "Tương quan Vốn Chủ sở hữu - Vốn hóa";
+	 
 	 public static final String ChungKhoan_perf1 = "Doanh thu và Lợi nhuận";
 	 public static final String ChungKhoan_perf2 = "Hiệu quả đồng vốn";
 	 public static final String ChungKhoan_perf3 = "Cấu trúc lợi nhuận";
@@ -60,6 +65,11 @@ public class Constants {
 	 public static final String ChungKhoan_bal3 = "Cơ cấu nguồn vốn";
 	 public static final String ChungKhoan_bal4 = "Cấu trúc doanh thu";
 	 public static final String ChungKhoan_bal5 = "Cấu trúc lãi gộp";
+	 
+	 public static final String ChungKhoan_val1 = "PB & ROE";
+	 public static final String ChungKhoan_val2 = "PE";
+	 public static final String ChungKhoan_val3 = "Tương quan Lợi nhuận - Vốn hóa";
+	 public static final String ChungKhoan_val4 = "Tương quan Vốn Chủ sở hữu - Vốn hóa";
 	 
 	 public static final String VERSION = "1.0.0";
 }
