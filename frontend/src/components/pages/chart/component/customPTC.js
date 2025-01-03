@@ -38,7 +38,7 @@ export let customPerfPTC1 = {
     },
   ],
   yAxis: {
-    left: { type: 'bil', piecewise: true, showLineReference: true },
+    left: { type: 'bil', piecewise: true, showLineReference: true, divide: 2 },
     right: { type: 'per', piecewise: true },
   },
 };
@@ -130,7 +130,7 @@ export let customPerfPTC3 = {
     },
   ],
   yAxis: {
-    left: { type: 'bil', piecewise: false },
+    left: { type: 'bil', piecewise: false, divide: 1 },
     right: { type: 'per', piecewise: true },
   },
 };
@@ -174,7 +174,7 @@ export let customPerfPTC4 = {
     },
   ],
   yAxis: {
-    left: { type: 'bil', piecewise: true, showLineReference: true },
+    left: { type: 'bil', piecewise: true, showLineReference: true, divide: 2 },
     right: { type: 'per', piecewise: false },
   },
 };
@@ -245,7 +245,7 @@ export let customPerfPTC6 = {
     },
   ],
   yAxis: {
-    left: { type: 'bil', piecewise: true, showLineReference: true },
+    left: { type: 'bil', piecewise: true, showLineReference: true, divide: 2 },
     right: { type: 'bil', piecewise: true },
   },
 };
@@ -282,7 +282,7 @@ export let customPerfPTC7 = {
     },
   ],
   yAxis: {
-    left: { type: 'per', piecewise: true, dash1: true },
+    left: { type: 'per', piecewise: true, dash1: true, divide: 2 },
     right: { type: 'per', piecewise: true, dash2: true },
   },
 };
@@ -297,6 +297,15 @@ export let customPerfPTC8 = {
       curve: 'linear',
       yAxisId: 'leftAxis',
       color: '#013368',
+      valueFormatter: (v) => (v === null ? '' : v + ' %'),
+    },
+    {
+      type: 'line',
+      label: 'Biên lợi nhuận ròng TTM',
+      dataKey: 'nimgTrailing',
+      curve: 'linear',
+      yAxisId: 'leftAxis',
+      color: '#0D6B64',
       valueFormatter: (v) => (v === null ? '' : v + ' %'),
     },
     {
@@ -319,15 +328,6 @@ export let customPerfPTC8 = {
     },
     {
       type: 'line',
-      label: 'Biên lợi nhuận ròng TTM',
-      dataKey: 'nimgTrailing',
-      curve: 'linear',
-      yAxisId: 'leftAxis',
-      color: '#0D6B64',
-      valueFormatter: (v) => (v === null ? '' : v + ' %'),
-    },
-    {
-      type: 'line',
       label: '(Nợ + VCSH)/VCSH',
       dataKey: 'dee',
       curve: 'linear',
@@ -337,7 +337,7 @@ export let customPerfPTC8 = {
     },
   ],
   yAxis: {
-    left: { type: 'per', piecewise: true },
+    left: { type: 'per', piecewise: true, divide: 2 },
     right: { type: 'time', piecewise: true, dash4: true },
   },
 };
@@ -612,7 +612,7 @@ export let customBalPTC6 = {
     },
   ],
   yAxis: {
-    left: { type: 'per', piecewise: true, showLineReference: true, marker: 2 },
+    left: { type: 'per', piecewise: true, showLineReference: true, marker: 2, divide: 3 },
     right: { type: 'per', piecewise: true },
   },
 };
@@ -703,7 +703,7 @@ export let customCFPTC2 = {
     },
   ],
   yAxis: {
-    left: { type: 'bil', piecewise: false, showLineReference: true },
+    left: { type: 'bil', piecewise: false, showLineReference: true, divide: 2 },
     right: { type: 'bil', piecewise: true, showLineReference: true },
   },
 };
@@ -851,7 +851,7 @@ export let customValPTC1 = {
     },
   ],
   yAxis: {
-    left: { type: 'time', piecewise: false, dash1: true },
+    left: { type: 'time', piecewise: false, dash1: true, divide: 2 },
     right: { type: 'time', piecewise: false, dash3: true },
   },
 };
@@ -888,8 +888,8 @@ export let customValPTC2 = {
     },
   ],
   yAxis: {
-    left: { type: 'per', piecewise: false },
-    right: { type: 'time', piecewise: false, dash2: true },
+    left: { type: 'per', piecewise: false, divide: 1 },
+    right: { type: 'time', piecewise: true, dash2: true },
   },
 };
 export let customValPTC3 = {
@@ -915,8 +915,8 @@ export let customValPTC3 = {
     },
   ],
   yAxis: {
-    left: { type: 'bil', piecewise: false },
-    right: { type: 'bil', piecewise: false, dash: true },
+    left: { type: 'bil', piecewise: false, divide: 1 },
+    right: { type: 'bil', piecewise: true },
   },
 };
 export let customValPTC4 = {
@@ -951,8 +951,8 @@ export let customValPTC4 = {
     },
   ],
   yAxis: {
-    left: { type: 'bil', piecewise: false },
-    right: { type: 'time', piecewise: false, dash2: true },
+    left: { type: 'bil', piecewise: false, divide: 1 },
+    right: { type: 'time', piecewise: true, dash2: true },
   },
 };
 export let customValPTC5 = {
@@ -978,8 +978,8 @@ export let customValPTC5 = {
     },
   ],
   yAxis: {
-    left: { type: 'bil', piecewise: false },
-    right: { type: 'bil', piecewise: false },
+    left: { type: 'bil', piecewise: false, divide: 1 },
+    right: { type: 'bil', piecewise: true },
   },
 };
 export let customValPTC6 = {
@@ -1014,7 +1014,7 @@ export let customValPTC6 = {
     },
   ],
   yAxis: {
-    left: { type: 'bil', piecewise: false },
+    left: { type: 'bil', piecewise: false, divide: 1 },
     right: { type: 'time', piecewise: false, dash2: true },
   },
 };
@@ -1050,7 +1050,7 @@ export let customValPTC7 = {
     },
   ],
   yAxis: {
-    left: { type: 'bil', piecewise: false },
+    left: { type: 'bil', piecewise: false, divide: 1 },
     right: { type: 'time', piecewise: false, dash2: true },
   },
 };
@@ -1077,7 +1077,7 @@ export let customValPTC8 = {
     },
   ],
   yAxis: {
-    left: { type: 'bil', piecewise: false },
-    right: { type: 'bil', piecewise: false },
+    left: { type: 'bil', piecewise: false, divide: 1 },
+    right: { type: 'bil', piecewise: true },
   },
 };

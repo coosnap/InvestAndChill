@@ -29,7 +29,7 @@ export let customNHPerf1 = {
     },
   ],
   yAxis: {
-    left: { type: 'bil', piecewise: false },
+    left: { type: 'bil', piecewise: false, divide: 2 },
     right: { type: 'per', piecewise: true },
   },
 };
@@ -131,7 +131,7 @@ export let customNHPerf4 = {
     },
   ],
   yAxis: {
-    left: { type: 'per', piecewise: false },
+    left: { type: 'per', piecewise: false, divide: 1 },
     right: { type: 'per', piecewise: true, dash1: true },
   },
 };
@@ -294,7 +294,7 @@ export let customNHBal4 = {
     },
   ],
   yAxis: {
-    left: { type: 'per', piecewise: false },
+    left: { type: 'per', piecewise: false, divide: 2 },
     right: { type: 'per', piecewise: true },
   },
 };
@@ -338,7 +338,7 @@ export let customNHBal5 = {
     },
   ],
   yAxis: {
-    left: { type: 'bil', piecewise: false },
+    left: { type: 'bil', piecewise: false, divide: 2 },
     right: { type: 'per', piecewise: false, dash3: true },
   },
 };
@@ -384,7 +384,7 @@ export let customNHBal6 = {
     },
   ],
   yAxis: {
-    left: { type: 'bil', piecewise: false },
+    left: { type: 'bil', piecewise: false, divide: 2 },
     right: { type: 'per', piecewise: true },
   },
 };
@@ -419,7 +419,7 @@ export let customNHBal7 = {
     },
   ],
   yAxis: {
-    left: { type: 'bil', piecewise: true, showLineReference: true },
+    left: { type: 'bil', piecewise: true, showLineReference: true, divide: 2 },
     right: { type: 'per', piecewise: false },
   },
 };
@@ -446,7 +446,7 @@ export let customNHBal8 = {
     },
   ],
   yAxis: {
-    left: { type: 'bil', piecewise: false },
+    left: { type: 'bil', piecewise: false, divide: 1 },
     right: { type: 'per', piecewise: true },
   },
 };

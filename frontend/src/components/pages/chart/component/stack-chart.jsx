@@ -23,7 +23,7 @@ export default function NoStackChart(data) {
   }
 
   return (
-    <Box sx={{ width: '100%', backgroundColor: '#FCE6A9' }}>
+    <Box sx={{ width: '100%', backgroundColor: '#FCE6A9', position: 'relative' }}>
       <ResponsiveChartContainer
         // className="water-mark-chart"
         dataset={data.data.dataset}
@@ -278,7 +278,7 @@ export default function NoStackChart(data) {
             }}
           />
         )}
-        <ChartsLegend
+        {/* <ChartsLegend
           padding={{ bottom: 0, top: 10, left: 35, right: 35 }}
           labelStyle={{ fontSize: 12 }}
           slotProps={{
@@ -289,9 +289,20 @@ export default function NoStackChart(data) {
               itemGap: 8,
             },
           }}
-        />
+        /> */}
         <ChartsTooltip />
       </ResponsiveChartContainer>
+      <div className="absolute top-0 w-full flex flex-wrap justify-center items-center gap-2 mt-2">
+        {data.data.series.map((e, index) => (
+          <div key={index} className="flex items-center">
+            {index === data.data.yAxis.left.divide && (
+              <div className="w-0.5 h-4 mr-2 bg-white"></div>
+            )}
+            <div className="w-2 h-2 mr-1" style={{ backgroundColor: e.color }}></div>
+            <span className="text-xs whitespace-nowrap">{e.label}</span>
+          </div>
+        ))}
+      </div>
     </Box>
   );
 }

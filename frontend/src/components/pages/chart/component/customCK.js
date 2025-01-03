@@ -38,7 +38,7 @@ export let customPerfCK1 = {
     },
   ],
   yAxis: {
-    left: { type: 'bil', piecewise: false },
+    left: { type: 'bil', piecewise: false, divide: 2 },
     right: { type: 'per', piecewise: false },
   },
 };
@@ -74,7 +74,7 @@ export let customPerfCK2 = {
     // },
   ],
   yAxis: {
-    left: { type: 'per', piecewise: true },
+    left: { type: 'per', piecewise: true, divide: 1 },
     right: { type: 'per', piecewise: true, dash1: true },
   },
 };
@@ -157,7 +157,7 @@ export let customPerfCK4 = {
     },
   ],
   yAxis: {
-    left: { type: 'bil', piecewise: false },
+    left: { type: 'bil', piecewise: false, divide: 1 },
     right: { type: 'per', piecewise: true },
   },
 };
@@ -172,6 +172,15 @@ export let customPerfCK5 = {
       curve: 'linear',
       yAxisId: 'leftAxis',
       color: '#013368',
+      valueFormatter: (v) => (v === null ? '' : v + ' %'),
+    },
+    {
+      type: 'line',
+      label: 'Biên lợi nhuận ròng TTM',
+      dataKey: 'nimgTrailing',
+      curve: 'linear',
+      yAxisId: 'leftAxis',
+      color: '#0D6B64',
       valueFormatter: (v) => (v === null ? '' : v + ' %'),
     },
     {
@@ -194,15 +203,6 @@ export let customPerfCK5 = {
     },
     {
       type: 'line',
-      label: 'Biên lợi nhuận ròng TTM',
-      dataKey: 'nimgTrailing',
-      curve: 'linear',
-      yAxisId: 'leftAxis',
-      color: '#0D6B64',
-      valueFormatter: (v) => (v === null ? '' : v + ' %'),
-    },
-    {
-      type: 'line',
       label: '(Nợ + VCSH)/VCSH',
       dataKey: 'dee',
       curve: 'linear',
@@ -212,7 +212,7 @@ export let customPerfCK5 = {
     },
   ],
   yAxis: {
-    left: { type: 'per', piecewise: true },
+    left: { type: 'per', piecewise: true, divide: 2 },
     right: { type: 'time', piecewise: false, dash4: true },
   },
 };
@@ -240,7 +240,7 @@ export let customBalCK1 = {
     },
   ],
   yAxis: {
-    left: { type: 'per', piecewise: true },
+    left: { type: 'per', piecewise: true, divide: 1 },
     right: { type: 'per', piecewise: false },
   },
 };
