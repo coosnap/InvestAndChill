@@ -102,9 +102,13 @@ export const TabChart = () => {
     perf3: true,
     bal1: true,
     bal2: true,
+    bal2ajust: true,
     bal3: true,
+    bal3ajust: true,
     bal4: true,
+    bal4ajust: true,
     bal5: true,
+    bal5ajust: true,
   });
   const [checkedBank, setCheckedBank] = useState({
     chart: true,
@@ -292,13 +296,13 @@ export const TabChart = () => {
   const mapDataChart = async (custom, type, xAxis) => {
     let result;
     if (type === 'PTC') {
-      result = await getDataChartNonFinancial(custom.type, codeValue, custom.year);
+      result = await getDataChartNonFinancial(custom.type, codeValue, custom.year, custom.chart);
     }
     if (type === 'ChungKhoan') {
-      result = await getDataChartStock(custom.type, codeValue, custom.year);
+      result = await getDataChartStock(custom.type, codeValue, custom.year, custom.chart);
     }
     if (type === 'NganHang') {
-      result = await getDataChartBank(custom.type, codeValue, custom.year);
+      result = await getDataChartBank(custom.type, codeValue, custom.year, custom.chart);
     }
     if (result) {
       let format = await formatData(result);
@@ -1024,6 +1028,11 @@ export const TabChart = () => {
     }
   };
 
+  const sumItem = (array) => {
+    const sum = array.reduce((accumulator, currentValue) => accumulator * currentValue, 1);
+    return sum;
+  };
+
   const handleToggle = async (typeChart) => {
     if (tabType === 'PTC') {
       if (typeChart === 'perf1') {
@@ -1045,6 +1054,8 @@ export const TabChart = () => {
             label: 'Lợi nhuận tài chính TTM (one-off adjusted)',
             dataKey: 'netFinancialAdjustTrailing',
             yAxisId: 'leftAxis',
+            color: '#6EA2DF',
+            valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
           };
           let newPerf = await mapDataChart(customPerfPTC4, tabType);
           setDataChart((prev) => ({ ...prev, perf4: newPerf }));
@@ -1055,6 +1066,8 @@ export const TabChart = () => {
             label: 'Lợi nhuận tài chính TTM',
             dataKey: 'netFinanceialTrailing',
             yAxisId: 'leftAxis',
+            color: '#6EA2DF',
+            valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
           };
           let newPerf = await mapDataChart(customPerfPTC4, tabType);
           setDataChart((prev) => ({ ...prev, perf4: newPerf }));
@@ -1069,6 +1082,8 @@ export const TabChart = () => {
             dataKey: 'nitrailingAdjust',
             yAxisId: 'rightAxis',
             stack: 'stack',
+            color: '#ABB2B4',
+            valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
           };
         } else {
           customPerfPTC5.series[0] = {
@@ -1077,6 +1092,8 @@ export const TabChart = () => {
             dataKey: 'nitrailing',
             yAxisId: 'rightAxis',
             stack: 'stack',
+            color: '#ABB2B4',
+            valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
           };
         }
         let newPerf = await mapDataChart(customPerfPTC5, tabType);
@@ -1097,145 +1114,162 @@ export const TabChart = () => {
       }
       if (typeChart === 'bal1ajust') {
         if (checked.bal1ajust) {
-          const giaTriRongTaiSanDauTu = dataChart.bal1.dataset.map((v) => v.giaTriRongTaiSanDauTu);
-          const hangTonKhoRong = dataChart.bal1.dataset.map((v) => v.hangTonKhoRong);
-          const phaiThu = dataChart.bal1.dataset.map((v) => v.phaiThu);
-          const taiSanCoDinh = dataChart.bal1.dataset.map((v) => v.taiSanCoDinh);
-          const taiSanDoDangDaiHan = dataChart.bal1.dataset.map((v) => v.taiSanDoDangDaiHan);
-          const taiSanKhac = dataChart.bal1.dataset.map((v) => v.taiSanKhac);
-          const tienDTNGDaoHan = dataChart.bal1.dataset.map((v) => v.tienDTNGDaoHan);
-          const getPercents = (array) =>
-            array.map((v, index) => {
-              const result =
-                (v /
-                  (phaiThu[index] +
-                    tienDTNGDaoHan[index] +
-                    hangTonKhoRong[index] +
-                    taiSanCoDinh[index] +
-                    taiSanDoDangDaiHan[index] +
-                    giaTriRongTaiSanDauTu[index] +
-                    taiSanKhac[index])) *
-                  100 || 0;
-              return result;
-            });
-          customBalPTC1.series = [
-            {
-              data: getPercents(tienDTNGDaoHan),
-              type: 'line',
-              label: 'Tiền',
-              area: true,
-              stack: 'total',
-              yAxisId: 'leftAxis',
-            },
-            {
-              data: getPercents(phaiThu),
-              type: 'line',
-              label: 'Phải thu',
-              area: true,
-              stack: 'total',
-              yAxisId: 'leftAxis',
-            },
-            {
-              data: getPercents(hangTonKhoRong),
-              type: 'line',
-              label: 'Hàng tồn kho',
-              area: true,
-              stack: 'total',
-              yAxisId: 'leftAxis',
-            },
-            {
-              data: getPercents(taiSanCoDinh),
-              type: 'line',
-              label: 'Tài sản cố định',
-              area: true,
-              stack: 'total',
-              yAxisId: 'leftAxis',
-            },
-            {
-              data: getPercents(taiSanDoDangDaiHan),
-              type: 'line',
-              label: 'Tài sản dở dang',
-              area: true,
-              stack: 'total',
-              yAxisId: 'leftAxis',
-            },
-            {
-              data: getPercents(giaTriRongTaiSanDauTu),
-              type: 'line',
-              label: 'Bất động sản đầu tư',
-              area: true,
-              stack: 'total',
-              yAxisId: 'leftAxis',
-            },
-            {
-              data: getPercents(taiSanKhac),
-              type: 'line',
-              label: 'Tài sản khác',
-              area: true,
-              stack: 'total',
-              yAxisId: 'leftAxis',
-            },
-          ];
-          customBalPTC1.yAxis = {
-            left: { type: 'per', piecewise: true },
-            right: { type: 'bil', piecewise: false },
-          };
+          try {
+            customBalPTC1.chart = true;
+            customBalPTC1.series = [
+              {
+                dataKey: 'tienDTNGDaoHan',
+                type: 'line',
+                label: 'Tiền',
+                area: true,
+                stack: 'total',
+                yAxisId: 'leftAxis',
+                color: '#C8D0D2',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+              {
+                dataKey: 'phaiThu',
+                type: 'line',
+                label: 'Phải thu',
+                area: true,
+                stack: 'total',
+                yAxisId: 'leftAxis',
+                color: '#93B6D6',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+              {
+                dataKey: 'hangTonKhoRong',
+                type: 'line',
+                label: 'Hàng tồn kho',
+                area: true,
+                stack: 'total',
+                yAxisId: 'leftAxis',
+                color: '#6EA2DF',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+              {
+                dataKey: 'taiSanCoDinh',
+                type: 'line',
+                label: 'Tài sản cố định',
+                area: true,
+                stack: 'total',
+                yAxisId: 'leftAxis',
+                color: '#014388',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+              {
+                dataKey: 'taiSanDoDangDaiHan',
+                type: 'line',
+                label: 'Tài sản dở dang',
+                area: true,
+                stack: 'total',
+                yAxisId: 'leftAxis',
+                color: '#2471BE',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+              {
+                dataKey: 'giaTriRongTaiSanDauTu',
+                type: 'line',
+                label: 'Bất động sản đầu tư',
+                area: true,
+                stack: 'total',
+                yAxisId: 'leftAxis',
+                color: '#585D5D',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+              {
+                dataKey: 'taiSanKhac',
+                type: 'line',
+                label: 'Tài sản khác',
+                area: true,
+                stack: 'total',
+                yAxisId: 'leftAxis',
+                color: '#8F9596',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+            ];
+            customBalPTC1.yAxis = {
+              left: { type: 'per', piecewise: true },
+              right: { type: 'bil', piecewise: false },
+            };
+          } catch (error) {
+            console.log('error', error);
+          }
         } else {
-          customBalPTC1.series = [
-            {
-              type: 'bar',
-              label: 'Tiền',
-              dataKey: 'tienDTNGDaoHan',
-              yAxisId: 'leftAxis',
-              stack: 'stack',
-            },
-            {
-              type: 'bar',
-              label: 'Phải thu',
-              dataKey: 'phaiThu',
-              yAxisId: 'leftAxis',
-              stack: 'stack',
-            },
-            {
-              type: 'bar',
-              label: 'Hàng tồn kho',
-              dataKey: 'hangTonKhoRong',
-              yAxisId: 'leftAxis',
-              stack: 'stack',
-            },
-            {
-              type: 'bar',
-              label: 'Tài sản cố định',
-              dataKey: 'taiSanCoDinh',
-              yAxisId: 'leftAxis',
-              stack: 'stack',
-            },
-            {
-              type: 'bar',
-              label: 'Tài sản dở dang',
-              dataKey: 'taiSanDoDangDaiHan',
-              yAxisId: 'leftAxis',
-              stack: 'stack',
-            },
-            {
-              type: 'bar',
-              label: 'Bất động sản đầu tư',
-              dataKey: 'giaTriRongTaiSanDauTu',
-              yAxisId: 'leftAxis',
-              stack: 'stack',
-            },
-            {
-              type: 'bar',
-              label: 'Tài sản khác',
-              dataKey: 'taiSanKhac',
-              yAxisId: 'leftAxis',
-              stack: 'stack',
-            },
-          ];
-          customBalPTC1.yAxis = {
-            left: { type: 'bil', piecewise: false },
-            right: { type: 'bil', piecewise: false },
-          };
+          try {
+            customBalPTC1.chart = false;
+            customBalPTC1.series = [
+              {
+                type: 'bar',
+                label: 'Tiền',
+                dataKey: 'tienDTNGDaoHan',
+                yAxisId: 'leftAxis',
+                stack: 'stack',
+                color: '#C8D0D2',
+                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              },
+              {
+                type: 'bar',
+                label: 'Phải thu',
+                dataKey: 'phaiThu',
+                yAxisId: 'leftAxis',
+                stack: 'stack',
+                color: '#93B6D6',
+                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              },
+              {
+                type: 'bar',
+                label: 'Hàng tồn kho',
+                dataKey: 'hangTonKhoRong',
+                yAxisId: 'leftAxis',
+                stack: 'stack',
+                color: '#6EA2DF',
+                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              },
+              {
+                type: 'bar',
+                label: 'Tài sản cố định',
+                dataKey: 'taiSanCoDinh',
+                yAxisId: 'leftAxis',
+                stack: 'stack',
+                color: '#014388',
+                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              },
+              {
+                type: 'bar',
+                label: 'Tài sản dở dang',
+                dataKey: 'taiSanDoDangDaiHan',
+                yAxisId: 'leftAxis',
+                stack: 'stack',
+                color: '#2471BE',
+                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              },
+              {
+                type: 'bar',
+                label: 'Bất động sản đầu tư',
+                dataKey: 'giaTriRongTaiSanDauTu',
+                yAxisId: 'leftAxis',
+                stack: 'stack',
+                color: '#585D5D',
+                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              },
+              {
+                type: 'bar',
+                label: 'Tài sản khác',
+                dataKey: 'taiSanKhac',
+                yAxisId: 'leftAxis',
+                stack: 'stack',
+                color: '#8F9596',
+                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              },
+            ];
+            customBalPTC1.yAxis = {
+              left: { type: 'bil', piecewise: false, showLineReference: true },
+              right: { type: 'bil', piecewise: false },
+            };
+          } catch (error) {
+            console.log('error', error);
+          }
         }
         let newPerf = await mapDataChart(customBalPTC1, tabType);
         setDataChart((prev) => ({ ...prev, bal1: newPerf }));
@@ -1250,62 +1284,68 @@ export const TabChart = () => {
       if (typeChart === 'bal2ajust') {
         if (checked.bal2ajust) {
           const vonGop = dataChart.bal2.dataset.map((v) => v.vonGop);
+          const sumVonGop = sumItem(vonGop);
           const laiChuaPhanPhoi = dataChart.bal2.dataset.map((v) => v.laiChuaPhanPhoi);
+          const sumLaiChuaPhanPhoi = sumItem(laiChuaPhanPhoi);
           const vcshKhac = dataChart.bal2.dataset.map((v) => v.vcshKhac);
+          const sumVcshKhac = sumItem(vcshKhac);
           const noChiemDung = dataChart.bal2.dataset.map((v) => v.noChiemDung);
+          const sumNoChiemDung = sumItem(noChiemDung);
           const noVay = dataChart.bal2.dataset.map((v) => v.noVay);
-          const getPercentsBal2 = (array) =>
-            array.map((v, index) => {
-              const result =
-                (v /
-                  (vonGop[index] +
-                    laiChuaPhanPhoi[index] +
-                    vcshKhac[index] +
-                    noChiemDung[index] +
-                    noVay[index])) *
-                  100 || 0;
-              return result;
-            });
+          const sumNoVay = sumItem(noVay);
+          console.log('sumNoVay', sumNoVay);
+
+          customBalPTC2.chart = true;
           customBalPTC2.series = [
             {
-              data: getPercentsBal2(vonGop),
+              dataKey: 'vonGop',
               type: 'line',
               label: 'Vốn góp của Chủ sở hữu',
               area: true,
-              stack: 'total',
+              stack: sumVonGop >= 0 ? 'total' : 'total1',
               yAxisId: 'rightAxis',
+              color: '#585D5D',
+              valueFormatter: (v) => (v === null ? '' : v + ' %'),
             },
             {
-              data: getPercentsBal2(laiChuaPhanPhoi),
+              dataKey: 'laiChuaPhanPhoi',
               type: 'line',
               label: 'LNST chưa phân phối',
               yAxisId: 'rightAxis',
               area: true,
-              stack: 'total',
+              stack: sumLaiChuaPhanPhoi >= 0 ? 'total' : 'total1',
+              color: '#8F9596',
+              valueFormatter: (v) => (v === null ? '' : v + ' %'),
             },
             {
-              data: getPercentsBal2(vcshKhac),
+              dataKey: 'vcshKhac',
               type: 'line',
               label: 'Vốn chủ sở hữu khác',
               yAxisId: 'rightAxis',
               area: true,
-              stack: 'total',
+              stack: sumVcshKhac >= 0 ? 'total' : 'total1',
+              color: '#ABB2B4',
+              valueFormatter: (v) => (v === null ? '' : v + ' %'),
             },
             {
-              data: getPercentsBal2(noChiemDung),
+              dataKey: 'noChiemDung',
               type: 'line',
               label: 'Nợ chiếm dụng',
               yAxisId: 'rightAxis',
               area: true,
-              stack: 'total',
+              stack: sumNoChiemDung >= 0 ? 'total' : 'total1',
+              color: '#CCBA95',
+              valueFormatter: (v) => (v === null ? '' : v + ' %'),
             },
             {
-              data: getPercentsBal2(noVay),
+              dataKey: 'noVay',
               type: 'line',
               label: 'Nợ vay',
               yAxisId: 'rightAxis',
               area: true,
-              stack: 'total',
+              stack: sumNoVay >= 0 ? 'total' : 'total1',
+              color: '#AD5757',
+              valueFormatter: (v) => (v === null ? '' : v + ' %'),
             },
           ];
           customBalPTC2.yAxis = {
@@ -1313,6 +1353,7 @@ export const TabChart = () => {
             right: { type: 'per', piecewise: true },
           };
         } else {
+          customBalPTC2.chart = false;
           customBalPTC2.series = [
             {
               type: 'bar',
@@ -1320,6 +1361,8 @@ export const TabChart = () => {
               dataKey: 'vonGop',
               yAxisId: 'rightAxis',
               stack: 'stack',
+              color: '#585D5D',
+              valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
             },
             {
               type: 'bar',
@@ -1327,6 +1370,8 @@ export const TabChart = () => {
               dataKey: 'laiChuaPhanPhoi',
               yAxisId: 'rightAxis',
               stack: 'stack',
+              color: '#8F9596',
+              valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
             },
             {
               type: 'bar',
@@ -1334,6 +1379,8 @@ export const TabChart = () => {
               dataKey: 'vcshKhac',
               yAxisId: 'rightAxis',
               stack: 'stack',
+              color: '#ABB2B4',
+              valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
             },
             {
               type: 'bar',
@@ -1341,6 +1388,8 @@ export const TabChart = () => {
               dataKey: 'noChiemDung',
               yAxisId: 'rightAxis',
               stack: 'stack',
+              color: '#CCBA95',
+              valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
             },
             {
               type: 'bar',
@@ -1348,11 +1397,13 @@ export const TabChart = () => {
               dataKey: 'noVay',
               yAxisId: 'rightAxis',
               stack: 'stack',
+              color: '#AD5757',
+              valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
             },
           ];
           customBalPTC2.yAxis = {
             left: { type: 'per', piecewise: false },
-            right: { type: 'bil', piecewise: false },
+            right: { type: 'bil', piecewise: true },
           };
         }
         let newPerf = await mapDataChart(customBalPTC2, tabType);
@@ -1454,6 +1505,138 @@ export const TabChart = () => {
         let newPerf = await mapDataChart(customBalCK2, tabType);
         setDataChart((prev) => ({ ...prev, bal2: newPerf }));
         setCheckedCK((prev) => ({ ...prev, bal2: !prev.bal2 }));
+      }
+      if (typeChart === 'bal2ajust') {
+        if (checkedCK.bal2ajust) {
+          try {
+            customBalCK2.chart = true;
+            customBalCK2.series = [
+              {
+                dataKey: 'tienVaTaiSanTuongDuongTien',
+                type: 'line',
+                label: 'Tiền',
+                area: true,
+                stack: 'total',
+                yAxisId: 'leftAxis',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+              {
+                dataKey: 'cacTaiSanTaiChinhThongQuaGhiNhanLaiLo',
+                type: 'line',
+                label: 'FVTPL',
+                area: true,
+                stack: 'total',
+                yAxisId: 'leftAxis',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+              {
+                dataKey: 'cacKhoanDauTuNamGiuDenNgayDaoHan',
+                type: 'line',
+                label: 'HTM',
+                area: true,
+                stack: 'total',
+                yAxisId: 'leftAxis',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+              {
+                dataKey: 'cacKhoanChoVay',
+                type: 'line',
+                label: 'Cho vay',
+                area: true,
+                stack: 'total',
+                yAxisId: 'leftAxis',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+              {
+                dataKey: 'cacKhoanTaiChinhSanSangDeBan',
+                type: 'line',
+                label: 'AFS',
+                area: true,
+                stack: 'total',
+                yAxisId: 'leftAxis',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+              {
+                dataKey: 'taiSanKhac',
+                type: 'line',
+                label: 'Tài sản khác',
+                area: true,
+                stack: 'total',
+                yAxisId: 'leftAxis',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+            ];
+            customBalCK2.yAxis = {
+              left: { type: 'per', piecewise: true },
+              right: { type: 'bil', piecewise: false },
+            };
+          } catch (error) {
+            console.log('error', error);
+          }
+        } else {
+          try {
+            customBalCK2.chart = false;
+            customBalCK2.series = [
+              {
+                type: 'bar',
+                label: 'Tiền',
+                dataKey: 'tienVaTaiSanTuongDuongTien',
+                yAxisId: 'leftAxis',
+                stack: 'stack',
+                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              },
+              {
+                type: 'bar',
+                label: 'FVTPL',
+                dataKey: 'cacTaiSanTaiChinhThongQuaGhiNhanLaiLo',
+                yAxisId: 'leftAxis',
+                stack: 'stack',
+                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              },
+              {
+                type: 'bar',
+                label: 'HTM',
+                dataKey: 'cacKhoanDauTuNamGiuDenNgayDaoHan',
+                yAxisId: 'leftAxis',
+                stack: 'stack',
+                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              },
+              {
+                type: 'bar',
+                label: 'Cho vay',
+                dataKey: 'cacKhoanChoVay',
+                yAxisId: 'leftAxis',
+                stack: 'stack',
+                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              },
+              {
+                type: 'bar',
+                label: 'AFS',
+                dataKey: 'cacKhoanTaiChinhSanSangDeBan',
+                yAxisId: 'leftAxis',
+                stack: 'stack',
+                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              },
+              {
+                type: 'bar',
+                label: 'Tài sản khác',
+                dataKey: 'taiSanKhac',
+                yAxisId: 'leftAxis',
+                stack: 'stack',
+                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              },
+            ];
+            customBalCK2.yAxis = {
+              left: { type: 'bil', piecewise: false, showLineReference: true },
+              right: { type: 'bil', piecewise: false },
+            };
+          } catch (error) {
+            console.log('error', error);
+          }
+        }
+        let newPerf = await mapDataChart(customBalCK2, tabType);
+        setDataChart((prev) => ({ ...prev, bal2: newPerf }));
+        setCheckedCK((prev) => ({ ...prev, bal2ajust: !prev.bal2ajust }));
       }
       if (typeChart === 'bal3') {
         customBalCK3.year = checkedCK.bal3;
@@ -1783,8 +1966,22 @@ export const TabChart = () => {
                   {ChartItem(dataChart?.perf3, checkedCK?.perf3, 'perf3', true)}
                 </div>
                 <div className="flex gap-8">
-                  {ChartItem(dataChart?.bal4, checkedCK?.bal4, 'bal4', true)}
-                  {ChartItem(dataChart?.bal5, checkedCK?.bal5, 'bal5', true)}
+                  {ChartItem(
+                    dataChart?.bal4,
+                    checkedCK?.bal4,
+                    'bal4',
+                    true,
+                    'bal4ajust',
+                    checkedCK?.bal4ajust
+                  )}
+                  {ChartItem(
+                    dataChart?.bal5,
+                    checkedCK?.bal5,
+                    'bal5',
+                    true,
+                    'bal5ajust',
+                    checkedCK?.bal5ajust
+                  )}
                 </div>
                 <div className="flex gap-8">{ChartItem(dataChart?.perf4, null, 'perf4')}</div>
               </div>
@@ -1794,8 +1991,22 @@ export const TabChart = () => {
             {codeValue && (
               <div className="flex flex-col gap-8">
                 <div className="flex gap-8">
-                  {ChartItem(dataChart?.bal2, checkedCK?.bal2, 'bal2', true)}
-                  {ChartItem(dataChart?.bal3, checkedCK?.bal3, 'bal3', true)}
+                  {ChartItem(
+                    dataChart?.bal2,
+                    checkedCK?.bal2,
+                    'bal2',
+                    true,
+                    'bal2ajust',
+                    checkedCK?.bal2ajust
+                  )}
+                  {ChartItem(
+                    dataChart?.bal3,
+                    checkedCK?.bal3,
+                    'bal3',
+                    true,
+                    'bal3ajust',
+                    checkedCK?.bal3ajust
+                  )}
                 </div>
                 <div className="flex gap-8">
                   {ChartItem(dataChart?.bal1, checkedCK?.bal1, 'bal1', true)}

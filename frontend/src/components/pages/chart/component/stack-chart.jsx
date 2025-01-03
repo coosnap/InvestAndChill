@@ -135,6 +135,34 @@ export default function NoStackChart(data) {
           '.MuiBarElement-series-auto-generated-id-3': {
             opacity: data.data.yAxis.right.opacity === 3 ? 0.5 : 1,
           },
+
+          '.MuiLineElement-series-auto-generated-id-4': {
+            strokeDasharray:
+              data.data.yAxis.right.dash4 || data.data.yAxis.left.dash4 ? '5 5' : null,
+            display:
+              data.data.yAxis.right.marker || data.data.yAxis.left.marker === 4 ? 'none' : 'block',
+          },
+          '.MuiMarkElement-series-auto-generated-id-4': {
+            display:
+              data.data.yAxis.right.marker || data.data.yAxis.left.marker === 4 ? 'block' : 'none',
+          },
+          '.MuiBarElement-series-auto-generated-id-4': {
+            opacity: data.data.yAxis.right.opacity === 4 ? 0.5 : 1,
+          },
+
+          '.MuiLineElement-series-auto-generated-id-5': {
+            strokeDasharray:
+              data.data.yAxis.right.dash5 || data.data.yAxis.left.dash5 ? '5 5' : null,
+            display:
+              data.data.yAxis.right.marker || data.data.yAxis.left.marker === 5 ? 'none' : 'block',
+          },
+          '.MuiMarkElement-series-auto-generated-id-5': {
+            display:
+              data.data.yAxis.right.marker || data.data.yAxis.left.marker === 5 ? 'block' : 'none',
+          },
+          '.MuiBarElement-series-auto-generated-id-5': {
+            opacity: data.data.yAxis.right.opacity === 5 ? 0.5 : 1,
+          },
         }}
       >
         <BarPlot />

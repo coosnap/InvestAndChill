@@ -7,6 +7,7 @@ export let customPerfPTC1 = {
       label: 'Doanh thu thuần',
       dataKey: 'doanhSoThuan',
       yAxisId: 'leftAxis',
+      color: '#C8D0D2',
       valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
@@ -14,14 +15,16 @@ export let customPerfPTC1 = {
       label: 'Lợi nhuận ròng',
       dataKey: 'loiNhuanCuaCoDongCongTyMe',
       yAxisId: 'leftAxis',
+      color: '#8F9596',
       valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
       type: 'line',
-      label: 'Biên lợi nhuận gộp',
+      label: ' Biên lợi nhuận gộp',
       dataKey: 'bienLaiGop',
       curve: 'linear',
       yAxisId: 'rightAxis',
+      color: '#CC8C32',
       valueFormatter: (v) => (v === null ? '' : v + ' %'),
     },
     {
@@ -30,6 +33,7 @@ export let customPerfPTC1 = {
       dataKey: 'bienLaiRong',
       curve: 'linear',
       yAxisId: 'rightAxis',
+      color: '#0D6B64',
       valueFormatter: (v) => (v === null ? '' : v + ' %'),
     },
   ],
@@ -48,6 +52,7 @@ export let customPerfPTC2 = {
       dataKey: 'loiNhuanCotLoi',
       yAxisId: 'rightAxis',
       stack: 'stack',
+      color: '#ABB2B4',
       valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
@@ -56,6 +61,7 @@ export let customPerfPTC2 = {
       dataKey: 'loiNhuanTaiChinh',
       yAxisId: 'rightAxis',
       stack: 'stack',
+      color: '#6EA2DF',
       valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
@@ -64,6 +70,7 @@ export let customPerfPTC2 = {
       dataKey: 'thuNhapKhac',
       yAxisId: 'rightAxis',
       stack: 'stack',
+      color: '#202222',
       valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
@@ -72,6 +79,7 @@ export let customPerfPTC2 = {
       dataKey: 'laiLoTuCongTyLienDoanh',
       yAxisId: 'rightAxis',
       stack: 'stack',
+      color: '#0D6B64',
       valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
   ],
@@ -90,6 +98,7 @@ export let customPerfPTC3 = {
       dataKey: 'salesTrailing',
       yAxisId: 'leftAxis',
       stack: 'stack',
+      color: '#C8D0D2',
       valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
@@ -98,6 +107,7 @@ export let customPerfPTC3 = {
       dataKey: 'gpmtrailing',
       curve: 'linear',
       yAxisId: 'rightAxis',
+      color: '#CC8C32',
       valueFormatter: (v) => (v === null ? '' : v + ' %'),
     },
     {
@@ -106,6 +116,7 @@ export let customPerfPTC3 = {
       dataKey: 'sgamtrailing',
       curve: 'linear',
       yAxisId: 'rightAxis',
+      color: '#981F36',
       valueFormatter: (v) => (v === null ? '' : v + ' %'),
     },
     {
@@ -114,6 +125,7 @@ export let customPerfPTC3 = {
       dataKey: 'ebitmTrailing',
       curve: 'linear',
       yAxisId: 'rightAxis',
+      color: '#CFAB6D',
       valueFormatter: (v) => (v === null ? '' : v + ' %'),
     },
   ],
@@ -131,6 +143,7 @@ export let customPerfPTC4 = {
       label: 'EBIT TTM',
       dataKey: 'ebittrailing',
       yAxisId: 'leftAxis',
+      color: '#C8D0D2',
       valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
@@ -138,6 +151,7 @@ export let customPerfPTC4 = {
       label: 'Lợi nhuận tài chính TTM',
       dataKey: 'netFinanceialTrailing',
       yAxisId: 'leftAxis',
+      color: '#6EA2DF',
       valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
@@ -146,6 +160,7 @@ export let customPerfPTC4 = {
       dataKey: 'ebitmTrailing',
       curve: 'linear',
       yAxisId: 'rightAxis',
+      color: '#CFAB6D',
       valueFormatter: (v) => (v === null ? '' : v + ' %'),
     },
     {
@@ -154,6 +169,7 @@ export let customPerfPTC4 = {
       dataKey: 'nimgTrailing',
       curve: 'linear',
       yAxisId: 'rightAxis',
+      color: '#0D6B64',
       valueFormatter: (v) => (v === null ? '' : v + ' %'),
     },
   ],
@@ -172,6 +188,7 @@ export let customPerfPTC5 = {
       dataKey: 'nitrailing',
       yAxisId: 'rightAxis',
       stack: 'stack',
+      color: '#ABB2B4',
       valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
@@ -180,6 +197,7 @@ export let customPerfPTC5 = {
       dataKey: 'minoritiesTrailing',
       yAxisId: 'rightAxis',
       stack: 'stack',
+      color: '#981F36',
       valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
@@ -187,6 +205,7 @@ export let customPerfPTC5 = {
       label: 'Lợi nhuận CTLDLK TTM',
       dataKey: 'associateTrailing',
       yAxisId: 'rightAxis',
+      color: '#0D6B64',
       valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
   ],
@@ -204,6 +223,7 @@ export let customPerfPTC6 = {
       label: 'EBITDA TTM',
       dataKey: 'ebitdatrailing',
       yAxisId: 'leftAxis',
+      color: '#C8D0D2',
       valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
@@ -211,6 +231,7 @@ export let customPerfPTC6 = {
       label: 'EBIT TTM',
       dataKey: 'ebittrailing',
       yAxisId: 'leftAxis',
+      color: '#ABB2B4',
       valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
@@ -219,6 +240,7 @@ export let customPerfPTC6 = {
       dataKey: 'interestExpenseTrailing',
       curve: 'linear',
       yAxisId: 'rightAxis',
+      color: '#981F36',
       valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
   ],
@@ -237,6 +259,7 @@ export let customPerfPTC7 = {
       dataKey: 'roe',
       curve: 'linear',
       yAxisId: 'leftAxis',
+      color: '#013368',
       valueFormatter: (v) => (v === null ? '' : v + ' %'),
     },
     {
@@ -245,6 +268,7 @@ export let customPerfPTC7 = {
       dataKey: 'roic',
       curve: 'linear',
       yAxisId: 'leftAxis',
+      color: '#013368',
       valueFormatter: (v) => (v === null ? '' : v + ' %'),
     },
     {
@@ -253,12 +277,13 @@ export let customPerfPTC7 = {
       dataKey: 'laiVay',
       curve: 'linear',
       yAxisId: 'rightAxis',
+      color: '#981F36',
       valueFormatter: (v) => (v === null ? '' : v + ' %'),
     },
   ],
   yAxis: {
-    left: { type: 'per', piecewise: true },
-    right: { type: 'per', piecewise: true },
+    left: { type: 'per', piecewise: true, dash1: true },
+    right: { type: 'per', piecewise: true, dash2: true },
   },
 };
 export let customPerfPTC8 = {
@@ -271,6 +296,7 @@ export let customPerfPTC8 = {
       dataKey: 'roe',
       curve: 'linear',
       yAxisId: 'leftAxis',
+      color: '#013368',
       valueFormatter: (v) => (v === null ? '' : v + ' %'),
     },
     {
@@ -279,6 +305,7 @@ export let customPerfPTC8 = {
       dataKey: 'assetTurnover',
       curve: 'linear',
       yAxisId: 'rightAxis',
+      color: '#C8D0D2',
       valueFormatter: (v) => (v === null ? '' : v + ' lần'),
     },
     {
@@ -287,6 +314,7 @@ export let customPerfPTC8 = {
       dataKey: 'leverage',
       curve: 'linear',
       yAxisId: 'rightAxis',
+      color: '#981F36',
       valueFormatter: (v) => (v === null ? '' : v + ' lần'),
     },
     {
@@ -295,6 +323,7 @@ export let customPerfPTC8 = {
       dataKey: 'nimgTrailing',
       curve: 'linear',
       yAxisId: 'leftAxis',
+      color: '#0D6B64',
       valueFormatter: (v) => (v === null ? '' : v + ' %'),
     },
     {
@@ -303,18 +332,20 @@ export let customPerfPTC8 = {
       dataKey: 'dee',
       curve: 'linear',
       yAxisId: 'rightAxis',
+      color: '#981F36',
       valueFormatter: (v) => (v === null ? '' : v + ' lần'),
     },
   ],
   yAxis: {
     left: { type: 'per', piecewise: true },
-    right: { type: 'time', piecewise: true },
+    right: { type: 'time', piecewise: true, dash4: true },
   },
 };
 
 export let customBalPTC1 = {
   type: 'bal1',
   year: false,
+  chart: false,
   series: [
     {
       type: 'bar',
@@ -322,6 +353,8 @@ export let customBalPTC1 = {
       dataKey: 'tienDTNGDaoHan',
       yAxisId: 'leftAxis',
       stack: 'stack',
+      color: '#C8D0D2',
+      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -329,6 +362,8 @@ export let customBalPTC1 = {
       dataKey: 'phaiThu',
       yAxisId: 'leftAxis',
       stack: 'stack',
+      color: '#93B6D6',
+      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -336,6 +371,8 @@ export let customBalPTC1 = {
       dataKey: 'hangTonKhoRong',
       yAxisId: 'leftAxis',
       stack: 'stack',
+      color: '#6EA2DF',
+      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -343,6 +380,8 @@ export let customBalPTC1 = {
       dataKey: 'taiSanCoDinh',
       yAxisId: 'leftAxis',
       stack: 'stack',
+      color: '#014388',
+      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -350,6 +389,8 @@ export let customBalPTC1 = {
       dataKey: 'taiSanDoDangDaiHan',
       yAxisId: 'leftAxis',
       stack: 'stack',
+      color: '#2471BE',
+      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -357,6 +398,8 @@ export let customBalPTC1 = {
       dataKey: 'giaTriRongTaiSanDauTu',
       yAxisId: 'leftAxis',
       stack: 'stack',
+      color: '#585D5D',
+      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -364,6 +407,8 @@ export let customBalPTC1 = {
       dataKey: 'taiSanKhac',
       yAxisId: 'leftAxis',
       stack: 'stack',
+      color: '#8F9596',
+      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
   ],
   yAxis: {
@@ -374,6 +419,7 @@ export let customBalPTC1 = {
 export let customBalPTC2 = {
   type: 'bal2',
   year: false,
+  chart: false,
   series: [
     {
       type: 'bar',
@@ -381,6 +427,8 @@ export let customBalPTC2 = {
       dataKey: 'vonGop',
       yAxisId: 'rightAxis',
       stack: 'stack',
+      color: '#585D5D',
+      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -388,6 +436,8 @@ export let customBalPTC2 = {
       dataKey: 'laiChuaPhanPhoi',
       yAxisId: 'rightAxis',
       stack: 'stack',
+      color: '#8F9596',
+      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -395,6 +445,8 @@ export let customBalPTC2 = {
       dataKey: 'vcshKhac',
       yAxisId: 'rightAxis',
       stack: 'stack',
+      color: '#ABB2B4',
+      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -402,6 +454,8 @@ export let customBalPTC2 = {
       dataKey: 'noChiemDung',
       yAxisId: 'rightAxis',
       stack: 'stack',
+      color: '#CCBA95',
+      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -409,6 +463,8 @@ export let customBalPTC2 = {
       dataKey: 'noVay',
       yAxisId: 'rightAxis',
       stack: 'stack',
+      color: '#AD5757',
+      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
   ],
   yAxis: {
@@ -426,6 +482,7 @@ export let customBalPTC3 = {
       dataKey: 'grossPPE',
       yAxisId: 'rightAxis',
       stack: 'stack',
+      color: '#014388',
       valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
@@ -433,6 +490,7 @@ export let customBalPTC3 = {
       label: 'Khấu hao lũy kế',
       dataKey: 'dappe',
       yAxisId: 'rightAxis',
+      color: '#ABB2B4',
       valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
@@ -441,6 +499,7 @@ export let customBalPTC3 = {
       dataKey: 'xayDungCoBanDoDang',
       yAxisId: 'rightAxis',
       stack: 'stack',
+      color: '#2471BE',
       valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
   ],
@@ -458,6 +517,7 @@ export let customBalPTC4 = {
       label: 'Nợ ròng',
       dataKey: 'netDebt',
       yAxisId: 'rightAxis',
+      color: '#AD5757',
       valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
@@ -465,6 +525,7 @@ export let customBalPTC4 = {
       label: 'Vốn lưu động',
       dataKey: 'workingcap',
       yAxisId: 'rightAxis',
+      color: '#CCBA95',
       valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
   ],
@@ -483,6 +544,7 @@ export let customBalPTC5 = {
       dataKey: 'vongQuayHangTonKho',
       yAxisId: 'rightAxis',
       curve: 'linear',
+      color: '#C8D0D2',
       valueFormatter: (v) => (v === null ? '' : v + ' lần'),
     },
     {
@@ -491,6 +553,7 @@ export let customBalPTC5 = {
       dataKey: 'vongQuayPhaiThu',
       yAxisId: 'rightAxis',
       curve: 'linear',
+      color: '#CC8C32',
       valueFormatter: (v) => (v === null ? '' : v + ' lần'),
     },
     {
@@ -498,6 +561,7 @@ export let customBalPTC5 = {
       label: 'Vòng quay phải trả nhà cung cấp',
       dataKey: 'vongQuayPhaiTra',
       yAxisId: 'rightAxis',
+      color: '#AD5757',
       valueFormatter: (v) => (v === null ? '' : v + ' lần'),
     },
   ],
@@ -516,6 +580,7 @@ export let customBalPTC6 = {
       dataKey: 'vayNganHanVCSH',
       yAxisId: 'leftAxis',
       stack: 'stack',
+      color: '#8F9596',
       valueFormatter: (v) => (v === null ? '' : v + ' %'),
     },
     {
@@ -524,6 +589,7 @@ export let customBalPTC6 = {
       dataKey: 'vayDaiHanVCSH',
       yAxisId: 'leftAxis',
       stack: 'stack',
+      color: '#C8D0D2',
       valueFormatter: (v) => (v === null ? '' : v + ' %'),
     },
     {
@@ -532,6 +598,7 @@ export let customBalPTC6 = {
       dataKey: 'vayVCSH',
       yAxisId: 'leftAxis',
       curve: 'linear',
+      color: '#013368',
       valueFormatter: (v) => (v === null ? '' : v + ' %'),
     },
     {
@@ -540,6 +607,7 @@ export let customBalPTC6 = {
       dataKey: 'laiVay',
       yAxisId: 'rightAxis',
       curve: 'linear',
+      color: '#981F36',
       valueFormatter: (v) => (v === null ? '' : v + ' %'),
     },
   ],
@@ -559,6 +627,7 @@ export let customCFPTC1 = {
       dataKey: 'luuChuyenTienTeRongTuCacHoatDongSanXuatKinhDoanh',
       yAxisId: 'rightAxis',
       stack: 'stack',
+      color: '#C8D0D2',
       valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
@@ -567,6 +636,7 @@ export let customCFPTC1 = {
       dataKey: 'luuChuyenTienTeRongTuCacHoatDongDauTu',
       yAxisId: 'rightAxis',
       stack: 'stack',
+      color: '#ABB2B4',
       valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
@@ -575,6 +645,7 @@ export let customCFPTC1 = {
       dataKey: 'luuChuyenTienTeTuHoatDongTaiChinh',
       yAxisId: 'rightAxis',
       stack: 'stack',
+      color: '#8F9596',
       valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
@@ -583,6 +654,7 @@ export let customCFPTC1 = {
       dataKey: 'fcf',
       curve: 'linear',
       yAxisId: 'rightAxis',
+      color: '#2471BE',
       valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
   ],
@@ -600,6 +672,7 @@ export let customCFPTC2 = {
       label: 'Net Income + DA - NWC',
       dataKey: 'netIncomeDANWC',
       yAxisId: 'rightAxis',
+      color: '#014388',
       valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
@@ -607,6 +680,7 @@ export let customCFPTC2 = {
       label: 'Net Income + DA - NWC - CAPEX',
       dataKey: 'netIncomeDANWCCAPEX',
       yAxisId: 'rightAxis',
+      color: '#6EA2DF',
       valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
@@ -615,6 +689,7 @@ export let customCFPTC2 = {
       dataKey: 'netIncomeDANWCRolling',
       curve: 'linear',
       yAxisId: 'leftAxis',
+      color: '#014388',
       valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
@@ -623,6 +698,7 @@ export let customCFPTC2 = {
       dataKey: 'netIncomeDANWCCAPEXRolling',
       curve: 'linear',
       yAxisId: 'leftAxis',
+      color: '#6EA2DF',
       valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
   ],
@@ -641,6 +717,7 @@ export let customCFPTC3 = {
       dataKey: 'noVay',
       yAxisId: 'rightAxis',
       stack: 'stack',
+      color: '#AD5757',
       valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
@@ -649,6 +726,7 @@ export let customCFPTC3 = {
       dataKey: 'tienVaTuongDuongTien',
       yAxisId: 'rightAxis',
       stack: 'stack',
+      color: '#C8D0D2',
       valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
@@ -657,6 +735,7 @@ export let customCFPTC3 = {
       dataKey: 'giaTriThuanDauTuNganHan',
       yAxisId: 'rightAxis',
       stack: 'stack',
+      color: '#93B6D6',
       valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
@@ -665,6 +744,16 @@ export let customCFPTC3 = {
       dataKey: 'dauTuNamGiuDenNgayDaoHan',
       yAxisId: 'rightAxis',
       stack: 'stack',
+      color: '#6EA2DF',
+      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+    },
+    {
+      type: 'line',
+      label: 'Nợ ròng',
+      dataKey: 'netDebt',
+      curve: 'linear',
+      yAxisId: 'rightAxis',
+      color: '#202222',
       valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
   ],
@@ -683,6 +772,7 @@ export let customCFPTC4 = {
       dataKey: 'nguoiMuaTraTienTruoc',
       yAxisId: 'rightAxis',
       stack: 'stack',
+      color: '#C8D0D2',
       valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
@@ -691,6 +781,7 @@ export let customCFPTC4 = {
       dataKey: 'doanhThuChuaThucHienNganHan',
       yAxisId: 'rightAxis',
       stack: 'stack',
+      color: '#93B6D6',
       valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
@@ -699,6 +790,7 @@ export let customCFPTC4 = {
       dataKey: 'nguoiMuaTraTienTruocDaiHan',
       yAxisId: 'rightAxis',
       stack: 'stack',
+      color: '#8F9596',
       valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
@@ -707,6 +799,7 @@ export let customCFPTC4 = {
       dataKey: 'doanhThuChuaThucHien',
       yAxisId: 'rightAxis',
       stack: 'stack',
+      color: '#6EA2DF',
       valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
   ],
@@ -726,6 +819,7 @@ export let customValPTC1 = {
       dataKey: 'pe',
       curve: 'linear',
       yAxisId: 'rightAxis',
+      color: '#014388',
       valueFormatter: (v) => (v === null ? '' : v + ' lần'),
     },
     {
@@ -734,6 +828,7 @@ export let customValPTC1 = {
       dataKey: 'peMedian',
       curve: 'linear',
       yAxisId: 'rightAxis',
+      color: '#6EA2DF',
       valueFormatter: (v) => (v === null ? '' : v + ' lần'),
     },
     {
@@ -742,6 +837,7 @@ export let customValPTC1 = {
       dataKey: 'evebitda',
       curve: 'linear',
       yAxisId: 'leftAxis',
+      color: '#CC8C32',
       valueFormatter: (v) => (v === null ? '' : v + ' lần'),
     },
     {
@@ -750,6 +846,7 @@ export let customValPTC1 = {
       dataKey: 'evebitdaMedian',
       curve: 'linear',
       yAxisId: 'leftAxis',
+      color: '#CCBA95',
       valueFormatter: (v) => (v === null ? '' : v + ' lần'),
     },
   ],
@@ -768,6 +865,7 @@ export let customValPTC2 = {
       dataKey: 'roe',
       curve: 'linear',
       yAxisId: 'leftAxis',
+      color: '#013368',
       valueFormatter: (v) => (v === null ? '' : v + ' %'),
     },
     {
@@ -776,6 +874,7 @@ export let customValPTC2 = {
       dataKey: 'pb',
       curve: 'linear',
       yAxisId: 'rightAxis',
+      color: '#CC8C32',
       valueFormatter: (v) => (v === null ? '' : v + ' lần'),
     },
     {
@@ -784,6 +883,7 @@ export let customValPTC2 = {
       dataKey: 'pbMedian',
       curve: 'linear',
       yAxisId: 'rightAxis',
+      color: '#CCBA95',
       valueFormatter: (v) => (v === null ? '' : v + ' lần'),
     },
   ],
@@ -801,6 +901,7 @@ export let customValPTC3 = {
       label: 'Doanh thu thuần TTM',
       dataKey: 'salettm',
       yAxisId: 'leftAxis',
+      color: '#C8D0D2',
       valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
@@ -809,6 +910,7 @@ export let customValPTC3 = {
       dataKey: 'marketcap',
       curve: 'linear',
       yAxisId: 'rightAxis',
+      color: '#014388',
       valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
   ],
@@ -826,6 +928,7 @@ export let customValPTC4 = {
       label: 'Doanh thu thuần TTM',
       dataKey: 'salettm',
       yAxisId: 'leftAxis',
+      color: '#C8D0D2',
       valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
@@ -834,6 +937,7 @@ export let customValPTC4 = {
       dataKey: 'ps',
       curve: 'linear',
       yAxisId: 'rightAxis',
+      color: '#014388',
       valueFormatter: (v) => (v === null ? '' : v + ' lần'),
     },
     {
@@ -842,6 +946,7 @@ export let customValPTC4 = {
       dataKey: 'psMedian',
       curve: 'linear',
       yAxisId: 'rightAxis',
+      color: '#6EA2DF',
       valueFormatter: (v) => (v === null ? '' : v + ' lần'),
     },
   ],
@@ -859,6 +964,7 @@ export let customValPTC5 = {
       label: 'Lợi nhuận ròng TTM',
       dataKey: 'nittm',
       yAxisId: 'leftAxis',
+      color: '#C8D0D2',
       valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
@@ -867,6 +973,7 @@ export let customValPTC5 = {
       dataKey: 'marketcap',
       curve: 'linear',
       yAxisId: 'rightAxis',
+      color: '#014388',
       valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
   ],
@@ -884,6 +991,7 @@ export let customValPTC6 = {
       label: 'Lợi nhuận ròng TTM',
       dataKey: 'nittm',
       yAxisId: 'leftAxis',
+      color: '#C8D0D2',
       valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
@@ -892,6 +1000,7 @@ export let customValPTC6 = {
       dataKey: 'pe',
       curve: 'linear',
       yAxisId: 'rightAxis',
+      color: '#014388',
       valueFormatter: (v) => (v === null ? '' : v + ' lần'),
     },
     {
@@ -900,6 +1009,7 @@ export let customValPTC6 = {
       dataKey: 'peMedian',
       curve: 'linear',
       yAxisId: 'rightAxis',
+      color: '#6EA2DF',
       valueFormatter: (v) => (v === null ? '' : v + ' lần'),
     },
   ],
@@ -917,6 +1027,7 @@ export let customValPTC7 = {
       label: 'EBITDA TTM',
       dataKey: 'ebitdattm',
       yAxisId: 'leftAxis',
+      color: '#C8D0D2',
       valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
@@ -925,6 +1036,7 @@ export let customValPTC7 = {
       dataKey: 'evebitda',
       curve: 'linear',
       yAxisId: 'rightAxis',
+      color: '#014388',
       valueFormatter: (v) => (v === null ? '' : v + ' lần'),
     },
     {
@@ -933,6 +1045,7 @@ export let customValPTC7 = {
       dataKey: 'evebitdaMedian',
       curve: 'linear',
       yAxisId: 'rightAxis',
+      color: '#6EA2DF',
       valueFormatter: (v) => (v === null ? '' : v + ' lần'),
     },
   ],
@@ -950,6 +1063,7 @@ export let customValPTC8 = {
       label: 'Vốn chủ sở hữu',
       dataKey: 'capital',
       yAxisId: 'leftAxis',
+      color: '#ABB2B4',
       valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
@@ -958,6 +1072,7 @@ export let customValPTC8 = {
       dataKey: 'marketcap',
       curve: 'linear',
       yAxisId: 'rightAxis',
+      color: '#014388',
       valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
   ],
