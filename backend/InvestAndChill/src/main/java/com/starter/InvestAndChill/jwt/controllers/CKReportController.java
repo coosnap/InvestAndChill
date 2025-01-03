@@ -16,15 +16,24 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.starter.InvestAndChill.jwt.models.ChungKhoanReport;
+import com.starter.InvestAndChill.jwt.models.Valuation;
+import com.starter.InvestAndChill.jwt.payload.response.MessageResponse;
 import com.starter.InvestAndChill.jwt.payload.response.PTC.Perf1Response;
 import com.starter.InvestAndChill.jwt.payload.response.chungkhoan.Bal2Response;
 import com.starter.InvestAndChill.jwt.payload.response.chungkhoan.Bal3Response;
 import com.starter.InvestAndChill.jwt.payload.response.chungkhoan.Bal4Response;
 import com.starter.InvestAndChill.jwt.payload.response.chungkhoan.Bal5Response;
 import com.starter.InvestAndChill.jwt.payload.response.chungkhoan.Perf2Response;
+import com.starter.InvestAndChill.jwt.payload.response.nganhang.Val1Response;
+import com.starter.InvestAndChill.jwt.payload.response.nganhang.Val2Response;
+import com.starter.InvestAndChill.jwt.payload.response.nganhang.Val3Response;
+import com.starter.InvestAndChill.jwt.payload.response.nganhang.Val4Response;
+import com.starter.InvestAndChill.jwt.repository.CKRepository;
 import com.starter.InvestAndChill.jwt.repository.CKRepositoryNam;
 import com.starter.InvestAndChill.jwt.repository.CKRepositoryQuy;
+import com.starter.InvestAndChill.jwt.repository.ValuationRepository;
 import com.starter.InvestAndChill.utils.CalculatorUtils;
 import com.starter.InvestAndChill.utils.Constants;
 import com.starter.InvestAndChill.utils.RoundNumber;
@@ -34,6 +43,14 @@ import com.starter.InvestAndChill.utils.RoundNumber;
 @RestController
 @RequestMapping("/api/report/chungkhoan")
 public class CKReportController {
+	
+	@Autowired
+	ValuationRepository valuationRepository;
+	
+	Pageable pageableValuation = PageRequest.of(0, 41); 
+	
+	@Autowired
+	CKRepository ckRepository;
 	
 	@Autowired
 	CKRepositoryQuy ckQuyRepository;
@@ -373,29 +390,113 @@ public class CKReportController {
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 	
-//	@GetMapping("/val1/{stock}")
-//	public ResponseEntity<?> val1(@PathVariable String stock, @RequestParam(required = false,name = "type") String type) {
-//		List<ChungKhoanReport> listReport = new ArrayList<ChungKhoanReport>();
-//		List<com.starter.InvestAndChill.jwt.payload.response.chungkhoan.Val1Response> list;
-//	
-//		if ("year".equals(type)) {
-//			listReport =  ckNamRepository.findByStockForPerf(stock,pageableNam);
-//		} else {
-//			listReport =	ckQuyRepository.findByStockForPerf(stock,pageableQuy);
-//		}
-//		Collections.reverse(listReport);
-//		list = listReport.stream()
-//	                .map(report -> {
-//	                	com.starter.InvestAndChill.jwt.payload.response.chungkhoan.Val1Response response = new com.starter.InvestAndChill.jwt.payload.response.chungkhoan.Val1Response();
-//	                	response.setId(report.getId());
-//	                	response.setTitle(Constants.ChungKhoan_bal1);
-//	                    response.setLaiVay(RoundNumber.lamTronPhanTram(report.getLaiVay()));
-//	                    response.setVayVCSH(RoundNumber.lamTronPhanTram(report.getVayVCSH()));
-//	                    return response;
-//	                })
-//	                .collect(Collectors.toList());
-//			
-//		return new ResponseEntity<>(list, HttpStatus.OK);
-//	}
+	@GetMapping("/val1/{stock}")
+	public ResponseEntity<?> val1(@PathVariable String stock) {
+		List<Valuation> listValuation = new ArrayList<Valuation>();
+		
+		listValuation =  valuationRepository.findTopRankedDataByStockCode(stock, pageableValuation);
+
+		if (listValuation.isEmpty()) {
+			return new ResponseEntity<>(new MessageResponse("Data is not available"), HttpStatus.OK);
+		}
+		
+		Collections.reverse(listValuation);
+		CalculatorUtils.calculateMedianForOne(listValuation,"PB");
+		List<Val1Response> list = new ArrayList<Val1Response>();
+		for (int i=0;i< listValuation.size();i++) {
+			Valuation report = listValuation.get(i);
+			Val1Response response = new Val1Response();
+			response.setId(report.getId());
+			response.setTitle(Constants.ChungKhoan_val1);
+			
+			response.setRoe(RoundNumber.lamTronPhanTram(ckRepository.findRoe(report.getId().getStockCode(), report.getId().getQuarter(), report.getId().getYear())));
+			response.setPb(RoundNumber.lamTronLan(report.getPb()));
+			response.setPbMedian(RoundNumber.lamTronLan(report.getPbMedian()));
+			list.add(response);
+		}
+		
+		return new ResponseEntity<>(list, HttpStatus.OK);
+	} 
+	
+	@GetMapping("/val2/{stock}")
+	public ResponseEntity<?> val2(@PathVariable String stock) {
+		List<Valuation> listValuation = new ArrayList<Valuation>();
+		
+		listValuation =  valuationRepository.findTopRankedDataByStockCode(stock, pageableValuation);
+
+		if (listValuation.isEmpty()) {
+			return new ResponseEntity<>(new MessageResponse("Data is not available"), HttpStatus.OK);
+		}
+		
+		Collections.reverse(listValuation);
+		CalculatorUtils.calculateMedianForOne(listValuation,"PE");
+		List<Val2Response> list = new ArrayList<Val2Response>();
+		for (int i=0;i< listValuation.size();i++) {
+			Valuation report = listValuation.get(i);
+			Val2Response response = new Val2Response();
+			response.setId(report.getId());
+			response.setTitle(Constants.ChungKhoan_val2);
+		
+			response.setPe(RoundNumber.lamTronLan(report.getPe()));
+			response.setPeMedian(RoundNumber.lamTronLan(report.getPeMedian()));
+			list.add(response);
+		}
+		
+		return new ResponseEntity<>(list, HttpStatus.OK);
+	} 
+	
+	@GetMapping("/val3/{stock}")
+	public ResponseEntity<?> val3(@PathVariable String stock) {
+		List<Valuation> listValuation = new ArrayList<Valuation>();
+		
+		listValuation =  valuationRepository.findTopRankedDataByStockCode(stock, pageableValuation);
+
+		if (listValuation.isEmpty()) {
+			return new ResponseEntity<>(new MessageResponse("Data is not available"), HttpStatus.OK);
+		}
+		
+		Collections.reverse(listValuation);
+
+		List<Val3Response> list = new ArrayList<Val3Response>();
+		for (int i=0;i< listValuation.size();i++) {
+			Valuation report = listValuation.get(i);
+			Val3Response response = new Val3Response();
+			response.setId(report.getId());
+			response.setTitle(Constants.ChungKhoan_val3);
+		
+			response.setLoiNhuanRongTTM(RoundNumber.lamTron(ckRepository.findLoiNhuanRongTTM(report.getId().getStockCode(), report.getId().getQuarter(), report.getId().getYear())));
+			response.setVonHoa(RoundNumber.lamTron(report.getMarketcap()));
+			list.add(response);
+		}
+		
+		return new ResponseEntity<>(list, HttpStatus.OK);
+	}
+	
+	@GetMapping("/val4/{stock}")
+	public ResponseEntity<?> val4(@PathVariable String stock) {
+		List<Valuation> listValuation = new ArrayList<Valuation>();
+		
+		listValuation =  valuationRepository.findTopRankedDataByStockCode(stock, pageableValuation);
+
+		if (listValuation.isEmpty()) {
+			return new ResponseEntity<>(new MessageResponse("Data is not available"), HttpStatus.OK);
+		}
+		
+		Collections.reverse(listValuation);
+
+		List<Val4Response> list = new ArrayList<Val4Response>();
+		for (int i=0;i< listValuation.size();i++) {
+			Valuation report = listValuation.get(i);
+			Val4Response response = new Val4Response();
+			response.setId(report.getId());
+			response.setTitle(Constants.ChungKhoan_val4);
+		
+			response.setVonChuSoHuu(RoundNumber.lamTron(ckRepository.findLoiNhuanRongTTM(report.getId().getStockCode(), report.getId().getQuarter(), report.getId().getYear())));
+			response.setVonHoa(RoundNumber.lamTron(report.getMarketcap()));
+			list.add(response);
+		}
+		
+		return new ResponseEntity<>(list, HttpStatus.OK);
+	} 
 
 }

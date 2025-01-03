@@ -46,6 +46,7 @@ import com.starter.InvestAndChill.jwt.payload.response.PTC.Val5Response;
 import com.starter.InvestAndChill.jwt.payload.response.PTC.Val6Response;
 import com.starter.InvestAndChill.jwt.payload.response.PTC.Val7Response;
 import com.starter.InvestAndChill.jwt.payload.response.PTC.Val8Response;
+import com.starter.InvestAndChill.jwt.repository.PTCRepository;
 import com.starter.InvestAndChill.jwt.repository.PTCRepositoryNam;
 import com.starter.InvestAndChill.jwt.repository.PTCRepositoryQuy;
 import com.starter.InvestAndChill.jwt.repository.ValuationRepository;
@@ -63,7 +64,8 @@ public class PTCReportController {
 	PTCRepositoryQuy ptcQuyRepository;
 	Pageable pageableQuy = PageRequest.of(0, 21); 
 	Pageable pageableToanQuy = PageRequest.of(0, 40); 
-	
+	@Autowired
+	PTCRepository ptcRepository;
 	@Autowired
 	PTCRepositoryNam ptcNamRepository;
 	Pageable pageableNam = PageRequest.of(0, 10); 
@@ -579,7 +581,6 @@ public class PTCReportController {
 		List<Valuation> listValuation = new ArrayList<Valuation>();
 		
 		listValuation =  valuationRepository.findTopRankedDataByStockCode(stock, pageableValuation);
-
 		if (listValuation.isEmpty()) {
 			return new ResponseEntity<>(new MessageResponse("Data is not available"), HttpStatus.OK);
 		}
@@ -593,7 +594,7 @@ public class PTCReportController {
 			Val2Response response = new Val2Response();
 			response.setId(report.getId());
 			response.setTitle(Constants.PTC_val2);
-			response.setRoe(RoundNumber.lamTronPhanTram(report.getRoe()));
+			response.setRoe(RoundNumber.lamTronPhanTram(ptcRepository.findRoe(report.getId().getStockCode(), report.getId().getQuarter(), report.getId().getYear())));
 			response.setPb(RoundNumber.lamTronLan(report.getPb()));
 			response.setPbMedian(RoundNumber.lamTronLan(report.getPbMedian()));
 			list.add(response);
@@ -607,14 +608,17 @@ public class PTCReportController {
 		List<Valuation> listValuation = new ArrayList<Valuation>();
 		
 		listValuation =  valuationRepository.findTopRankedDataByStockCode(stock, pageableValuation);
-
+		if (listValuation.isEmpty()) {
+			return new ResponseEntity<>(new MessageResponse("Data is not available"), HttpStatus.OK);
+		}
+		
 		Collections.reverse(listValuation);
 		List<Val3Response> list = listValuation.stream()
                 .map(report -> {
                 	Val3Response response = new Val3Response();
                 	response.setId(report.getId());
                 	response.setTitle(Constants.PTC_val3);
-                	response.setSalettm(RoundNumber.lamTron(report.getSalettm()));
+                	response.setSalettm(RoundNumber.lamTron(ptcRepository.findSalesTrailing(report.getId().getStockCode(), report.getId().getQuarter(), report.getId().getYear())));
                 	response.setMarketcap(RoundNumber.lamTron(report.getMarketcap()));
                     return response;
                 })
@@ -628,6 +632,10 @@ public class PTCReportController {
 		
 		listValuation =  valuationRepository.findTopRankedDataByStockCode(stock, pageableValuation);
 
+		if (listValuation.isEmpty()) {
+			return new ResponseEntity<>(new MessageResponse("Data is not available"), HttpStatus.OK);
+		}
+		
 		Collections.reverse(listValuation);
 		CalculatorUtils.calculateMedianForOne(listValuation,"PS");
 		
@@ -637,7 +645,7 @@ public class PTCReportController {
 			Val4Response response = new Val4Response();
 			response.setId(report.getId());
 			response.setTitle(Constants.PTC_val4);
-			response.setSalettm(RoundNumber.lamTron(report.getSalettm()));
+			response.setSalettm(RoundNumber.lamTron(ptcRepository.findSalesTrailing(report.getId().getStockCode(), report.getId().getQuarter(), report.getId().getYear())));
 			response.setPs(RoundNumber.lamTronLan(report.getPs()));
 			response.setPsMedian(RoundNumber.lamTronLan(report.getPsMedian()));
 			list.add(response);
@@ -652,13 +660,17 @@ public class PTCReportController {
 		
 		listValuation =  valuationRepository.findTopRankedDataByStockCode(stock, pageableValuation);
 
+		if (listValuation.isEmpty()) {
+			return new ResponseEntity<>(new MessageResponse("Data is not available"), HttpStatus.OK);
+		}
+		
 		Collections.reverse(listValuation);
 		List<Val5Response> list = listValuation.stream()
                 .map(report -> {
                 	Val5Response response = new Val5Response();
                 	response.setId(report.getId());
                 	response.setTitle(Constants.PTC_val5);
-                	response.setNittm(RoundNumber.lamTron(report.getNittm()));
+                	response.setNittm(RoundNumber.lamTron(ptcRepository.findNlTrailing(report.getId().getStockCode(), report.getId().getQuarter(), report.getId().getYear())));
                 	response.setMarketcap(RoundNumber.lamTron(report.getMarketcap()));
                     return response;
                 })
@@ -672,6 +684,10 @@ public class PTCReportController {
 		
 		listValuation =  valuationRepository.findTopRankedDataByStockCode(stock, pageableValuation);
 
+		if (listValuation.isEmpty()) {
+			return new ResponseEntity<>(new MessageResponse("Data is not available"), HttpStatus.OK);
+		}
+		
 		Collections.reverse(listValuation);
 		CalculatorUtils.calculateMedianForOne(listValuation,"PE");
 		
@@ -681,7 +697,7 @@ public class PTCReportController {
 			Val6Response response = new Val6Response();
 			response.setId(report.getId());
 			response.setTitle(Constants.PTC_val6);
-			response.setNittm(RoundNumber.lamTron(report.getNittm()));
+			response.setNittm(RoundNumber.lamTron(ptcRepository.findNlTrailing(report.getId().getStockCode(), report.getId().getQuarter(), report.getId().getYear())));
 			response.setPe(RoundNumber.lamTronLan(report.getPe()));
 			response.setPeMedian(RoundNumber.lamTronLan(report.getPeMedian()));
 			list.add(response);
@@ -695,7 +711,9 @@ public class PTCReportController {
 		List<Valuation> listValuation = new ArrayList<Valuation>();
 		
 		listValuation =  valuationRepository.findTopRankedDataByStockCode(stock, pageableValuation);
-
+		if (listValuation.isEmpty()) {
+			return new ResponseEntity<>(new MessageResponse("Data is not available"), HttpStatus.OK);
+		}
 		Collections.reverse(listValuation);
 		CalculatorUtils.calculateMedianForOne(listValuation,"evebitda");
 		
@@ -706,7 +724,7 @@ public class PTCReportController {
 			response.setId(report.getId());
 			response.setTitle(Constants.PTC_val7);
 			
-			response.setEbitdattm(RoundNumber.lamTron(report.getEbitdattm()));
+			response.setEbitdattm(RoundNumber.lamTron(ptcRepository.findEBITDATrailing(report.getId().getStockCode(), report.getId().getQuarter(), report.getId().getYear())));
 			response.setEvebitda(RoundNumber.lamTronLan(report.getEvebitda()));
 			response.setEvebitdaMedian(RoundNumber.lamTronLan(report.getEvebitdaMedian()));
 			list.add(response);
@@ -720,14 +738,16 @@ public class PTCReportController {
 		List<Valuation> listValuation = new ArrayList<Valuation>();
 		
 		listValuation =  valuationRepository.findTopRankedDataByStockCode(stock, pageableValuation);
-
+		if (listValuation.isEmpty()) {
+			return new ResponseEntity<>(new MessageResponse("Data is not available"), HttpStatus.OK);
+		}
 		Collections.reverse(listValuation);
 		List<Val8Response> list = listValuation.stream()
                 .map(report -> {
                 	Val8Response response = new Val8Response();
                 	response.setId(report.getId());
                 	response.setTitle(Constants.PTC_val8);
-                	response.setCapital(RoundNumber.lamTron(report.getCapital()));
+                	response.setCapital(RoundNumber.lamTron(ptcRepository.findVonChuSoHuu(report.getId().getStockCode(), report.getId().getQuarter(), report.getId().getYear())));
                 	response.setMarketcap(RoundNumber.lamTron(report.getMarketcap()));
                     return response;
                 })

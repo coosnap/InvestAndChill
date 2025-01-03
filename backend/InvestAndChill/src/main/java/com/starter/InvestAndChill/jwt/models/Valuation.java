@@ -20,13 +20,16 @@ public class Valuation {
 	public void setId(ValuationKey id) {
 		this.id = id;
 	}
-	@Column(name = "nittm")
+	//@Column(name = "nittm")
+	@Transient
 	private Double nittm;
-	@Column(name = "salettm")
+	//@Column(name = "salettm")
+	@Transient
 	private Double salettm;
 	@Column(name = "marketcap")
 	private Double marketcap;
-	@Column(name = "capital")
+	//@Column(name = "capital")
+	@Transient
 	private Double capital;
 	
 	//VAL1
@@ -40,7 +43,8 @@ public class Valuation {
 	private Double evebitdaMedian;
 	
 	//val2
-	@Column(name = "roe")
+	//@Column(name = "roe")
+	@Transient
 	private Double roe;
 	@Column(name = "pb")
 	private Double pb;
@@ -54,7 +58,8 @@ public class Valuation {
 	private Double psMedian;
 	
 	//val7
-	@Column(name = "ebitdattm")
+	//@Column(name = "ebitdattm")
+	@Transient
 	private Double ebitdattm;
 	
 	public Double getEbitdattm() {
