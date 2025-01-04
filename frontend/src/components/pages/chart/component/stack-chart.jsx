@@ -292,16 +292,51 @@ export default function NoStackChart(data) {
         /> */}
         <ChartsTooltip />
       </ResponsiveChartContainer>
-      <div className="absolute top-0 w-full flex flex-wrap justify-center items-center gap-2 mt-2">
-        {data.data.series.map((e, index) => (
-          <div key={index} className="flex items-center">
-            {index === data.data.yAxis.left.divide && (
-              <div className="w-0.5 h-4 mr-2 bg-white"></div>
-            )}
-            <div className="w-2 h-2 mr-1" style={{ backgroundColor: e.color }}></div>
-            <span className="text-xs whitespace-nowrap">{e.label}</span>
+      <div className="absolute top-0 w-full flex flex-wrap justify-center items-center mt-2">
+        {data.data.yAxis.left.legendNum ? (
+          <div className="flex flex-col items-center gap-2">
+            <div className="flex items-center gap-2">
+              {data.data.series.map(
+                (e, index) =>
+                  index <= data.data.yAxis.left.legendNum && (
+                    <div key={index} className="flex items-center">
+                      {index === data.data.yAxis.left.divide && (
+                        <div className="w-0.5 h-4 mr-2 bg-white"></div>
+                      )}
+                      <div className="w-2 h-2 mr-1" style={{ backgroundColor: e.color }}></div>
+                      <span className="text-xs whitespace-nowrap">{e.label}</span>
+                    </div>
+                  )
+              )}
+            </div>
+            <div className="flex items-center gap-2">
+              {data.data.series.map(
+                (e, index) =>
+                  index > data.data.yAxis.left.legendNum && (
+                    <div key={index} className="flex items-center">
+                      {index === data.data.yAxis.left.divide && (
+                        <div className="w-0.5 h-4 mr-2 bg-white"></div>
+                      )}
+                      <div className="w-2 h-2 mr-1" style={{ backgroundColor: e.color }}></div>
+                      <span className="text-xs whitespace-nowrap">{e.label}</span>
+                    </div>
+                  )
+              )}
+            </div>
           </div>
-        ))}
+        ) : (
+          <div className="flex items-center gap-2">
+            {data.data.series.map((e, index) => (
+              <div key={index} className="flex items-center">
+                {index === data.data.yAxis.left.divide && (
+                  <div className="w-0.5 h-4 mr-2 bg-white"></div>
+                )}
+                <div className="w-2 h-2 mr-1" style={{ backgroundColor: e.color }}></div>
+                <span className="text-xs whitespace-nowrap">{e.label}</span>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </Box>
   );

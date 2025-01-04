@@ -19,6 +19,10 @@ import {
   customPerfCK3,
   customPerfCK4,
   customPerfCK5,
+  customValCK1,
+  customValCK2,
+  customValCK3,
+  customValCK4,
 } from './customCK';
 import {
   customNHBal1,
@@ -37,6 +41,10 @@ import {
   customNHPerf2,
   customNHPerf3,
   customNHPerf4,
+  customNHVal1,
+  customNHVal2,
+  customNHVal3,
+  customNHVal4,
 } from './customNH';
 import {
   customBalPTC1,
@@ -115,15 +123,22 @@ export const TabChart = () => {
     perf1: true,
     perf2: true,
     perf3: true,
+    perf3adjust: true,
     perf4: true,
     bal1: true,
+    bal1adjust: true,
     bal2: true,
+    bal2adjust: true,
     bal3: true,
     bal4: true,
     bal5: true,
     bal6: true,
     bal7: true,
     bal8: true,
+    bal9adjust: true,
+    bal10adjust: true,
+    bal11adjust: true,
+    bal12adjust: true,
   });
   const [isOpened, setIsOpened] = useState(false);
 
@@ -544,6 +559,7 @@ export const TabChart = () => {
           if (type.type === 'ChungKhoan') {
             let perf1, perf2, perf3, perf4, perf5;
             let bal1, bal2, bal3, bal4, bal5;
+            let val1, val2, val3, val4;
             try {
               perf1 = await mapDataChart(customPerfCK1, type.type);
             } catch (error) {
@@ -595,19 +611,59 @@ export const TabChart = () => {
             } catch (error) {
               console.log('bal5', error);
             }
-            if (perf1 && perf2 && perf3 && perf4 && perf5 && bal1 && bal2 && bal3 && bal4 && bal5) {
+
+            try {
+              val1 = await mapDataChart(customValCK1, type.type);
+            } catch (error) {
+              console.log('val1', error);
+            }
+            try {
+              val2 = await mapDataChart(customValCK2, type.type);
+            } catch (error) {
+              console.log('val2', error);
+            }
+            try {
+              val3 = await mapDataChart(customValCK3, type.type);
+            } catch (error) {
+              console.log('val3', error);
+            }
+            try {
+              val4 = await mapDataChart(customValCK4, type.type);
+            } catch (error) {
+              console.log('val4', error);
+            }
+
+            if (
+              perf1 &&
+              perf2 &&
+              perf3 &&
+              perf4 &&
+              perf5 &&
+              bal1 &&
+              bal2 &&
+              bal3 &&
+              bal4 &&
+              bal5 &&
+              val1 &&
+              val2 &&
+              val3 &&
+              val4
+            ) {
               setDataChart({
                 perf1,
                 perf2,
                 perf3,
                 perf4,
                 perf5,
-
                 bal1,
                 bal2,
                 bal3,
                 bal4,
                 bal5,
+                val1,
+                val2,
+                val3,
+                val4,
               });
             }
             setIsLoading(false);
@@ -615,6 +671,7 @@ export const TabChart = () => {
           if (type.type === 'NganHang') {
             let perf1, perf2, perf3, perf4;
             let bal1, bal2, bal3, bal4, bal5, bal6, bal7, bal8, bal9, bal10, bal11, bal12;
+            let val1, val2, val3, val4;
             try {
               perf1 = await mapDataChart(customNHPerf1, type.type);
             } catch (error) {
@@ -700,6 +757,27 @@ export const TabChart = () => {
               console.log('bal12', error);
             }
 
+            try {
+              val1 = await mapDataChart(customNHVal1, type.type);
+            } catch (error) {
+              console.log('val1', error);
+            }
+            try {
+              val2 = await mapDataChart(customNHVal2, type.type);
+            } catch (error) {
+              console.log('val2', error);
+            }
+            try {
+              val3 = await mapDataChart(customNHVal3, type.type);
+            } catch (error) {
+              console.log('val3', error);
+            }
+            try {
+              val4 = await mapDataChart(customNHVal4, type.type);
+            } catch (error) {
+              console.log('val4', error);
+            }
+
             if (
               perf1 &&
               perf2 &&
@@ -716,7 +794,11 @@ export const TabChart = () => {
               bal9 &&
               bal10 &&
               bal11 &&
-              bal12
+              bal12 &&
+              val1 &&
+              val2 &&
+              val3 &&
+              val4
             ) {
               setDataChart({
                 perf1,
@@ -735,6 +817,10 @@ export const TabChart = () => {
                 bal10,
                 bal11,
                 bal12,
+                val1,
+                val2,
+                val3,
+                val4,
               });
             }
             setIsLoading(false);
@@ -1518,6 +1604,7 @@ export const TabChart = () => {
                 area: true,
                 stack: 'total',
                 yAxisId: 'leftAxis',
+                color: '#C8D0D2',
                 valueFormatter: (v) => (v === null ? '' : v + ' %'),
               },
               {
@@ -1527,6 +1614,7 @@ export const TabChart = () => {
                 area: true,
                 stack: 'total',
                 yAxisId: 'leftAxis',
+                color: '#93B6D6',
                 valueFormatter: (v) => (v === null ? '' : v + ' %'),
               },
               {
@@ -1536,6 +1624,7 @@ export const TabChart = () => {
                 area: true,
                 stack: 'total',
                 yAxisId: 'leftAxis',
+                color: '#6EA2DF',
                 valueFormatter: (v) => (v === null ? '' : v + ' %'),
               },
               {
@@ -1545,6 +1634,7 @@ export const TabChart = () => {
                 area: true,
                 stack: 'total',
                 yAxisId: 'leftAxis',
+                color: '#8F9596',
                 valueFormatter: (v) => (v === null ? '' : v + ' %'),
               },
               {
@@ -1554,6 +1644,7 @@ export const TabChart = () => {
                 area: true,
                 stack: 'total',
                 yAxisId: 'leftAxis',
+                color: '#014388',
                 valueFormatter: (v) => (v === null ? '' : v + ' %'),
               },
               {
@@ -1563,6 +1654,7 @@ export const TabChart = () => {
                 area: true,
                 stack: 'total',
                 yAxisId: 'leftAxis',
+                color: '#202222',
                 valueFormatter: (v) => (v === null ? '' : v + ' %'),
               },
             ];
@@ -1583,6 +1675,7 @@ export const TabChart = () => {
                 dataKey: 'tienVaTaiSanTuongDuongTien',
                 yAxisId: 'leftAxis',
                 stack: 'stack',
+                color: '#C8D0D2',
                 valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
               },
               {
@@ -1591,6 +1684,7 @@ export const TabChart = () => {
                 dataKey: 'cacTaiSanTaiChinhThongQuaGhiNhanLaiLo',
                 yAxisId: 'leftAxis',
                 stack: 'stack',
+                color: '#93B6D6',
                 valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
               },
               {
@@ -1599,6 +1693,7 @@ export const TabChart = () => {
                 dataKey: 'cacKhoanDauTuNamGiuDenNgayDaoHan',
                 yAxisId: 'leftAxis',
                 stack: 'stack',
+                color: '#6EA2DF',
                 valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
               },
               {
@@ -1607,6 +1702,7 @@ export const TabChart = () => {
                 dataKey: 'cacKhoanChoVay',
                 yAxisId: 'leftAxis',
                 stack: 'stack',
+                color: '#8F9596',
                 valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
               },
               {
@@ -1615,6 +1711,7 @@ export const TabChart = () => {
                 dataKey: 'cacKhoanTaiChinhSanSangDeBan',
                 yAxisId: 'leftAxis',
                 stack: 'stack',
+                color: '#014388',
                 valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
               },
               {
@@ -1623,6 +1720,7 @@ export const TabChart = () => {
                 dataKey: 'taiSanKhac',
                 yAxisId: 'leftAxis',
                 stack: 'stack',
+                color: '#202222',
                 valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
               },
             ];
@@ -1644,17 +1742,468 @@ export const TabChart = () => {
         setDataChart((prev) => ({ ...prev, bal3: newPerf }));
         setCheckedCK((prev) => ({ ...prev, bal3: !prev.bal3 }));
       }
+      if (typeChart === 'bal3ajust') {
+        if (checkedCK.bal3ajust) {
+          try {
+            customBalCK3.chart = true;
+            customBalCK3.series = [
+              {
+                label: 'Nợ chiếm dụng',
+                dataKey: 'noChiemDung',
+                type: 'line',
+                area: true,
+                stack: 'total',
+                yAxisId: 'leftAxis',
+                color: '#CCBA95',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+              {
+                label: 'Nợ vay',
+                dataKey: 'noVay',
+                type: 'line',
+                area: true,
+                stack: 'total',
+                yAxisId: 'leftAxis',
+                color: '#AD5757',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+              {
+                label: 'Vốn góp của chủ sở hữu',
+                dataKey: 'coPhieuPhoThongCoQuyenBieuQuyet',
+                type: 'line',
+                area: true,
+                stack: 'total',
+                yAxisId: 'leftAxis',
+                color: '#585D5D',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+              {
+                label: 'LNST chưa phân phối',
+                dataKey: 'loiNhuanChuaPhanPhoi',
+                type: 'line',
+                area: true,
+                stack: 'total',
+                yAxisId: 'leftAxis',
+                color: '#8F9596',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+              {
+                label: 'VCSH khác',
+                dataKey: 'vcshKhac',
+                type: 'line',
+                area: true,
+                stack: 'total',
+                yAxisId: 'leftAxis',
+                color: '#ABB2B4',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+            ];
+            customBalCK3.yAxis = {
+              left: { type: 'per', piecewise: true },
+              right: { type: 'bil', piecewise: false },
+            };
+          } catch (error) {
+            console.log('error', error);
+          }
+        } else {
+          try {
+            customBalCK3.chart = false;
+            customBalCK3.series = [
+              {
+                type: 'bar',
+                label: 'Nợ vay',
+                dataKey: 'noVay',
+                yAxisId: 'rightAxis',
+                stack: 'stack',
+                color: '#AD5757',
+                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              },
+              {
+                type: 'bar',
+                label: 'Nợ chiếm dụng',
+                dataKey: 'noChiemDung',
+                yAxisId: 'rightAxis',
+                stack: 'stack',
+                color: '#CCBA95',
+                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              },
+              {
+                type: 'bar',
+                label: 'Vốn góp của chủ sở hữu',
+                dataKey: 'coPhieuPhoThongCoQuyenBieuQuyet',
+                yAxisId: 'rightAxis',
+                stack: 'stack',
+                color: '#585D5D',
+                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              },
+              {
+                type: 'bar',
+                label: 'LNST chưa phân phối',
+                dataKey: 'loiNhuanChuaPhanPhoi',
+                yAxisId: 'rightAxis',
+                stack: 'stack',
+                color: '#8F9596',
+                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              },
+              {
+                type: 'bar',
+                label: 'VCSH khác',
+                dataKey: 'vcshKhac',
+                yAxisId: 'rightAxis',
+                stack: 'stack',
+                color: '#ABB2B4',
+                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              },
+            ];
+            customBalCK3.yAxis = {
+              left: { type: 'bil', piecewise: false, showLineReference: true },
+              right: { type: 'bil', piecewise: false },
+            };
+          } catch (error) {
+            console.log('error', error);
+          }
+        }
+        let newPerf = await mapDataChart(customBalCK3, tabType);
+        setDataChart((prev) => ({ ...prev, bal3: newPerf }));
+        setCheckedCK((prev) => ({ ...prev, bal3ajust: !prev.bal3ajust }));
+      }
       if (typeChart === 'bal4') {
         customBalCK4.year = checkedCK.bal4;
         let newPerf = await mapDataChart(customBalCK4, tabType);
         setDataChart((prev) => ({ ...prev, bal4: newPerf }));
         setCheckedCK((prev) => ({ ...prev, bal4: !prev.bal4 }));
       }
+      if (typeChart === 'bal4ajust') {
+        if (checkedCK.bal4ajust) {
+          try {
+            customBalCK4.chart = true;
+            customBalCK4.series = [
+              {
+                label: 'FVTPL',
+                dataKey: 'laiTuCacTaiSanTaiChinhGhiNhanThongQuaLaiLo',
+                type: 'line',
+                area: true,
+                stack: 'total',
+                yAxisId: 'leftAxis',
+                color: '#93B6D6',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+              {
+                label: 'Cho vay và phải thu',
+                dataKey: 'laiTuCacKhoanChoVayVaPhaiThu',
+                type: 'line',
+                area: true,
+                stack: 'total',
+                yAxisId: 'leftAxis',
+                color: '#8F9596',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+              {
+                label: 'Môi giới chứng khoán',
+                dataKey: 'doanhThuNghiepVuMoiGioiChungKhoan',
+                type: 'line',
+                area: true,
+                stack: 'total',
+                yAxisId: 'leftAxis',
+                color: '#C8D0D2',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+              {
+                label: 'HTM',
+                dataKey: 'laiTuCacKhoanDauTuNamGiuDenNgayDaoHan',
+                type: 'line',
+                area: true,
+                stack: 'total',
+                yAxisId: 'leftAxis',
+                color: '#6EA2DF',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+              {
+                label: 'AFS',
+                dataKey: 'laiTuCacTaiSanTaiChinhSanSangDeBan',
+                type: 'line',
+                area: true,
+                stack: 'total',
+                yAxisId: 'leftAxis',
+                color: '#014388',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+              {
+                label: 'Bảo lãnh phát hành',
+                dataKey: 'doanhThuNghiepVuBaoLanhPhatHanhChungKhoan',
+                type: 'line',
+                area: true,
+                stack: 'total',
+                yAxisId: 'leftAxis',
+                color: '#CFAB6D',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+              {
+                label: 'Khác',
+                dataKey: 'tongDoanhThuKhac',
+                type: 'line',
+                area: true,
+                stack: 'total',
+                yAxisId: 'leftAxis',
+                color: '#202222',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+            ];
+            customBalCK4.yAxis = {
+              left: { type: 'per', piecewise: true },
+              right: { type: 'bil', piecewise: false },
+            };
+          } catch (error) {
+            console.log('error', error);
+          }
+        } else {
+          try {
+            customBalCK4.chart = false;
+            customBalCK4.series = [
+              {
+                type: 'bar',
+                label: 'FVTPL',
+                dataKey: 'laiTuCacTaiSanTaiChinhGhiNhanThongQuaLaiLo',
+                yAxisId: 'leftAxis',
+                stack: 'stack',
+                color: '#93B6D6',
+                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              },
+              {
+                type: 'bar',
+                label: 'Cho vay và phải thu',
+                dataKey: 'laiTuCacKhoanChoVayVaPhaiThu',
+                yAxisId: 'leftAxis',
+                stack: 'stack',
+                color: '#8F9596',
+                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              },
+              {
+                type: 'bar',
+                label: 'Môi giới chứng khoán',
+                dataKey: 'doanhThuNghiepVuMoiGioiChungKhoan',
+                yAxisId: 'leftAxis',
+                stack: 'stack',
+                color: '#C8D0D2',
+                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              },
+              {
+                type: 'bar',
+                label: 'HTM',
+                dataKey: 'laiTuCacKhoanDauTuNamGiuDenNgayDaoHan',
+                yAxisId: 'leftAxis',
+                stack: 'stack',
+                color: '#6EA2DF',
+                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              },
+              {
+                type: 'bar',
+                label: 'AFS',
+                dataKey: 'laiTuCacTaiSanTaiChinhSanSangDeBan',
+                yAxisId: 'leftAxis',
+                stack: 'stack',
+                color: '#014388',
+                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              },
+              {
+                type: 'bar',
+                label: 'Bảo lãnh phát hành',
+                dataKey: 'doanhThuNghiepVuBaoLanhPhatHanhChungKhoan',
+                yAxisId: 'leftAxis',
+                stack: 'stack',
+                color: '#CFAB6D',
+                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              },
+              {
+                type: 'bar',
+                label: 'Khác',
+                dataKey: 'tongDoanhThuKhac',
+                yAxisId: 'leftAxis',
+                stack: 'stack',
+                color: '#202222',
+                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              },
+            ];
+            customBalCK4.yAxis = {
+              left: { type: 'bil', piecewise: false, showLineReference: true },
+              right: { type: 'bil', piecewise: false },
+            };
+          } catch (error) {
+            console.log('error', error);
+          }
+        }
+        let newPerf = await mapDataChart(customBalCK4, tabType);
+        setDataChart((prev) => ({ ...prev, bal4: newPerf }));
+        setCheckedCK((prev) => ({ ...prev, bal4ajust: !prev.bal4ajust }));
+      }
       if (typeChart === 'bal5') {
         customBalCK5.year = checkedCK.bal5;
         let newPerf = await mapDataChart(customBalCK5, tabType);
         setDataChart((prev) => ({ ...prev, bal5: newPerf }));
         setCheckedCK((prev) => ({ ...prev, bal5: !prev.bal5 }));
+      }
+      if (typeChart === 'bal5ajust') {
+        if (checkedCK.bal5ajust) {
+          try {
+            customBalCK5.chart = true;
+            customBalCK5.series = [
+              {
+                label: 'FVTPL',
+                dataKey: 'gpfvtpl',
+                type: 'line',
+                area: true,
+                stack: 'total',
+                yAxisId: 'leftAxis',
+                color: '#93B6D6',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+              {
+                label: 'Cho vay và phải thu',
+                dataKey: 'gpcvmargin',
+                type: 'line',
+                area: true,
+                stack: 'total',
+                yAxisId: 'leftAxis',
+                color: '#8F9596',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+              {
+                label: 'Môi giới chứng khoán',
+                dataKey: 'gpmoiGioi',
+                type: 'line',
+                area: true,
+                stack: 'total',
+                yAxisId: 'leftAxis',
+                color: '#C8D0D2',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+              {
+                label: 'HTM',
+                dataKey: 'gphtm',
+                type: 'line',
+                area: true,
+                stack: 'total',
+                yAxisId: 'leftAxis',
+                color: '#6EA2DF',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+              {
+                label: 'AFS',
+                dataKey: 'gpafs',
+                type: 'line',
+                area: true,
+                stack: 'total',
+                yAxisId: 'leftAxis',
+                color: '#014388',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+              {
+                label: 'Bảo lãnh phát hành',
+                dataKey: 'gpbaoLanhPhatHanh',
+                type: 'line',
+                area: true,
+                stack: 'total',
+                yAxisId: 'leftAxis',
+                color: '#CFAB6D',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+              {
+                label: 'Khác',
+                dataKey: 'gpkhac',
+                type: 'line',
+                area: true,
+                stack: 'total',
+                yAxisId: 'leftAxis',
+                color: '#202222',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+            ];
+            customBalCK5.yAxis = {
+              left: { type: 'per', piecewise: true },
+              right: { type: 'bil', piecewise: false },
+            };
+          } catch (error) {
+            console.log('error', error);
+          }
+        } else {
+          try {
+            customBalCK5.chart = false;
+            customBalCK5.series = [
+              {
+                type: 'bar',
+                label: 'FVTPL',
+                dataKey: 'gpfvtpl',
+                yAxisId: 'leftAxis',
+                stack: 'stack',
+                color: '#93B6D6',
+                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              },
+              {
+                type: 'bar',
+                label: 'Cho vay và phải thu',
+                dataKey: 'gpcvmargin',
+                yAxisId: 'leftAxis',
+                stack: 'stack',
+                color: '#8F9596',
+                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              },
+              {
+                type: 'bar',
+                label: 'Môi giới chứng khoán',
+                dataKey: 'gpmoiGioi',
+                yAxisId: 'leftAxis',
+                stack: 'stack',
+                color: '#C8D0D2',
+                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              },
+              {
+                type: 'bar',
+                label: 'HTM',
+                dataKey: 'gphtm',
+                yAxisId: 'leftAxis',
+                stack: 'stack',
+                color: '#6EA2DF',
+                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              },
+              {
+                type: 'bar',
+                label: 'AFS',
+                dataKey: 'gpafs',
+                yAxisId: 'leftAxis',
+                stack: 'stack',
+                color: '#014388',
+                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              },
+              {
+                type: 'bar',
+                label: 'Bảo lãnh phát hành',
+                dataKey: 'gpbaoLanhPhatHanh',
+                yAxisId: 'leftAxis',
+                stack: 'stack',
+                color: '#CFAB6D',
+                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              },
+              {
+                type: 'bar',
+                label: 'Khác',
+                dataKey: 'gpkhac',
+                yAxisId: 'leftAxis',
+                stack: 'stack',
+                color: '#202222',
+                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              },
+            ];
+            customBalCK5.yAxis = {
+              left: { type: 'bil', piecewise: false, showLineReference: true },
+              right: { type: 'bil', piecewise: false },
+            };
+          } catch (error) {
+            console.log('error', error);
+          }
+        }
+        let newPerf = await mapDataChart(customBalCK5, tabType);
+        setDataChart((prev) => ({ ...prev, bal5: newPerf }));
+        setCheckedCK((prev) => ({ ...prev, bal5ajust: !prev.bal5ajust }));
       }
     }
     if (tabType === 'NganHang') {
@@ -1732,6 +2281,487 @@ export const TabChart = () => {
         let newPerf = await mapDataChart(customNHBal8, tabType);
         setDataChart((prev) => ({ ...prev, bal8: newPerf }));
         setCheckedBank((prev) => ({ ...prev, bal8: !prev.bal8 }));
+      }
+      if (typeChart === 'bal9adjust') {
+        if (checkedBank.bal9adjust) {
+          try {
+            customNHBal9.chart = true;
+            customNHBal9.series = [
+              {
+                label: 'Cho vay ngắn hạn',
+                dataKey: 'choVayNganHan',
+                type: 'line',
+                area: true,
+                stack: 'total',
+                yAxisId: 'leftAxis',
+                color: '#93B6D6',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+              {
+                label: 'Cho vay trung hạn',
+                dataKey: 'choVayTrungHan',
+                type: 'line',
+                area: true,
+                stack: 'total',
+                yAxisId: 'leftAxis',
+                color: '#6EA2DF',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+              {
+                label: 'Cho vay dài hạn',
+                dataKey: 'choVayDaiHan',
+                type: 'line',
+                area: true,
+                stack: 'total',
+                yAxisId: 'leftAxis',
+                color: '#014388',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+            ];
+            customNHBal9.yAxis = {
+              left: { type: 'per', piecewise: true },
+              right: { type: 'bil', piecewise: false },
+            };
+          } catch (error) {
+            console.log('error', error);
+          }
+        } else {
+          try {
+            customNHBal9.chart = false;
+            customNHBal9.series = [
+              {
+                type: 'bar',
+                label: 'Cho vay ngắn hạn',
+                dataKey: 'choVayNganHan',
+                yAxisId: 'leftAxis',
+                stack: 'stack',
+                color: '#93B6D6',
+                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              },
+              {
+                type: 'bar',
+                label: 'Cho vay trung hạn',
+                dataKey: 'choVayTrungHan',
+                yAxisId: 'leftAxis',
+                stack: 'stack',
+                color: '#6EA2DF',
+                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              },
+              {
+                type: 'bar',
+                label: 'Cho vay dài hạn',
+                dataKey: 'choVayDaiHan',
+                yAxisId: 'leftAxis',
+                stack: 'stack',
+                color: '#014388',
+                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              },
+            ];
+            customNHBal9.yAxis = {
+              left: { type: 'bil', piecewise: false, showLineReference: true },
+              right: { type: 'bil', piecewise: false },
+            };
+          } catch (error) {
+            console.log('error', error);
+          }
+        }
+        let newPerf = await mapDataChart(customNHBal9, tabType);
+        setDataChart((prev) => ({ ...prev, bal9: newPerf }));
+        setCheckedBank((prev) => ({ ...prev, bal9adjust: !prev.bal9adjust }));
+      }
+      if (typeChart === 'bal10adjust') {
+        if (checkedBank.bal10adjust) {
+          try {
+            customNHBal10.chart = true;
+            customNHBal10.series = [
+              {
+                label: 'Doanh nghiệp nhà nước',
+                dataKey: 'doanhNghiepNhaNuoc',
+                type: 'line',
+                area: true,
+                stack: 'total',
+                yAxisId: 'leftAxis',
+                color: '#CCBA95',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+              {
+                label: 'Công ty TNHH và cổ phần',
+                dataKey: 'congTyTNHHVaCoPhan',
+                type: 'line',
+                area: true,
+                stack: 'total',
+                yAxisId: 'leftAxis',
+                color: '#014388',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+              {
+                label: 'Doanh nghiệp nước ngoài',
+                dataKey: 'doanhNghiepNuocNgoai',
+                type: 'line',
+                area: true,
+                stack: 'total',
+                yAxisId: 'leftAxis',
+                color: '#6EA2DF',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+              {
+                label: 'Hợp tác xã và công ty tư nhân',
+                dataKey: 'hopTacXaVaCongTyTuNhan',
+                type: 'line',
+                area: true,
+                stack: 'total',
+                yAxisId: 'leftAxis',
+                color: '#93B6D6',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+              {
+                label: 'Cá nhân',
+                dataKey: 'caNhan',
+                type: 'line',
+                area: true,
+                stack: 'total',
+                yAxisId: 'leftAxis',
+                color: '#C8D0D2',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+              {
+                label: 'Khác',
+                dataKey: 'khac',
+                type: 'line',
+                area: true,
+                stack: 'total',
+                yAxisId: 'leftAxis',
+                color: '#202222',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+            ];
+            customNHBal10.yAxis = {
+              left: { type: 'per', piecewise: true },
+              right: { type: 'bil', piecewise: false },
+            };
+          } catch (error) {
+            console.log('error', error);
+          }
+        } else {
+          try {
+            customNHBal10.chart = false;
+            customNHBal10.series = [
+              {
+                type: 'bar',
+                label: 'Doanh nghiệp nhà nước',
+                dataKey: 'doanhNghiepNhaNuoc',
+                yAxisId: 'leftAxis',
+                stack: 'stack',
+                color: '#CCBA95',
+                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              },
+              {
+                type: 'bar',
+                label: 'Công ty TNHH và cổ phần',
+                dataKey: 'congTyTNHHVaCoPhan',
+                yAxisId: 'leftAxis',
+                stack: 'stack',
+                color: '#014388',
+                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              },
+              {
+                type: 'bar',
+                label: 'Doanh nghiệp nước ngoài',
+                dataKey: 'doanhNghiepNuocNgoai',
+                yAxisId: 'leftAxis',
+                stack: 'stack',
+                color: '#6EA2DF',
+                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              },
+              {
+                type: 'bar',
+                label: 'Hợp tác xã và công ty tư nhân',
+                dataKey: 'hopTacXaVaCongTyTuNhan',
+                yAxisId: 'leftAxis',
+                stack: 'stack',
+                color: '#93B6D6',
+                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              },
+              {
+                type: 'bar',
+                label: 'Cá nhân',
+                dataKey: 'caNhan',
+                yAxisId: 'leftAxis',
+                stack: 'stack',
+                color: '#C8D0D2',
+                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              },
+              {
+                type: 'bar',
+                label: 'Khác',
+                dataKey: 'khac',
+                yAxisId: 'leftAxis',
+                stack: 'stack',
+                color: '#202222',
+                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              },
+            ];
+            customNHBal10.yAxis = {
+              left: { type: 'bil', piecewise: false, showLineReference: true },
+              right: { type: 'bil', piecewise: false },
+            };
+          } catch (error) {
+            console.log('error', error);
+          }
+        }
+        let newPerf = await mapDataChart(customNHBal10, tabType);
+        setDataChart((prev) => ({ ...prev, bal10: newPerf }));
+        setCheckedBank((prev) => ({ ...prev, bal10adjust: !prev.bal10adjust }));
+      }
+      if (typeChart === 'bal11adjust') {
+        if (checkedBank.bal11adjust) {
+          try {
+            customNHBal11.chart = true;
+            customNHBal11.series = [
+              {
+                label: 'Tiền gửi không kỳ hạn',
+                dataKey: 'tienGuiKhongKyHan',
+                type: 'line',
+                area: true,
+                stack: 'total',
+                yAxisId: 'leftAxis',
+                color: '#C8D0D2',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+              {
+                label: 'Tiền gửi có kỳ hạn',
+                dataKey: 'tienGuiCoKyHan',
+                type: 'line',
+                area: true,
+                stack: 'total',
+                yAxisId: 'leftAxis',
+                color: '#93B6D6',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+              {
+                label: 'Tiền gửi tiết kiệm',
+                dataKey: 'tienGuiTietKiem',
+                type: 'line',
+                area: true,
+                stack: 'total',
+                yAxisId: 'leftAxis',
+                color: '#6EA2DF',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+              {
+                label: 'Tiền gửi ký quỹ',
+                dataKey: 'tienGuiKyQuy',
+                type: 'line',
+                area: true,
+                stack: 'total',
+                yAxisId: 'leftAxis',
+                color: '#CCBA95',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+              {
+                label: 'Tiền gửi cho những mục đích riêng biệt',
+                dataKey: 'tienGuiChoNhungMucDichRiengBiet',
+                type: 'line',
+                area: true,
+                stack: 'total',
+                yAxisId: 'leftAxis',
+                color: '#202222',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+            ];
+            customNHBal11.yAxis = {
+              left: { type: 'per', piecewise: true },
+              right: { type: 'bil', piecewise: false },
+            };
+          } catch (error) {
+            console.log('error', error);
+          }
+        } else {
+          try {
+            customNHBal11.chart = false;
+            customNHBal11.series = [
+              {
+                type: 'bar',
+                label: 'Tiền gửi không kỳ hạn',
+                dataKey: 'tienGuiKhongKyHan',
+                yAxisId: 'leftAxis',
+                stack: 'stack',
+                color: '#C8D0D2',
+                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              },
+              {
+                type: 'bar',
+                label: 'Tiền gửi có kỳ hạn',
+                dataKey: 'tienGuiCoKyHan',
+                yAxisId: 'leftAxis',
+                stack: 'stack',
+                color: '#93B6D6',
+                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              },
+              {
+                type: 'bar',
+                label: 'Tiền gửi tiết kiệm',
+                dataKey: 'tienGuiTietKiem',
+                yAxisId: 'leftAxis',
+                stack: 'stack',
+                color: '#6EA2DF',
+                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              },
+              {
+                type: 'bar',
+                label: 'Tiền gửi ký quỹ',
+                dataKey: 'tienGuiKyQuy',
+                yAxisId: 'leftAxis',
+                stack: 'stack',
+                color: '#CCBA95',
+                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              },
+              {
+                type: 'bar',
+                label: 'Tiền gửi cho những mục đích riêng biệt',
+                dataKey: 'tienGuiChoNhungMucDichRiengBiet',
+                yAxisId: 'leftAxis',
+                stack: 'stack',
+                color: '#202222',
+                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              },
+            ];
+            customNHBal11.yAxis = {
+              left: { type: 'bil', piecewise: false, showLineReference: true },
+              right: { type: 'bil', piecewise: false },
+            };
+          } catch (error) {
+            console.log('error', error);
+          }
+        }
+        let newPerf = await mapDataChart(customNHBal11, tabType);
+        setDataChart((prev) => ({ ...prev, bal11: newPerf }));
+        setCheckedBank((prev) => ({ ...prev, bal11adjust: !prev.bal11adjust }));
+      }
+      if (typeChart === 'bal12adjust') {
+        if (checkedBank.bal12adjust) {
+          try {
+            customNHBal12.chart = true;
+            customNHBal12.series = [
+              {
+                label: 'Doanh nghiệp nhà nước',
+                dataKey: 'doanhNghiepNhaNuocTG',
+                type: 'line',
+                area: true,
+                stack: 'total',
+                yAxisId: 'leftAxis',
+                color: '#CCBA95',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+              {
+                label: 'Doanh nghiệp tư nhân',
+                dataKey: 'doanhNghiepTuNhanTG',
+                type: 'line',
+                area: true,
+                stack: 'total',
+                yAxisId: 'leftAxis',
+                color: '#014388',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+              {
+                label: 'Doanh nghiệp nước ngoài',
+                dataKey: 'doanhNghiepNuocNgoaiTG',
+                type: 'line',
+                area: true,
+                stack: 'total',
+                yAxisId: 'leftAxis',
+                color: '#6EA2DF',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+              {
+                label: 'Cá nhân',
+                dataKey: 'caNhanTG',
+                type: 'line',
+                area: true,
+                stack: 'total',
+                yAxisId: 'leftAxis',
+                color: '#C8D0D2',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+              {
+                label: 'Khác',
+                dataKey: 'khacTG',
+                type: 'line',
+                area: true,
+                stack: 'total',
+                yAxisId: 'leftAxis',
+                color: '#202222',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+            ];
+            customNHBal12.yAxis = {
+              left: { type: 'per', piecewise: true },
+              right: { type: 'bil', piecewise: false },
+            };
+          } catch (error) {
+            console.log('error', error);
+          }
+        } else {
+          try {
+            customNHBal12.chart = false;
+            customNHBal12.series = [
+              {
+                type: 'bar',
+                label: 'Doanh nghiệp nhà nước',
+                dataKey: 'doanhNghiepNhaNuocTG',
+                yAxisId: 'leftAxis',
+                stack: 'stack',
+                color: '#CCBA95',
+                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              },
+              {
+                type: 'bar',
+                label: 'Doanh nghiệp tư nhân',
+                dataKey: 'doanhNghiepTuNhanTG',
+                yAxisId: 'leftAxis',
+                stack: 'stack',
+                color: '#014388',
+                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              },
+              {
+                type: 'bar',
+                label: 'Doanh nghiệp nước ngoài',
+                dataKey: 'doanhNghiepNuocNgoaiTG',
+                yAxisId: 'leftAxis',
+                stack: 'stack',
+                color: '#6EA2DF',
+                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              },
+              {
+                type: 'bar',
+                label: 'Cá nhân',
+                dataKey: 'caNhanTG',
+                yAxisId: 'leftAxis',
+                stack: 'stack',
+                color: '#C8D0D2',
+                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              },
+              {
+                type: 'bar',
+                label: 'Khác',
+                dataKey: 'khacTG',
+                yAxisId: 'leftAxis',
+                stack: 'stack',
+                color: '#202222',
+                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              },
+            ];
+            customNHBal12.yAxis = {
+              left: { type: 'bil', piecewise: false, showLineReference: true },
+              right: { type: 'bil', piecewise: false },
+            };
+          } catch (error) {
+            console.log('error', error);
+          }
+        }
+        let newPerf = await mapDataChart(customNHBal12, tabType);
+        setDataChart((prev) => ({ ...prev, bal12: newPerf }));
+        setCheckedBank((prev) => ({ ...prev, bal12adjust: !prev.bal12adjust }));
       }
     }
   };
@@ -2024,6 +3054,20 @@ export const TabChart = () => {
               </div>
             )}
           </CustomTabPanel>
+          <CustomTabPanel value={tab ? Number(tab) : value} index={3}>
+            {codeValue && (
+              <div className="flex flex-col gap-8">
+                <div className="flex gap-8">
+                  {ChartItem(dataChart?.val1, null, 'val1')}
+                  {ChartItem(dataChart?.val2, null, 'val2')}
+                </div>
+                <div className="flex gap-8">
+                  {ChartItem(dataChart?.val3, null, 'val3')}
+                  {ChartItem(dataChart?.val4, null, 'val4')}
+                </div>
+              </div>
+            )}
+          </CustomTabPanel>
         </>
       )}
       {tabType === 'NganHang' && (
@@ -2068,12 +3112,54 @@ export const TabChart = () => {
             {codeValue && (
               <div className="flex flex-col gap-8">
                 <div className="flex gap-8">
-                  {ChartItem(dataChart?.bal9, null, 'bal9')}
-                  {ChartItem(dataChart?.bal10, null, 'bal10')}
+                  {ChartItem(
+                    dataChart?.bal9,
+                    null,
+                    'bal9',
+                    false,
+                    'bal9adjust',
+                    checkedBank?.bal9adjust
+                  )}
+                  {ChartItem(
+                    dataChart?.bal10,
+                    null,
+                    'bal10',
+                    false,
+                    'bal10adjust',
+                    checkedBank?.bal10adjust
+                  )}
                 </div>
                 <div className="flex gap-8">
-                  {ChartItem(dataChart?.bal11, null, 'bal11')}
-                  {ChartItem(dataChart?.bal12, null, 'bal12')}
+                  {ChartItem(
+                    dataChart?.bal11,
+                    null,
+                    'bal11',
+                    false,
+                    'bal11adjust',
+                    checkedBank?.bal11adjust
+                  )}
+                  {ChartItem(
+                    dataChart?.bal12,
+                    null,
+                    'bal12',
+                    false,
+                    'bal12adjust',
+                    checkedBank?.bal12adjust
+                  )}
+                </div>
+              </div>
+            )}
+          </CustomTabPanel>
+          <CustomTabPanel value={tab ? Number(tab) : value} index={3}>
+            {codeValue && (
+              <div className="flex flex-col gap-8">
+                <div className="flex gap-8">
+                  {ChartItem(dataChart?.val1, null, 'val1')}
+                  {ChartItem(dataChart?.val2, null, 'val2')}
+                </div>
+                <div className="flex gap-8">
+                  {ChartItem(dataChart?.val3, null, 'val3')}
+                  {ChartItem(dataChart?.val4, null, 'val4')}
                 </div>
               </div>
             )}

@@ -547,7 +547,7 @@ export let customNHBal10 = {
     },
   ],
   yAxis: {
-    left: { type: 'bil', piecewise: false },
+    left: { type: 'bil', piecewise: false, legendNum: 2 },
     right: { type: 'per', piecewise: false },
   },
 };
@@ -602,7 +602,7 @@ export let customNHBal11 = {
     },
   ],
   yAxis: {
-    left: { type: 'bil', piecewise: false },
+    left: { type: 'bil', piecewise: false, legendNum: 2 },
     right: { type: 'per', piecewise: false },
   },
 };
@@ -659,5 +659,127 @@ export let customNHBal12 = {
   yAxis: {
     left: { type: 'bil', piecewise: false },
     right: { type: 'per', piecewise: false },
+  },
+};
+
+export let customNHVal1 = {
+  type: 'val1',
+  year: false,
+  series: [
+    {
+      type: 'line',
+      label: 'ROE',
+      dataKey: 'roe',
+      curve: 'linear',
+      yAxisId: 'leftAxis',
+      color: '#013368',
+      valueFormatter: (v) => (v === null ? '' : v + ' %'),
+    },
+    {
+      type: 'line',
+      label: 'P/B',
+      dataKey: 'pb',
+      curve: 'linear',
+      yAxisId: 'rightAxis',
+      color: '#CC8C32',
+      valueFormatter: (v) => (v === null ? '' : v + ' lần'),
+    },
+    {
+      type: 'line',
+      label: 'P/B trung vị',
+      dataKey: 'pbMedian',
+      curve: 'linear',
+      yAxisId: 'rightAxis',
+      color: '#CCBA95',
+      valueFormatter: (v) => (v === null ? '' : v + ' lần'),
+    },
+  ],
+  yAxis: {
+    left: { type: 'bil', piecewise: false },
+    right: { type: 'per', piecewise: true, dash2: true },
+  },
+};
+export let customNHVal2 = {
+  type: 'val2',
+  year: false,
+  series: [
+    {
+      type: 'line',
+      label: 'P/E',
+      dataKey: 'pe',
+      curve: 'linear',
+      yAxisId: 'leftAxis',
+      color: '#014388',
+      valueFormatter: (v) => (v === null ? '' : v + ' lần'),
+    },
+    {
+      type: 'line',
+      label: 'P/E trung vị',
+      dataKey: 'peMedian',
+      curve: 'linear',
+      yAxisId: 'leftAxis',
+      color: '#6EA2DF',
+      valueFormatter: (v) => (v === null ? '' : v + ' lần'),
+    },
+  ],
+  yAxis: {
+    left: { type: 'time', piecewise: false },
+    right: { type: 'per', piecewise: true, dash1: true },
+  },
+};
+export let customNHVal3 = {
+  type: 'val3',
+  year: false,
+  chart: false,
+  series: [
+    {
+      type: 'bar',
+      label: 'Lợi nhuận ròng TTM',
+      dataKey: 'loiNhuanRongTTM',
+      yAxisId: 'leftAxis',
+      color: '#C8D0D2',
+      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+    },
+    {
+      type: 'line',
+      label: 'Vốn hóa',
+      dataKey: 'vonHoa',
+      curve: 'linear',
+      yAxisId: 'rightAxis',
+      color: '#014388',
+      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+    },
+  ],
+  yAxis: {
+    left: { type: 'bil', piecewise: false },
+    right: { type: 'bil', piecewise: true },
+  },
+};
+export let customNHVal4 = {
+  type: 'val4',
+  year: false,
+  chart: false,
+  series: [
+    {
+      type: 'bar',
+      label: 'Vốn chủ sở hữu',
+      dataKey: 'vonChuSoHuu',
+      yAxisId: 'leftAxis',
+      color: '#ABB2B4',
+      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+    },
+    {
+      type: 'line',
+      label: 'Vốn hóa',
+      dataKey: 'vonHoa',
+      curve: 'linear',
+      yAxisId: 'rightAxis',
+      color: '#014388',
+      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+    },
+  ],
+  yAxis: {
+    left: { type: 'bil', piecewise: false },
+    right: { type: 'bil', piecewise: true },
   },
 };
