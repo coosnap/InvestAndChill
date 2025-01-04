@@ -13,14 +13,14 @@ export default {
     },
     extend: {
       colors: {
-        primary: '#FFF4C7',
-        second: '#FCE6A9',
+        primary: '#FFF8DC',
+        second: '#F3E5AB',
         third: '#AAD6FA',
         fourth: '#C5F6FA',
       },
       backgroundColor: {
-        primary: '#FFF4C7',
-        second: '#FCE6A9',
+        primary: '#FFF8DC',
+        second: '#F3E5AB',
         third: '#AAD6FA',
         fourth: '#C5F6FA',
       },

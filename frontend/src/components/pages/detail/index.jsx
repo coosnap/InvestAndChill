@@ -69,7 +69,7 @@ function Detail() {
         <Accordion
           expanded={'1'}
           sx={{
-            border: '1px solid #198ADE',
+            backgroundColor: '#FFFAF0',
             boxShadow: 'none',
           }}
         >
@@ -340,7 +340,7 @@ function Detail() {
           </AccordionDetails>
         </Accordion>
       </div>
-      <div className="relative min-w-[1000px] w-[1000px] border mr-8 select-none">
+      <div className="relative min-w-[1000px] w-[1000px] mr-8 select-none">
         <div className="bg-second p-6 max-h-[600px] h-[600px] overflow-y-auto water-mark">
           <div className="flex justify-center mb-4 text-2xl font-bold">{detail.title}</div>
           <div dangerouslySetInnerHTML={{ __html: detail.content }} />

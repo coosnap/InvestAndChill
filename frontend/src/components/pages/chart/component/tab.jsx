@@ -2831,7 +2831,7 @@ export const TabChart = () => {
           position: 'sticky',
           top: 0,
           zIndex: 10,
-          backgroundColor: '#FFF4C7',
+          backgroundColor: '#FFF8DC',
         }}
       >
         <div className="text-[2rem] font-bold pt-4">{codeValue}</div>

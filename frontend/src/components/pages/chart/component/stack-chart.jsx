@@ -23,7 +23,7 @@ export default function NoStackChart(data) {
   }
 
   return (
-    <Box sx={{ width: '100%', backgroundColor: '#FCE6A9', position: 'relative' }}>
+    <Box sx={{ width: '100%', backgroundColor: '#FFF8DC', position: 'relative' }}>
       <ResponsiveChartContainer
         // className="water-mark-chart"
         dataset={data.data.dataset}
