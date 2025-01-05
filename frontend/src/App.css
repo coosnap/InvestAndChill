@@ -16,6 +16,10 @@ td {
   border-width: 1px;
 }
 
+ul {
+  list-style-type: inherit;
+}
+
 .custom-td td {
   border-width: 0;
 }
