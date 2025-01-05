@@ -1,5 +1,5 @@
 import Box from '@mui/material/Box';
-import { ChartsLegend, ChartsReferenceLine, ChartsTooltip, ChartsYAxis } from '@mui/x-charts';
+import { ChartsReferenceLine, ChartsTooltip, ChartsYAxis, useYScale } from '@mui/x-charts';
 import { BarPlot } from '@mui/x-charts/BarChart';
 import { ChartsXAxis } from '@mui/x-charts/ChartsXAxis';
 import { AreaPlot, LineHighlightPlot, LinePlot, MarkPlot } from '@mui/x-charts/LineChart';
@@ -11,16 +11,45 @@ export default function NoStackChart(data) {
       if (Math.abs(value) > max) {
         return value - Math.abs(value) / 10;
       } else if (value < 0) {
-        return value + value / 10;
+        return value - (Math.abs(value) + max) / 10;
       } else if (value > 0) {
-        return value - (value + max) / 10;
+        return value - (Math.abs(value) + max) / 10;
       } else if (value === 0) {
-        if ((value, max)) return value - (value + max) / 10;
+        if ((value, max)) return value - (Math.abs(value) + max) / 10;
       }
     } else {
       return value;
     }
   }
+
+  const SlotBarElement = (props) => {
+    const yAxisScale = useYScale('leftAxis');
+    const yAxisValue = yAxisScale.invert(props.style.y.animation.to);
+    const isBelowBar = yAxisValue < 0;
+    const color = isBelowBar ? data.data.yAxis.left.colors[1] : data.data.yAxis.left.colors[0];
+    console.log('yAxisValue', yAxisValue);
+
+    return props.className.includes('1') ? (
+      <rect
+        fill={color}
+        height={props.style.height.animation.to}
+        width={props.style.width.animation.to}
+        x={props.style.x.animation.to}
+        y={props.style.y.animation.to}
+      />
+    ) : (
+      data.data.yAxis.left.colorsBasic.map((e, index) => (
+        <rect
+          key={index}
+          fill={e}
+          height={props.style.height.animation.to}
+          width={props.style.width.animation.to}
+          x={props.style.x.animation.to}
+          y={props.style.y.animation.to}
+        />
+      ))
+    );
+  };
 
   return (
     <Box sx={{ width: '100%', backgroundColor: '#FFF8DC', position: 'relative' }}>
@@ -48,11 +77,6 @@ export default function NoStackChart(data) {
                         min: extend(min, max),
                         max: extend(max),
                       }),
-                // colorMap: {
-                //   type: 'piecewise',
-                //   colors: ['red', 'blue'],
-                //   thresholds: [0],
-                // },
               }
             : {
                 id: 'leftAxis',
@@ -170,7 +194,13 @@ export default function NoStackChart(data) {
           },
         }}
       >
-        <BarPlot />
+        {data.data.yAxis.left.nagative ? (
+          data.data.series.map(
+            (e, index) => e.changeColor && <BarPlot key={index} slots={{ bar: SlotBarElement }} />
+          )
+        ) : (
+          <BarPlot />
+        )}
         <LinePlot />
         <LineHighlightPlot />
         <AreaPlot />

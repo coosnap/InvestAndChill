@@ -156,6 +156,7 @@ export let customPerfPTC4 = {
       dataKey: 'netFinanceialTrailing',
       yAxisId: 'leftAxis',
       color: '#6EA2DF',
+      changeColor: true,
       valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
     },
     {
@@ -178,7 +179,15 @@ export let customPerfPTC4 = {
     },
   ],
   yAxis: {
-    left: { type: 'bil', piecewise: true, showLineReference: true, divide: 2 },
+    left: {
+      type: 'bil',
+      piecewise: false,
+      showLineReference: true,
+      divide: 2,
+      nagative: true,
+      colors: ['#6EA2DF', '#981F36'],
+      colorsBasic: ['#C8D0D2'],
+    },
     right: { type: 'per', piecewise: false },
   },
 };
@@ -416,7 +425,7 @@ export let customBalPTC1 = {
     },
   ],
   yAxis: {
-    left: { type: 'bil', piecewise: false, showLineReference: true },
+    left: { type: 'bil', piecewise: false, showLineReference: true, legendNum: 3 },
     right: { type: 'bil', piecewise: false },
   },
 };
@@ -472,7 +481,7 @@ export let customBalPTC2 = {
     },
   ],
   yAxis: {
-    left: { type: 'per', piecewise: false },
+    left: { type: 'per', piecewise: false, legendNum: 2 },
     right: { type: 'bil', piecewise: true, showLineReference: true },
   },
 };
