@@ -11,17 +11,10 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
 import { StokeAll } from '@/store/stoke';
 import { useEffect, useState } from 'react';
 import { RiDeleteBinLine } from 'react-icons/ri';
+import { Virtuoso } from 'react-virtuoso';
 import { useRecoilState } from 'recoil';
 import AddStoke from './AddStoke';
 
@@ -65,23 +58,25 @@ export default function TableStoke() {
       <div className="my-8">
         <AddStoke render={() => getData()} action="Add" />
       </div>
-      <Table className="custom-td border bg-white">
-        <TableHeader>
-          <TableRow className="bg-blue-100">
-            <TableHead className="text-center">Symbol</TableHead>
-            <TableHead className="text-center">Company Name</TableHead>
-            <TableHead className="text-center">Note</TableHead>
-            <TableHead className="text-center">Action</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {stokes &&
-            stokes.map((stoke) => (
-              <TableRow key={stoke.id}>
-                <TableCell className="text-center">{stoke.symbol}</TableCell>
-                <TableCell className="text-center">{stoke.companyName}</TableCell>
-                <TableCell className="text-center">{stoke.note}</TableCell>
-                <TableCell className="flex justify-center">
+      <table className="w-full">
+        <thead className="bg-[#DBEAFE]">
+          <tr className="flex py-2">
+            <th className="w-20 pl-4">Symbol</th>
+            <th className="flex flex-1 justify-center">Company Name</th>
+            <th className="w-40">Note</th>
+            <th className="w-40">Action</th>
+          </tr>
+        </thead>
+        <tbody className="relative">
+          <Virtuoso
+            className="!h-96 w-full !absolute bg-white"
+            data={stokes}
+            itemContent={(_, stoke) => (
+              <tr key={stoke.id} className="flex justify-between items-center py-1 border-b">
+                <td className="w-20 border-none pl-4">{stoke.symbol}</td>
+                <td className="flex flex-1 justify-center border-none">{stoke.companyName}</td>
+                <td className="w-40 border-none">{stoke.note}</td>
+                <td className="w-40 flex justify-center border-none pr-4">
                   <div className="cursor-pointer flex">
                     <AddStoke render={getData} action="Edit" id={stoke.id} />
                   </div>
@@ -106,11 +101,12 @@ export default function TableStoke() {
                       </AlertDialogFooter>
                     </AlertDialogContent>
                   </AlertDialog>
-                </TableCell>
-              </TableRow>
-            ))}
-        </TableBody>
-      </Table>
+                </td>
+              </tr>
+            )}
+          />
+        </tbody>
+      </table>
     </>
   );
 }
