@@ -77,6 +77,7 @@ import {
 import StackChart from './stack-chart';
 
 import './style.scss';
+import LoaderChart from '@/components/common/LoaderChart';
 
 export const TabChart = () => {
   const [value, setValue] = useState(0);
@@ -294,6 +295,13 @@ export const TabChart = () => {
   }));
 
   const tab = window.localStorage.getItem('tab');
+  useEffect(() => {
+    if (tab) {
+      setValue(parseInt(tab));
+    } else {
+      setValue(0);
+    }
+  }, [tab]);
 
   const handleChange = (event, newValue) => {
     window.localStorage.setItem('tab', newValue);
@@ -356,474 +364,354 @@ export const TabChart = () => {
             let bal1, bal2, bal3, bal4, bal5, bal6;
             let cf1, cf2, cf3, cf4;
             let val1, val2, val3, val4, val5, val6, val7, val8;
-            try {
-              perf1 = await mapDataChart(customPerfPTC1, type.type);
-            } catch (error) {
-              console.log('error', error);
-            }
-            try {
-              perf2 = await mapDataChart(customPerfPTC2, type.type);
-            } catch (error) {
-              console.log('error', error);
-            }
-            try {
-              perf3 = await mapDataChart(customPerfPTC3, type.type);
-            } catch (error) {
-              console.log('error', error);
-            }
-            try {
-              perf4 = await mapDataChart(customPerfPTC4, type.type);
-            } catch (error) {
-              console.log('error', error);
-            }
-            try {
-              perf5 = await mapDataChart(customPerfPTC5, type.type, {
-                categoryGapRatio: 0.5,
-                barGapRatio: -1,
-              });
-            } catch (error) {
-              console.log('error', error);
-            }
-            try {
-              perf6 = await mapDataChart(customPerfPTC6, type.type);
-            } catch (error) {
-              console.log('error', error);
-            }
-            try {
-              perf7 = await mapDataChart(customPerfPTC7, type.type);
-            } catch (error) {
-              console.log('error', error);
-            }
-            try {
-              perf8 = await mapDataChart(customPerfPTC8, type.type);
-            } catch (error) {
-              console.log('error', error);
+            if (value === 0) {
+              let callPerf1 = mapDataChart(customPerfPTC1, type.type);
+              let callPerf2 = mapDataChart(customPerfPTC2, type.type);
+              let callPerf3 = mapDataChart(customPerfPTC3, type.type);
+              let callPerf4 = mapDataChart(customPerfPTC4, type.type);
+              let callPerf5 = mapDataChart(customPerfPTC5, type.type);
+              let callPerf6 = mapDataChart(customPerfPTC6, type.type);
+
+              Promise.all([callPerf1, callPerf2, callPerf3, callPerf4, callPerf5, callPerf6])
+                .then((values) => {
+                  perf1 = values[0];
+                  perf2 = values[1];
+                  perf3 = values[2];
+                  perf4 = values[3];
+                  perf5 = values[4];
+                  perf6 = values[5];
+                  setDataChart({
+                    perf1,
+                    perf2,
+                    perf3,
+                    perf4,
+                    perf5,
+                    perf6,
+                  });
+                  setIsLoading(false);
+                })
+                .catch((error) => console.log('error', error), setIsLoading(false));
             }
 
-            try {
-              bal1 = await mapDataChart(customBalPTC1, type.type);
-            } catch (error) {
-              console.log('error', error);
-            }
-            try {
-              bal2 = await mapDataChart(customBalPTC2, type.type);
-            } catch (error) {
-              console.log('error', error);
-            }
-            try {
-              bal3 = await mapDataChart(customBalPTC3, type.type, {
-                categoryGapRatio: 0.5,
-                barGapRatio: -1,
-              });
-            } catch (error) {
-              console.log('error', error);
-            }
-            try {
-              bal4 = await mapDataChart(customBalPTC4, type.type);
-            } catch (error) {
-              console.log('error', error);
-            }
-            try {
-              bal5 = await mapDataChart(customBalPTC5, type.type);
-            } catch (error) {
-              console.log('error', error);
-            }
-            try {
-              bal6 = await mapDataChart(customBalPTC6, type.type);
-            } catch (error) {
-              console.log('error', error);
+            if (value === 1) {
+              let callBal1 = mapDataChart(customBalPTC1, type.type);
+              let callBal2 = mapDataChart(customBalPTC2, type.type);
+              let callBal3 = mapDataChart(customBalPTC3, type.type);
+              let callBal4 = mapDataChart(customBalPTC4, type.type);
+              let callBal5 = mapDataChart(customBalPTC5, type.type);
+              let callBal6 = mapDataChart(customBalPTC6, type.type);
+
+              Promise.all([callBal1, callBal2, callBal3, callBal4, callBal5, callBal6])
+                .then((values) => {
+                  bal1 = values[0];
+                  bal2 = values[1];
+                  bal3 = values[2];
+                  bal4 = values[3];
+                  bal5 = values[4];
+                  bal6 = values[5];
+                  setDataChart({
+                    bal1,
+                    bal2,
+                    bal3,
+                    bal4,
+                    bal5,
+                    bal6,
+                  });
+                  setIsLoading(false);
+                })
+                .catch((error) => console.log('error', error), setIsLoading(false));
             }
 
-            try {
-              cf1 = await mapDataChart(customCFPTC1, type.type);
-            } catch (error) {
-              console.log('error', error);
-            }
-            try {
-              cf2 = await mapDataChart(customCFPTC2, type.type);
-            } catch (error) {
-              console.log('error', error);
-            }
-            try {
-              cf3 = await mapDataChart(customCFPTC3, type.type);
-            } catch (error) {
-              console.log('error', error);
-            }
-            try {
-              cf4 = await mapDataChart(customCFPTC4, type.type);
-            } catch (error) {
-              console.log('error', error);
+            if (value === 2) {
+              let callPerf7 = mapDataChart(customPerfPTC7, type.type);
+              let callPerf8 = mapDataChart(customPerfPTC8, type.type);
+
+              Promise.all([callPerf7, callPerf8])
+                .then((values) => {
+                  perf7 = values[0];
+                  perf8 = values[1];
+                  setDataChart({
+                    perf7,
+                    perf8,
+                  });
+                  setIsLoading(false);
+                })
+                .catch((error) => console.log('error', error), setIsLoading(false));
             }
 
-            try {
-              val1 = await mapDataChart(customValPTC1, type.type);
-            } catch (error) {
-              console.log('error', error);
-            }
-            try {
-              val2 = await mapDataChart(customValPTC2, type.type);
-            } catch (error) {
-              console.log('error', error);
-            }
-            try {
-              val3 = await mapDataChart(customValPTC3, type.type);
-            } catch (error) {
-              console.log('error', error);
-            }
-            try {
-              val4 = await mapDataChart(customValPTC4, type.type);
-            } catch (error) {
-              console.log('error', error);
-            }
-            try {
-              val5 = await mapDataChart(customValPTC5, type.type);
-            } catch (error) {
-              console.log('error', error);
-            }
-            try {
-              val6 = await mapDataChart(customValPTC6, type.type);
-            } catch (error) {
-              console.log('error', error);
-            }
-            try {
-              val7 = await mapDataChart(customValPTC7, type.type);
-            } catch (error) {
-              console.log('error', error);
-            }
-            try {
-              val8 = await mapDataChart(customValPTC8, type.type);
-            } catch (error) {
-              console.log('error', error);
+            if (value === 3) {
+              let callCf1 = mapDataChart(customCFPTC1, type.type);
+              let callCf2 = mapDataChart(customCFPTC2, type.type);
+              let callCf3 = mapDataChart(customCFPTC3, type.type);
+              let callCf4 = mapDataChart(customCFPTC4, type.type);
+
+              Promise.all([callCf1, callCf2, callCf3, callCf4])
+                .then((values) => {
+                  cf1 = values[0];
+                  cf2 = values[1];
+                  cf3 = values[2];
+                  cf4 = values[3];
+                  setDataChart({
+                    cf1,
+                    cf2,
+                    cf3,
+                    cf4,
+                  });
+                  setIsLoading(false);
+                })
+                .catch((error) => console.log('error', error), setIsLoading(false));
             }
 
-            if (
-              perf1 ||
-              perf2 ||
-              perf3 ||
-              perf4 ||
-              perf5 ||
-              perf6 ||
-              perf7 ||
-              perf8 ||
-              bal1 ||
-              bal2 ||
-              bal3 ||
-              bal4 ||
-              bal5 ||
-              bal6 ||
-              cf1 ||
-              cf2 ||
-              cf3 ||
-              cf4 ||
-              val1 ||
-              val2 ||
-              val3 ||
-              val4 ||
-              val5 ||
-              val6 ||
-              val7 ||
-              val8
-            ) {
-              setDataChart({
-                perf1,
-                perf2,
-                perf3,
-                perf4,
-                perf5,
-                perf6,
-                perf7,
-                perf8,
-                bal1,
-                bal2,
-                bal3,
-                bal4,
-                bal5,
-                bal6,
-                cf1,
-                cf2,
-                cf3,
-                cf4,
-                val1,
-                val2,
-                val3,
-                val4,
-                val5,
-                val6,
-                val7,
-                val8,
-              });
+            if (value === 4) {
+              let callVal1 = mapDataChart(customValPTC1, type.type);
+              let callVal2 = mapDataChart(customValPTC2, type.type);
+              let callVal3 = mapDataChart(customValPTC3, type.type);
+              let callVal4 = mapDataChart(customValPTC4, type.type);
+              let callVal5 = mapDataChart(customValPTC5, type.type);
+              let callVal6 = mapDataChart(customValPTC6, type.type);
+              let callVal7 = mapDataChart(customValPTC7, type.type);
+              let callVal8 = mapDataChart(customValPTC8, type.type);
+
+              Promise.all([
+                callVal1,
+                callVal2,
+                callVal3,
+                callVal4,
+                callVal5,
+                callVal6,
+                callVal7,
+                callVal8,
+              ])
+                .then((values) => {
+                  val1 = values[0];
+                  val2 = values[1];
+                  val3 = values[2];
+                  val4 = values[3];
+                  val5 = values[4];
+                  val6 = values[5];
+                  val7 = values[6];
+                  val8 = values[7];
+                  setDataChart({
+                    val1,
+                    val2,
+                    val3,
+                    val4,
+                    val5,
+                    val6,
+                    val7,
+                    val8,
+                  });
+                  setIsLoading(false);
+                })
+                .catch((error) => console.log('error', error), setIsLoading(false));
             }
-            setValue(0);
-            setIsLoading(false);
           }
           if (type.type === 'ChungKhoan') {
             let perf1, perf2, perf3, perf4, perf5;
             let bal1, bal2, bal3, bal4, bal5;
             let val1, val2, val3, val4;
-            try {
-              perf1 = await mapDataChart(customPerfCK1, type.type);
-            } catch (error) {
-              console.log('perf1', error);
-            }
-            try {
-              perf2 = await mapDataChart(customPerfCK2, type.type);
-            } catch (error) {
-              console.log('perf2', error);
-            }
-            try {
-              perf3 = await mapDataChart(customPerfCK3, type.type);
-            } catch (error) {
-              console.log('perf3', error);
-            }
-            try {
-              perf4 = await mapDataChart(customPerfCK4, type.type);
-            } catch (error) {
-              console.log('perf4', error);
-            }
-            try {
-              perf5 = await mapDataChart(customPerfCK5, type.type);
-            } catch (error) {
-              console.log('perf5', error);
+            if (value === 0) {
+              let callPerf1 = mapDataChart(customPerfCK1, type.type);
+              let callPerf3 = mapDataChart(customPerfCK3, type.type);
+              let callPerf4 = mapDataChart(customPerfCK4, type.type);
+              let callBal4 = mapDataChart(customBalCK4, type.type);
+              let callBal5 = mapDataChart(customBalCK5, type.type);
+
+              Promise.all([callPerf1, callPerf3, callPerf4, callBal4, callBal5])
+                .then((values) => {
+                  perf1 = values[0];
+                  perf3 = values[1];
+                  perf4 = values[2];
+                  bal4 = values[3];
+                  bal5 = values[4];
+                  setDataChart({
+                    perf1,
+                    perf3,
+                    perf4,
+                    bal4,
+                    bal5,
+                  });
+                  setIsLoading(false);
+                })
+                .catch((error) => console.log('error', error), setIsLoading(false));
             }
 
-            try {
-              bal1 = await mapDataChart(customBalCK1, type.type);
-            } catch (error) {
-              console.log('bal1', error);
-            }
-            try {
-              bal2 = await mapDataChart(customBalCK2, type.type);
-            } catch (error) {
-              console.log('bal2', error);
-            }
-            try {
-              bal3 = await mapDataChart(customBalCK3, type.type);
-            } catch (error) {
-              console.log('bal3', error);
-            }
-            try {
-              bal4 = await mapDataChart(customBalCK4, type.type);
-            } catch (error) {
-              console.log('bal4', error);
-            }
-            try {
-              bal5 = await mapDataChart(customBalCK5, type.type);
-            } catch (error) {
-              console.log('bal5', error);
+            if (value === 1) {
+              let callBal1 = mapDataChart(customBalCK1, type.type);
+              let callBal2 = mapDataChart(customBalCK2, type.type);
+              let callBal3 = mapDataChart(customBalCK3, type.type);
+
+              Promise.all([callBal1, callBal2, callBal3])
+                .then((values) => {
+                  bal1 = values[0];
+                  bal2 = values[1];
+                  bal3 = values[2];
+                  setDataChart({
+                    bal1,
+                    bal2,
+                    bal3,
+                  });
+                  setIsLoading(false);
+                })
+                .catch((error) => console.log('error', error), setIsLoading(false));
             }
 
-            try {
-              val1 = await mapDataChart(customValCK1, type.type);
-            } catch (error) {
-              console.log('val1', error);
-            }
-            try {
-              val2 = await mapDataChart(customValCK2, type.type);
-            } catch (error) {
-              console.log('val2', error);
-            }
-            try {
-              val3 = await mapDataChart(customValCK3, type.type);
-            } catch (error) {
-              console.log('val3', error);
-            }
-            try {
-              val4 = await mapDataChart(customValCK4, type.type);
-            } catch (error) {
-              console.log('val4', error);
+            if (value === 2) {
+              let callPerf2 = mapDataChart(customPerfCK2, type.type);
+              let callPerf5 = mapDataChart(customPerfCK5, type.type);
+
+              Promise.all([callPerf2, callPerf5])
+                .then((values) => {
+                  perf2 = values[0];
+                  perf5 = values[1];
+                  setDataChart({
+                    perf2,
+                    perf5,
+                  });
+                  setIsLoading(false);
+                })
+                .catch((error) => console.log('error', error), setIsLoading(false));
             }
 
-            if (
-              perf1 &&
-              perf2 &&
-              perf3 &&
-              perf4 &&
-              perf5 &&
-              bal1 &&
-              bal2 &&
-              bal3 &&
-              bal4 &&
-              bal5 &&
-              val1 &&
-              val2 &&
-              val3 &&
-              val4
-            ) {
-              setDataChart({
-                perf1,
-                perf2,
-                perf3,
-                perf4,
-                perf5,
-                bal1,
-                bal2,
-                bal3,
-                bal4,
-                bal5,
-                val1,
-                val2,
-                val3,
-                val4,
-              });
+            if (value === 3) {
+              let callVal1 = mapDataChart(customValCK1, type.type);
+              let callVal2 = mapDataChart(customValCK2, type.type);
+              let callVal3 = mapDataChart(customValCK3, type.type);
+              let callVal4 = mapDataChart(customValCK4, type.type);
+
+              Promise.all([callVal1, callVal2, callVal3, callVal4])
+                .then((values) => {
+                  val1 = values[0];
+                  val2 = values[1];
+                  val3 = values[2];
+                  val4 = values[3];
+                  setDataChart({
+                    val1,
+                    val2,
+                    val3,
+                    val4,
+                  });
+                  setIsLoading(false);
+                })
+                .catch((error) => console.log('error', error), setIsLoading(false));
             }
-            setIsLoading(false);
           }
           if (type.type === 'NganHang') {
             let perf1, perf2, perf3, perf4;
             let bal1, bal2, bal3, bal4, bal5, bal6, bal7, bal8, bal9, bal10, bal11, bal12;
             let val1, val2, val3, val4;
-            try {
-              perf1 = await mapDataChart(customNHPerf1, type.type);
-            } catch (error) {
-              console.log('perf1', error);
-            }
-            try {
-              perf2 = await mapDataChart(customNHPerf2, type.type);
-            } catch (error) {
-              console.log('perf2', error);
-            }
-            try {
-              perf3 = await mapDataChart(customNHPerf3, type.type);
-            } catch (error) {
-              console.log('perf3', error);
-            }
-            try {
-              perf4 = await mapDataChart(customNHPerf4, type.type);
-            } catch (error) {
-              console.log('perf4', error);
+            if (value === 0) {
+              let callPerf1 = mapDataChart(customNHPerf1, type.type);
+              let callPerf2 = mapDataChart(customNHPerf2, type.type);
+              let callPerf3 = mapDataChart(customNHPerf3, type.type);
+              let callPerf4 = mapDataChart(customNHPerf4, type.type);
+
+              Promise.all([callPerf1, callPerf2, callPerf3, callPerf4])
+                .then((values) => {
+                  perf1 = values[0];
+                  perf2 = values[1];
+                  perf3 = values[2];
+                  perf4 = values[3];
+                  setDataChart({
+                    perf1,
+                    perf2,
+                    perf3,
+                    perf4,
+                  });
+                  setIsLoading(false);
+                })
+                .catch((error) => console.log('error', error), setIsLoading(false));
             }
 
-            try {
-              bal1 = await mapDataChart(customNHBal1, type.type);
-            } catch (error) {
-              console.log('bal1', error);
-            }
-            try {
-              bal2 = await mapDataChart(customNHBal2, type.type);
-            } catch (error) {
-              console.log('bal2', error);
-            }
-            try {
-              bal3 = await mapDataChart(customNHBal3, type.type);
-            } catch (error) {
-              console.log('bal3', error);
-            }
-            try {
-              bal4 = await mapDataChart(customNHBal4, type.type);
-            } catch (error) {
-              console.log('bal4', error);
-            }
-            try {
-              bal5 = await mapDataChart(customNHBal5, type.type, {
-                categoryGapRatio: 0.5,
-                barGapRatio: -1,
-              });
-            } catch (error) {
-              console.log('bal5', error);
-            }
-            try {
-              bal6 = await mapDataChart(customNHBal6, type.type);
-            } catch (error) {
-              console.log('bal6', error);
-            }
-            try {
-              bal7 = await mapDataChart(customNHBal7, type.type);
-            } catch (error) {
-              console.log('bal7', error);
-            }
-            try {
-              bal8 = await mapDataChart(customNHBal8, type.type);
-            } catch (error) {
-              console.log('bal8', error);
-            }
-            try {
-              bal9 = await mapDataChart(customNHBal9, type.type);
-            } catch (error) {
-              console.log('bal9', error);
-            }
-            try {
-              bal10 = await mapDataChart(customNHBal10, type.type);
-            } catch (error) {
-              console.log('bal10', error);
-            }
-            try {
-              bal11 = await mapDataChart(customNHBal11, type.type);
-            } catch (error) {
-              console.log('bal11', error);
-            }
-            try {
-              bal12 = await mapDataChart(customNHBal12, type.type);
-            } catch (error) {
-              console.log('bal12', error);
+            if (value === 1) {
+              let callBal1 = mapDataChart(customNHBal1, type.type);
+              let callBal2 = mapDataChart(customNHBal2, type.type);
+              let callBal3 = mapDataChart(customNHBal3, type.type);
+              let callBal4 = mapDataChart(customNHBal4, type.type);
+              let callBal5 = mapDataChart(customNHBal5, type.type);
+              let callBal6 = mapDataChart(customNHBal6, type.type);
+              let callBal7 = mapDataChart(customNHBal7, type.type);
+              let callBal8 = mapDataChart(customNHBal8, type.type);
+
+              Promise.all([
+                callBal1,
+                callBal2,
+                callBal3,
+                callBal4,
+                callBal5,
+                callBal6,
+                callBal7,
+                callBal8,
+              ])
+                .then((values) => {
+                  bal1 = values[0];
+                  bal2 = values[1];
+                  bal3 = values[2];
+                  bal4 = values[3];
+                  bal5 = values[4];
+                  bal6 = values[5];
+                  bal7 = values[6];
+                  bal8 = values[7];
+                  setDataChart({
+                    bal1,
+                    bal2,
+                    bal3,
+                    bal4,
+                    bal5,
+                    bal6,
+                    bal7,
+                    bal8,
+                  });
+                  setIsLoading(false);
+                })
+                .catch((error) => console.log('error', error), setIsLoading(false));
             }
 
-            try {
-              val1 = await mapDataChart(customNHVal1, type.type);
-            } catch (error) {
-              console.log('val1', error);
-            }
-            try {
-              val2 = await mapDataChart(customNHVal2, type.type);
-            } catch (error) {
-              console.log('val2', error);
-            }
-            try {
-              val3 = await mapDataChart(customNHVal3, type.type);
-            } catch (error) {
-              console.log('val3', error);
-            }
-            try {
-              val4 = await mapDataChart(customNHVal4, type.type);
-            } catch (error) {
-              console.log('val4', error);
+            if (value === 2) {
+              let callBal9 = mapDataChart(customNHBal9, type.type);
+              let callBal10 = mapDataChart(customNHBal10, type.type);
+              let callBal11 = mapDataChart(customNHBal11, type.type);
+              let callBal12 = mapDataChart(customNHBal12, type.type);
+
+              Promise.all([callBal9, callBal10, callBal11, callBal12])
+                .then((values) => {
+                  bal9 = values[0];
+                  bal10 = values[1];
+                  bal11 = values[2];
+                  bal12 = values[3];
+                  setDataChart({
+                    bal9,
+                    bal10,
+                    bal11,
+                    bal12,
+                  });
+                  setIsLoading(false);
+                })
+                .catch((error) => console.log('error', error), setIsLoading(false));
             }
 
-            if (
-              perf1 &&
-              perf2 &&
-              perf3 &&
-              perf4 &&
-              bal1 &&
-              bal2 &&
-              bal3 &&
-              bal4 &&
-              bal5 &&
-              bal6 &&
-              bal7 &&
-              bal8 &&
-              bal9 &&
-              bal10 &&
-              bal11 &&
-              bal12 &&
-              val1 &&
-              val2 &&
-              val3 &&
-              val4
-            ) {
-              setDataChart({
-                perf1,
-                perf2,
-                perf3,
-                perf4,
-                bal1,
-                bal2,
-                bal3,
-                bal4,
-                bal5,
-                bal6,
-                bal7,
-                bal8,
-                bal9,
-                bal10,
-                bal11,
-                bal12,
-                val1,
-                val2,
-                val3,
-                val4,
-              });
+            if (value === 3) {
+              let callVal1 = mapDataChart(customNHVal1, type.type);
+              let callVal2 = mapDataChart(customNHVal2, type.type);
+              let callVal3 = mapDataChart(customNHVal3, type.type);
+              let callVal4 = mapDataChart(customNHVal4, type.type);
+
+              Promise.all([callVal1, callVal2, callVal3, callVal4])
+                .then((values) => {
+                  val1 = values[0];
+                  val2 = values[1];
+                  val3 = values[2];
+                  val4 = values[3];
+                  setDataChart({
+                    val1,
+                    val2,
+                    val3,
+                    val4,
+                  });
+                  setIsLoading(false);
+                })
+                .catch((error) => console.log('error', error), setIsLoading(false));
             }
-            setIsLoading(false);
           }
         } catch (error) {
           setIsLoading(false);
@@ -831,7 +719,7 @@ export const TabChart = () => {
       }
     };
     loadData();
-  }, [codeValue]);
+  }, [codeValue, value]);
 
   console.log('dataChart', dataChart);
 
@@ -2773,43 +2661,43 @@ export const TabChart = () => {
     };
   }, []);
 
-  if (isLoading) {
-    return <></>;
-  }
-
   const handleToggleTitle = () => {
     setIsOpened(!isOpened);
   };
   const ChartItem = (dataChart, checked, type, year, addjust, checkedAdjust) => {
     return (
-      <div className="lg:w-1/2 md:w-full">
-        <div className="flex">
-          <div className={`flex flex-1 font-bold text-xl ${!year && !addjust ? 'mb-[18px]' : ''}`}>
-            <span className="cursor-pointer" onClick={handleToggleTitle}>
-              {dataChart?.title || ''} {isOpened ? ' - ' + codeValue : ''}
-            </span>
+      dataChart && (
+        <div className="lg:w-1/2 md:w-full">
+          <div className="flex">
+            <div
+              className={`flex flex-1 font-bold text-xl ${!year && !addjust ? 'mb-[18px]' : ''}`}
+            >
+              <span className="cursor-pointer" onClick={handleToggleTitle}>
+                {dataChart?.title || ''} {isOpened ? ' - ' + codeValue : ''}
+              </span>
+            </div>
+            {addjust && (
+              <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
+                <FormControlLabel
+                  checked={!checkedAdjust}
+                  onChange={() => handleToggle(addjust)}
+                  control={<IOSSwitchAdjust sx={{ m: 1 }} defaultChecked disableRipple />}
+                />
+              </Stack>
+            )}
+            {year && (
+              <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
+                <FormControlLabel
+                  checked={!checked}
+                  onChange={() => handleToggle(type)}
+                  control={<IOSSwitch sx={{ m: 1 }} defaultChecked disableRipple />}
+                />
+              </Stack>
+            )}
           </div>
-          {addjust && (
-            <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-              <FormControlLabel
-                checked={!checkedAdjust}
-                onChange={() => handleToggle(addjust)}
-                control={<IOSSwitchAdjust sx={{ m: 1 }} defaultChecked disableRipple />}
-              />
-            </Stack>
-          )}
-          {year && (
-            <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
-              <FormControlLabel
-                checked={!checked}
-                onChange={() => handleToggle(type)}
-                control={<IOSSwitch sx={{ m: 1 }} defaultChecked disableRipple />}
-              />
-            </Stack>
-          )}
+          {dataChart && <StackChart data={dataChart} />}
         </div>
-        {dataChart && <StackChart data={dataChart} />}
-      </div>
+      )
     );
   };
 
@@ -2817,7 +2705,7 @@ export const TabChart = () => {
     <Box sx={{ width: '98%', margin: 'auto' }}>
       {show && (
         <div
-          className="fixed bottom-2 right-2 cursor-pointer"
+          className="fixed bottom-2 right-2 cursor-pointer z-10"
           onClick={() => window.scrollTo(0, 0)}
         >
           <ArrowCircleUpIcon color="warning" fontSize="large" />
@@ -2834,11 +2722,12 @@ export const TabChart = () => {
           backgroundColor: '#FFF8DC',
         }}
       >
+        {isLoading && <LoaderChart />}
         <div className="text-[2rem] font-bold pt-4">{codeValue}</div>
         <div className="flex justify-between">
           <Tabs
             sx={{ '.css-1h9z7r5-MuiButtonBase-root-MuiTab-root': { fontWeight: 'bold' } }}
-            value={tab ? Number(tab) : value}
+            value={value}
             onChange={handleChange}
             aria-label="basic tabs example"
           >
@@ -2889,7 +2778,7 @@ export const TabChart = () => {
       </Box>
       {tabType === 'PTC' && (
         <>
-          <CustomTabPanel value={tab ? Number(tab) : value} index={0}>
+          <CustomTabPanel value={value} index={0}>
             {codeValue && (
               <div className="flex flex-col gap-8">
                 <div className="flex gap-8">
@@ -2907,7 +2796,7 @@ export const TabChart = () => {
               </div>
             )}
           </CustomTabPanel>
-          <CustomTabPanel value={tab ? Number(tab) : value} index={1}>
+          <CustomTabPanel value={value} index={1}>
             {codeValue && (
               <div className="flex flex-col gap-8">
                 <div className="flex gap-8">
@@ -2939,13 +2828,13 @@ export const TabChart = () => {
               </div>
             )}
           </CustomTabPanel>
-          <CustomTabPanel value={tab ? Number(tab) : value} index={2}>
+          <CustomTabPanel value={value} index={2}>
             <div className="flex gap-8">
               {ChartItem(dataChart?.perf7, checked?.perf7, 'perf7', true)}
               {ChartItem(dataChart?.perf8, checked?.perf8, 'perf8')}
             </div>
           </CustomTabPanel>
-          <CustomTabPanel value={tab ? Number(tab) : value} index={3}>
+          <CustomTabPanel value={value} index={3}>
             <div className="flex flex-col gap-8">
               <div className="flex gap-8">
                 {ChartItem(dataChart?.cf1, checked?.cf1, 'cf1', true)}
@@ -2964,7 +2853,7 @@ export const TabChart = () => {
               </div>
             </div>
           </CustomTabPanel>
-          <CustomTabPanel value={tab ? Number(tab) : value} index={4}>
+          <CustomTabPanel value={value} index={4}>
             <div className="flex flex-col gap-8">
               <div className="flex gap-8">
                 {ChartItem(dataChart?.val1, checked?.val1, 'val1')}
@@ -2988,7 +2877,7 @@ export const TabChart = () => {
       )}
       {tabType === 'ChungKhoan' && (
         <>
-          <CustomTabPanel value={tab ? Number(tab) : value} index={0}>
+          <CustomTabPanel value={value} index={0}>
             {codeValue && (
               <div className="flex flex-col gap-8">
                 <div className="flex gap-8">
@@ -3017,7 +2906,7 @@ export const TabChart = () => {
               </div>
             )}
           </CustomTabPanel>
-          <CustomTabPanel value={tab ? Number(tab) : value} index={1}>
+          <CustomTabPanel value={value} index={1}>
             {codeValue && (
               <div className="flex flex-col gap-8">
                 <div className="flex gap-8">
@@ -3044,7 +2933,7 @@ export const TabChart = () => {
               </div>
             )}
           </CustomTabPanel>
-          <CustomTabPanel value={tab ? Number(tab) : value} index={2}>
+          <CustomTabPanel value={value} index={2}>
             {codeValue && (
               <div className="flex flex-col gap-8">
                 <div className="flex gap-8">
@@ -3054,7 +2943,7 @@ export const TabChart = () => {
               </div>
             )}
           </CustomTabPanel>
-          <CustomTabPanel value={tab ? Number(tab) : value} index={3}>
+          <CustomTabPanel value={value} index={3}>
             {codeValue && (
               <div className="flex flex-col gap-8">
                 <div className="flex gap-8">
@@ -3072,7 +2961,7 @@ export const TabChart = () => {
       )}
       {tabType === 'NganHang' && (
         <>
-          <CustomTabPanel value={tab ? Number(tab) : value} index={0}>
+          <CustomTabPanel value={value} index={0}>
             {codeValue && (
               <div className="flex flex-col gap-8">
                 <div className="flex gap-8">
@@ -3086,7 +2975,7 @@ export const TabChart = () => {
               </div>
             )}
           </CustomTabPanel>
-          <CustomTabPanel value={tab ? Number(tab) : value} index={1}>
+          <CustomTabPanel value={value} index={1}>
             {codeValue && (
               <div className="flex flex-col gap-8">
                 <div className="flex gap-8">
@@ -3108,7 +2997,7 @@ export const TabChart = () => {
               </div>
             )}
           </CustomTabPanel>
-          <CustomTabPanel value={tab ? Number(tab) : value} index={2}>
+          <CustomTabPanel value={value} index={2}>
             {codeValue && (
               <div className="flex flex-col gap-8">
                 <div className="flex gap-8">
@@ -3150,7 +3039,7 @@ export const TabChart = () => {
               </div>
             )}
           </CustomTabPanel>
-          <CustomTabPanel value={tab ? Number(tab) : value} index={3}>
+          <CustomTabPanel value={value} index={3}>
             {codeValue && (
               <div className="flex flex-col gap-8">
                 <div className="flex gap-8">

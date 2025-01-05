@@ -36,9 +36,7 @@ export async function insertArticle(data) {
     label: data.label,
   };
   const response = await fetch(
-    `${import.meta.env.VITE_REACT_APP_API}/api/article/save?stockId=${data.stockId}&type=${
-      data.type
-    }`,
+    `${import.meta.env.VITE_REACT_APP_API}/api/article/save?stockId=${data.stockId}`,
     {
       method: 'POST',
       headers: {

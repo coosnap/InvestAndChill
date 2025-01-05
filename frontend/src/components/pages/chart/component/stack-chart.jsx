@@ -48,6 +48,11 @@ export default function NoStackChart(data) {
                         min: extend(min, max),
                         max: extend(max),
                       }),
+                // colorMap: {
+                //   type: 'piecewise',
+                //   colors: ['red', 'blue'],
+                //   thresholds: [0],
+                // },
               }
             : {
                 id: 'leftAxis',

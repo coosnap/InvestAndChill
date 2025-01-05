@@ -145,6 +145,10 @@ export let customPerfPTC4 = {
       yAxisId: 'leftAxis',
       color: '#C8D0D2',
       valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      // highlightScope: {
+      //   highlighted: 'item',
+      //   faded: 'global',
+      // },
     },
     {
       type: 'bar',
@@ -703,7 +707,7 @@ export let customCFPTC2 = {
     },
   ],
   yAxis: {
-    left: { type: 'bil', piecewise: false, showLineReference: true, divide: 2 },
+    left: { type: 'bil', piecewise: false, showLineReference: true, divide: 2, legendNum: 2 },
     right: { type: 'bil', piecewise: true, showLineReference: true },
   },
 };
@@ -804,7 +808,7 @@ export let customCFPTC4 = {
     },
   ],
   yAxis: {
-    left: { type: 'per', piecewise: false },
+    left: { type: 'per', piecewise: false, legendNum: 1 },
     right: { type: 'bil', piecewise: false },
   },
 };
