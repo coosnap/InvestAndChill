@@ -27,7 +27,6 @@ export default function NoStackChart(data) {
     const yAxisValue = yAxisScale.invert(props.style.y.animation.to);
     const isBelowBar = yAxisValue < 0;
     const color = isBelowBar ? data.data.yAxis.left.colors[1] : data.data.yAxis.left.colors[0];
-    console.log('yAxisValue', yAxisValue);
 
     return props.className.includes('1') ? (
       <rect
