@@ -158,8 +158,8 @@ public class ArticleController {
 	    	Date date = new Date();
 	    	Timestamp now = new Timestamp(date.getTime());
 	    	long dateDiff = compareTwoTimeStamps(now,createDate);
-	    	if (dateDiff > 7)
-	    		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//	    	if (dateDiff > 7)
+//	    		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	    	
 	    	_article.setTitle(article.getTitle());
 	    	_article.setContent(article.getContent());

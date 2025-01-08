@@ -183,9 +183,10 @@ def phi_tai_chinh_calculate_data(rs: List[Dict], combine_data: List[Dict]) -> Li
             i_9_2 = extract_sum_previous_quarters(item, combine_data, 'p_p_11') or 0
             item['p_i_9'] = i_9_1 + i_9_2
 
-            i_10_1 = item['p_p_17'] or 0
-            i_10_2 = item['p_p_8'] or 0
-            item['p_i_10'] = i_10_1 + i_10_2
+            i_10_1 = item['p_p_5'] or 0
+            i_10_2 = item['p_p_10'] or 0
+            i_10_3 = item['p_p_11'] or 0
+            item['p_i_10'] = i_10_1 - i_10_2 - i_10_3
 
             item['p_i_5'] = extract_sum_previous_quarters(item, combine_data, 'p_i_10')
 
@@ -262,7 +263,8 @@ def phi_tai_chinh_calculate_data(rs: List[Dict], combine_data: List[Dict]) -> Li
             i_31_2 = item['p_i_11'] or 0
             i_31_3 = item['p_b_78'] or 0
             i_31_4 = item['p_b_91'] or 0
-            item['p_i_31'] = i_31_1 - i_31_2 - (i_31_3 - i_31_4)
+            i_31_5 = item['p_b_67'] or 0
+            item['p_i_31'] = i_31_1 - i_31_2 - (i_31_5 - i_31_3 - i_31_4)
 
             i_32_1 = extract_sum_previous_quarters(item, combine_data, 'p_i_31', 1) or 0
             i_32_2 = item['p_i_31'] or 0
@@ -381,7 +383,7 @@ def phi_tai_chinh_calculate_data(rs: List[Dict], combine_data: List[Dict]) -> Li
 
         # start handle year data
         else:
-            item['p_i_10'] = (item['p_p_17'] or 0) + (item['p_p_8'] or 0)
+            item['p_i_10'] = (item['p_p_5'] or 0) - (item['p_p_10'] or 0) - (item['p_p_11'] or 0)
             item['p_i_11'] = (item['p_b_2'] or 0) + (item['p_b_5'] or 0)
             item['p_i_12'] = (item['p_b_9'] or 0) + (item['p_b_28'] or 0)
             item['p_i_13'] = (item['p_b_10'] or 0) + (item['p_b_29'] or 0)
@@ -421,7 +423,7 @@ def phi_tai_chinh_calculate_data(rs: List[Dict], combine_data: List[Dict]) -> Li
             i_31_2 = item['p_i_11'] or 0
             i_31_3 = item['p_b_78'] or 0
             i_31_4 = item['p_b_91'] or 0
-            item['p_i_31'] = i_31_1 - i_31_2 - (i_31_3 - i_31_4)
+            item['p_i_31'] = i_31_1 - i_31_2 - (i_31_5 - i_31_3 - i_31_4)
 
             i_32_1 = extract_sum_previous_years(item, combine_data, 'p_i_31')
             i_32_2 = item['p_i_31']

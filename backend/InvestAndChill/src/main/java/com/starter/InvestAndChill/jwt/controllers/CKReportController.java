@@ -452,7 +452,7 @@ public class CKReportController {
 		listValuation =  valuationRepository.findTopRankedDataByStockCode(stock, pageableValuation);
 
 		if (listValuation.isEmpty()) {
-			return new ResponseEntity<>(new MessageResponse("Data is not available"), HttpStatus.OK);
+			return new ResponseEntity<>(new MessageResponse("Data is empty"), HttpStatus.OK);
 		}
 		
 		Collections.reverse(listValuation);
