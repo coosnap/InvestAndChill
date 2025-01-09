@@ -120,10 +120,26 @@ public class ChungKhoanReport {
 	@Column(name = "c_i_58")
 	private Double GPKhac;
 	
-	
+	//other1
+	@Column(name = "c_b_205")
+	private Double tienGuiCuaKhachHang;
+	@Column(name = "c_f_158")
+	private Double choVayKyQuy;
 
 	
 	
+	public Double getTienGuiCuaKhachHang() {
+		return tienGuiCuaKhachHang;
+	}
+	public void setTienGuiCuaKhachHang(Double tienGuiCuaKhachHang) {
+		this.tienGuiCuaKhachHang = tienGuiCuaKhachHang;
+	}
+	public Double getChoVayKyQuy() {
+		return choVayKyQuy;
+	}
+	public void setChoVayKyQuy(Double choVayKyQuy) {
+		this.choVayKyQuy = choVayKyQuy;
+	}
 	public Double getGPFVTPL() {
 		return GPFVTPL;
 	}

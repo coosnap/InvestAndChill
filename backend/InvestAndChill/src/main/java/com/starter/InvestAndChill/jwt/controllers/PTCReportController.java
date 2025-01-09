@@ -259,7 +259,7 @@ public class PTCReportController {
                 	Perf8Response response = new Perf8Response();
                     response.setId(report.getId());
                     response.setTitle(Constants.PTC_perf8);
-                    response.setRoe(RoundNumber.lamTronPhanTram(report.getRoe()));
+                   // response.setRoe(RoundNumber.lamTronPhanTram(report.getRoe()));
                     response.setAssetTurnover(RoundNumber.lamTronLan(report.getAssetTurnover()));
                     response.setLeverage(RoundNumber.lamTronLan(report.getLeverage()));
                     response.setNImgTrailing(RoundNumber.lamTronPhanTram(report.getNImgTrailing()));
@@ -515,7 +515,7 @@ public class PTCReportController {
                     response.setNoVay(RoundNumber.lamTron(-report.getNoVay()));
                     response.setTienLongTrongPhaiThuChoVay(RoundNumber.lamTron(report.getTienLongTrongPhaiThuChoVay()));
                     response.setTienVaTuongDuongTien(RoundNumber.lamTron(report.getTienVaTuongDuongTien()));
-                    response.setNetDebt(RoundNumber.lamTron(report.getNetDebt()));
+                    response.setNetDebt(RoundNumber.lamTron(-report.getNetDebt()));
                     return response;
                 })
                 .collect(Collectors.toList());

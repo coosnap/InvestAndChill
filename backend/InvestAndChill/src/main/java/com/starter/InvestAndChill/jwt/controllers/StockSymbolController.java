@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.starter.InvestAndChill.jwt.models.ChungKhoanReportQuy;
 import com.starter.InvestAndChill.jwt.models.StockSymbol;
+import com.starter.InvestAndChill.jwt.payload.response.MessageResponse;
 import com.starter.InvestAndChill.jwt.payload.response.TypeResponse;
 import com.starter.InvestAndChill.jwt.repository.CKRepositoryQuy;
 import com.starter.InvestAndChill.jwt.repository.NganHangRepositoryQuy;
@@ -46,20 +47,45 @@ public class StockSymbolController {
 	
 	@GetMapping("/all")
 	//@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<List<StockSymbol>> allAccess(@RequestParam(required = false,name = "size") Integer size) {
+	public ResponseEntity<List<StockSymbol>> allAccess(@RequestParam(required = false,name = "type") String type) {
 		try {
 			List<StockSymbol> stockSymbols = new ArrayList<StockSymbol>();
-			if (size == null) {
-				stockSymbolRepository.findAll().forEach(stockSymbols::add);
+			
+			if ("category".equals(type)) {
+				stockSymbolRepository.findCategory().forEach(stockSymbols::add);
+			} else if ("article".equals(type)) {
+				stockSymbolRepository.findStockSymbolWithArticle().forEach(stockSymbols::add);
 			} else {
-				stockSymbolRepository.findBySizeOfCompany(size).forEach(stockSymbols::add);
+				stockSymbolRepository.findAll().forEach(stockSymbols::add);
 			}
+			
+//			if (size == null) {
+//				stockSymbolRepository.findAll().forEach(stockSymbols::add);
+//			} else {
+//				stockSymbolRepository.findBySizeOfCompany(size).forEach(stockSymbols::add);
+//			}
 			
 			if (stockSymbols.isEmpty()) {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 			}
 
 			return new ResponseEntity<>(stockSymbols, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping("/getTitle/{stockSymbol}")
+	public ResponseEntity<?> getTitle(@PathVariable String stockSymbol) {
+		try {
+			StockSymbol stockResult = new StockSymbol();
+			stockResult = stockSymbolRepository.findStockSymbolTitle(stockSymbol);
+			
+			if (stockResult == null) {
+				return new ResponseEntity<>(new MessageResponse("Data is empty"), HttpStatus.OK);
+			}
+
+			return new ResponseEntity<>(new MessageResponse(stockResult.getSymbol() + " - " + stockResult.getCompanyName()), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 		}

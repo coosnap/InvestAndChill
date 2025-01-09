@@ -25,6 +25,7 @@ import com.starter.InvestAndChill.jwt.payload.response.chungkhoan.Bal2Response;
 import com.starter.InvestAndChill.jwt.payload.response.chungkhoan.Bal3Response;
 import com.starter.InvestAndChill.jwt.payload.response.chungkhoan.Bal4Response;
 import com.starter.InvestAndChill.jwt.payload.response.chungkhoan.Bal5Response;
+import com.starter.InvestAndChill.jwt.payload.response.chungkhoan.Other1Response;
 import com.starter.InvestAndChill.jwt.payload.response.chungkhoan.Perf2Response;
 import com.starter.InvestAndChill.jwt.payload.response.nganhang.Val1Response;
 import com.starter.InvestAndChill.jwt.payload.response.nganhang.Val2Response;
@@ -187,7 +188,7 @@ public class CKReportController {
 	                    response.setDEE(RoundNumber.lamTronLan(report.getDEE()));
 	                    response.setLeverage(RoundNumber.lamTronLan(report.getLeverage()));
 	                    response.setNImgTrailing(RoundNumber.lamTronPhanTram(report.getNImgTrailing()));
-	                    response.setRoe(RoundNumber.lamTronPhanTram(report.getRoe()));
+	                    //response.setRoe(RoundNumber.lamTronPhanTram(report.getRoe()));
 	                    return response;
 	                })
 	                .collect(Collectors.toList());
@@ -491,12 +492,38 @@ public class CKReportController {
 			response.setId(report.getId());
 			response.setTitle(Constants.ChungKhoan_val4);
 		
-			response.setVonChuSoHuu(RoundNumber.lamTron(ckRepository.findLoiNhuanRongTTM(report.getId().getStockCode(), report.getId().getQuarter(), report.getId().getYear())));
+			response.setVonChuSoHuu(RoundNumber.lamTron(ckRepository.findVonChuSoHuu(report.getId().getStockCode(), report.getId().getQuarter(), report.getId().getYear())));
 			response.setVonHoa(RoundNumber.lamTron(report.getMarketcap()));
 			list.add(response);
 		}
 		
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	} 
+	
+	
+	@GetMapping("/other1/{stock}")
+	public ResponseEntity<?> other1(@PathVariable String stock, @RequestParam(required = false,name = "type") String type) {
+		List<ChungKhoanReport> listReport = new ArrayList<ChungKhoanReport>();
+		List<Other1Response> list;
+	
+		if ("year".equals(type)) {
+			listReport =  ckNamRepository.findByStockForPerf(stock,pageableNam);
+		} else {
+			listReport =	ckQuyRepository.findByStockForPerf(stock,pageableQuy);
+		}
+		Collections.reverse(listReport);
+		list = listReport.stream()
+	                .map(report -> {
+	                	Other1Response response = new Other1Response();
+	                	response.setId(report.getId());
+	                	response.setTitle(Constants.ChungKhoan_other1);
+	                    response.setTienGuiCuaKhachHang(RoundNumber.lamTron(report.getTienGuiCuaKhachHang()));
+	                    response.setChoVayKyQuy(RoundNumber.lamTron(report.getChoVayKyQuy()));
+	                    return response;
+	                })
+	                .collect(Collectors.toList());
+			
+		return new ResponseEntity<>(list, HttpStatus.OK);
+	}
 
 }
