@@ -43,3 +43,13 @@ export async function getDataChartBank(type, code, year, chart) {
   }
   return;
 }
+
+export async function getTitle(code) {
+  const response = await axiosInstance.get(
+    `${import.meta.env.VITE_REACT_APP_API}/api/stock/getTitle/${code}`
+  );
+  if (response.status === 200) {
+    return response.data;
+  }
+  return;
+}

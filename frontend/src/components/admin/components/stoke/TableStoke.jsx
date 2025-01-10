@@ -26,7 +26,7 @@ export default function TableStoke() {
   async function getData() {
     setIsLoading(true);
     try {
-      const result = await getStockAll();
+      const result = await getStockAll('article');
       setStokes(result);
     } catch (error) {
       setStokes([]);

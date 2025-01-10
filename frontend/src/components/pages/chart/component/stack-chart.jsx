@@ -37,16 +37,13 @@ export default function NoStackChart(data) {
         y={props.style.y.animation.to}
       />
     ) : (
-      data.data.yAxis.left.colorsBasic.map((e, index) => (
-        <rect
-          key={index}
-          fill={e}
-          height={props.style.height.animation.to}
-          width={props.style.width.animation.to}
-          x={props.style.x.animation.to}
-          y={props.style.y.animation.to}
-        />
-      ))
+      <rect
+        fill={data.data.yAxis.left.colorsBasic[0]}
+        height={props.style.height.animation.to}
+        width={props.style.width.animation.to}
+        x={props.style.x.animation.to}
+        y={props.style.y.animation.to}
+      />
     );
   };
 
@@ -119,7 +116,7 @@ export default function NoStackChart(data) {
               data.data.yAxis.right.marker || data.data.yAxis.left.marker === 0 ? 'block' : 'none',
           },
           '.MuiBarElement-series-auto-generated-id-0': {
-            opacity: data.data.yAxis.right.opacity === 0 ? 0.5 : 1,
+            opacity: data.data.yAxis.right.opacity || data.data.yAxis.left.opacity === 0 ? 0.5 : 1,
           },
 
           '.MuiLineElement-series-auto-generated-id-1': {
@@ -133,7 +130,7 @@ export default function NoStackChart(data) {
               data.data.yAxis.right.marker || data.data.yAxis.left.marker === 1 ? 'block' : 'none',
           },
           '.MuiBarElement-series-auto-generated-id-1': {
-            opacity: data.data.yAxis.right.opacity === 1 ? 0.5 : 1,
+            opacity: data.data.yAxis.right.opacity || data.data.yAxis.left.opacity === 1 ? 0.5 : 1,
           },
 
           '.MuiLineElement-series-auto-generated-id-2': {
@@ -147,7 +144,7 @@ export default function NoStackChart(data) {
               data.data.yAxis.right.marker || data.data.yAxis.left.marker === 2 ? 'block' : 'none',
           },
           '.MuiBarElement-series-auto-generated-id-2': {
-            opacity: data.data.yAxis.right.opacity === 2 ? 0.5 : 1,
+            opacity: data.data.yAxis.right.opacity || data.data.yAxis.left.opacity === 2 ? 0.5 : 1,
           },
 
           '.MuiLineElement-series-auto-generated-id-3': {
@@ -161,7 +158,7 @@ export default function NoStackChart(data) {
               data.data.yAxis.right.marker || data.data.yAxis.left.marker === 3 ? 'block' : 'none',
           },
           '.MuiBarElement-series-auto-generated-id-3': {
-            opacity: data.data.yAxis.right.opacity === 3 ? 0.5 : 1,
+            opacity: data.data.yAxis.right.opacity || data.data.yAxis.left.opacity === 3 ? 0.5 : 1,
           },
 
           '.MuiLineElement-series-auto-generated-id-4': {
@@ -175,7 +172,7 @@ export default function NoStackChart(data) {
               data.data.yAxis.right.marker || data.data.yAxis.left.marker === 4 ? 'block' : 'none',
           },
           '.MuiBarElement-series-auto-generated-id-4': {
-            opacity: data.data.yAxis.right.opacity === 4 ? 0.5 : 1,
+            opacity: data.data.yAxis.right.opacity || data.data.yAxis.left.opacity === 4 ? 0.5 : 1,
           },
 
           '.MuiLineElement-series-auto-generated-id-5': {
@@ -189,7 +186,7 @@ export default function NoStackChart(data) {
               data.data.yAxis.right.marker || data.data.yAxis.left.marker === 5 ? 'block' : 'none',
           },
           '.MuiBarElement-series-auto-generated-id-5': {
-            opacity: data.data.yAxis.right.opacity === 5 ? 0.5 : 1,
+            opacity: data.data.yAxis.right.opacity || data.data.yAxis.left.opacity === 5 ? 0.5 : 1,
           },
         }}
       >
@@ -204,7 +201,7 @@ export default function NoStackChart(data) {
         <LineHighlightPlot />
         <AreaPlot />
         <ChartsXAxis />
-        {data.data.yAxis.left.marker && <MarkPlot />}
+        {/* {data.data.yAxis.left.marker && <MarkPlot />} */}
 
         {data.data.yAxis.left.showLineReference && (
           <ChartsReferenceLine

@@ -10,7 +10,7 @@ function ListCompany() {
 
   async function getData() {
     setIsLoading(true);
-    let result = await getStockAll();
+    let result = await getStockAll('category');
     setCategories(result);
     setIsLoading(false);
   }

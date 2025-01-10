@@ -1,7 +1,7 @@
 import axiosInstance from './axiosInstance';
 
-export async function getStockAll() {
-  const response = await axiosInstance.get('/api/stock/all');
+export async function getStockAll(type) {
+  const response = await axiosInstance.get(`/api/stock/all${type ? '?type=' + type : ''}`);
   if (response.status === 200) {
     return response.data;
   }
