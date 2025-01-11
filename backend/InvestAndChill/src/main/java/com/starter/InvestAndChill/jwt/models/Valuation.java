@@ -3,16 +3,13 @@ package com.starter.InvestAndChill.jwt.models;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
 
-@Entity
-@DynamicInsert
-@DynamicUpdate
-@Table(	name = "valuation")
+
+@MappedSuperclass
 public class Valuation {
 	
 	@EmbeddedId
@@ -25,17 +22,10 @@ public class Valuation {
 	public void setId(ValuationKey id) {
 		this.id = id;
 	}
-	@Column(name = "nittm")
-	//@Transient
-	private Double nittm;
-	@Column(name = "salettm")
-	//@Transient
-	private Double salettm;
+	
 	@Column(name = "marketcap")
 	private Double marketcap;
-	@Column(name = "capital")
-	//@Transient
-	private Double capital;
+	
 	
 	//VAL1
 	@Column(name = "pe")
@@ -47,10 +37,7 @@ public class Valuation {
 	@Transient
 	private Double evebitdaMedian;
 	
-	//val2
-	@Column(name = "roe")
-	//@Transient
-	private Double roe;
+	
 	@Column(name = "pb")
 	private Double pb;
 	@Transient
@@ -62,44 +49,7 @@ public class Valuation {
 	@Transient
 	private Double psMedian;
 	
-	//val7
-	@Column(name = "ebitdattm")
-	//@Transient
-	private Double ebitdattm;
 	
-//	@Column(name = "loiNhuanRongTTM")
-//	private Double loiNhuanRongTTM;
-//	
-//	@Column(name = "vonChuSoHuu")
-//	private Double vonChuSoHuu;
-	
-	
-	
-	
-	
-//	public Double getVonChuSoHuu() {
-//		return vonChuSoHuu;
-//	}
-//
-//	public void setVonChuSoHuu(Double vonChuSoHuu) {
-//		this.vonChuSoHuu = vonChuSoHuu;
-//	}
-//
-//	public Double getLoiNhuanRongTTM() {
-//		return loiNhuanRongTTM;
-//	}
-//
-//	public void setLoiNhuanRongTTM(Double loiNhuanRongTTM) {
-//		this.loiNhuanRongTTM = loiNhuanRongTTM;
-//	}
-
-	public Double getEbitdattm() {
-		return ebitdattm;
-	}
-
-	public void setEbitdattm(Double ebitdattm) {
-		this.ebitdattm = ebitdattm;
-	}
 
 	public Double getPs() {
 		return ps;
@@ -123,14 +73,6 @@ public class Valuation {
 
 	public void setPbMedian(Double pbMedian) {
 		this.pbMedian = pbMedian;
-	}
-
-	public Double getRoe() {
-		return roe;
-	}
-
-	public void setRoe(Double roe) {
-		this.roe = roe;
 	}
 
 	public Double getPb() {
@@ -173,21 +115,7 @@ public class Valuation {
 		this.evebitda = evebitda;
 	}
 
-	public Double getNittm() {
-		return nittm;
-	}
-
-	public void setNittm(Double nittm) {
-		this.nittm = nittm;
-	}
-
-	public Double getSalettm() {
-		return salettm;
-	}
-
-	public void setSalettm(Double salettm) {
-		this.salettm = salettm;
-	}
+	
 
 	public Double getMarketcap() {
 		return marketcap;
@@ -195,13 +123,5 @@ public class Valuation {
 
 	public void setMarketcap(Double marketcap) {
 		this.marketcap = marketcap;
-	}
-
-	public Double getCapital() {
-		return capital;
-	}
-
-	public void setCapital(Double capital) {
-		this.capital = capital;
 	}
 }

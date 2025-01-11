@@ -68,14 +68,14 @@ public class CalculatorUtils {
 	
 	
 	
-	public static void calculateMedianForOne(List<Valuation> listValuation,String type) {
+	public static void calculateMedianForOne(List<? extends Valuation> listValuation,String type) {
 		List<Double> listMedian = initListFull(listValuation, type);
 		
-		for (int i=0;i<listMedian.size();i++) {
-			if (listMedian.get(i) == null) {
-				return;
-			}
-		}
+//		for (int i=0;i<listMedian.size();i++) {
+//			if (listMedian.get(i) == null) {
+//				return;
+//			}
+//		}
 		
 		Collections.sort(listMedian);
 		Double trungVi;
@@ -102,18 +102,23 @@ public class CalculatorUtils {
 		}		
 	}
 	
-	public static List<Double> initListFull(List<Valuation> listValuation,String type) {
+	public static List<Double> initListFull(List<? extends Valuation> listValuation,String type) {
 		List<Double> list = new ArrayList<Double>();
 		for (int i = 0; i < listValuation.size(); i++) {
-			if (type.equalsIgnoreCase("PE")) {
+			
+			
+			if (type.equalsIgnoreCase("PE") && (listValuation.get(i).getPe() != null)) {
 				list.add(listValuation.get(i).getPe());
-			} else if (type.equalsIgnoreCase("evebitda")) {
+			} else if (type.equalsIgnoreCase("evebitda") && (listValuation.get(i).getEvebitda() != null)) {
 				list.add(listValuation.get(i).getEvebitda());
-			} else if (type.equalsIgnoreCase("PB")) {
+			} else if (type.equalsIgnoreCase("PB") && (listValuation.get(i).getPb() != null)) {
 				list.add(listValuation.get(i).getPb());
-			} else if (type.equalsIgnoreCase("PS")) {
+			} else if (type.equalsIgnoreCase("PS") && (listValuation.get(i).getPs() != null) ) {
 				list.add(listValuation.get(i).getPs());
 			}
+			
+			
+			
 		}
 		return list;
 	}

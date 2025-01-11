@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.starter.InvestAndChill.jwt.models.PTCReport;
-import com.starter.InvestAndChill.jwt.models.Valuation;
+import com.starter.InvestAndChill.jwt.models.ValuationPTC;
 import com.starter.InvestAndChill.jwt.payload.response.MessageResponse;
 import com.starter.InvestAndChill.jwt.payload.response.PTC.Bal1Response;
 import com.starter.InvestAndChill.jwt.payload.response.PTC.Bal2Response;
@@ -46,10 +46,9 @@ import com.starter.InvestAndChill.jwt.payload.response.PTC.Val5Response;
 import com.starter.InvestAndChill.jwt.payload.response.PTC.Val6Response;
 import com.starter.InvestAndChill.jwt.payload.response.PTC.Val7Response;
 import com.starter.InvestAndChill.jwt.payload.response.PTC.Val8Response;
-import com.starter.InvestAndChill.jwt.repository.PTCRepository;
 import com.starter.InvestAndChill.jwt.repository.PTCRepositoryNam;
 import com.starter.InvestAndChill.jwt.repository.PTCRepositoryQuy;
-import com.starter.InvestAndChill.jwt.repository.ValuationRepository;
+import com.starter.InvestAndChill.jwt.repository.ValuationPTCRepository;
 import com.starter.InvestAndChill.utils.CalculatorUtils;
 import com.starter.InvestAndChill.utils.Constants;
 import com.starter.InvestAndChill.utils.RoundNumber;
@@ -64,14 +63,14 @@ public class PTCReportController {
 	PTCRepositoryQuy ptcQuyRepository;
 	Pageable pageableQuy = PageRequest.of(0, 21); 
 	Pageable pageableToanQuy = PageRequest.of(0, 40); 
-	@Autowired
-	PTCRepository ptcRepository;
+//	@Autowired
+//	PTCRepository ptcRepository;
 	@Autowired
 	PTCRepositoryNam ptcNamRepository;
 	Pageable pageableNam = PageRequest.of(0, 10); 
 	
 	@Autowired
-	ValuationRepository valuationRepository;
+	ValuationPTCRepository valuationPTCRepository;
 	
 	Pageable pageableValuation = PageRequest.of(0, 41); 
 	
@@ -548,20 +547,20 @@ public class PTCReportController {
 	
 	@GetMapping("/val1/{stock}")
 	public ResponseEntity<?> val1(@PathVariable String stock) {
-		List<Valuation> listValuation = new ArrayList<Valuation>();
+		List<ValuationPTC> listValuation = new ArrayList<ValuationPTC>();
 		
-		listValuation =  valuationRepository.findTopRankedDataByStockCodeWithPTC(stock, pageableValuation);
+		listValuation =  valuationPTCRepository.findTopRankedDataByStockCodeWithPTC(stock, pageableValuation);
 
 		if (listValuation.isEmpty()) {
-			return new ResponseEntity<>(new MessageResponse("Data is not available"), HttpStatus.OK);
+			return new ResponseEntity<>(new MessageResponse("Data is empty"), HttpStatus.OK);
 		}
 		
 		Collections.reverse(listValuation);
-		CalculatorUtils.calculateMedianForOne(listValuation,"PE");
+		CalculatorUtils.calculateMedianForOne( listValuation,"PE");
 		CalculatorUtils.calculateMedianForOne(listValuation,"evebitda");
 		List<Val1Response> list = new ArrayList<Val1Response>();
 		for (int i=0;i< listValuation.size();i++) {
-			Valuation report = listValuation.get(i);
+			ValuationPTC report = listValuation.get(i);
 			Val1Response response = new Val1Response();
 			response.setId(report.getId());
 			response.setTitle(Constants.PTC_val1);
@@ -576,39 +575,13 @@ public class PTCReportController {
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	} 
 	
-//	@GetMapping("/val2/{stock}")
-//	public ResponseEntity<?> val2(@PathVariable String stock) {
-//		List<Valuation> listValuation = new ArrayList<Valuation>();
-//		listValuation =  valuationRepository.findTopRankedDataByStockCode(stock, pageableValuation);
-//		if (listValuation.isEmpty()) {
-//			return new ResponseEntity<>(new MessageResponse("Data is not available"), HttpStatus.OK);
-//		}
-//		
-//		Collections.reverse(listValuation);
-//		CalculatorUtils.calculateMedianForOne(listValuation,"PB");
-//		
-//		List<Val2Response> list = new ArrayList<Val2Response>();
-//		for (int i=0;i< listValuation.size();i++) {
-//			Valuation report = listValuation.get(i);
-//			Val2Response response = new Val2Response();
-//			response.setId(report.getId());
-//			response.setTitle(Constants.PTC_val2);
-//			response.setRoe(RoundNumber.lamTronPhanTram(ptcRepository.findRoe(report.getId().getStockCode(), report.getId().getQuarter(), report.getId().getYear())));
-//			response.setPb(RoundNumber.lamTronLan(report.getPb()));
-//			response.setPbMedian(RoundNumber.lamTronLan(report.getPbMedian()));
-//			list.add(response);
-//		}
-//		
-//		return new ResponseEntity<>(list, HttpStatus.OK);
-//	} 
-	
 	@GetMapping("/val2/{stock}")
 	public ResponseEntity<?> val2(@PathVariable String stock) {
-		List<Valuation> listValuation = new ArrayList<Valuation>();
+		List<ValuationPTC> listValuation = new ArrayList<ValuationPTC>();
 
-		listValuation =  valuationRepository.findTopRankedDataByStockCodeWithPTC(stock, pageableValuation);
+		listValuation =  valuationPTCRepository.findTopRankedDataByStockCodeWithPTC(stock, pageableValuation);
 		if (listValuation.isEmpty()) {
-			return new ResponseEntity<>(new MessageResponse("Data is not available"), HttpStatus.OK);
+			return new ResponseEntity<>(new MessageResponse("Data is empty"), HttpStatus.OK);
 		}
 		
 		Collections.reverse(listValuation);
@@ -616,7 +589,7 @@ public class PTCReportController {
 		
 		List<Val2Response> list = new ArrayList<Val2Response>();
 		for (int i=0;i< listValuation.size();i++) {
-			Valuation report = listValuation.get(i);
+			ValuationPTC report = listValuation.get(i);
 			Val2Response response = new Val2Response();
 			response.setId(report.getId());
 			response.setTitle(Constants.PTC_val2);
@@ -631,9 +604,9 @@ public class PTCReportController {
 	
 	@GetMapping("/val3/{stock}")
 	public ResponseEntity<?> val3(@PathVariable String stock) {
-		List<Valuation> listValuation = new ArrayList<Valuation>();
+		List<ValuationPTC> listValuation = new ArrayList<ValuationPTC>();
 		
-		listValuation =  valuationRepository.findTopRankedDataByStockCodeWithPTC(stock, pageableValuation);
+		listValuation =  valuationPTCRepository.findTopRankedDataByStockCodeWithPTC(stock, pageableValuation);
 		if (listValuation.isEmpty()) {
 			return new ResponseEntity<>(new MessageResponse("Data is not available"), HttpStatus.OK);
 		}
@@ -654,9 +627,9 @@ public class PTCReportController {
 	
 	@GetMapping("/val4/{stock}")
 	public ResponseEntity<?> val4(@PathVariable String stock) {
-		List<Valuation> listValuation = new ArrayList<Valuation>();
+		List<ValuationPTC> listValuation = new ArrayList<ValuationPTC>();
 		
-		listValuation =  valuationRepository.findTopRankedDataByStockCodeWithPTC(stock, pageableValuation);
+		listValuation =  valuationPTCRepository.findTopRankedDataByStockCodeWithPTC(stock, pageableValuation);
 
 		if (listValuation.isEmpty()) {
 			return new ResponseEntity<>(new MessageResponse("Data is not available"), HttpStatus.OK);
@@ -667,7 +640,7 @@ public class PTCReportController {
 		
 		List<Val4Response> list = new ArrayList<Val4Response>();
 		for (int i=0;i< listValuation.size();i++) {
-			Valuation report = listValuation.get(i);
+			ValuationPTC report = listValuation.get(i);
 			Val4Response response = new Val4Response();
 			response.setId(report.getId());
 			response.setTitle(Constants.PTC_val4);
@@ -682,9 +655,9 @@ public class PTCReportController {
 	
 	@GetMapping("/val5/{stock}")
 	public ResponseEntity<?> val5(@PathVariable String stock) {
-		List<Valuation> listValuation = new ArrayList<Valuation>();
+		List<ValuationPTC> listValuation = new ArrayList<ValuationPTC>();
 		
-		listValuation =  valuationRepository.findTopRankedDataByStockCodeWithPTC(stock, pageableValuation);
+		listValuation =  valuationPTCRepository.findTopRankedDataByStockCodeWithPTC(stock, pageableValuation);
 
 		if (listValuation.isEmpty()) {
 			return new ResponseEntity<>(new MessageResponse("Data is not available"), HttpStatus.OK);
@@ -706,9 +679,9 @@ public class PTCReportController {
 	
 	@GetMapping("/val6/{stock}")
 	public ResponseEntity<?> val6(@PathVariable String stock) {
-		List<Valuation> listValuation = new ArrayList<Valuation>();
+		List<ValuationPTC> listValuation = new ArrayList<ValuationPTC>();
 		
-		listValuation =  valuationRepository.findTopRankedDataByStockCodeWithPTC(stock, pageableValuation);
+		listValuation =  valuationPTCRepository.findTopRankedDataByStockCodeWithPTC(stock, pageableValuation);
 
 		if (listValuation.isEmpty()) {
 			return new ResponseEntity<>(new MessageResponse("Data is not available"), HttpStatus.OK);
@@ -719,7 +692,7 @@ public class PTCReportController {
 		
 		List<Val6Response> list = new ArrayList<Val6Response>();
 		for (int i=0;i< listValuation.size();i++) {
-			Valuation report = listValuation.get(i);
+			ValuationPTC report = listValuation.get(i);
 			Val6Response response = new Val6Response();
 			response.setId(report.getId());
 			response.setTitle(Constants.PTC_val6);
@@ -734,9 +707,9 @@ public class PTCReportController {
 	
 	@GetMapping("/val7/{stock}")
 	public ResponseEntity<?> val7(@PathVariable String stock) {
-		List<Valuation> listValuation = new ArrayList<Valuation>();
+		List<ValuationPTC> listValuation = new ArrayList<ValuationPTC>();
 		
-		listValuation =  valuationRepository.findTopRankedDataByStockCodeWithPTC(stock, pageableValuation);
+		listValuation =  valuationPTCRepository.findTopRankedDataByStockCodeWithPTC(stock, pageableValuation);
 		if (listValuation.isEmpty()) {
 			return new ResponseEntity<>(new MessageResponse("Data is not available"), HttpStatus.OK);
 		}
@@ -745,7 +718,7 @@ public class PTCReportController {
 		
 		List<Val7Response> list = new ArrayList<Val7Response>();
 		for (int i=0;i< listValuation.size();i++) {
-			Valuation report = listValuation.get(i);
+			ValuationPTC report = listValuation.get(i);
 			Val7Response response = new Val7Response();
 			response.setId(report.getId());
 			response.setTitle(Constants.PTC_val7);
@@ -760,9 +733,9 @@ public class PTCReportController {
 	
 	@GetMapping("/val8/{stock}")
 	public ResponseEntity<?> val8(@PathVariable String stock) {
-		List<Valuation> listValuation = new ArrayList<Valuation>();
+		List<ValuationPTC> listValuation = new ArrayList<ValuationPTC>();
 		
-		listValuation =  valuationRepository.findTopRankedDataByStockCodeWithPTC(stock, pageableValuation);
+		listValuation =  valuationPTCRepository.findTopRankedDataByStockCodeWithPTC(stock, pageableValuation);
 		if (listValuation.isEmpty()) {
 			return new ResponseEntity<>(new MessageResponse("Data is not available"), HttpStatus.OK);
 		}
