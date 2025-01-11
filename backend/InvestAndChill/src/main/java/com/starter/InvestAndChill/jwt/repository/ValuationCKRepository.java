@@ -32,7 +32,7 @@ public interface ValuationCKRepository extends JpaRepository<ValuationCK, Valuat
          FROM
              valuation
          WHERE
-             stock_code = 'VND'
+             stock_code = :stockCode
      )
      SELECT
          r.*, ckr.c_i_6 as roe, ckr.c_i_3 as loinhuanrong, ckr.c_b_142 as vonchusohuu
