@@ -381,25 +381,28 @@ def phi_tai_chinh_calculate_data(rs: List[Dict], combine_data: List[Dict]) -> Li
             item['p_i_66'] = (item['p_i_26'] or 0) - (item['p_m_2'] or 0)
             item['p_i_67'] = extract_sum_previous_quarters(item, combine_data, 'p_i_66')
             
-            # filter index 2025-01-10 sửa
+           # filter index 2025-01-10 sửa
             item['p_i_68'] = item['p_i_61'] / item['p_i_5'] if item['p_i_61'] is not None and item['p_i_5'] != 0 and item['p_i_5'] is not None else None
             item['p_i_69'] = item['p_i_8'] / item['p_i_56'] if item['p_i_56'] != 0 and item['p_i_56'] is not None else None
             item['p_i_70'] = item['p_i_4'] / item['p_i_56'] if item['p_i_4'] is not None and item['p_i_56'] != 0 and item['p_i_56'] is not None else None
             item['p_i_71'] = (item['p_b_36'] or 0) + (item['p_b_47'] or 0)
-            item['p_i_72'] = extract_sum_previous_quarters(item, combine_data, 'p_c_2') /3
+            i_72_1 = item['p_c_2'].rolling(window=12).sum()
+            item['p_i_72'] = i_72_1 /3 if i_72_1 is not None and i_72_1 != 0 else None
             item['p_i_73'] = item['p_i_71'] / item['p_i_72'] if item['p_i_72'] != 0 and item['p_i_72'] is not None else None
             item['p_i_74'] = (item['p_b_70'] or 0) + (item['p_b_76'] or 0)
             item['p_i_75'] = item['p_i_74'] / item['p_i_1'] if item['p_i_1'] != 0 and item['p_i_1'] is not None else None
             item['p_i_76'] = item['p_i_52'].apply(lambda x: x if x > 0 else 0).rolling(window=4).sum()
             item['p_i_77'] = item['p_i_76']/item['p_i_62'] if item['p_i_76'] is not None and item['p_i_62'] != 0 and item['p_i_62'] is not None else None
             item['p_i_78'] = item['p_i_76']/((item['p_b_66'] or 0 ) - (item['p_i_52'] or 0 ))
-            item['p_i_79_1'] = item['p_p_3']/item['p_p_3'].shift(4) - 1
-            item['p_i_79_2'] = item['p_p_3']/((item['p_p_3'] + item['p_p_3'].shift(4))/2) - 1
-            item['p_i_79_3'] = item['p_p_3']/((item['p_p_3'] + item['p_p_3'].shift(4) + item['p_p_3'].shift(4))/3) - 1
+            i_79_1 = item['p_p_3'].shift(4)
+            i_79_2 = item['p_p_3'].shift(8)
+            item['p_i_79_1'] = item['p_p_3']/i_79_1 - 1 if item['p_p_3'] is not None and i_79_1 != 0 and i_79_1 is not None else None
+            item['p_i_79_2'] = item['p_p_3']/((item['p_p_3'] + i_79_1)/2) - 1 if item['p_p_3'] is not None and i_79_1 != 0 and i_79_1 is not None else None
+            item['p_i_79_3'] = item['p_p_3']/((item['p_p_3'] + i_79_1 + i_79_2)/3) - 1 if item['p_p_3'] is not None and i_79_1 != 0 and i_79_1 is not None and i_79_2 != 0 and i_79_2 is not None else None
             item['p_i_80'] = item['p_i_11'] + (item['p_m_1'] or 0) + (item['p_b_58'] or 0) - item['p_i_16']
-            item['p_i_81'] = extract_sum_previous_quarters(item, combine_data, 'p_c_35') * -1
+            i_81_1 = extract_sum_previous_quarters(item, combine_data, 'p_c_35')
+            item['p_i_81'] = i_81_1 * -1 if i_81_1 is not None else None
             item['p_i_82'] = item['p_i_65'] / item['p_i_1'] if item['p_i_1'] != 0 and item['p_i_1'] is not None and item['p_i_65'] is not None else None
-
             i83_1 = extract_sum_previous_quarters(item, combine_data, 'p_i_20')
             i83_1_2 = i83_1 / 4 if i83_1 is not None else None
             item['p_i_83'] = item['p_i_65'] / i83_1_2 if i83_1_2 != 0 and i83_1_2 is not None and item['p_i_65'] is not None else None
