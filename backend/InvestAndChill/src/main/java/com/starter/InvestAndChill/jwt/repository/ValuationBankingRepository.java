@@ -35,12 +35,13 @@ public interface ValuationBankingRepository extends JpaRepository<ValuationBanki
      SELECT
          r.*, nhr.b_i_20 as roe, nhr.b_i_10 as loinhuanrong, nhr.b_b_64 as vonchusohuu
      FROM
-         ranked_data r, ngan_hang_report nhr
-     WHERE
-         row_num = 1 
-         and r.stock_code = nhr.stock_code 
+         ranked_data r LEFT JOIN ngan_hang_report nhr 
+         on r.stock_code = nhr.stock_code
          and r.quarter = nhr.quarter
          and r.year = nhr.year
+     WHERE
+         row_num = 1 
+         
      ORDER BY
          year DESC, quarter DESC, date DESC
      """, nativeQuery = true)

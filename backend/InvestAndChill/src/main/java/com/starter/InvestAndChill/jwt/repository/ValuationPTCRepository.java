@@ -35,12 +35,13 @@ public interface ValuationPTCRepository extends JpaRepository<ValuationPTC, Valu
 		        SELECT
 		            r.*,ptc.p_i_6 as roe, ptc.p_i_1 as salettm, ptc.p_i_3 as nittm, ptc.p_i_56 as ebitdattm, ptc.p_b_98 as capital
 		        FROM
-		            ranked_data r, phi_tai_chinh_report ptc
-		        WHERE
-		            row_num = 1 
-		            and r.stock_code = ptc.stock_code 
+		            ranked_data r LEFT JOIN phi_tai_chinh_report ptc
+		            on r.stock_code = ptc.stock_code
 		            and r.quarter = ptc.quarter
 		            and r.year = ptc.year
+		        WHERE
+		            row_num = 1 
+
 		        ORDER BY
 		            year DESC, quarter DESC, date DESC
 		        """, nativeQuery = true)

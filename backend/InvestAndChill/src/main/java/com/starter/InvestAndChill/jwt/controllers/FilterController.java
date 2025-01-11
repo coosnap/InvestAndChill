@@ -18,8 +18,8 @@ public class FilterController {
 	@Autowired
 	ArticleRepository articleRepository;
 	
-	@GetMapping("/tangTruongDoanhThu")
-	public ResponseEntity<?> filterTangTruongDoanhThu(@RequestParam String type, @RequestParam Double min) {
+	@GetMapping("/giaTangCongSuat")
+	public ResponseEntity<?> filterGiaTangCongSuat(@RequestParam String type, @RequestParam Double min) {
 		
 		return new ResponseEntity<>("", HttpStatus.OK);
 	}

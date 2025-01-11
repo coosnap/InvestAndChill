@@ -37,12 +37,13 @@ public interface ValuationCKRepository extends JpaRepository<ValuationCK, Valuat
      SELECT
          r.*, ckr.c_i_6 as roe, ckr.c_i_3 as loinhuanrong, ckr.c_b_142 as vonchusohuu
      FROM
-         ranked_data r, chung_khoan_report ckr
-     WHERE
-         row_num = 1 
-         and r.stock_code = ckr.stock_code 
+         ranked_data r LEFT JOIN chung_khoan_report ckr 
+         on r.stock_code = ckr.stock_code
          and r.quarter = ckr.quarter
          and r.year = ckr.year
+     WHERE
+         row_num = 1 
+        
      ORDER BY
          year DESC, quarter DESC, date DESC
 		        """, nativeQuery = true)
