@@ -6,7 +6,12 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+
 @Entity
+@DynamicInsert
+@DynamicUpdate
 @Table(	name = "valuation")
 public class Valuation {
 	
@@ -20,16 +25,16 @@ public class Valuation {
 	public void setId(ValuationKey id) {
 		this.id = id;
 	}
-	//@Column(name = "nittm")
-	@Transient
+	@Column(name = "nittm")
+	//@Transient
 	private Double nittm;
-	//@Column(name = "salettm")
-	@Transient
+	@Column(name = "salettm")
+	//@Transient
 	private Double salettm;
 	@Column(name = "marketcap")
 	private Double marketcap;
-	//@Column(name = "capital")
-	@Transient
+	@Column(name = "capital")
+	//@Transient
 	private Double capital;
 	
 	//VAL1
@@ -43,8 +48,8 @@ public class Valuation {
 	private Double evebitdaMedian;
 	
 	//val2
-	//@Column(name = "roe")
-	@Transient
+	@Column(name = "roe")
+	//@Transient
 	private Double roe;
 	@Column(name = "pb")
 	private Double pb;
@@ -58,10 +63,36 @@ public class Valuation {
 	private Double psMedian;
 	
 	//val7
-	//@Column(name = "ebitdattm")
-	@Transient
+	@Column(name = "ebitdattm")
+	//@Transient
 	private Double ebitdattm;
 	
+//	@Column(name = "loiNhuanRongTTM")
+//	private Double loiNhuanRongTTM;
+//	
+//	@Column(name = "vonChuSoHuu")
+//	private Double vonChuSoHuu;
+	
+	
+	
+	
+	
+//	public Double getVonChuSoHuu() {
+//		return vonChuSoHuu;
+//	}
+//
+//	public void setVonChuSoHuu(Double vonChuSoHuu) {
+//		this.vonChuSoHuu = vonChuSoHuu;
+//	}
+//
+//	public Double getLoiNhuanRongTTM() {
+//		return loiNhuanRongTTM;
+//	}
+//
+//	public void setLoiNhuanRongTTM(Double loiNhuanRongTTM) {
+//		this.loiNhuanRongTTM = loiNhuanRongTTM;
+//	}
+
 	public Double getEbitdattm() {
 		return ebitdattm;
 	}

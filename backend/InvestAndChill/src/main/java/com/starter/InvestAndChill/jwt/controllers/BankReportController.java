@@ -571,112 +571,112 @@ public class BankReportController {
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 	
-	@GetMapping("/val1/{stock}")
-	public ResponseEntity<?> val1(@PathVariable String stock) {
-		List<Valuation> listValuation = new ArrayList<Valuation>();
-		
-		listValuation =  valuationRepository.findTopRankedDataByStockCode(stock, pageableValuation);
-
-		if (listValuation.isEmpty()) {
-			return new ResponseEntity<>(new MessageResponse("Data is not available"), HttpStatus.OK);
-		}
-		
-		Collections.reverse(listValuation);
-		CalculatorUtils.calculateMedianForOne(listValuation,"PB");
-		List<Val1Response> list = new ArrayList<Val1Response>();
-		for (int i=0;i< listValuation.size();i++) {
-			Valuation report = listValuation.get(i);
-			Val1Response response = new Val1Response();
-			response.setId(report.getId());
-			response.setTitle(Constants.NganHang_val1);
-			
-			response.setRoe(RoundNumber.lamTronPhanTram(nganHangRepository.findRoe(report.getId().getStockCode(), report.getId().getQuarter(), report.getId().getYear())));
-			response.setPb(RoundNumber.lamTronLan(report.getPb()));
-			response.setPbMedian(RoundNumber.lamTronLan(report.getPbMedian()));
-			list.add(response);
-		}
-		
-		return new ResponseEntity<>(list, HttpStatus.OK);
-	} 
-	
-	@GetMapping("/val2/{stock}")
-	public ResponseEntity<?> val2(@PathVariable String stock) {
-		List<Valuation> listValuation = new ArrayList<Valuation>();
-		
-		listValuation =  valuationRepository.findTopRankedDataByStockCode(stock, pageableValuation);
-
-		if (listValuation.isEmpty()) {
-			return new ResponseEntity<>(new MessageResponse("Data is not available"), HttpStatus.OK);
-		}
-		
-		Collections.reverse(listValuation);
-		CalculatorUtils.calculateMedianForOne(listValuation,"PE");
-		List<Val2Response> list = new ArrayList<Val2Response>();
-		for (int i=0;i< listValuation.size();i++) {
-			Valuation report = listValuation.get(i);
-			Val2Response response = new Val2Response();
-			response.setId(report.getId());
-			response.setTitle(Constants.NganHang_val2);
-		
-			response.setPe(RoundNumber.lamTronLan(report.getPe()));
-			response.setPeMedian(RoundNumber.lamTronLan(report.getPeMedian()));
-			list.add(response);
-		}
-		
-		return new ResponseEntity<>(list, HttpStatus.OK);
-	} 
-	
-	@GetMapping("/val3/{stock}")
-	public ResponseEntity<?> val3(@PathVariable String stock) {
-		List<Valuation> listValuation = new ArrayList<Valuation>();
-		
-		listValuation =  valuationRepository.findTopRankedDataByStockCode(stock, pageableValuation);
-
-		if (listValuation.isEmpty()) {
-			return new ResponseEntity<>(new MessageResponse("Data is not available"), HttpStatus.OK);
-		}
-		
-		Collections.reverse(listValuation);
-
-		List<Val3Response> list = new ArrayList<Val3Response>();
-		for (int i=0;i< listValuation.size();i++) {
-			Valuation report = listValuation.get(i);
-			Val3Response response = new Val3Response();
-			response.setId(report.getId());
-			response.setTitle(Constants.NganHang_val3);
-		
-			response.setLoiNhuanRongTTM(RoundNumber.lamTron(nganHangRepository.findLoiNhuanRongTTM(report.getId().getStockCode(), report.getId().getQuarter(), report.getId().getYear())));
-			response.setVonHoa(RoundNumber.lamTron(report.getMarketcap()));
-			list.add(response);
-		}
-		
-		return new ResponseEntity<>(list, HttpStatus.OK);
-	} 
-	
-	@GetMapping("/val4/{stock}")
-	public ResponseEntity<?> val4(@PathVariable String stock) {
-		List<Valuation> listValuation = new ArrayList<Valuation>();
-		
-		listValuation =  valuationRepository.findTopRankedDataByStockCode(stock, pageableValuation);
-
-		if (listValuation.isEmpty()) {
-			return new ResponseEntity<>(new MessageResponse("Data is not available"), HttpStatus.OK);
-		}
-		
-		Collections.reverse(listValuation);
-
-		List<Val4Response> list = new ArrayList<Val4Response>();
-		for (int i=0;i< listValuation.size();i++) {
-			Valuation report = listValuation.get(i);
-			Val4Response response = new Val4Response();
-			response.setId(report.getId());
-			response.setTitle(Constants.NganHang_val4);
-		
-			response.setVonChuSoHuu(RoundNumber.lamTron(nganHangRepository.findLoiNhuanRongTTM(report.getId().getStockCode(), report.getId().getQuarter(), report.getId().getYear())));
-			response.setVonHoa(RoundNumber.lamTron(report.getMarketcap()));
-			list.add(response);
-		}
-		
-		return new ResponseEntity<>(list, HttpStatus.OK);
-	} 
+//	@GetMapping("/val1/{stock}")
+//	public ResponseEntity<?> val1(@PathVariable String stock) {
+//		List<Valuation> listValuation = new ArrayList<Valuation>();
+//		
+//		listValuation =  valuationRepository.findTopRankedDataByStockCodeWithBanking(stock, pageableValuation);
+//
+//		if (listValuation.isEmpty()) {
+//			return new ResponseEntity<>(new MessageResponse("Data is not available"), HttpStatus.OK);
+//		}
+//		
+//		Collections.reverse(listValuation);
+//		CalculatorUtils.calculateMedianForOne(listValuation,"PB");
+//		List<Val1Response> list = new ArrayList<Val1Response>();
+//		for (int i=0;i< listValuation.size();i++) {
+//			Valuation report = listValuation.get(i);
+//			Val1Response response = new Val1Response();
+//			response.setId(report.getId());
+//			response.setTitle(Constants.NganHang_val1);
+//			
+//			response.setRoe(RoundNumber.lamTronPhanTram(report.getRoe()));
+//			response.setPb(RoundNumber.lamTronLan(report.getPb()));
+//			response.setPbMedian(RoundNumber.lamTronLan(report.getPbMedian()));
+//			list.add(response);
+//		}
+//		
+//		return new ResponseEntity<>(list, HttpStatus.OK);
+//	} 
+//	
+//	@GetMapping("/val2/{stock}")
+//	public ResponseEntity<?> val2(@PathVariable String stock) {
+//		List<Valuation> listValuation = new ArrayList<Valuation>();
+//		
+//		listValuation =  valuationRepository.findTopRankedDataByStockCode(stock, pageableValuation);
+//
+//		if (listValuation.isEmpty()) {
+//			return new ResponseEntity<>(new MessageResponse("Data is not available"), HttpStatus.OK);
+//		}
+//		
+//		Collections.reverse(listValuation);
+//		CalculatorUtils.calculateMedianForOne(listValuation,"PE");
+//		List<Val2Response> list = new ArrayList<Val2Response>();
+//		for (int i=0;i< listValuation.size();i++) {
+//			Valuation report = listValuation.get(i);
+//			Val2Response response = new Val2Response();
+//			response.setId(report.getId());
+//			response.setTitle(Constants.NganHang_val2);
+//		
+//			response.setPe(RoundNumber.lamTronLan(report.getPe()));
+//			response.setPeMedian(RoundNumber.lamTronLan(report.getPeMedian()));
+//			list.add(response);
+//		}
+//		
+//		return new ResponseEntity<>(list, HttpStatus.OK);
+//	} 
+//	
+//	@GetMapping("/val3/{stock}")
+//	public ResponseEntity<?> val3(@PathVariable String stock) {
+//		List<Valuation> listValuation = new ArrayList<Valuation>();
+//		
+//		listValuation =  valuationRepository.findTopRankedDataByStockCodeWithBanking(stock, pageableValuation);
+//
+//		if (listValuation.isEmpty()) {
+//			return new ResponseEntity<>(new MessageResponse("Data is not available"), HttpStatus.OK);
+//		}
+//		
+//		Collections.reverse(listValuation);
+//
+//		List<Val3Response> list = new ArrayList<Val3Response>();
+//		for (int i=0;i< listValuation.size();i++) {
+//			Valuation report = listValuation.get(i);
+//			Val3Response response = new Val3Response();
+//			response.setId(report.getId());
+//			response.setTitle(Constants.NganHang_val3);
+//		
+//			response.setLoiNhuanRongTTM(RoundNumber.lamTron(report.getLoiNhuanRongTTM()));
+//			response.setVonHoa(RoundNumber.lamTron(report.getMarketcap()));
+//			list.add(response);
+//		}
+//		
+//		return new ResponseEntity<>(list, HttpStatus.OK);
+//	} 
+//	
+//	@GetMapping("/val4/{stock}")
+//	public ResponseEntity<?> val4(@PathVariable String stock) {
+//		List<Valuation> listValuation = new ArrayList<Valuation>();
+//		
+//		listValuation =  valuationRepository.findTopRankedDataByStockCodeWithBanking(stock, pageableValuation);
+//
+//		if (listValuation.isEmpty()) {
+//			return new ResponseEntity<>(new MessageResponse("Data is not available"), HttpStatus.OK);
+//		}
+//		
+//		Collections.reverse(listValuation);
+//
+//		List<Val4Response> list = new ArrayList<Val4Response>();
+//		for (int i=0;i< listValuation.size();i++) {
+//			Valuation report = listValuation.get(i);
+//			Val4Response response = new Val4Response();
+//			response.setId(report.getId());
+//			response.setTitle(Constants.NganHang_val4);
+//		
+//			response.setVonChuSoHuu(RoundNumber.lamTron(report.getVonChuSoHuu()));
+//			response.setVonHoa(RoundNumber.lamTron(report.getMarketcap()));
+//			list.add(response);
+//		}
+//		
+//		return new ResponseEntity<>(list, HttpStatus.OK);
+//	} 
 }
