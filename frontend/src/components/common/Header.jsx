@@ -254,13 +254,13 @@ function Header() {
   return (
     <div className="navbar flex items-center bg-fourth py-2 sm:px-8 vm:px-2">
       <div className="flex flex-1">
-        <Link
-          to="/invest"
+        <a
+          href="/invest"
           className="flex items-center text-3xl tracking-tighter font-semibold text-[#DA5800]"
         >
           <img src="/logo.jpg" width={48} height={48} />
           <h4 className="ml-3">InvestNChill</h4>
-        </Link>
+        </a>
         {pathname.includes('/chart') && (
           <div className="ml-4 mt-1">
             <TextField
@@ -293,9 +293,9 @@ function Header() {
             </div>
             {(cookies?.roles?.includes('ROLE_MODERATOR_USER') ||
               cookies?.roles?.includes('ROLE_ADMIN')) && (
-              <Link to="/admin" className="text-lg" onClick={() => setShowPop(false)}>
+              <a href="/admin" className="text-lg" onClick={() => setShowPop(false)}>
                 Đi tới Admin
-              </Link>
+              </a>
             )}
             <button id="update-info" className="text-lg text-start" onClick={handleUpdateUser}>
               Cập nhật thông tin
