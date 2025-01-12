@@ -7,7 +7,7 @@ import {
 } from '@/api/chart';
 import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
 import { Box, FormControlLabel, Stack, styled, Switch, Tab, Tabs } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import {
   customBalCK1,
@@ -78,11 +78,13 @@ import {
 import StackChart from './stack-chart';
 
 import './style.scss';
-import LoaderChart from '@/components/common/LoaderChart';
 
 export const TabChart = () => {
-  const [value, setValue] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const codeValue = searchParams.get('code') || '';
+  const tab = window.localStorage.getItem('tab');
+
+  const [value, setValue] = useState(tab - 0 || 0);
   const [dataChart, setDataChart] = useState([]);
   const [tabType, setTabType] = useState('');
   const [title, setTitle] = useState('');
@@ -144,9 +146,6 @@ export const TabChart = () => {
     bal12adjust: true,
   });
   const [isOpened, setIsOpened] = useState(false);
-
-  const [searchParams, setSearchParams] = useSearchParams();
-  const codeValue = searchParams.get('code') || '';
 
   const IOSSwitch = styled((props) => <Switch {...props} />)(() => ({
     width: 74,
@@ -296,15 +295,6 @@ export const TabChart = () => {
     },
   }));
 
-  const tab = window.localStorage.getItem('tab');
-  useEffect(() => {
-    if (tab) {
-      setValue(parseInt(tab));
-    } else {
-      setValue(0);
-    }
-  }, [tab]);
-
   const handleChange = (event, newValue) => {
     window.localStorage.setItem('tab', newValue);
     setValue(newValue);
@@ -353,386 +343,381 @@ export const TabChart = () => {
     }
   };
 
-  useEffect(() => {
-    const loadData = async () => {
-      if (codeValue) {
-        setDataChart([]);
-        setIsLoading(true);
-        try {
-          const type = await getTypeDataChart(codeValue);
-          const title = await getTitle(codeValue);
-          setTitle(title.message);
-          setTabType(type.type);
-          if (type.type === 'PTC') {
-            let perf1, perf2, perf3, perf4, perf5, perf6, perf7, perf8;
-            let bal1, bal2, bal3, bal4, bal5, bal6;
-            let cf1, cf2, cf3, cf4;
-            let val1, val2, val3, val4, val5, val6, val7, val8;
-            if (value === 0) {
-              let callPerf1 = mapDataChart(customPerfPTC1, type.type);
-              let callPerf2 = mapDataChart(customPerfPTC2, type.type);
-              let callPerf3 = mapDataChart(customPerfPTC3, type.type);
-              let callPerf4 = mapDataChart(customPerfPTC4, type.type);
-              let callPerf5 = mapDataChart(customPerfPTC5, type.type);
-              let callPerf6 = mapDataChart(customPerfPTC6, type.type);
+  const loadData = async () => {
+    if (codeValue) {
+      setDataChart([]);
+      try {
+        const type = await getTypeDataChart(codeValue);
+        const title = await getTitle(codeValue);
+        setTitle(title.message);
+        setTabType(type.type);
+        if (type.type === 'PTC') {
+          let perf1, perf2, perf3, perf4, perf5, perf6, perf7, perf8;
+          let bal1, bal2, bal3, bal4, bal5, bal6;
+          let cf1, cf2, cf3, cf4;
+          let val1, val2, val3, val4, val5, val6, val7, val8;
+          if (value === 0) {
+            let callPerf1 = mapDataChart(customPerfPTC1, type.type);
+            let callPerf2 = mapDataChart(customPerfPTC2, type.type);
+            let callPerf3 = mapDataChart(customPerfPTC3, type.type);
+            let callPerf4 = mapDataChart(customPerfPTC4, type.type);
+            let callPerf5 = mapDataChart(customPerfPTC5, type.type);
+            let callPerf6 = mapDataChart(customPerfPTC6, type.type);
 
-              Promise.all([callPerf1, callPerf2, callPerf3, callPerf4, callPerf5, callPerf6])
-                .then((values) => {
-                  perf1 = values[0];
-                  perf2 = values[1];
-                  perf3 = values[2];
-                  perf4 = values[3];
-                  perf5 = values[4];
-                  perf6 = values[5];
-                  setDataChart({
-                    perf1,
-                    perf2,
-                    perf3,
-                    perf4,
-                    perf5,
-                    perf6,
-                  });
-                  setIsLoading(false);
-                })
-                .catch((error) => console.log('error', error), setIsLoading(false));
-            }
-
-            if (value === 1) {
-              let callBal1 = mapDataChart(customBalPTC1, type.type);
-              let bal2ajust = !checked.bal2ajust
-                ? {
-                    categoryGapRatio: -0.05,
-                    barGapRatio: 0,
-                  }
-                : null;
-              let callBal2 = mapDataChart(customBalPTC2, type.type, bal2ajust);
-              let callBal3 = mapDataChart(customBalPTC3, type.type, {
-                categoryGapRatio: 0.5,
-                barGapRatio: -1,
-              });
-              let callBal4 = mapDataChart(customBalPTC4, type.type);
-              let callBal5 = mapDataChart(customBalPTC5, type.type);
-              let callBal6 = mapDataChart(customBalPTC6, type.type);
-
-              Promise.all([callBal1, callBal2, callBal3, callBal4, callBal5, callBal6])
-                .then((values) => {
-                  bal1 = values[0];
-                  bal2 = values[1];
-                  bal3 = values[2];
-                  bal4 = values[3];
-                  bal5 = values[4];
-                  bal6 = values[5];
-                  setDataChart({
-                    bal1,
-                    bal2,
-                    bal3,
-                    bal4,
-                    bal5,
-                    bal6,
-                  });
-                  setIsLoading(false);
-                })
-                .catch((error) => console.log('error', error), setIsLoading(false));
-            }
-
-            if (value === 2) {
-              let callPerf7 = mapDataChart(customPerfPTC7, type.type);
-              let callPerf8 = mapDataChart(customPerfPTC8, type.type);
-
-              Promise.all([callPerf7, callPerf8])
-                .then((values) => {
-                  perf7 = values[0];
-                  perf8 = values[1];
-                  setDataChart({
-                    perf7,
-                    perf8,
-                  });
-                  setIsLoading(false);
-                })
-                .catch((error) => console.log('error', error), setIsLoading(false));
-            }
-
-            if (value === 3) {
-              let callCf1 = mapDataChart(customCFPTC1, type.type);
-              let callCf2 = mapDataChart(customCFPTC2, type.type);
-              let callCf3 = mapDataChart(customCFPTC3, type.type);
-              let callCf4 = mapDataChart(customCFPTC4, type.type);
-
-              Promise.all([callCf1, callCf2, callCf3, callCf4])
-                .then((values) => {
-                  cf1 = values[0];
-                  cf2 = values[1];
-                  cf3 = values[2];
-                  cf4 = values[3];
-                  setDataChart({
-                    cf1,
-                    cf2,
-                    cf3,
-                    cf4,
-                  });
-                  setIsLoading(false);
-                })
-                .catch((error) => console.log('error', error), setIsLoading(false));
-            }
-
-            if (value === 4) {
-              let callVal1 = mapDataChart(customValPTC1, type.type);
-              let callVal2 = mapDataChart(customValPTC2, type.type);
-              let callVal3 = mapDataChart(customValPTC3, type.type);
-              let callVal4 = mapDataChart(customValPTC4, type.type);
-              let callVal5 = mapDataChart(customValPTC5, type.type);
-              let callVal6 = mapDataChart(customValPTC6, type.type);
-              let callVal7 = mapDataChart(customValPTC7, type.type);
-              let callVal8 = mapDataChart(customValPTC8, type.type);
-
-              Promise.all([
-                callVal1,
-                callVal2,
-                callVal3,
-                callVal4,
-                callVal5,
-                callVal6,
-                callVal7,
-                callVal8,
-              ])
-                .then((values) => {
-                  val1 = values[0];
-                  val2 = values[1];
-                  val3 = values[2];
-                  val4 = values[3];
-                  val5 = values[4];
-                  val6 = values[5];
-                  val7 = values[6];
-                  val8 = values[7];
-                  setDataChart({
-                    val1,
-                    val2,
-                    val3,
-                    val4,
-                    val5,
-                    val6,
-                    val7,
-                    val8,
-                  });
-                  setIsLoading(false);
-                })
-                .catch((error) => console.log('error', error), setIsLoading(false));
-            }
+            Promise.all([callPerf1, callPerf2, callPerf3, callPerf4, callPerf5, callPerf6])
+              .then((values) => {
+                perf1 = values[0];
+                perf2 = values[1];
+                perf3 = values[2];
+                perf4 = values[3];
+                perf5 = values[4];
+                perf6 = values[5];
+                setDataChart({
+                  perf1,
+                  perf2,
+                  perf3,
+                  perf4,
+                  perf5,
+                  perf6,
+                });
+              })
+              .catch((error) => console.log('error', error));
           }
-          if (type.type === 'ChungKhoan') {
-            let perf1, perf2, perf3, perf4, perf5;
-            let bal1, bal2, bal3, bal4, bal5;
-            let val1, val2, val3, val4;
-            if (value === 0) {
-              let callPerf1 = mapDataChart(customPerfCK1, type.type);
-              let callPerf3 = mapDataChart(customPerfCK3, type.type);
-              let callPerf4 = mapDataChart(customPerfCK4, type.type);
-              let callBal4 = mapDataChart(customBalCK4, type.type);
-              let callBal5 = mapDataChart(customBalCK5, type.type);
 
-              Promise.all([callPerf1, callPerf3, callPerf4, callBal4, callBal5])
-                .then((values) => {
-                  perf1 = values[0];
-                  perf3 = values[1];
-                  perf4 = values[2];
-                  bal4 = values[3];
-                  bal5 = values[4];
-                  setDataChart({
-                    perf1,
-                    perf3,
-                    perf4,
-                    bal4,
-                    bal5,
-                  });
-                  setIsLoading(false);
-                })
-                .catch((error) => console.log('error', error), setIsLoading(false));
-            }
+          if (value === 1) {
+            let callBal1 = mapDataChart(customBalPTC1, type.type);
+            let bal2ajust = !checked.bal2ajust
+              ? {
+                  categoryGapRatio: -0.05,
+                  barGapRatio: 0,
+                }
+              : null;
+            let callBal2 = mapDataChart(customBalPTC2, type.type, bal2ajust);
+            let callBal3 = mapDataChart(customBalPTC3, type.type, {
+              categoryGapRatio: 0.5,
+              barGapRatio: -1,
+            });
+            let callBal4 = mapDataChart(customBalPTC4, type.type);
+            let callBal5 = mapDataChart(customBalPTC5, type.type);
+            let callBal6 = mapDataChart(customBalPTC6, type.type);
 
-            if (value === 1) {
-              let callBal1 = mapDataChart(customBalCK1, type.type);
-              let callBal2 = mapDataChart(customBalCK2, type.type);
-              let callBal3 = mapDataChart(customBalCK3, type.type);
-
-              Promise.all([callBal1, callBal2, callBal3])
-                .then((values) => {
-                  bal1 = values[0];
-                  bal2 = values[1];
-                  bal3 = values[2];
-                  setDataChart({
-                    bal1,
-                    bal2,
-                    bal3,
-                  });
-                  setIsLoading(false);
-                })
-                .catch((error) => console.log('error', error), setIsLoading(false));
-            }
-
-            if (value === 2) {
-              let callPerf2 = mapDataChart(customPerfCK2, type.type);
-              let callPerf5 = mapDataChart(customPerfCK5, type.type);
-
-              Promise.all([callPerf2, callPerf5])
-                .then((values) => {
-                  perf2 = values[0];
-                  perf5 = values[1];
-                  setDataChart({
-                    perf2,
-                    perf5,
-                  });
-                  setIsLoading(false);
-                })
-                .catch((error) => console.log('error', error), setIsLoading(false));
-            }
-
-            if (value === 3) {
-              let callVal1 = mapDataChart(customValCK1, type.type);
-              let callVal2 = mapDataChart(customValCK2, type.type);
-              let callVal3 = mapDataChart(customValCK3, type.type);
-              let callVal4 = mapDataChart(customValCK4, type.type);
-
-              Promise.all([callVal1, callVal2, callVal3, callVal4])
-                .then((values) => {
-                  val1 = values[0];
-                  val2 = values[1];
-                  val3 = values[2];
-                  val4 = values[3];
-                  setDataChart({
-                    val1,
-                    val2,
-                    val3,
-                    val4,
-                  });
-                  setIsLoading(false);
-                })
-                .catch((error) => console.log('error', error), setIsLoading(false));
-            }
+            Promise.all([callBal1, callBal2, callBal3, callBal4, callBal5, callBal6])
+              .then((values) => {
+                bal1 = values[0];
+                bal2 = values[1];
+                bal3 = values[2];
+                bal4 = values[3];
+                bal5 = values[4];
+                bal6 = values[5];
+                setDataChart({
+                  bal1,
+                  bal2,
+                  bal3,
+                  bal4,
+                  bal5,
+                  bal6,
+                });
+              })
+              .catch((error) => console.log('error', error));
           }
-          if (type.type === 'NganHang') {
-            let perf1, perf2, perf3, perf4;
-            let bal1, bal2, bal3, bal4, bal5, bal6, bal7, bal8, bal9, bal10, bal11, bal12;
-            let val1, val2, val3, val4;
-            if (value === 0) {
-              let callPerf1 = mapDataChart(customNHPerf1, type.type);
-              let callPerf2 = mapDataChart(customNHPerf2, type.type);
-              let callPerf3 = mapDataChart(customNHPerf3, type.type);
-              let callPerf4 = mapDataChart(customNHPerf4, type.type);
 
-              Promise.all([callPerf1, callPerf2, callPerf3, callPerf4])
-                .then((values) => {
-                  perf1 = values[0];
-                  perf2 = values[1];
-                  perf3 = values[2];
-                  perf4 = values[3];
-                  setDataChart({
-                    perf1,
-                    perf2,
-                    perf3,
-                    perf4,
-                  });
-                  setIsLoading(false);
-                })
-                .catch((error) => console.log('error', error), setIsLoading(false));
-            }
+          if (value === 2) {
+            let callPerf7 = mapDataChart(customPerfPTC7, type.type);
+            let callPerf8 = mapDataChart(customPerfPTC8, type.type);
 
-            if (value === 1) {
-              let callBal1 = mapDataChart(customNHBal1, type.type);
-              let callBal2 = mapDataChart(customNHBal2, type.type);
-              let callBal3 = mapDataChart(customNHBal3, type.type);
-              let callBal4 = mapDataChart(customNHBal4, type.type);
-              let callBal5 = mapDataChart(customNHBal5, type.type);
-              let callBal6 = mapDataChart(customNHBal6, type.type);
-              let callBal7 = mapDataChart(customNHBal7, type.type);
-              let callBal8 = mapDataChart(customNHBal8, type.type);
-
-              Promise.all([
-                callBal1,
-                callBal2,
-                callBal3,
-                callBal4,
-                callBal5,
-                callBal6,
-                callBal7,
-                callBal8,
-              ])
-                .then((values) => {
-                  bal1 = values[0];
-                  bal2 = values[1];
-                  bal3 = values[2];
-                  bal4 = values[3];
-                  bal5 = values[4];
-                  bal6 = values[5];
-                  bal7 = values[6];
-                  bal8 = values[7];
-                  setDataChart({
-                    bal1,
-                    bal2,
-                    bal3,
-                    bal4,
-                    bal5,
-                    bal6,
-                    bal7,
-                    bal8,
-                  });
-                  setIsLoading(false);
-                })
-                .catch((error) => console.log('error', error), setIsLoading(false));
-            }
-
-            if (value === 2) {
-              let callBal9 = mapDataChart(customNHBal9, type.type);
-              let callBal10 = mapDataChart(customNHBal10, type.type);
-              let callBal11 = mapDataChart(customNHBal11, type.type);
-              let callBal12 = mapDataChart(customNHBal12, type.type);
-
-              Promise.all([callBal9, callBal10, callBal11, callBal12])
-                .then((values) => {
-                  bal9 = values[0];
-                  bal10 = values[1];
-                  bal11 = values[2];
-                  bal12 = values[3];
-                  setDataChart({
-                    bal9,
-                    bal10,
-                    bal11,
-                    bal12,
-                  });
-                  setIsLoading(false);
-                })
-                .catch((error) => console.log('error', error), setIsLoading(false));
-            }
-
-            if (value === 3) {
-              let callVal1 = mapDataChart(customNHVal1, type.type);
-              let callVal2 = mapDataChart(customNHVal2, type.type);
-              let callVal3 = mapDataChart(customNHVal3, type.type);
-              let callVal4 = mapDataChart(customNHVal4, type.type);
-
-              Promise.all([callVal1, callVal2, callVal3, callVal4])
-                .then((values) => {
-                  val1 = values[0];
-                  val2 = values[1];
-                  val3 = values[2];
-                  val4 = values[3];
-                  setDataChart({
-                    val1,
-                    val2,
-                    val3,
-                    val4,
-                  });
-                  setIsLoading(false);
-                })
-                .catch((error) => console.log('error', error), setIsLoading(false));
-            }
+            Promise.all([callPerf7, callPerf8])
+              .then((values) => {
+                perf7 = values[0];
+                perf8 = values[1];
+                setDataChart({
+                  perf7,
+                  perf8,
+                });
+              })
+              .catch((error) => console.log('error', error));
           }
-        } catch (error) {
-          setIsLoading(false);
+
+          if (value === 3) {
+            let callCf1 = mapDataChart(customCFPTC1, type.type);
+            let callCf2 = mapDataChart(customCFPTC2, type.type);
+            let callCf3 = mapDataChart(customCFPTC3, type.type);
+            let callCf4 = mapDataChart(customCFPTC4, type.type);
+
+            Promise.all([callCf1, callCf2, callCf3, callCf4])
+              .then((values) => {
+                cf1 = values[0];
+                cf2 = values[1];
+                cf3 = values[2];
+                cf4 = values[3];
+                setDataChart({
+                  cf1,
+                  cf2,
+                  cf3,
+                  cf4,
+                });
+              })
+              .catch((error) => console.log('error', error));
+          }
+
+          if (value === 4) {
+            let callVal1 = mapDataChart(customValPTC1, type.type);
+            let callVal2 = mapDataChart(customValPTC2, type.type);
+            let callVal3 = mapDataChart(customValPTC3, type.type);
+            let callVal4 = mapDataChart(customValPTC4, type.type);
+            let callVal5 = mapDataChart(customValPTC5, type.type);
+            let callVal6 = mapDataChart(customValPTC6, type.type);
+            let callVal7 = mapDataChart(customValPTC7, type.type);
+            let callVal8 = mapDataChart(customValPTC8, type.type);
+
+            Promise.all([
+              callVal1,
+              callVal2,
+              callVal3,
+              callVal4,
+              callVal5,
+              callVal6,
+              callVal7,
+              callVal8,
+            ])
+              .then((values) => {
+                val1 = values[0];
+                val2 = values[1];
+                val3 = values[2];
+                val4 = values[3];
+                val5 = values[4];
+                val6 = values[5];
+                val7 = values[6];
+                val8 = values[7];
+                setDataChart({
+                  val1,
+                  val2,
+                  val3,
+                  val4,
+                  val5,
+                  val6,
+                  val7,
+                  val8,
+                });
+              })
+              .catch((error) => console.log('error', error));
+          }
         }
+        if (type.type === 'ChungKhoan') {
+          let perf1, perf2, perf3, perf4, perf5;
+          let bal1, bal2, bal3, bal4, bal5;
+          let val1, val2, val3, val4;
+          if (value === 0) {
+            let callPerf1 = mapDataChart(customPerfCK1, type.type);
+            let callPerf3 = mapDataChart(customPerfCK3, type.type);
+            let callPerf4 = mapDataChart(customPerfCK4, type.type);
+            let callBal4 = mapDataChart(customBalCK4, type.type);
+            let callBal5 = mapDataChart(customBalCK5, type.type);
+
+            Promise.all([callPerf1, callPerf3, callPerf4, callBal4, callBal5])
+              .then((values) => {
+                perf1 = values[0];
+                perf3 = values[1];
+                perf4 = values[2];
+                bal4 = values[3];
+                bal5 = values[4];
+                setDataChart({
+                  perf1,
+                  perf3,
+                  perf4,
+                  bal4,
+                  bal5,
+                });
+              })
+              .catch((error) => console.log('error', error));
+          }
+
+          if (value === 1) {
+            let callBal1 = mapDataChart(customBalCK1, type.type);
+            let callBal2 = mapDataChart(customBalCK2, type.type);
+            let callBal3 = mapDataChart(customBalCK3, type.type);
+
+            Promise.all([callBal1, callBal2, callBal3])
+              .then((values) => {
+                bal1 = values[0];
+                bal2 = values[1];
+                bal3 = values[2];
+                setDataChart({
+                  bal1,
+                  bal2,
+                  bal3,
+                });
+              })
+              .catch((error) => console.log('error', error));
+          }
+
+          if (value === 2) {
+            let callPerf2 = mapDataChart(customPerfCK2, type.type);
+            let callPerf5 = mapDataChart(customPerfCK5, type.type);
+
+            Promise.all([callPerf2, callPerf5])
+              .then((values) => {
+                perf2 = values[0];
+                perf5 = values[1];
+                setDataChart({
+                  perf2,
+                  perf5,
+                });
+              })
+              .catch((error) => console.log('error', error));
+          }
+
+          if (value === 3) {
+            let callVal1 = mapDataChart(customValCK1, type.type);
+            let callVal2 = mapDataChart(customValCK2, type.type);
+            let callVal3 = mapDataChart(customValCK3, type.type);
+            let callVal4 = mapDataChart(customValCK4, type.type);
+
+            Promise.all([callVal1, callVal2, callVal3, callVal4])
+              .then((values) => {
+                val1 = values[0];
+                val2 = values[1];
+                val3 = values[2];
+                val4 = values[3];
+                setDataChart({
+                  val1,
+                  val2,
+                  val3,
+                  val4,
+                });
+              })
+              .catch((error) => console.log('error', error));
+          }
+        }
+        if (type.type === 'NganHang') {
+          let perf1, perf2, perf3, perf4;
+          let bal1, bal2, bal3, bal4, bal5, bal6, bal7, bal8, bal9, bal10, bal11, bal12;
+          let val1, val2, val3, val4;
+          if (value === 0) {
+            let callPerf1 = mapDataChart(customNHPerf1, type.type);
+            let callPerf2 = mapDataChart(customNHPerf2, type.type);
+            let callPerf3 = mapDataChart(customNHPerf3, type.type);
+            let callPerf4 = mapDataChart(customNHPerf4, type.type);
+
+            Promise.all([callPerf1, callPerf2, callPerf3, callPerf4])
+              .then((values) => {
+                perf1 = values[0];
+                perf2 = values[1];
+                perf3 = values[2];
+                perf4 = values[3];
+                setDataChart({
+                  perf1,
+                  perf2,
+                  perf3,
+                  perf4,
+                });
+              })
+              .catch((error) => console.log('error', error));
+          }
+
+          if (value === 1) {
+            let callBal1 = mapDataChart(customNHBal1, type.type);
+            let callBal2 = mapDataChart(customNHBal2, type.type);
+            let callBal3 = mapDataChart(customNHBal3, type.type);
+            let callBal4 = mapDataChart(customNHBal4, type.type);
+            let callBal5 = mapDataChart(customNHBal5, type.type);
+            let callBal6 = mapDataChart(customNHBal6, type.type);
+            let callBal7 = mapDataChart(customNHBal7, type.type);
+            let callBal8 = mapDataChart(customNHBal8, type.type);
+
+            Promise.all([
+              callBal1,
+              callBal2,
+              callBal3,
+              callBal4,
+              callBal5,
+              callBal6,
+              callBal7,
+              callBal8,
+            ])
+              .then((values) => {
+                bal1 = values[0];
+                bal2 = values[1];
+                bal3 = values[2];
+                bal4 = values[3];
+                bal5 = values[4];
+                bal6 = values[5];
+                bal7 = values[6];
+                bal8 = values[7];
+                setDataChart({
+                  bal1,
+                  bal2,
+                  bal3,
+                  bal4,
+                  bal5,
+                  bal6,
+                  bal7,
+                  bal8,
+                });
+              })
+              .catch((error) => console.log('error', error));
+          }
+
+          if (value === 2) {
+            let callBal9 = mapDataChart(customNHBal9, type.type);
+            let callBal10 = mapDataChart(customNHBal10, type.type);
+            let callBal11 = mapDataChart(customNHBal11, type.type);
+            let callBal12 = mapDataChart(customNHBal12, type.type);
+
+            Promise.all([callBal9, callBal10, callBal11, callBal12])
+              .then((values) => {
+                bal9 = values[0];
+                bal10 = values[1];
+                bal11 = values[2];
+                bal12 = values[3];
+                setDataChart({
+                  bal9,
+                  bal10,
+                  bal11,
+                  bal12,
+                });
+              })
+              .catch((error) => console.log('error', error));
+          }
+
+          if (value === 3) {
+            let callVal1 = mapDataChart(customNHVal1, type.type);
+            let callVal2 = mapDataChart(customNHVal2, type.type);
+            let callVal3 = mapDataChart(customNHVal3, type.type);
+            let callVal4 = mapDataChart(customNHVal4, type.type);
+
+            Promise.all([callVal1, callVal2, callVal3, callVal4])
+              .then((values) => {
+                val1 = values[0];
+                val2 = values[1];
+                val3 = values[2];
+                val4 = values[3];
+                setDataChart({
+                  val1,
+                  val2,
+                  val3,
+                  val4,
+                });
+              })
+              .catch((error) => console.log('error', error));
+          }
+        }
+      } catch (error) {
+        console.log('error', error);
       }
-    };
+    }
+  };
+
+  useEffect(() => {
+    if (tabType !== 'PTC' && value - 0 === 4) {
+      window.localStorage.setItem('tab', 3);
+      setValue(3);
+    }
+    if (tabType === 'PTC' && value - 0 === 3) {
+      window.localStorage.setItem('tab', 4);
+      setValue(4);
+    }
     loadData();
-  }, [codeValue, value]);
+  }, [codeValue, value, tabType]);
 
   console.log('dataChart', dataChart);
 
@@ -2811,11 +2796,10 @@ export const TabChart = () => {
           backgroundColor: '#FFF8DC',
         }}
       >
-        {isLoading && <LoaderChart />}
         <div className="text-[2rem] font-bold pt-4">{title}</div>
         <div className="flex justify-between">
           <Tabs
-            sx={{ '.css-1h9z7r5-MuiButtonBase-root-MuiTab-root': { fontWeight: 'bold' } }}
+            sx={{ '.MuiTab-root': { fontWeight: 'bold' } }}
             value={value}
             onChange={handleChange}
             aria-label="basic tabs example"
@@ -2823,7 +2807,7 @@ export const TabChart = () => {
             {tabType === 'PTC' &&
               [
                 'Chi phí và Sinh lời',
-                'Tài sản & Nguồn vốn',
+                'Tài sản và nguồn vốn',
                 'Hiệu quả đồng vốn',
                 'Dòng tiền',
                 'Định giá',
