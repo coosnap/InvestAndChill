@@ -46,6 +46,14 @@ public class ValuationKey implements Serializable{
 	}
 	
 	public ValuationKey() {
+		
+	}
+	
+	public ValuationKey(String stockCode, String quarter, String year, LocalDateTime date) {
+		this.stockCode = stockCode;
+		this.quarter = quarter;
+		this.year = year;
+		this.date = date;
 	}
 
 	

@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 import com.starter.InvestAndChill.jwt.models.PTCReport;
-import com.starter.InvestAndChill.jwt.models.Valuation;
+import com.starter.InvestAndChill.pojo.ValuationDTO;
 
 public class CalculatorUtils {
 	public static void calculatePI54(List<PTCReport> listReport) {
@@ -68,14 +68,8 @@ public class CalculatorUtils {
 	
 	
 	
-	public static void calculateMedianForOne(List<? extends Valuation> listValuation,String type) {
+	public static void calculateMedianForOne(List<? extends ValuationDTO> listValuation,String type) {
 		List<Double> listMedian = initListFull(listValuation, type);
-		
-//		for (int i=0;i<listMedian.size();i++) {
-//			if (listMedian.get(i) == null) {
-//				return;
-//			}
-//		}
 		
 		Collections.sort(listMedian);
 		Double trungVi;
@@ -102,7 +96,7 @@ public class CalculatorUtils {
 		}		
 	}
 	
-	public static List<Double> initListFull(List<? extends Valuation> listValuation,String type) {
+	public static List<Double> initListFull(List<? extends ValuationDTO> listValuation,String type) {
 		List<Double> list = new ArrayList<Double>();
 		for (int i = 0; i < listValuation.size(); i++) {
 			

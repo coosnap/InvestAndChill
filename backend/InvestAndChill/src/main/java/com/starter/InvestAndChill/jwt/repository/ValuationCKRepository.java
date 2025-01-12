@@ -8,56 +8,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.starter.InvestAndChill.jwt.models.Valuation;
-import com.starter.InvestAndChill.jwt.models.ValuationCK;
 import com.starter.InvestAndChill.jwt.models.ValuationKey;
+import com.starter.InvestAndChill.pojo.ValuationChungKhoanDTO;
 
-public interface ValuationCKRepository extends JpaRepository<ValuationCK, ValuationKey>{
+public interface ValuationCKRepository extends JpaRepository<Valuation, ValuationKey>{
 	
-	 @Query(value = """
-		        WITH ranked_data AS (
-         SELECT
-             stock_code,   
-             date,            
-             quarter,        
-             year,
-             marketcap,
-             evebitda,
-             pe,
-             pb,
-             ps,
-             ROW_NUMBER() OVER (
-                 PARTITION BY stock_code, year, quarter
-                 ORDER BY date DESC                                 
-             ) AS row_num
-         FROM
-             valuation
-         WHERE
-             stock_code = :stockCode
-     )
-     SELECT
-         r.*, ckr.c_i_6 as roe, ckr.c_i_3 as loinhuanrong, ckr.c_b_142 as vonchusohuu
-     FROM
-         ranked_data r LEFT JOIN chung_khoan_report ckr 
-         on r.stock_code = ckr.stock_code
-         and r.quarter = ckr.quarter
-         and r.year = ckr.year
-     WHERE
-         row_num = 1 
-        
-     ORDER BY
-         year DESC, quarter DESC, date DESC
-		        """, nativeQuery = true)
-		    List<ValuationCK> findTopRankedDataByStockCodeCK(@Param("stockCode") String stockCode,Pageable pageable);
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-
-	 
-	 
-	 
-	 
+	@Query(name = "user.findByChungKhoan", nativeQuery = true)
+    List<ValuationChungKhoanDTO> findTopRankedDataByStockCodeWithChungKhoanReport(@Param("stockCode") String stockCode,Pageable pageable);
+ 
 }

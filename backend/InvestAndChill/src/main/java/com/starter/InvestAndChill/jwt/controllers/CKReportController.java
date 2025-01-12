@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.starter.InvestAndChill.jwt.models.ChungKhoanReport;
-import com.starter.InvestAndChill.jwt.models.ValuationCK;
+import com.starter.InvestAndChill.jwt.models.ValuationKey;
 import com.starter.InvestAndChill.jwt.payload.response.MessageResponse;
 import com.starter.InvestAndChill.jwt.payload.response.PTC.Perf1Response;
 import com.starter.InvestAndChill.jwt.payload.response.chungkhoan.Bal2Response;
@@ -34,6 +34,7 @@ import com.starter.InvestAndChill.jwt.payload.response.nganhang.Val4Response;
 import com.starter.InvestAndChill.jwt.repository.CKRepositoryNam;
 import com.starter.InvestAndChill.jwt.repository.CKRepositoryQuy;
 import com.starter.InvestAndChill.jwt.repository.ValuationCKRepository;
+import com.starter.InvestAndChill.pojo.ValuationChungKhoanDTO;
 import com.starter.InvestAndChill.utils.CalculatorUtils;
 import com.starter.InvestAndChill.utils.Constants;
 import com.starter.InvestAndChill.utils.RoundNumber;
@@ -389,9 +390,9 @@ public class CKReportController {
 	
 	@GetMapping("/val1/{stock}")
 	public ResponseEntity<?> val1(@PathVariable String stock) {
-		List<ValuationCK> listValuation = new ArrayList<ValuationCK>();
+		List<ValuationChungKhoanDTO> listValuation = new ArrayList<ValuationChungKhoanDTO>();
 		
-		listValuation =  valuationRepository.findTopRankedDataByStockCodeCK(stock, pageableValuation);
+		listValuation =  valuationRepository.findTopRankedDataByStockCodeWithChungKhoanReport(stock, pageableValuation);
 
 		if (listValuation.isEmpty()) {
 			return new ResponseEntity<>(new MessageResponse("Data is not available"), HttpStatus.OK);
@@ -401,9 +402,9 @@ public class CKReportController {
 		CalculatorUtils.calculateMedianForOne(listValuation,"PB");
 		List<Val1Response> list = new ArrayList<Val1Response>();
 		for (int i=0;i< listValuation.size();i++) {
-			ValuationCK report = listValuation.get(i);
+			ValuationChungKhoanDTO report = listValuation.get(i);
 			Val1Response response = new Val1Response();
-			response.setId(report.getId());
+			response.setId(new ValuationKey(report.getStockCode(),report.getQuarter(),report.getYear(),report.getDate()));
 			response.setTitle(Constants.ChungKhoan_val1);
 			
 			response.setRoe(RoundNumber.lamTronPhanTram(report.getRoe()));
@@ -417,9 +418,9 @@ public class CKReportController {
 	
 	@GetMapping("/val2/{stock}")
 	public ResponseEntity<?> val2(@PathVariable String stock) {
-		List<ValuationCK> listValuation = new ArrayList<ValuationCK>();
+		List<ValuationChungKhoanDTO> listValuation = new ArrayList<ValuationChungKhoanDTO>();
 		
-		listValuation =  valuationRepository.findTopRankedDataByStockCodeCK(stock, pageableValuation);
+		listValuation =  valuationRepository.findTopRankedDataByStockCodeWithChungKhoanReport(stock, pageableValuation);
 
 		if (listValuation.isEmpty()) {
 			return new ResponseEntity<>(new MessageResponse("Data is not available"), HttpStatus.OK);
@@ -429,9 +430,9 @@ public class CKReportController {
 		CalculatorUtils.calculateMedianForOne(listValuation,"PE");
 		List<Val2Response> list = new ArrayList<Val2Response>();
 		for (int i=0;i< listValuation.size();i++) {
-			ValuationCK report = listValuation.get(i);
+			ValuationChungKhoanDTO report = listValuation.get(i);
 			Val2Response response = new Val2Response();
-			response.setId(report.getId());
+			response.setId(new ValuationKey(report.getStockCode(),report.getQuarter(),report.getYear(),report.getDate()));
 			response.setTitle(Constants.ChungKhoan_val2);
 		
 			response.setPe(RoundNumber.lamTronLan(report.getPe()));
@@ -444,9 +445,9 @@ public class CKReportController {
 	
 	@GetMapping("/val3/{stock}")
 	public ResponseEntity<?> val3(@PathVariable String stock) {
-		List<ValuationCK> listValuation = new ArrayList<ValuationCK>();
+		List<ValuationChungKhoanDTO> listValuation = new ArrayList<ValuationChungKhoanDTO>();
 		
-		listValuation =  valuationRepository.findTopRankedDataByStockCodeCK(stock, pageableValuation);
+		listValuation =  valuationRepository.findTopRankedDataByStockCodeWithChungKhoanReport(stock, pageableValuation);
 
 		if (listValuation.isEmpty()) {
 			return new ResponseEntity<>(new MessageResponse("Data is empty"), HttpStatus.OK);
@@ -456,12 +457,12 @@ public class CKReportController {
 
 		List<Val3Response> list = new ArrayList<Val3Response>();
 		for (int i=0;i< listValuation.size();i++) {
-			ValuationCK report = listValuation.get(i);
+			ValuationChungKhoanDTO report = listValuation.get(i);
 			Val3Response response = new Val3Response();
-			response.setId(report.getId());
+			response.setId(new ValuationKey(report.getStockCode(),report.getQuarter(),report.getYear(),report.getDate()));
 			response.setTitle(Constants.ChungKhoan_val3);
 		
-			response.setLoiNhuanRongTTM(RoundNumber.lamTron(report.getLoiNhuanRongTTM()));
+			response.setLoiNhuanRongTTM(RoundNumber.lamTron(report.getLoiNhuanRong()));
 			response.setVonHoa(RoundNumber.lamTron(report.getMarketcap()));
 			list.add(response);
 		}
@@ -471,9 +472,9 @@ public class CKReportController {
 	
 	@GetMapping("/val4/{stock}")
 	public ResponseEntity<?> val4(@PathVariable String stock) {
-		List<ValuationCK> listValuation = new ArrayList<ValuationCK>();
+		List<ValuationChungKhoanDTO> listValuation = new ArrayList<ValuationChungKhoanDTO>();
 		
-		listValuation =  valuationRepository.findTopRankedDataByStockCodeCK(stock, pageableValuation);
+		listValuation =  valuationRepository.findTopRankedDataByStockCodeWithChungKhoanReport(stock, pageableValuation);
 
 		if (listValuation.isEmpty()) {
 			return new ResponseEntity<>(new MessageResponse("Data is not available"), HttpStatus.OK);
@@ -483,9 +484,9 @@ public class CKReportController {
 
 		List<Val4Response> list = new ArrayList<Val4Response>();
 		for (int i=0;i< listValuation.size();i++) {
-			ValuationCK report = listValuation.get(i);
+			ValuationChungKhoanDTO report = listValuation.get(i);
 			Val4Response response = new Val4Response();
-			response.setId(report.getId());
+			response.setId(new ValuationKey(report.getStockCode(),report.getQuarter(),report.getYear(),report.getDate()));
 			response.setTitle(Constants.ChungKhoan_val4);
 		
 			response.setVonChuSoHuu(RoundNumber.lamTron(report.getVonChuSoHuu()));

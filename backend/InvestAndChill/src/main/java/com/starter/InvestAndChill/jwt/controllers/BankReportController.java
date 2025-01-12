@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.starter.InvestAndChill.jwt.models.NganHangReport;
-import com.starter.InvestAndChill.jwt.models.ValuationBanking;
+import com.starter.InvestAndChill.jwt.models.ValuationKey;
 import com.starter.InvestAndChill.jwt.payload.response.MessageResponse;
 import com.starter.InvestAndChill.jwt.payload.response.nganhang.Bal10Response;
 import com.starter.InvestAndChill.jwt.payload.response.nganhang.Bal11Response;
@@ -43,6 +43,7 @@ import com.starter.InvestAndChill.jwt.payload.response.nganhang.Val4Response;
 import com.starter.InvestAndChill.jwt.repository.NganHangRepositoryNam;
 import com.starter.InvestAndChill.jwt.repository.NganHangRepositoryQuy;
 import com.starter.InvestAndChill.jwt.repository.ValuationBankingRepository;
+import com.starter.InvestAndChill.pojo.ValuationBankingDTO;
 import com.starter.InvestAndChill.utils.CalculatorUtils;
 import com.starter.InvestAndChill.utils.Constants;
 import com.starter.InvestAndChill.utils.RoundNumber;
@@ -570,7 +571,7 @@ public class BankReportController {
 	
 	@GetMapping("/val1/{stock}")
 	public ResponseEntity<?> val1(@PathVariable String stock) {
-		List<ValuationBanking> listValuation = new ArrayList<ValuationBanking>();
+		List<ValuationBankingDTO> listValuation = new ArrayList<ValuationBankingDTO>();
 		
 		listValuation =  valuationBankingRepository.findTopRankedDataByStockCodeWithBanking(stock, pageableValuation);
 
@@ -582,9 +583,9 @@ public class BankReportController {
 		CalculatorUtils.calculateMedianForOne(listValuation,"PB");
 		List<Val1Response> list = new ArrayList<Val1Response>();
 		for (int i=0;i< listValuation.size();i++) {
-			ValuationBanking report = listValuation.get(i);
+			ValuationBankingDTO report = listValuation.get(i);
 			Val1Response response = new Val1Response();
-			response.setId(report.getId());
+			response.setId(new ValuationKey(report.getStockCode(),report.getQuarter(),report.getYear(),report.getDate()));
 			response.setTitle(Constants.NganHang_val1);
 			
 			response.setRoe(RoundNumber.lamTronPhanTram(report.getRoe()));
@@ -598,7 +599,7 @@ public class BankReportController {
 	
 	@GetMapping("/val2/{stock}")
 	public ResponseEntity<?> val2(@PathVariable String stock) {
-		List<ValuationBanking> listValuation = new ArrayList<ValuationBanking>();
+		List<ValuationBankingDTO> listValuation = new ArrayList<ValuationBankingDTO>();
 		
 		listValuation =  valuationBankingRepository.findTopRankedDataByStockCodeWithBanking(stock, pageableValuation);
 
@@ -610,9 +611,9 @@ public class BankReportController {
 		CalculatorUtils.calculateMedianForOne(listValuation,"PE");
 		List<Val2Response> list = new ArrayList<Val2Response>();
 		for (int i=0;i< listValuation.size();i++) {
-			ValuationBanking report = listValuation.get(i);
+			ValuationBankingDTO report = listValuation.get(i);
 			Val2Response response = new Val2Response();
-			response.setId(report.getId());
+			response.setId(new ValuationKey(report.getStockCode(),report.getQuarter(),report.getYear(),report.getDate()));
 			response.setTitle(Constants.NganHang_val2);
 		
 			response.setPe(RoundNumber.lamTronLan(report.getPe()));
@@ -625,7 +626,7 @@ public class BankReportController {
 	
 	@GetMapping("/val3/{stock}")
 	public ResponseEntity<?> val3(@PathVariable String stock) {
-		List<ValuationBanking> listValuation = new ArrayList<ValuationBanking>();
+		List<ValuationBankingDTO> listValuation = new ArrayList<ValuationBankingDTO>();
 		
 		listValuation =  valuationBankingRepository.findTopRankedDataByStockCodeWithBanking(stock, pageableValuation);
 
@@ -637,12 +638,12 @@ public class BankReportController {
 
 		List<Val3Response> list = new ArrayList<Val3Response>();
 		for (int i=0;i< listValuation.size();i++) {
-			ValuationBanking report = listValuation.get(i);
+			ValuationBankingDTO report = listValuation.get(i);
 			Val3Response response = new Val3Response();
-			response.setId(report.getId());
+			response.setId(new ValuationKey(report.getStockCode(),report.getQuarter(),report.getYear(),report.getDate()));
 			response.setTitle(Constants.NganHang_val3);
 		
-			response.setLoiNhuanRongTTM(RoundNumber.lamTron(report.getLoiNhuanRongTTM()));
+			response.setLoiNhuanRongTTM(RoundNumber.lamTron(report.getLoiNhuanRong()));
 			response.setVonHoa(RoundNumber.lamTron(report.getMarketcap()));
 			list.add(response);
 		}
@@ -652,7 +653,7 @@ public class BankReportController {
 	
 	@GetMapping("/val4/{stock}")
 	public ResponseEntity<?> val4(@PathVariable String stock) {
-		List<ValuationBanking> listValuation = new ArrayList<ValuationBanking>();
+		List<ValuationBankingDTO> listValuation = new ArrayList<ValuationBankingDTO>();
 		
 		listValuation =  valuationBankingRepository.findTopRankedDataByStockCodeWithBanking(stock, pageableValuation);
 
@@ -664,9 +665,9 @@ public class BankReportController {
 
 		List<Val4Response> list = new ArrayList<Val4Response>();
 		for (int i=0;i< listValuation.size();i++) {
-			ValuationBanking report = listValuation.get(i);
+			ValuationBankingDTO report = listValuation.get(i);
 			Val4Response response = new Val4Response();
-			response.setId(report.getId());
+			response.setId(new ValuationKey(report.getStockCode(),report.getQuarter(),report.getYear(),report.getDate()));
 			response.setTitle(Constants.NganHang_val4);
 		
 			response.setVonChuSoHuu(RoundNumber.lamTron(report.getVonChuSoHuu()));

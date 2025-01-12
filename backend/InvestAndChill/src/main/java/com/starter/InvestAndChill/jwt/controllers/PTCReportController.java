@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.starter.InvestAndChill.jwt.models.PTCReport;
-import com.starter.InvestAndChill.jwt.models.ValuationPTC;
+import com.starter.InvestAndChill.jwt.models.ValuationKey;
 import com.starter.InvestAndChill.jwt.payload.response.MessageResponse;
 import com.starter.InvestAndChill.jwt.payload.response.PTC.Bal1Response;
 import com.starter.InvestAndChill.jwt.payload.response.PTC.Bal2Response;
@@ -49,6 +49,7 @@ import com.starter.InvestAndChill.jwt.payload.response.PTC.Val8Response;
 import com.starter.InvestAndChill.jwt.repository.PTCRepositoryNam;
 import com.starter.InvestAndChill.jwt.repository.PTCRepositoryQuy;
 import com.starter.InvestAndChill.jwt.repository.ValuationPTCRepository;
+import com.starter.InvestAndChill.pojo.ValuationPhiTaiChinhDTO;
 import com.starter.InvestAndChill.utils.CalculatorUtils;
 import com.starter.InvestAndChill.utils.Constants;
 import com.starter.InvestAndChill.utils.RoundNumber;
@@ -547,7 +548,7 @@ public class PTCReportController {
 	
 	@GetMapping("/val1/{stock}")
 	public ResponseEntity<?> val1(@PathVariable String stock) {
-		List<ValuationPTC> listValuation = new ArrayList<ValuationPTC>();
+		List<ValuationPhiTaiChinhDTO> listValuation = new ArrayList<ValuationPhiTaiChinhDTO>();
 		
 		listValuation =  valuationPTCRepository.findTopRankedDataByStockCodeWithPTC(stock, pageableValuation);
 
@@ -560,9 +561,9 @@ public class PTCReportController {
 		CalculatorUtils.calculateMedianForOne(listValuation,"evebitda");
 		List<Val1Response> list = new ArrayList<Val1Response>();
 		for (int i=0;i< listValuation.size();i++) {
-			ValuationPTC report = listValuation.get(i);
+			ValuationPhiTaiChinhDTO report = listValuation.get(i);
 			Val1Response response = new Val1Response();
-			response.setId(report.getId());
+			response.setId(new ValuationKey(report.getStockCode(),report.getQuarter(),report.getYear(),report.getDate()));
 			response.setTitle(Constants.PTC_val1);
 			
 			response.setPe(RoundNumber.lamTronLan(report.getPe()));
@@ -577,7 +578,7 @@ public class PTCReportController {
 	
 	@GetMapping("/val2/{stock}")
 	public ResponseEntity<?> val2(@PathVariable String stock) {
-		List<ValuationPTC> listValuation = new ArrayList<ValuationPTC>();
+		List<ValuationPhiTaiChinhDTO> listValuation = new ArrayList<ValuationPhiTaiChinhDTO>();
 
 		listValuation =  valuationPTCRepository.findTopRankedDataByStockCodeWithPTC(stock, pageableValuation);
 		if (listValuation.isEmpty()) {
@@ -589,9 +590,9 @@ public class PTCReportController {
 		
 		List<Val2Response> list = new ArrayList<Val2Response>();
 		for (int i=0;i< listValuation.size();i++) {
-			ValuationPTC report = listValuation.get(i);
+			ValuationPhiTaiChinhDTO report = listValuation.get(i);
 			Val2Response response = new Val2Response();
-			response.setId(report.getId());
+			response.setId(new ValuationKey(report.getStockCode(),report.getQuarter(),report.getYear(),report.getDate()));
 			response.setTitle(Constants.PTC_val2);
 			response.setRoe(RoundNumber.lamTronPhanTram(report.getRoe()));
 			response.setPb(RoundNumber.lamTronLan(report.getPb()));
@@ -604,7 +605,7 @@ public class PTCReportController {
 	
 	@GetMapping("/val3/{stock}")
 	public ResponseEntity<?> val3(@PathVariable String stock) {
-		List<ValuationPTC> listValuation = new ArrayList<ValuationPTC>();
+		List<ValuationPhiTaiChinhDTO> listValuation = new ArrayList<ValuationPhiTaiChinhDTO>();
 		
 		listValuation =  valuationPTCRepository.findTopRankedDataByStockCodeWithPTC(stock, pageableValuation);
 		if (listValuation.isEmpty()) {
@@ -615,7 +616,7 @@ public class PTCReportController {
 		List<Val3Response> list = listValuation.stream()
                 .map(report -> {
                 	Val3Response response = new Val3Response();
-                	response.setId(report.getId());
+                	response.setId(new ValuationKey(report.getStockCode(),report.getQuarter(),report.getYear(),report.getDate()));
                 	response.setTitle(Constants.PTC_val3);
                 	response.setSalettm(RoundNumber.lamTron(report.getSalettm()));
                 	response.setMarketcap(RoundNumber.lamTron(report.getMarketcap()));
@@ -627,7 +628,7 @@ public class PTCReportController {
 	
 	@GetMapping("/val4/{stock}")
 	public ResponseEntity<?> val4(@PathVariable String stock) {
-		List<ValuationPTC> listValuation = new ArrayList<ValuationPTC>();
+		List<ValuationPhiTaiChinhDTO> listValuation = new ArrayList<ValuationPhiTaiChinhDTO>();
 		
 		listValuation =  valuationPTCRepository.findTopRankedDataByStockCodeWithPTC(stock, pageableValuation);
 
@@ -640,9 +641,9 @@ public class PTCReportController {
 		
 		List<Val4Response> list = new ArrayList<Val4Response>();
 		for (int i=0;i< listValuation.size();i++) {
-			ValuationPTC report = listValuation.get(i);
+			ValuationPhiTaiChinhDTO report = listValuation.get(i);
 			Val4Response response = new Val4Response();
-			response.setId(report.getId());
+			response.setId(new ValuationKey(report.getStockCode(),report.getQuarter(),report.getYear(),report.getDate()));
 			response.setTitle(Constants.PTC_val4);
 			response.setSalettm(RoundNumber.lamTron(report.getSalettm()));
 			response.setPs(RoundNumber.lamTronLan(report.getPs()));
@@ -655,7 +656,7 @@ public class PTCReportController {
 	
 	@GetMapping("/val5/{stock}")
 	public ResponseEntity<?> val5(@PathVariable String stock) {
-		List<ValuationPTC> listValuation = new ArrayList<ValuationPTC>();
+		List<ValuationPhiTaiChinhDTO> listValuation = new ArrayList<ValuationPhiTaiChinhDTO>();
 		
 		listValuation =  valuationPTCRepository.findTopRankedDataByStockCodeWithPTC(stock, pageableValuation);
 
@@ -667,7 +668,7 @@ public class PTCReportController {
 		List<Val5Response> list = listValuation.stream()
                 .map(report -> {
                 	Val5Response response = new Val5Response();
-                	response.setId(report.getId());
+                	response.setId(new ValuationKey(report.getStockCode(),report.getQuarter(),report.getYear(),report.getDate()));
                 	response.setTitle(Constants.PTC_val5);
                 	response.setNittm(RoundNumber.lamTron(report.getNittm()));
                 	response.setMarketcap(RoundNumber.lamTron(report.getMarketcap()));
@@ -679,7 +680,7 @@ public class PTCReportController {
 	
 	@GetMapping("/val6/{stock}")
 	public ResponseEntity<?> val6(@PathVariable String stock) {
-		List<ValuationPTC> listValuation = new ArrayList<ValuationPTC>();
+		List<ValuationPhiTaiChinhDTO> listValuation = new ArrayList<ValuationPhiTaiChinhDTO>();
 		
 		listValuation =  valuationPTCRepository.findTopRankedDataByStockCodeWithPTC(stock, pageableValuation);
 
@@ -692,9 +693,9 @@ public class PTCReportController {
 		
 		List<Val6Response> list = new ArrayList<Val6Response>();
 		for (int i=0;i< listValuation.size();i++) {
-			ValuationPTC report = listValuation.get(i);
+			ValuationPhiTaiChinhDTO report = listValuation.get(i);
 			Val6Response response = new Val6Response();
-			response.setId(report.getId());
+			response.setId(new ValuationKey(report.getStockCode(),report.getQuarter(),report.getYear(),report.getDate()));
 			response.setTitle(Constants.PTC_val6);
 			response.setNittm(RoundNumber.lamTron(report.getNittm()));
 			response.setPe(RoundNumber.lamTronLan(report.getPe()));
@@ -707,7 +708,7 @@ public class PTCReportController {
 	
 	@GetMapping("/val7/{stock}")
 	public ResponseEntity<?> val7(@PathVariable String stock) {
-		List<ValuationPTC> listValuation = new ArrayList<ValuationPTC>();
+		List<ValuationPhiTaiChinhDTO> listValuation = new ArrayList<ValuationPhiTaiChinhDTO>();
 		
 		listValuation =  valuationPTCRepository.findTopRankedDataByStockCodeWithPTC(stock, pageableValuation);
 		if (listValuation.isEmpty()) {
@@ -718,9 +719,9 @@ public class PTCReportController {
 		
 		List<Val7Response> list = new ArrayList<Val7Response>();
 		for (int i=0;i< listValuation.size();i++) {
-			ValuationPTC report = listValuation.get(i);
+			ValuationPhiTaiChinhDTO report = listValuation.get(i);
 			Val7Response response = new Val7Response();
-			response.setId(report.getId());
+			response.setId(new ValuationKey(report.getStockCode(),report.getQuarter(),report.getYear(),report.getDate()));
 			response.setTitle(Constants.PTC_val7);
 			response.setEbitdattm(RoundNumber.lamTron(report.getEbitdattm()));
 			response.setEvebitda(RoundNumber.lamTronLan(report.getEvebitda()));
@@ -733,7 +734,7 @@ public class PTCReportController {
 	
 	@GetMapping("/val8/{stock}")
 	public ResponseEntity<?> val8(@PathVariable String stock) {
-		List<ValuationPTC> listValuation = new ArrayList<ValuationPTC>();
+		List<ValuationPhiTaiChinhDTO> listValuation = new ArrayList<ValuationPhiTaiChinhDTO>();
 		
 		listValuation =  valuationPTCRepository.findTopRankedDataByStockCodeWithPTC(stock, pageableValuation);
 		if (listValuation.isEmpty()) {
@@ -743,7 +744,7 @@ public class PTCReportController {
 		List<Val8Response> list = listValuation.stream()
                 .map(report -> {
                 	Val8Response response = new Val8Response();
-                	response.setId(report.getId());
+                	response.setId(new ValuationKey(report.getStockCode(),report.getQuarter(),report.getYear(),report.getDate()));
                 	response.setTitle(Constants.PTC_val8);
                 	response.setCapital(RoundNumber.lamTron(report.getCapital()));
                 	response.setMarketcap(RoundNumber.lamTron(report.getMarketcap()));
