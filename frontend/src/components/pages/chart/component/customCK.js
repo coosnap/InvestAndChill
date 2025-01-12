@@ -569,7 +569,7 @@ export let customValCK2 = {
     {
       type: 'line',
       label: 'P/E trung vị',
-      dataKey: 'pbMedian',
+      dataKey: 'peMedian',
       curve: 'linear',
       yAxisId: 'leftAxis',
       color: '#6EA2DF',

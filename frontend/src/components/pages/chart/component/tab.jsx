@@ -2,6 +2,7 @@ import {
   getDataChartBank,
   getDataChartNonFinancial,
   getDataChartStock,
+  getTitle,
   getTypeDataChart,
 } from '@/api/chart';
 import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
@@ -84,6 +85,7 @@ export const TabChart = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [dataChart, setDataChart] = useState([]);
   const [tabType, setTabType] = useState('');
+  const [title, setTitle] = useState('');
   const [checked, setChecked] = useState({
     chart: true,
     perf1: true,
@@ -358,6 +360,8 @@ export const TabChart = () => {
         setIsLoading(true);
         try {
           const type = await getTypeDataChart(codeValue);
+          const title = await getTitle(codeValue);
+          setTitle(title.message);
           setTabType(type.type);
           if (type.type === 'PTC') {
             let perf1, perf2, perf3, perf4, perf5, perf6, perf7, perf8;
@@ -1155,6 +1159,7 @@ export const TabChart = () => {
               {
                 dataKey: 'tienDTNGDaoHan',
                 type: 'line',
+                curve: 'linear',
                 label: 'Tiền',
                 area: true,
                 stack: 'total',
@@ -1165,6 +1170,7 @@ export const TabChart = () => {
               {
                 dataKey: 'phaiThu',
                 type: 'line',
+                curve: 'linear',
                 label: 'Phải thu',
                 area: true,
                 stack: 'total',
@@ -1175,6 +1181,7 @@ export const TabChart = () => {
               {
                 dataKey: 'hangTonKhoRong',
                 type: 'line',
+                curve: 'linear',
                 label: 'Hàng tồn kho',
                 area: true,
                 stack: 'total',
@@ -1185,6 +1192,7 @@ export const TabChart = () => {
               {
                 dataKey: 'taiSanCoDinh',
                 type: 'line',
+                curve: 'linear',
                 label: 'Tài sản cố định',
                 area: true,
                 stack: 'total',
@@ -1195,6 +1203,7 @@ export const TabChart = () => {
               {
                 dataKey: 'taiSanDoDangDaiHan',
                 type: 'line',
+                curve: 'linear',
                 label: 'Tài sản dở dang',
                 area: true,
                 stack: 'total',
@@ -1205,6 +1214,7 @@ export const TabChart = () => {
               {
                 dataKey: 'giaTriRongTaiSanDauTu',
                 type: 'line',
+                curve: 'linear',
                 label: 'Bất động sản đầu tư',
                 area: true,
                 stack: 'total',
@@ -1215,6 +1225,7 @@ export const TabChart = () => {
               {
                 dataKey: 'taiSanKhac',
                 type: 'line',
+                curve: 'linear',
                 label: 'Tài sản khác',
                 area: true,
                 stack: 'total',
@@ -1311,8 +1322,16 @@ export const TabChart = () => {
         setChecked((prev) => ({ ...prev, bal1ajust: !prev.bal1ajust }));
       }
       if (typeChart === 'bal2') {
+        let newPerf = [];
         customBalPTC2.year = checked.bal2;
-        let newPerf = await mapDataChart(customBalPTC2, tabType);
+        if (!checked.bal2ajust) {
+          newPerf = await mapDataChart(customBalPTC2, tabType, {
+            categoryGapRatio: -0.05,
+            barGapRatio: 0,
+          });
+        } else {
+          newPerf = await mapDataChart(customBalPTC2, tabType);
+        }
         setDataChart((prev) => ({ ...prev, bal2: newPerf }));
         setChecked((prev) => ({ ...prev, bal2: !prev.bal2 }));
       }
@@ -1819,6 +1838,7 @@ export const TabChart = () => {
                 label: 'FVTPL',
                 dataKey: 'laiTuCacTaiSanTaiChinhGhiNhanThongQuaLaiLo',
                 type: 'line',
+                curve: 'linear',
                 area: true,
                 stack: 'total',
                 yAxisId: 'rightAxis',
@@ -1829,6 +1849,7 @@ export const TabChart = () => {
                 label: 'Cho vay và phải thu',
                 dataKey: 'laiTuCacKhoanChoVayVaPhaiThu',
                 type: 'line',
+                curve: 'linear',
                 area: true,
                 stack: 'total',
                 yAxisId: 'rightAxis',
@@ -1839,6 +1860,7 @@ export const TabChart = () => {
                 label: 'Môi giới chứng khoán',
                 dataKey: 'doanhThuNghiepVuMoiGioiChungKhoan',
                 type: 'line',
+                curve: 'linear',
                 area: true,
                 stack: 'total',
                 yAxisId: 'rightAxis',
@@ -1849,6 +1871,7 @@ export const TabChart = () => {
                 label: 'HTM',
                 dataKey: 'laiTuCacKhoanDauTuNamGiuDenNgayDaoHan',
                 type: 'line',
+                curve: 'linear',
                 area: true,
                 stack: 'total',
                 yAxisId: 'rightAxis',
@@ -1859,6 +1882,7 @@ export const TabChart = () => {
                 label: 'AFS',
                 dataKey: 'laiTuCacTaiSanTaiChinhSanSangDeBan',
                 type: 'line',
+                curve: 'linear',
                 area: true,
                 stack: 'total',
                 yAxisId: 'rightAxis',
@@ -1869,6 +1893,7 @@ export const TabChart = () => {
                 label: 'Bảo lãnh phát hành',
                 dataKey: 'doanhThuNghiepVuBaoLanhPhatHanhChungKhoan',
                 type: 'line',
+                curve: 'linear',
                 area: true,
                 stack: 'total',
                 yAxisId: 'rightAxis',
@@ -1879,6 +1904,7 @@ export const TabChart = () => {
                 label: 'Khác',
                 dataKey: 'tongDoanhThuKhac',
                 type: 'line',
+                curve: 'linear',
                 area: true,
                 stack: 'total',
                 yAxisId: 'rightAxis',
@@ -1975,11 +2001,21 @@ export const TabChart = () => {
       }
       if (typeChart === 'bal5') {
         customBalCK5.year = checkedCK.bal5;
-        let newPerf = await mapDataChart(customBalCK5, tabType);
+        let newPerf = await mapDataChart(
+          customBalCK5,
+          tabType,
+          !checkedCK.bal5ajust
+            ? {
+                categoryGapRatio: -0.05,
+                barGapRatio: 0,
+              }
+            : null
+        );
         setDataChart((prev) => ({ ...prev, bal5: newPerf }));
         setCheckedCK((prev) => ({ ...prev, bal5: !prev.bal5 }));
       }
       if (typeChart === 'bal5ajust') {
+        let newPerf = [];
         if (checkedCK.bal5ajust) {
           try {
             customBalCK5.chart = true;
@@ -1987,7 +2023,7 @@ export const TabChart = () => {
               {
                 label: 'FVTPL',
                 dataKey: 'gpfvtpl',
-                type: 'line',
+                type: 'bar',
                 area: true,
                 stack: 'total',
                 yAxisId: 'rightAxis',
@@ -1997,7 +2033,7 @@ export const TabChart = () => {
               {
                 label: 'Cho vay và phải thu',
                 dataKey: 'gpcvmargin',
-                type: 'line',
+                type: 'bar',
                 area: true,
                 stack: 'total',
                 yAxisId: 'rightAxis',
@@ -2007,7 +2043,7 @@ export const TabChart = () => {
               {
                 label: 'Môi giới chứng khoán',
                 dataKey: 'gpmoiGioi',
-                type: 'line',
+                type: 'bar',
                 area: true,
                 stack: 'total',
                 yAxisId: 'rightAxis',
@@ -2017,7 +2053,7 @@ export const TabChart = () => {
               {
                 label: 'HTM',
                 dataKey: 'gphtm',
-                type: 'line',
+                type: 'bar',
                 area: true,
                 stack: 'total',
                 yAxisId: 'rightAxis',
@@ -2027,7 +2063,7 @@ export const TabChart = () => {
               {
                 label: 'AFS',
                 dataKey: 'gpafs',
-                type: 'line',
+                type: 'bar',
                 area: true,
                 stack: 'total',
                 yAxisId: 'rightAxis',
@@ -2037,7 +2073,7 @@ export const TabChart = () => {
               {
                 label: 'Bảo lãnh phát hành',
                 dataKey: 'gpbaoLanhPhatHanh',
-                type: 'line',
+                type: 'bar',
                 area: true,
                 stack: 'total',
                 yAxisId: 'rightAxis',
@@ -2047,7 +2083,7 @@ export const TabChart = () => {
               {
                 label: 'Khác',
                 dataKey: 'gpkhac',
-                type: 'line',
+                type: 'bar',
                 area: true,
                 stack: 'total',
                 yAxisId: 'rightAxis',
@@ -2059,6 +2095,10 @@ export const TabChart = () => {
               left: { type: 'bil', piecewise: false },
               right: { type: 'per', piecewise: true },
             };
+            newPerf = await mapDataChart(customBalCK5, tabType, {
+              categoryGapRatio: -0.05,
+              barGapRatio: 0,
+            });
           } catch (error) {
             console.log('error', error);
           }
@@ -2134,11 +2174,11 @@ export const TabChart = () => {
               left: { type: 'bil', piecewise: false },
               right: { type: 'bil', piecewise: false, showLineReference: true },
             };
+            newPerf = await mapDataChart(customBalCK5, tabType);
           } catch (error) {
             console.log('error', error);
           }
         }
-        let newPerf = await mapDataChart(customBalCK5, tabType);
         setDataChart((prev) => ({ ...prev, bal5: newPerf }));
         setCheckedCK((prev) => ({ ...prev, bal5ajust: !prev.bal5ajust }));
       }
@@ -2722,7 +2762,7 @@ export const TabChart = () => {
               className={`flex flex-1 font-bold text-xl ${!year && !addjust ? 'mb-[18px]' : ''}`}
             >
               <span className="cursor-pointer" onClick={handleToggleTitle}>
-                {dataChart?.title || ''} {isOpened ? ' - ' + codeValue : ''}
+                {dataChart?.title || ''} {isOpened ? ' [' + codeValue + ']' : ''}
               </span>
             </div>
             {addjust && (
@@ -2772,7 +2812,7 @@ export const TabChart = () => {
         }}
       >
         {isLoading && <LoaderChart />}
-        <div className="text-[2rem] font-bold pt-4">{codeValue}</div>
+        <div className="text-[2rem] font-bold pt-4">{title}</div>
         <div className="flex justify-between">
           <Tabs
             sx={{ '.css-1h9z7r5-MuiButtonBase-root-MuiTab-root': { fontWeight: 'bold' } }}
