@@ -3,9 +3,12 @@ package com.starter.InvestAndChill.utils;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.starter.InvestAndChill.jwt.models.PTCReport;
+import com.starter.InvestAndChill.jwt.payload.response.filter.GiaTangCongSuatResponse;
 import com.starter.InvestAndChill.pojo.ValuationDTO;
 
 public class CalculatorUtils {
@@ -124,10 +127,8 @@ public class CalculatorUtils {
 		if (obj == null) {
             System.out.println("Object is null.");
             return null;
-        }
-		
+        }	
 		isTotalNegav = checkTotalNegative(obj);
-		//System.out.println(isTotalNegav);
 		
 		Class<?> clazz = obj.getClass();
 		Field[] fields = clazz.getDeclaredFields();
@@ -146,20 +147,14 @@ public class CalculatorUtils {
                     }
                 } catch (NumberFormatException e) {
                     System.out.println("Không thể chuyển đổi chuỗi thành Double.");
-                }
-                
-                
-               
-                
+                }              
                 if (isTotalNegav) {
                 	total += valueDouble;
                 } else {
                 	if (valueDouble > 0) {
                 		total += valueDouble;
                 	}
-                }
-
-                
+                }             
             } catch (IllegalAccessException e) {
                 System.out.println("Cannot access field: " + field.getName());
             }
@@ -169,7 +164,6 @@ public class CalculatorUtils {
         
 	}
 	
-	
 	public static boolean checkTotalNegative(Object obj) {
 		boolean isTotalNegav = true;
 		Class<?> clazz = obj.getClass();
@@ -178,8 +172,6 @@ public class CalculatorUtils {
 	            field.setAccessible(true);
 	            try {
 	                Object value = field.get(obj);
-	                //System.out.println("Field: " + field.getName() + ", Value: " + value);
-	                
 	                if (!"title".equals(field.getName()) && (value != null) && ((Double)value > 0)) {
 	                	return false;
 	                }
@@ -191,6 +183,94 @@ public class CalculatorUtils {
 		 return isTotalNegav;
 		
 	}
+	
+	public static List<GiaTangCongSuatResponse> filterSortValue(List<GiaTangCongSuatResponse> list, String sortType, String sortValue) {
+		List<GiaTangCongSuatResponse> sortedList = list;
+		if("asc".equals(sortValue)) {
+			if ("marketcap".equals(sortType)) {
+				sortedList = list.stream()
+					    .sorted(Comparator.comparing(GiaTangCongSuatResponse::getMarketcap, Comparator.nullsLast(Comparator.naturalOrder())))
+					    .collect(Collectors.toList());
+			} else if ("evebitda".equals(sortType)) {
+				sortedList = list.stream()
+					    .sorted(Comparator.comparing(GiaTangCongSuatResponse::getEvebitda, Comparator.nullsLast(Comparator.naturalOrder())))
+					    .collect(Collectors.toList());
+			} else if ("divyld".equals(sortType)) {
+				sortedList = list.stream()
+					    .sorted(Comparator.comparing(GiaTangCongSuatResponse::getDivyld, Comparator.nullsLast(Comparator.naturalOrder())))
+					    .collect(Collectors.toList());
+			} else if ("pb".equals(sortType)) {
+				sortedList = list.stream()
+					    .sorted(Comparator.comparing(GiaTangCongSuatResponse::getPb, Comparator.nullsLast(Comparator.naturalOrder())))
+					    .collect(Collectors.toList());
+			} else if ("pe".equals(sortType)) {
+				sortedList = list.stream()
+					    .sorted(Comparator.comparing(GiaTangCongSuatResponse::getPe, Comparator.nullsLast(Comparator.naturalOrder())))
+					    .collect(Collectors.toList());
+			} else if ("roe".equals(sortType)) {
+				sortedList = list.stream()
+					    .sorted(Comparator.comparing(GiaTangCongSuatResponse::getRoe, Comparator.nullsLast(Comparator.naturalOrder())))
+					    .collect(Collectors.toList());
+			} else if ("pi77".equals(sortType)) {
+				sortedList = list.stream()
+					    .sorted(Comparator.comparing(GiaTangCongSuatResponse::getPi77, Comparator.nullsLast(Comparator.naturalOrder())))
+					    .collect(Collectors.toList());
+			} else if ("pi78".equals(sortType)) {
+				sortedList = list.stream()
+					    .sorted(Comparator.comparing(GiaTangCongSuatResponse::getPi78, Comparator.nullsLast(Comparator.naturalOrder())))
+					    .collect(Collectors.toList());
+			}
+			
+		} else if ("desc".equals(sortValue)) {
+			if ("marketcap".equals(sortType)) {
+				sortedList = list.stream()
+					    .sorted(Comparator.comparing(GiaTangCongSuatResponse::getMarketcap, 
+					                                  Comparator.nullsLast(Comparator.reverseOrder())))
+					    .collect(Collectors.toList());
+			} else if ("evebitda".equals(sortType)) {
+				sortedList = list.stream()
+						.sorted(Comparator.comparing(GiaTangCongSuatResponse::getEvebitda, 
+                                Comparator.nullsLast(Comparator.reverseOrder())))
+					    .collect(Collectors.toList());
+			} else if ("divyld".equals(sortType)) {
+				sortedList = list.stream()
+						.sorted(Comparator.comparing(GiaTangCongSuatResponse::getDivyld, 
+                                Comparator.nullsLast(Comparator.reverseOrder())))
+					    .collect(Collectors.toList());
+			} else if ("pb".equals(sortType)) {
+				sortedList = list.stream()
+						.sorted(Comparator.comparing(GiaTangCongSuatResponse::getPb, 
+                                Comparator.nullsLast(Comparator.reverseOrder())))
+					    .collect(Collectors.toList());
+			} else if ("pe".equals(sortType)) {
+				sortedList = list.stream()
+						.sorted(Comparator.comparing(GiaTangCongSuatResponse::getPe, 
+                                Comparator.nullsLast(Comparator.reverseOrder())))
+					    .collect(Collectors.toList());
+			} else if ("roe".equals(sortType)) {
+				sortedList = list.stream()
+						.sorted(Comparator.comparing(GiaTangCongSuatResponse::getRoe, 
+                                Comparator.nullsLast(Comparator.reverseOrder())))
+					    .collect(Collectors.toList());
+			} else if ("pi77".equals(sortType)) {
+				sortedList = list.stream()
+						.sorted(Comparator.comparing(GiaTangCongSuatResponse::getPi77, 
+                                Comparator.nullsLast(Comparator.reverseOrder())))
+					    .collect(Collectors.toList());
+			} else if ("pi78".equals(sortType)) {
+				sortedList = list.stream()
+						.sorted(Comparator.comparing(GiaTangCongSuatResponse::getPi78, 
+                                Comparator.nullsLast(Comparator.reverseOrder())))
+					    .collect(Collectors.toList());
+			}
+		}
+		
+		
+		return sortedList;
+	}
+	
+	
+	
 	
 	
 }

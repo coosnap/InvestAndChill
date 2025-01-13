@@ -82,7 +82,7 @@ public class BankReportController {
 	                    Perf1Response response = new Perf1Response();
 	                    response.setId(report.getId());
 	                    response.setTitle(Constants.NganHang_perf1);
-	                    response.setBienLaiRong(RoundNumber.lamTron(report.getBienLaiRong()));
+	                    response.setBienLaiRong(RoundNumber.lamTronPhanTram(report.getBienLaiRong()));
 	                    response.setCoDongCuaCongTyMe(RoundNumber.lamTron(report.getCoDongCuaCongTyMe()));
 	                    response.setTongThuNhapHoatDong(RoundNumber.lamTron(report.getTongThuNhapHoatDong()));
 	                    return response;
