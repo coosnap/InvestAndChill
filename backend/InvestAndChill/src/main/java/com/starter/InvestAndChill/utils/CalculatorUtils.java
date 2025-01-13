@@ -9,8 +9,10 @@ import java.util.stream.Collectors;
 
 import com.starter.InvestAndChill.jwt.models.PTCReport;
 import com.starter.InvestAndChill.pojo.FilterGiaTangCongSuatDTO;
+import com.starter.InvestAndChill.pojo.FilterNoNhieuSomChiTraDTO;
 import com.starter.InvestAndChill.pojo.FilterPhiTaiChinhDTO;
 import com.starter.InvestAndChill.pojo.FilterTheoDoiPreSalesDTO;
+import com.starter.InvestAndChill.pojo.FilterXuLyKhauHaoNangDTO;
 import com.starter.InvestAndChill.pojo.ValuationDTO;
 
 public class CalculatorUtils {
@@ -242,6 +244,42 @@ public class CalculatorUtils {
 				        .sorted(Comparator.comparing(FilterTheoDoiPreSalesDTO::getPi75, Comparator.nullsLast(Comparator.naturalOrder())))
 				        .collect(Collectors.toList());
 				    sortedList = (List<T>) subList; 
+			} else if ("pi68".equals(sortType)) {
+				List<FilterNoNhieuSomChiTraDTO> subList = list.stream()
+				        .filter(item -> item instanceof FilterNoNhieuSomChiTraDTO) 
+				        .map(item -> (FilterNoNhieuSomChiTraDTO) item)             
+				        .collect(Collectors.toList());
+				    subList = subList.stream()
+				        .sorted(Comparator.comparing(FilterNoNhieuSomChiTraDTO::getPi68, Comparator.nullsLast(Comparator.naturalOrder())))
+				        .collect(Collectors.toList());
+				    sortedList = (List<T>) subList; 
+			} else if ("pi69".equals(sortType)) {
+				List<FilterNoNhieuSomChiTraDTO> subList = list.stream()
+				        .filter(item -> item instanceof FilterNoNhieuSomChiTraDTO) 
+				        .map(item -> (FilterNoNhieuSomChiTraDTO) item)             
+				        .collect(Collectors.toList());
+				    subList = subList.stream()
+				        .sorted(Comparator.comparing(FilterNoNhieuSomChiTraDTO::getPi69, Comparator.nullsLast(Comparator.naturalOrder())))
+				        .collect(Collectors.toList());
+				    sortedList = (List<T>) subList; 
+			} else if ("pi70".equals(sortType)) {
+				List<FilterXuLyKhauHaoNangDTO> subList = list.stream()
+				        .filter(item -> item instanceof FilterXuLyKhauHaoNangDTO) 
+				        .map(item -> (FilterXuLyKhauHaoNangDTO) item)             
+				        .collect(Collectors.toList());
+				    subList = subList.stream()
+				        .sorted(Comparator.comparing(FilterXuLyKhauHaoNangDTO::getPi70, Comparator.nullsLast(Comparator.naturalOrder())))
+				        .collect(Collectors.toList());
+				    sortedList = (List<T>) subList; 
+			} else if ("pi73".equals(sortType)) {
+				List<FilterXuLyKhauHaoNangDTO> subList = list.stream()
+				        .filter(item -> item instanceof FilterXuLyKhauHaoNangDTO) 
+				        .map(item -> (FilterXuLyKhauHaoNangDTO) item)             
+				        .collect(Collectors.toList());
+				    subList = subList.stream()
+				        .sorted(Comparator.comparing(FilterXuLyKhauHaoNangDTO::getPi73, Comparator.nullsLast(Comparator.naturalOrder())))
+				        .collect(Collectors.toList());
+				    sortedList = (List<T>) subList; 
 			}
 			
 		} else if ("desc".equals(sortValue)) {
@@ -302,6 +340,42 @@ public class CalculatorUtils {
 				        .collect(Collectors.toList());
 				    subList = subList.stream()
 				        .sorted(Comparator.comparing(FilterTheoDoiPreSalesDTO::getPi75,  Comparator.nullsLast(Comparator.reverseOrder())))
+				        .collect(Collectors.toList());
+				    sortedList = (List<T>) subList; 
+			} else if ("pi68".equals(sortType)) {
+				List<FilterNoNhieuSomChiTraDTO> subList = list.stream()
+				        .filter(item -> item instanceof FilterNoNhieuSomChiTraDTO) 
+				        .map(item -> (FilterNoNhieuSomChiTraDTO) item)             
+				        .collect(Collectors.toList());
+				    subList = subList.stream()
+				        .sorted(Comparator.comparing(FilterNoNhieuSomChiTraDTO::getPi68, Comparator.nullsLast(Comparator.reverseOrder())))
+				        .collect(Collectors.toList());
+				    sortedList = (List<T>) subList; 
+			} else if ("pi69".equals(sortType)) {
+				List<FilterNoNhieuSomChiTraDTO> subList = list.stream()
+				        .filter(item -> item instanceof FilterNoNhieuSomChiTraDTO) 
+				        .map(item -> (FilterNoNhieuSomChiTraDTO) item)             
+				        .collect(Collectors.toList());
+				    subList = subList.stream()
+				        .sorted(Comparator.comparing(FilterNoNhieuSomChiTraDTO::getPi69, Comparator.nullsLast(Comparator.reverseOrder())))
+				        .collect(Collectors.toList());
+				    sortedList = (List<T>) subList; 
+			} else if ("pi70".equals(sortType)) {
+				List<FilterXuLyKhauHaoNangDTO> subList = list.stream()
+				        .filter(item -> item instanceof FilterXuLyKhauHaoNangDTO) 
+				        .map(item -> (FilterXuLyKhauHaoNangDTO) item)             
+				        .collect(Collectors.toList());
+				    subList = subList.stream()
+				        .sorted(Comparator.comparing(FilterXuLyKhauHaoNangDTO::getPi70, Comparator.nullsLast(Comparator.reverseOrder())))
+				        .collect(Collectors.toList());
+				    sortedList = (List<T>) subList; 
+			} else if ("pi73".equals(sortType)) {
+				List<FilterXuLyKhauHaoNangDTO> subList = list.stream()
+				        .filter(item -> item instanceof FilterXuLyKhauHaoNangDTO) 
+				        .map(item -> (FilterXuLyKhauHaoNangDTO) item)             
+				        .collect(Collectors.toList());
+				    subList = subList.stream()
+				        .sorted(Comparator.comparing(FilterXuLyKhauHaoNangDTO::getPi73, Comparator.nullsLast(Comparator.reverseOrder())))
 				        .collect(Collectors.toList());
 				    sortedList = (List<T>) subList; 
 			}
