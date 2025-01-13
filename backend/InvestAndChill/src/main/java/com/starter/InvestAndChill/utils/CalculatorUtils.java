@@ -8,7 +8,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.starter.InvestAndChill.jwt.models.PTCReport;
-import com.starter.InvestAndChill.jwt.payload.response.filter.GiaTangCongSuatResponse;
+import com.starter.InvestAndChill.pojo.FilterGiaTangCongSuatDTO;
+import com.starter.InvestAndChill.pojo.FilterPhiTaiChinhDTO;
+import com.starter.InvestAndChill.pojo.FilterTheoDoiPreSalesDTO;
 import com.starter.InvestAndChill.pojo.ValuationDTO;
 
 public class CalculatorUtils {
@@ -184,88 +186,127 @@ public class CalculatorUtils {
 		
 	}
 	
-	public static List<GiaTangCongSuatResponse> filterSortValue(List<GiaTangCongSuatResponse> list, String sortType, String sortValue) {
-		List<GiaTangCongSuatResponse> sortedList = list;
+	public static <T extends FilterPhiTaiChinhDTO> List<T> filterSortValue(List<T> list, String sortType, String sortValue) {
+		List<T> sortedList = list;
 		if("asc".equals(sortValue)) {
 			if ("marketcap".equals(sortType)) {
 				sortedList = list.stream()
-					    .sorted(Comparator.comparing(GiaTangCongSuatResponse::getMarketcap, Comparator.nullsLast(Comparator.naturalOrder())))
+					    .sorted(Comparator.comparing(T::getMarketcap, Comparator.nullsLast(Comparator.naturalOrder())))
 					    .collect(Collectors.toList());
 			} else if ("evebitda".equals(sortType)) {
 				sortedList = list.stream()
-					    .sorted(Comparator.comparing(GiaTangCongSuatResponse::getEvebitda, Comparator.nullsLast(Comparator.naturalOrder())))
+					    .sorted(Comparator.comparing(T::getEvebitda, Comparator.nullsLast(Comparator.naturalOrder())))
 					    .collect(Collectors.toList());
 			} else if ("divyld".equals(sortType)) {
 				sortedList = list.stream()
-					    .sorted(Comparator.comparing(GiaTangCongSuatResponse::getDivyld, Comparator.nullsLast(Comparator.naturalOrder())))
+					    .sorted(Comparator.comparing(T::getDivyld, Comparator.nullsLast(Comparator.naturalOrder())))
 					    .collect(Collectors.toList());
 			} else if ("pb".equals(sortType)) {
 				sortedList = list.stream()
-					    .sorted(Comparator.comparing(GiaTangCongSuatResponse::getPb, Comparator.nullsLast(Comparator.naturalOrder())))
+					    .sorted(Comparator.comparing(T::getPb, Comparator.nullsLast(Comparator.naturalOrder())))
 					    .collect(Collectors.toList());
 			} else if ("pe".equals(sortType)) {
 				sortedList = list.stream()
-					    .sorted(Comparator.comparing(GiaTangCongSuatResponse::getPe, Comparator.nullsLast(Comparator.naturalOrder())))
+					    .sorted(Comparator.comparing(T::getPe, Comparator.nullsLast(Comparator.naturalOrder())))
 					    .collect(Collectors.toList());
 			} else if ("roe".equals(sortType)) {
 				sortedList = list.stream()
-					    .sorted(Comparator.comparing(GiaTangCongSuatResponse::getRoe, Comparator.nullsLast(Comparator.naturalOrder())))
+					    .sorted(Comparator.comparing(T::getRoe, Comparator.nullsLast(Comparator.naturalOrder())))
 					    .collect(Collectors.toList());
-			} else if ("pi77".equals(sortType)) {
-				sortedList = list.stream()
-					    .sorted(Comparator.comparing(GiaTangCongSuatResponse::getPi77, Comparator.nullsLast(Comparator.naturalOrder())))
-					    .collect(Collectors.toList());
+			} else if ("pi77".equals(sortType) && (list.get(0) instanceof FilterGiaTangCongSuatDTO)) {
+				List<FilterGiaTangCongSuatDTO> subList = list.stream()
+				        .filter(item -> item instanceof FilterGiaTangCongSuatDTO) // Lọc đúng kiểu
+				        .map(item -> (FilterGiaTangCongSuatDTO) item)             // Ép kiểu
+				        .collect(Collectors.toList());
+				    // Sắp xếp danh sách subList
+				    subList = subList.stream()
+				        .sorted(Comparator.comparing(FilterGiaTangCongSuatDTO::getPi77, Comparator.nullsLast(Comparator.naturalOrder())))
+				        .collect(Collectors.toList());
+				    // Ép subList ngược lại thành List<T> (nếu cần)
+				    sortedList = (List<T>) subList; 
 			} else if ("pi78".equals(sortType)) {
-				sortedList = list.stream()
-					    .sorted(Comparator.comparing(GiaTangCongSuatResponse::getPi78, Comparator.nullsLast(Comparator.naturalOrder())))
-					    .collect(Collectors.toList());
+				List<FilterGiaTangCongSuatDTO> subList = list.stream()
+				        .filter(item -> item instanceof FilterGiaTangCongSuatDTO) 
+				        .map(item -> (FilterGiaTangCongSuatDTO) item)             
+				        .collect(Collectors.toList());
+				    subList = subList.stream()
+				        .sorted(Comparator.comparing(FilterGiaTangCongSuatDTO::getPi78, Comparator.nullsLast(Comparator.naturalOrder())))
+				        .collect(Collectors.toList());
+				    sortedList = (List<T>) subList; 
+			} else if ("pi75".equals(sortType)) {
+				List<FilterTheoDoiPreSalesDTO> subList = list.stream()
+				        .filter(item -> item instanceof FilterTheoDoiPreSalesDTO) 
+				        .map(item -> (FilterTheoDoiPreSalesDTO) item)             
+				        .collect(Collectors.toList());
+				    subList = subList.stream()
+				        .sorted(Comparator.comparing(FilterTheoDoiPreSalesDTO::getPi75, Comparator.nullsLast(Comparator.naturalOrder())))
+				        .collect(Collectors.toList());
+				    sortedList = (List<T>) subList; 
 			}
 			
 		} else if ("desc".equals(sortValue)) {
 			if ("marketcap".equals(sortType)) {
 				sortedList = list.stream()
-					    .sorted(Comparator.comparing(GiaTangCongSuatResponse::getMarketcap, 
+					    .sorted(Comparator.comparing(FilterPhiTaiChinhDTO::getMarketcap, 
 					                                  Comparator.nullsLast(Comparator.reverseOrder())))
 					    .collect(Collectors.toList());
 			} else if ("evebitda".equals(sortType)) {
 				sortedList = list.stream()
-						.sorted(Comparator.comparing(GiaTangCongSuatResponse::getEvebitda, 
+						.sorted(Comparator.comparing(FilterPhiTaiChinhDTO::getEvebitda, 
                                 Comparator.nullsLast(Comparator.reverseOrder())))
 					    .collect(Collectors.toList());
 			} else if ("divyld".equals(sortType)) {
 				sortedList = list.stream()
-						.sorted(Comparator.comparing(GiaTangCongSuatResponse::getDivyld, 
+						.sorted(Comparator.comparing(FilterPhiTaiChinhDTO::getDivyld, 
                                 Comparator.nullsLast(Comparator.reverseOrder())))
 					    .collect(Collectors.toList());
 			} else if ("pb".equals(sortType)) {
 				sortedList = list.stream()
-						.sorted(Comparator.comparing(GiaTangCongSuatResponse::getPb, 
+						.sorted(Comparator.comparing(FilterPhiTaiChinhDTO::getPb, 
                                 Comparator.nullsLast(Comparator.reverseOrder())))
 					    .collect(Collectors.toList());
 			} else if ("pe".equals(sortType)) {
 				sortedList = list.stream()
-						.sorted(Comparator.comparing(GiaTangCongSuatResponse::getPe, 
+						.sorted(Comparator.comparing(FilterPhiTaiChinhDTO::getPe, 
                                 Comparator.nullsLast(Comparator.reverseOrder())))
 					    .collect(Collectors.toList());
 			} else if ("roe".equals(sortType)) {
 				sortedList = list.stream()
-						.sorted(Comparator.comparing(GiaTangCongSuatResponse::getRoe, 
+						.sorted(Comparator.comparing(FilterPhiTaiChinhDTO::getRoe, 
                                 Comparator.nullsLast(Comparator.reverseOrder())))
 					    .collect(Collectors.toList());
 			} else if ("pi77".equals(sortType)) {
-				sortedList = list.stream()
-						.sorted(Comparator.comparing(GiaTangCongSuatResponse::getPi77, 
-                                Comparator.nullsLast(Comparator.reverseOrder())))
-					    .collect(Collectors.toList());
+				List<FilterGiaTangCongSuatDTO> subList = list.stream()
+				        .filter(item -> item instanceof FilterGiaTangCongSuatDTO) 
+				        .map(item -> (FilterGiaTangCongSuatDTO) item)             
+				        .collect(Collectors.toList());
+				    // Sắp xếp danh sách subList
+				    subList = subList.stream()
+				        .sorted(Comparator.comparing(FilterGiaTangCongSuatDTO::getPi77, Comparator.nullsLast(Comparator.reverseOrder())))
+				        .collect(Collectors.toList());
+				    // Ép subList ngược lại thành List<T> (nếu cần)
+				    sortedList = (List<T>) subList; 
 			} else if ("pi78".equals(sortType)) {
-				sortedList = list.stream()
-						.sorted(Comparator.comparing(GiaTangCongSuatResponse::getPi78, 
-                                Comparator.nullsLast(Comparator.reverseOrder())))
-					    .collect(Collectors.toList());
+				List<FilterGiaTangCongSuatDTO> subList = list.stream()
+				        .filter(item -> item instanceof FilterGiaTangCongSuatDTO) 
+				        .map(item -> (FilterGiaTangCongSuatDTO) item)            
+				        .collect(Collectors.toList());
+				    subList = subList.stream()
+				        .sorted(Comparator.comparing(FilterGiaTangCongSuatDTO::getPi78, Comparator.nullsLast(Comparator.reverseOrder())))
+				        .collect(Collectors.toList());
+				    sortedList = (List<T>) subList; 
+			} else if ("pi75".equals(sortType)) {
+				List<FilterTheoDoiPreSalesDTO> subList = list.stream()
+				        .filter(item -> item instanceof FilterTheoDoiPreSalesDTO) 
+				        .map(item -> (FilterTheoDoiPreSalesDTO) item)             
+				        .collect(Collectors.toList());
+				    subList = subList.stream()
+				        .sorted(Comparator.comparing(FilterTheoDoiPreSalesDTO::getPi75,  Comparator.nullsLast(Comparator.reverseOrder())))
+				        .collect(Collectors.toList());
+				    sortedList = (List<T>) subList; 
 			}
 		}
-		
-		
+
 		return sortedList;
 	}
 	
