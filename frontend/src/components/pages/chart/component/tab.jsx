@@ -1507,19 +1507,113 @@ export const TabChart = () => {
       }
       if (typeChart === 'cf3adjust') {
         if (checked.cf3adjust) {
-          customCFPTC3.series.pop();
+          customCFPTC3.series = customCFPTC3.series = [
+            {
+              type: 'bar',
+              label: 'Nợ vay',
+              dataKey: 'noVay',
+              yAxisId: 'rightAxis',
+              stack: 'stack',
+              color: '#AD5757',
+              valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+            },
+            {
+              type: 'bar',
+              label: 'Tiền và tương đương tiền',
+              dataKey: 'tienVaTuongDuongTien',
+              yAxisId: 'rightAxis',
+              stack: 'stack',
+              color: '#C8D0D2',
+              valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+            },
+            {
+              type: 'bar',
+              label: 'Đầu tư tài chính ngắn hạn',
+              dataKey: 'giaTriThuanDauTuNganHan',
+              yAxisId: 'rightAxis',
+              stack: 'stack',
+              color: '#93B6D6',
+              valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+            },
+            {
+              type: 'bar',
+              label: 'HTM dài hạn',
+              dataKey: 'dauTuNamGiuDenNgayDaoHan',
+              yAxisId: 'rightAxis',
+              stack: 'stack',
+              color: '#6EA2DF',
+              valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+            },
+            {
+              type: 'line',
+              label: 'Nợ ròng',
+              dataKey: 'netDebt',
+              curve: 'linear',
+              yAxisId: 'rightAxis',
+              color: '#202222',
+              valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+            },
+          ];
           let newPerf = await mapDataChart(customCFPTC3, tabType);
           setDataChart((prev) => ({ ...prev, cf3: newPerf }));
           setChecked((prev) => ({ ...prev, cf3adjust: !prev.cf3adjust }));
         } else {
-          customCFPTC3.series.push({
-            type: 'bar',
-            label: 'Tiền cho vay',
-            dataKey: 'tienLongTrongPhaiThuChoVay',
-            yAxisId: 'rightAxis',
-            color: '#2471BE',
-            stack: 'stack',
-          });
+          customCFPTC3.series = [
+            {
+              type: 'bar',
+              label: 'Nợ vay',
+              dataKey: 'noVay',
+              yAxisId: 'rightAxis',
+              stack: 'stack',
+              color: '#AD5757',
+              valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+            },
+            {
+              type: 'bar',
+              label: 'Tiền và tương đương tiền',
+              dataKey: 'tienVaTuongDuongTien',
+              yAxisId: 'rightAxis',
+              stack: 'stack',
+              color: '#C8D0D2',
+              valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+            },
+            {
+              type: 'bar',
+              label: 'Đầu tư tài chính ngắn hạn',
+              dataKey: 'giaTriThuanDauTuNganHan',
+              yAxisId: 'rightAxis',
+              stack: 'stack',
+              color: '#93B6D6',
+              valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+            },
+            {
+              type: 'bar',
+              label: 'HTM dài hạn',
+              dataKey: 'dauTuNamGiuDenNgayDaoHan',
+              yAxisId: 'rightAxis',
+              stack: 'stack',
+              color: '#6EA2DF',
+              valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+            },
+            {
+              type: 'line',
+              label: 'Nợ ròng',
+              dataKey: 'netDebt',
+              curve: 'linear',
+              yAxisId: 'rightAxis',
+              color: '#202222',
+              valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+            },
+            {
+              type: 'bar',
+              label: 'Tiền cho vay',
+              dataKey: 'tienLongTrongPhaiThuChoVay',
+              yAxisId: 'rightAxis',
+              color: '#2471BE',
+              stack: 'stack',
+              valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+            },
+          ];
           let newPerf = await mapDataChart(customCFPTC3, tabType);
           setDataChart((prev) => ({ ...prev, cf3: newPerf }));
           setChecked((prev) => ({ ...prev, cf3adjust: !prev.cf3adjust }));
