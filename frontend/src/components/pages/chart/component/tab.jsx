@@ -15,6 +15,7 @@ import {
   customBalCK3,
   customBalCK4,
   customBalCK5,
+  customOtherCK1,
   customPerfCK1,
   customPerfCK2,
   customPerfCK3,
@@ -97,9 +98,9 @@ export const TabChart = () => {
     perf5: true,
     perf7: true,
     bal1: true,
-    bal1ajust: true,
+    bal1adjust: true,
     bal2: true,
-    bal2ajust: true,
+    bal2adjust: true,
     bal3: true,
     bal4: true,
     bal6: true,
@@ -116,13 +117,14 @@ export const TabChart = () => {
     perf3: true,
     bal1: true,
     bal2: true,
-    bal2ajust: true,
+    bal2adjust: true,
     bal3: true,
-    bal3ajust: true,
+    bal3adjust: true,
     bal4: true,
-    bal4ajust: true,
+    bal4adjust: true,
     bal5: true,
-    bal5ajust: true,
+    bal5adjust: true,
+    other1: true,
   });
   const [checkedBank, setCheckedBank] = useState({
     chart: true,
@@ -363,8 +365,14 @@ export const TabChart = () => {
             let callPerf2 = mapDataChart(customPerfPTC2, type.type);
             let callPerf3 = mapDataChart(customPerfPTC3, type.type);
             let callPerf4 = mapDataChart(customPerfPTC4, type.type);
-            let callPerf5 = mapDataChart(customPerfPTC5, type.type);
-            let callPerf6 = mapDataChart(customPerfPTC6, type.type);
+            let callPerf5 = mapDataChart(customPerfPTC5, type.type, {
+              categoryGapRatio: 0.5,
+              barGapRatio: -1,
+            });
+            let callPerf6 = mapDataChart(customPerfPTC6, type.type, {
+              categoryGapRatio: 0.5,
+              barGapRatio: -1,
+            });
 
             Promise.all([callPerf1, callPerf2, callPerf3, callPerf4, callPerf5, callPerf6])
               .then((values) => {
@@ -388,13 +396,13 @@ export const TabChart = () => {
 
           if (value === 1) {
             let callBal1 = mapDataChart(customBalPTC1, type.type);
-            let bal2ajust = !checked.bal2ajust
+            let bal2adjust = !checked.bal2adjust
               ? {
                   categoryGapRatio: -0.05,
                   barGapRatio: 0,
                 }
               : null;
-            let callBal2 = mapDataChart(customBalPTC2, type.type, bal2ajust);
+            let callBal2 = mapDataChart(customBalPTC2, type.type, bal2adjust);
             let callBal3 = mapDataChart(customBalPTC3, type.type, {
               categoryGapRatio: 0.5,
               barGapRatio: -1,
@@ -508,6 +516,7 @@ export const TabChart = () => {
           let perf1, perf2, perf3, perf4, perf5;
           let bal1, bal2, bal3, bal4, bal5;
           let val1, val2, val3, val4;
+          let other1;
           if (value === 0) {
             let callPerf1 = mapDataChart(customPerfCK1, type.type);
             let callPerf3 = mapDataChart(customPerfCK3, type.type);
@@ -537,16 +546,19 @@ export const TabChart = () => {
             let callBal1 = mapDataChart(customBalCK1, type.type);
             let callBal2 = mapDataChart(customBalCK2, type.type);
             let callBal3 = mapDataChart(customBalCK3, type.type);
+            let callOther1 = mapDataChart(customOtherCK1, type.type);
 
-            Promise.all([callBal1, callBal2, callBal3])
+            Promise.all([callBal1, callBal2, callBal3, callOther1])
               .then((values) => {
                 bal1 = values[0];
                 bal2 = values[1];
                 bal3 = values[2];
+                other1 = values[3];
                 setDataChart({
                   bal1,
                   bal2,
                   bal3,
+                  other1,
                 });
               })
               .catch((error) => console.log('error', error));
@@ -621,7 +633,10 @@ export const TabChart = () => {
             let callBal2 = mapDataChart(customNHBal2, type.type);
             let callBal3 = mapDataChart(customNHBal3, type.type);
             let callBal4 = mapDataChart(customNHBal4, type.type);
-            let callBal5 = mapDataChart(customNHBal5, type.type);
+            let callBal5 = mapDataChart(customNHBal5, type.type, {
+              categoryGapRatio: 0.5,
+              barGapRatio: -1,
+            });
             let callBal6 = mapDataChart(customNHBal6, type.type);
             let callBal7 = mapDataChart(customNHBal7, type.type);
             let callBal8 = mapDataChart(customNHBal8, type.type);
@@ -900,6 +915,14 @@ export const TabChart = () => {
       } catch (error) {
         console.log('bal5', error);
       }
+      try {
+        customOtherCK1.year = checkedCK.chart;
+        let newOther1 = await mapDataChart(customOtherCK1, tabType);
+        setDataChart((prev) => ({ ...prev, other1: newOther1 }));
+        setCheckedCK((prev) => ({ ...prev, other1: !checkedCK.chart }));
+      } catch (error) {
+        console.log('other1', error);
+      }
     }
     if (tabType === 'NganHang') {
       setCheckedBank((prev) => ({ ...prev, chart: !prev.chart }));
@@ -1026,7 +1049,7 @@ export const TabChart = () => {
               dataKey: 'ebittrailing',
               yAxisId: 'leftAxis',
               color: '#C8D0D2',
-              valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
             },
             {
               type: 'bar',
@@ -1034,7 +1057,7 @@ export const TabChart = () => {
               dataKey: 'netFinancialAdjustTrailing',
               yAxisId: 'leftAxis',
               color: '#6EA2DF',
-              valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
             },
             {
               type: 'line',
@@ -1066,7 +1089,7 @@ export const TabChart = () => {
               dataKey: 'ebittrailing',
               yAxisId: 'leftAxis',
               color: '#C8D0D2',
-              valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
             },
             {
               type: 'bar',
@@ -1075,7 +1098,7 @@ export const TabChart = () => {
               yAxisId: 'leftAxis',
               color: '#6EA2DF',
               changeColor: true,
-              valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
             },
             {
               type: 'line',
@@ -1110,7 +1133,7 @@ export const TabChart = () => {
             yAxisId: 'rightAxis',
             stack: 'stack',
             color: '#ABB2B4',
-            valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+            valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
           };
         } else {
           customPerfPTC5.series[0] = {
@@ -1120,10 +1143,13 @@ export const TabChart = () => {
             yAxisId: 'rightAxis',
             stack: 'stack',
             color: '#ABB2B4',
-            valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+            valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
           };
         }
-        let newPerf = await mapDataChart(customPerfPTC5, tabType);
+        let newPerf = await mapDataChart(customPerfPTC5, tabType, {
+          categoryGapRatio: 0.5,
+          barGapRatio: -1,
+        });
         setDataChart((prev) => ({ ...prev, perf5: newPerf }));
         setChecked((prev) => ({ ...prev, perf5: !prev.perf5 }));
       }
@@ -1139,8 +1165,8 @@ export const TabChart = () => {
         setDataChart((prev) => ({ ...prev, bal1: newPerf }));
         setChecked((prev) => ({ ...prev, bal1: !prev.bal1 }));
       }
-      if (typeChart === 'bal1ajust') {
-        if (checked.bal1ajust) {
+      if (typeChart === 'bal1adjust') {
+        if (checked.bal1adjust) {
           try {
             customBalPTC1.chart = true;
             customBalPTC1.series = [
@@ -1240,7 +1266,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#C8D0D2',
-                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -1249,7 +1275,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#93B6D6',
-                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -1258,7 +1284,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#6EA2DF',
-                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -1267,7 +1293,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#014388',
-                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -1276,7 +1302,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#2471BE',
-                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -1285,7 +1311,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#585D5D',
-                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -1294,7 +1320,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#8F9596',
-                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
             ];
             customBalPTC1.yAxis = {
@@ -1307,12 +1333,12 @@ export const TabChart = () => {
         }
         let newPerf = await mapDataChart(customBalPTC1, tabType);
         setDataChart((prev) => ({ ...prev, bal1: newPerf }));
-        setChecked((prev) => ({ ...prev, bal1ajust: !prev.bal1ajust }));
+        setChecked((prev) => ({ ...prev, bal1adjust: !prev.bal1adjust }));
       }
       if (typeChart === 'bal2') {
         let newPerf = [];
         customBalPTC2.year = checked.bal2;
-        if (!checked.bal2ajust) {
+        if (!checked.bal2adjust) {
           newPerf = await mapDataChart(customBalPTC2, tabType, {
             categoryGapRatio: -0.05,
             barGapRatio: 0,
@@ -1323,9 +1349,9 @@ export const TabChart = () => {
         setDataChart((prev) => ({ ...prev, bal2: newPerf }));
         setChecked((prev) => ({ ...prev, bal2: !prev.bal2 }));
       }
-      if (typeChart === 'bal2ajust') {
+      if (typeChart === 'bal2adjust') {
         let newPerf = [];
-        if (checked.bal2ajust) {
+        if (checked.bal2adjust) {
           customBalPTC2.chart = true;
           customBalPTC2.series = [
             {
@@ -1392,7 +1418,7 @@ export const TabChart = () => {
               yAxisId: 'rightAxis',
               stack: 'stack',
               color: '#585D5D',
-              valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
             },
             {
               type: 'bar',
@@ -1401,7 +1427,7 @@ export const TabChart = () => {
               yAxisId: 'rightAxis',
               stack: 'stack',
               color: '#8F9596',
-              valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
             },
             {
               type: 'bar',
@@ -1410,7 +1436,7 @@ export const TabChart = () => {
               yAxisId: 'rightAxis',
               stack: 'stack',
               color: '#ABB2B4',
-              valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
             },
             {
               type: 'bar',
@@ -1419,7 +1445,7 @@ export const TabChart = () => {
               yAxisId: 'rightAxis',
               stack: 'stack',
               color: '#CCBA95',
-              valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
             },
             {
               type: 'bar',
@@ -1428,7 +1454,7 @@ export const TabChart = () => {
               yAxisId: 'rightAxis',
               stack: 'stack',
               color: '#AD5757',
-              valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+              valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
             },
           ];
           customBalPTC2.yAxis = {
@@ -1438,7 +1464,7 @@ export const TabChart = () => {
           newPerf = await mapDataChart(customBalPTC2, tabType);
         }
         setDataChart((prev) => ({ ...prev, bal2: newPerf }));
-        setChecked((prev) => ({ ...prev, bal2ajust: !prev.bal2ajust }));
+        setChecked((prev) => ({ ...prev, bal2adjust: !prev.bal2adjust }));
       }
       if (typeChart === 'bal3') {
         customBalPTC3.year = checked.bal3;
@@ -1483,7 +1509,6 @@ export const TabChart = () => {
         if (checked.cf3adjust) {
           customCFPTC3.series.pop();
           let newPerf = await mapDataChart(customCFPTC3, tabType);
-          console.log('newPerf', newPerf);
           setDataChart((prev) => ({ ...prev, cf3: newPerf }));
           setChecked((prev) => ({ ...prev, cf3adjust: !prev.cf3adjust }));
         } else {
@@ -1492,6 +1517,8 @@ export const TabChart = () => {
             label: 'Tiền cho vay',
             dataKey: 'tienLongTrongPhaiThuChoVay',
             yAxisId: 'rightAxis',
+            color: '#2471BE',
+            stack: 'stack',
           });
           let newPerf = await mapDataChart(customCFPTC3, tabType);
           setDataChart((prev) => ({ ...prev, cf3: newPerf }));
@@ -1531,21 +1558,29 @@ export const TabChart = () => {
         setCheckedCK((prev) => ({ ...prev, bal1: !prev.bal1 }));
       }
       if (typeChart === 'bal2') {
+        let newPerf = [];
         customBalCK2.year = checkedCK.bal2;
-        let newPerf = await mapDataChart(customBalCK2, tabType);
+        if (!checkedCK.bal2adjust) {
+          newPerf = await mapDataChart(customBalCK2, tabType, {
+            categoryGapRatio: -0.05,
+            barGapRatio: 0,
+          });
+        } else {
+          newPerf = await mapDataChart(customBalCK2, tabType);
+        }
         setDataChart((prev) => ({ ...prev, bal2: newPerf }));
         setCheckedCK((prev) => ({ ...prev, bal2: !prev.bal2 }));
       }
-      if (typeChart === 'bal2ajust') {
-        if (checkedCK.bal2ajust) {
+      if (typeChart === 'bal2adjust') {
+        let newPerf = [];
+        if (checkedCK.bal2adjust) {
           try {
             customBalCK2.chart = true;
             customBalCK2.series = [
               {
                 dataKey: 'tienVaTaiSanTuongDuongTien',
-                type: 'line',
+                type: 'bar',
                 label: 'Tiền',
-                area: true,
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#C8D0D2',
@@ -1553,9 +1588,8 @@ export const TabChart = () => {
               },
               {
                 dataKey: 'cacTaiSanTaiChinhThongQuaGhiNhanLaiLo',
-                type: 'line',
+                type: 'bar',
                 label: 'FVTPL',
-                area: true,
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#93B6D6',
@@ -1563,9 +1597,8 @@ export const TabChart = () => {
               },
               {
                 dataKey: 'cacKhoanDauTuNamGiuDenNgayDaoHan',
-                type: 'line',
+                type: 'bar',
                 label: 'HTM',
-                area: true,
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#6EA2DF',
@@ -1573,9 +1606,8 @@ export const TabChart = () => {
               },
               {
                 dataKey: 'cacKhoanChoVay',
-                type: 'line',
+                type: 'bar',
                 label: 'Cho vay',
-                area: true,
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#8F9596',
@@ -1583,9 +1615,8 @@ export const TabChart = () => {
               },
               {
                 dataKey: 'cacKhoanTaiChinhSanSangDeBan',
-                type: 'line',
+                type: 'bar',
                 label: 'AFS',
-                area: true,
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#014388',
@@ -1593,9 +1624,8 @@ export const TabChart = () => {
               },
               {
                 dataKey: 'taiSanKhac',
-                type: 'line',
+                type: 'bar',
                 label: 'Tài sản khác',
-                area: true,
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#202222',
@@ -1606,6 +1636,10 @@ export const TabChart = () => {
               left: { type: 'bil', piecewise: false },
               right: { type: 'per', piecewise: true },
             };
+            newPerf = await mapDataChart(customBalCK2, tabType, {
+              categoryGapRatio: -0.05,
+              barGapRatio: 0,
+            });
           } catch (error) {
             console.log('error', error);
           }
@@ -1620,7 +1654,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#C8D0D2',
-                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -1629,7 +1663,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#93B6D6',
-                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -1638,7 +1672,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#6EA2DF',
-                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -1647,7 +1681,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#8F9596',
-                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -1656,7 +1690,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#014388',
-                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -1665,37 +1699,45 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#202222',
-                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
             ];
             customBalCK2.yAxis = {
               left: { type: 'bil', piecewise: false },
               right: { type: 'bil', piecewise: false, showLineReference: true },
             };
+            newPerf = await mapDataChart(customBalCK2, tabType);
           } catch (error) {
             console.log('error', error);
           }
         }
-        let newPerf = await mapDataChart(customBalCK2, tabType);
         setDataChart((prev) => ({ ...prev, bal2: newPerf }));
-        setCheckedCK((prev) => ({ ...prev, bal2ajust: !prev.bal2ajust }));
+        setCheckedCK((prev) => ({ ...prev, bal2adjust: !prev.bal2adjust }));
       }
       if (typeChart === 'bal3') {
+        let newPerf = [];
         customBalCK3.year = checkedCK.bal3;
-        let newPerf = await mapDataChart(customBalCK3, tabType);
+        if (!checkedCK.bal3adjust) {
+          newPerf = await mapDataChart(customBalCK3, tabType, {
+            categoryGapRatio: -0.05,
+            barGapRatio: 0,
+          });
+        } else {
+          newPerf = await mapDataChart(customBalCK3, tabType);
+        }
         setDataChart((prev) => ({ ...prev, bal3: newPerf }));
         setCheckedCK((prev) => ({ ...prev, bal3: !prev.bal3 }));
       }
-      if (typeChart === 'bal3ajust') {
-        if (checkedCK.bal3ajust) {
+      if (typeChart === 'bal3adjust') {
+        let newPerf = [];
+        if (checkedCK.bal3adjust) {
           try {
             customBalCK3.chart = true;
             customBalCK3.series = [
               {
                 label: 'Vốn góp của chủ sở hữu',
                 dataKey: 'coPhieuPhoThongCoQuyenBieuQuyet',
-                type: 'line',
-                area: true,
+                type: 'bar',
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#585D5D',
@@ -1704,8 +1746,7 @@ export const TabChart = () => {
               {
                 label: 'LNST chưa phân phối',
                 dataKey: 'loiNhuanChuaPhanPhoi',
-                type: 'line',
-                area: true,
+                type: 'bar',
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#8F9596',
@@ -1714,8 +1755,7 @@ export const TabChart = () => {
               {
                 label: 'VCSH khác',
                 dataKey: 'vcshKhac',
-                type: 'line',
-                area: true,
+                type: 'bar',
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#ABB2B4',
@@ -1724,8 +1764,7 @@ export const TabChart = () => {
               {
                 label: 'Nợ chiếm dụng',
                 dataKey: 'noChiemDung',
-                type: 'line',
-                area: true,
+                type: 'bar',
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#CCBA95',
@@ -1734,8 +1773,7 @@ export const TabChart = () => {
               {
                 label: 'Nợ vay',
                 dataKey: 'noVay',
-                type: 'line',
-                area: true,
+                type: 'bar',
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#AD5757',
@@ -1746,6 +1784,10 @@ export const TabChart = () => {
               left: { type: 'bil', piecewise: false },
               right: { type: 'per', piecewise: true },
             };
+            newPerf = await mapDataChart(customBalCK3, tabType, {
+              categoryGapRatio: -0.05,
+              barGapRatio: 0,
+            });
           } catch (error) {
             console.log('error', error);
           }
@@ -1760,7 +1802,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#585D5D',
-                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -1769,7 +1811,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#8F9596',
-                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -1778,7 +1820,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#ABB2B4',
-                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -1787,7 +1829,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#CCBA95',
-                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -1796,38 +1838,45 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#AD5757',
-                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
             ];
             customBalCK3.yAxis = {
               left: { type: 'bil', piecewise: false, showLineReference: true },
               right: { type: 'bil', piecewise: false },
             };
+            newPerf = await mapDataChart(customBalCK3, tabType);
           } catch (error) {
             console.log('error', error);
           }
         }
-        let newPerf = await mapDataChart(customBalCK3, tabType);
         setDataChart((prev) => ({ ...prev, bal3: newPerf }));
-        setCheckedCK((prev) => ({ ...prev, bal3ajust: !prev.bal3ajust }));
+        setCheckedCK((prev) => ({ ...prev, bal3adjust: !prev.bal3adjust }));
       }
       if (typeChart === 'bal4') {
+        let newPerf = [];
         customBalCK4.year = checkedCK.bal4;
-        let newPerf = await mapDataChart(customBalCK4, tabType);
+        if (!checkedCK.bal4adjust) {
+          newPerf = await mapDataChart(customBalCK4, tabType, {
+            categoryGapRatio: -0.05,
+            barGapRatio: 0,
+          });
+        } else {
+          newPerf = await mapDataChart(customBalCK4, tabType);
+        }
         setDataChart((prev) => ({ ...prev, bal4: newPerf }));
         setCheckedCK((prev) => ({ ...prev, bal4: !prev.bal4 }));
       }
-      if (typeChart === 'bal4ajust') {
-        if (checkedCK.bal4ajust) {
+      if (typeChart === 'bal4adjust') {
+        let newPerf = [];
+        if (checkedCK.bal4adjust) {
           try {
             customBalCK4.chart = true;
             customBalCK4.series = [
               {
                 label: 'FVTPL',
                 dataKey: 'laiTuCacTaiSanTaiChinhGhiNhanThongQuaLaiLo',
-                type: 'line',
-                curve: 'linear',
-                area: true,
+                type: 'bar',
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#93B6D6',
@@ -1836,9 +1885,7 @@ export const TabChart = () => {
               {
                 label: 'Cho vay và phải thu',
                 dataKey: 'laiTuCacKhoanChoVayVaPhaiThu',
-                type: 'line',
-                curve: 'linear',
-                area: true,
+                type: 'bar',
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#8F9596',
@@ -1847,9 +1894,7 @@ export const TabChart = () => {
               {
                 label: 'Môi giới chứng khoán',
                 dataKey: 'doanhThuNghiepVuMoiGioiChungKhoan',
-                type: 'line',
-                curve: 'linear',
-                area: true,
+                type: 'bar',
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#C8D0D2',
@@ -1858,9 +1903,7 @@ export const TabChart = () => {
               {
                 label: 'HTM',
                 dataKey: 'laiTuCacKhoanDauTuNamGiuDenNgayDaoHan',
-                type: 'line',
-                curve: 'linear',
-                area: true,
+                type: 'bar',
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#6EA2DF',
@@ -1869,9 +1912,7 @@ export const TabChart = () => {
               {
                 label: 'AFS',
                 dataKey: 'laiTuCacTaiSanTaiChinhSanSangDeBan',
-                type: 'line',
-                curve: 'linear',
-                area: true,
+                type: 'bar',
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#014388',
@@ -1880,9 +1921,7 @@ export const TabChart = () => {
               {
                 label: 'Bảo lãnh phát hành',
                 dataKey: 'doanhThuNghiepVuBaoLanhPhatHanhChungKhoan',
-                type: 'line',
-                curve: 'linear',
-                area: true,
+                type: 'bar',
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#CFAB6D',
@@ -1891,9 +1930,7 @@ export const TabChart = () => {
               {
                 label: 'Khác',
                 dataKey: 'tongDoanhThuKhac',
-                type: 'line',
-                curve: 'linear',
-                area: true,
+                type: 'bar',
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#202222',
@@ -1904,6 +1941,10 @@ export const TabChart = () => {
               left: { type: 'bil', piecewise: false },
               right: { type: 'per', piecewise: true },
             };
+            newPerf = await mapDataChart(customBalCK4, tabType, {
+              categoryGapRatio: -0.05,
+              barGapRatio: 0,
+            });
           } catch (error) {
             console.log('error', error);
           }
@@ -1918,7 +1959,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#93B6D6',
-                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -1927,7 +1968,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#8F9596',
-                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -1936,7 +1977,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#C8D0D2',
-                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -1945,7 +1986,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#6EA2DF',
-                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -1954,7 +1995,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#014388',
-                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -1963,7 +2004,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#CFAB6D',
-                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -1972,27 +2013,27 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#202222',
-                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
             ];
             customBalCK4.yAxis = {
               left: { type: 'bil', piecewise: false },
               right: { type: 'bil', piecewise: false, showLineReference: true },
             };
+            newPerf = await mapDataChart(customBalCK4, tabType);
           } catch (error) {
             console.log('error', error);
           }
         }
-        let newPerf = await mapDataChart(customBalCK4, tabType);
         setDataChart((prev) => ({ ...prev, bal4: newPerf }));
-        setCheckedCK((prev) => ({ ...prev, bal4ajust: !prev.bal4ajust }));
+        setCheckedCK((prev) => ({ ...prev, bal4adjust: !prev.bal4adjust }));
       }
       if (typeChart === 'bal5') {
         customBalCK5.year = checkedCK.bal5;
         let newPerf = await mapDataChart(
           customBalCK5,
           tabType,
-          !checkedCK.bal5ajust
+          !checkedCK.bal5adjust
             ? {
                 categoryGapRatio: -0.05,
                 barGapRatio: 0,
@@ -2002,9 +2043,9 @@ export const TabChart = () => {
         setDataChart((prev) => ({ ...prev, bal5: newPerf }));
         setCheckedCK((prev) => ({ ...prev, bal5: !prev.bal5 }));
       }
-      if (typeChart === 'bal5ajust') {
+      if (typeChart === 'bal5adjust') {
         let newPerf = [];
-        if (checkedCK.bal5ajust) {
+        if (checkedCK.bal5adjust) {
           try {
             customBalCK5.chart = true;
             customBalCK5.series = [
@@ -2101,7 +2142,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#93B6D6',
-                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -2110,7 +2151,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#8F9596',
-                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -2119,7 +2160,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#C8D0D2',
-                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -2128,7 +2169,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#6EA2DF',
-                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -2137,7 +2178,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#014388',
-                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -2146,7 +2187,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#CFAB6D',
-                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -2155,7 +2196,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#202222',
-                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
             ];
             customBalCK5.yAxis = {
@@ -2168,7 +2209,13 @@ export const TabChart = () => {
           }
         }
         setDataChart((prev) => ({ ...prev, bal5: newPerf }));
-        setCheckedCK((prev) => ({ ...prev, bal5ajust: !prev.bal5ajust }));
+        setCheckedCK((prev) => ({ ...prev, bal5adjust: !prev.bal5adjust }));
+      }
+      if (typeChart === 'other1') {
+        customOtherCK1.year = checkedCK.other1;
+        let newPerf = await mapDataChart(customOtherCK1, tabType);
+        setDataChart((prev) => ({ ...prev, other1: newPerf }));
+        setCheckedCK((prev) => ({ ...prev, other1: !prev.other1 }));
       }
     }
     if (tabType === 'NganHang') {
@@ -2185,10 +2232,110 @@ export const TabChart = () => {
         setCheckedBank((prev) => ({ ...prev, perf2: !prev.perf2 }));
       }
       if (typeChart === 'perf3') {
+        let newPerf = [];
         customNHPerf3.year = checkedBank.perf3;
-        let newPerf = await mapDataChart(customNHPerf3, tabType);
+        if (!checkedBank.perf3adjust) {
+          newPerf = await mapDataChart(customNHPerf3, tabType, {
+            categoryGapRatio: -0.05,
+            barGapRatio: 0,
+          });
+        } else {
+          newPerf = await mapDataChart(customNHPerf3, tabType);
+        }
         setDataChart((prev) => ({ ...prev, perf3: newPerf }));
         setCheckedBank((prev) => ({ ...prev, perf3: !prev.perf3 }));
+      }
+      if (typeChart === 'perf3adjust') {
+        let newPerf = [];
+        if (checkedBank.perf3adjust) {
+          try {
+            customNHPerf3.chart = true;
+            customNHPerf3.series = [
+              {
+                label: 'Thu nhập từ lãi',
+                dataKey: 'thuNhapLaiThuan',
+                type: 'bar',
+                stack: 'stack',
+                area: true,
+                yAxisId: 'rightAxis',
+                color: '#8F9596',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+              {
+                label: 'Thu nhập từ dịch vụ',
+                dataKey: 'laiLoTHuanTuHoatDongDichVu',
+                type: 'bar',
+                stack: 'stack',
+                area: true,
+                yAxisId: 'rightAxis',
+                color: '#C8D0D2',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+              {
+                label: 'Thu nhập khác',
+                dataKey: 'laiKhac',
+                type: 'bar',
+                stack: 'stack',
+                area: true,
+                yAxisId: 'rightAxis',
+                color: '#202222',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+            ];
+            customNHPerf3.yAxis = {
+              left: { type: 'bil', piecewise: false },
+              right: { type: 'per', piecewise: true },
+            };
+            newPerf = await mapDataChart(customNHPerf3, tabType, {
+              categoryGapRatio: -0.05,
+              barGapRatio: 0,
+            });
+          } catch (error) {
+            console.log('error', error);
+          }
+        } else {
+          try {
+            customNHPerf3.chart = false;
+            customNHPerf3.series = [
+              {
+                type: 'bar',
+                label: 'Thu nhập từ lãi',
+                dataKey: 'thuNhapLaiThuan',
+                yAxisId: 'rightAxis',
+                stack: 'stack',
+                color: '#8F9596',
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+              },
+              {
+                type: 'bar',
+                label: 'Thu nhập từ dịch vụ',
+                dataKey: 'laiLoTHuanTuHoatDongDichVu',
+                yAxisId: 'rightAxis',
+                stack: 'stack',
+                color: '#C8D0D2',
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+              },
+              {
+                type: 'bar',
+                label: 'Thu nhập khác',
+                dataKey: 'laiKhac',
+                yAxisId: 'rightAxis',
+                stack: 'stack',
+                color: '#202222',
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+              },
+            ];
+            customNHPerf3.yAxis = {
+              right: { type: 'bil', piecewise: false, showLineReference: true },
+              left: { type: 'bil', piecewise: false },
+            };
+            newPerf = await mapDataChart(customNHPerf3, tabType);
+          } catch (error) {
+            console.log('error', error);
+          }
+        }
+        setDataChart((prev) => ({ ...prev, perf3: newPerf }));
+        setCheckedBank((prev) => ({ ...prev, perf3adjust: !prev.perf3adjust }));
       }
       if (typeChart === 'perf4') {
         customNHPerf4.year = checkedBank.perf4;
@@ -2197,16 +2344,273 @@ export const TabChart = () => {
         setCheckedBank((prev) => ({ ...prev, perf4: !prev.perf4 }));
       }
       if (typeChart === 'bal1') {
+        let newPerf = [];
         customNHBal1.year = checkedBank.bal1;
-        let newPerf = await mapDataChart(customNHBal1, tabType);
+        if (!checkedBank.bal1adjust) {
+          newPerf = await mapDataChart(customNHBal1, tabType, {
+            categoryGapRatio: -0.05,
+            barGapRatio: 0,
+          });
+        } else {
+          newPerf = await mapDataChart(customNHBal1, tabType);
+        }
         setDataChart((prev) => ({ ...prev, bal1: newPerf }));
         setCheckedBank((prev) => ({ ...prev, bal1: !prev.bal1 }));
       }
+      if (typeChart === 'bal1adjust') {
+        let newPerf = [];
+        if (checkedBank.bal1adjust) {
+          try {
+            customNHBal1.chart = true;
+            customNHBal1.series = [
+              {
+                label: 'Tiền gửi và cho vay TCTD khác',
+                dataKey: 'tgvaChoVayCacTCTDKhacTruocDuPhong',
+                type: 'bar',
+                stack: 'stack',
+                area: true,
+                yAxisId: 'rightAxis',
+                color: '#C8D0D2',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+              {
+                label: 'Cho vay khác hàng',
+                dataKey: 'choVayKhachHang',
+                type: 'bar',
+                stack: 'stack',
+                area: true,
+                yAxisId: 'rightAxis',
+                color: '#93B6D6',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+              {
+                label: 'Chứng khoán',
+                dataKey: 'laiKhac',
+                type: 'bar',
+                stack: 'stack',
+                area: true,
+                yAxisId: 'rightAxis',
+                color: '#6EA2DF',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+              {
+                label: 'Tài sản khác',
+                dataKey: 'cacTaiSanKhac',
+                type: 'bar',
+                stack: 'stack',
+                area: true,
+                yAxisId: 'rightAxis',
+                color: '#014388',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+            ];
+            customNHBal1.yAxis = {
+              left: { type: 'bil', piecewise: false },
+              right: { type: 'per', piecewise: true },
+            };
+            newPerf = await mapDataChart(customNHBal1, tabType, {
+              categoryGapRatio: -0.05,
+              barGapRatio: 0,
+            });
+          } catch (error) {
+            console.log('error', error);
+          }
+        } else {
+          try {
+            customNHBal1.chart = false;
+            customNHBal1.series = [
+              {
+                type: 'bar',
+                label: 'Tiền gửi và cho vay TCTD khác',
+                dataKey: 'tgvaChoVayCacTCTDKhacTruocDuPhong',
+                yAxisId: 'rightAxis',
+                stack: 'stack',
+                color: '#C8D0D2',
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+              },
+              {
+                type: 'bar',
+                label: 'Cho vay khác hàng',
+                dataKey: 'choVayKhachHang',
+                yAxisId: 'rightAxis',
+                stack: 'stack',
+                color: '#93B6D6',
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+              },
+              {
+                type: 'bar',
+                label: 'Chứng khoán',
+                dataKey: 'chungKhoanTruocDP',
+                yAxisId: 'rightAxis',
+                stack: 'stack',
+                color: '#6EA2DF',
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+              },
+              {
+                type: 'bar',
+                label: 'Tài sản khác',
+                dataKey: 'cacTaiSanKhac',
+                yAxisId: 'rightAxis',
+                stack: 'stack',
+                color: '#014388',
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+              },
+            ];
+            customNHBal1.yAxis = {
+              right: { type: 'bil', piecewise: false, showLineReference: true },
+              left: { type: 'bil', piecewise: false },
+            };
+            newPerf = await mapDataChart(customNHBal1, tabType);
+          } catch (error) {
+            console.log('error', error);
+          }
+        }
+        setDataChart((prev) => ({ ...prev, bal1: newPerf }));
+        setCheckedBank((prev) => ({ ...prev, bal1adjust: !prev.bal1adjust }));
+      }
       if (typeChart === 'bal2') {
+        let newPerf = [];
         customNHBal2.year = checkedBank.bal2;
-        let newPerf = await mapDataChart(customNHBal2, tabType);
+        if (!checkedBank.bal2adjust) {
+          newPerf = await mapDataChart(customNHBal2, tabType, {
+            categoryGapRatio: -0.05,
+            barGapRatio: 0,
+          });
+        } else {
+          newPerf = await mapDataChart(customNHBal2, tabType);
+        }
         setDataChart((prev) => ({ ...prev, bal2: newPerf }));
         setCheckedBank((prev) => ({ ...prev, bal2: !prev.bal2 }));
+      }
+      if (typeChart === 'bal2adjust') {
+        let newPerf = [];
+        if (checkedBank.bal2adjust) {
+          try {
+            customNHBal2.chart = true;
+            customNHBal2.series = [
+              {
+                label: 'Tiền gửi và vay TCTD khác',
+                dataKey: 'tienGuiVaVayCacToChucTinDung',
+                type: 'bar',
+                stack: 'stack',
+                area: true,
+                yAxisId: 'rightAxis',
+                color: '#C8D0D2',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+              {
+                label: 'Tiền gửi của khách hàng',
+                dataKey: 'tienGuiCuaKhachHang',
+                type: 'bar',
+                stack: 'stack',
+                area: true,
+                yAxisId: 'rightAxis',
+                color: '#93B6D6',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+              {
+                label: 'Giấy tờ có giá',
+                dataKey: 'phatHanhGiayToCoGia',
+                type: 'bar',
+                stack: 'stack',
+                area: true,
+                yAxisId: 'rightAxis',
+                color: '#6EA2DF',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+              {
+                label: 'Vốn chủ sở hữu',
+                dataKey: 'vonChuSoHuu',
+                type: 'bar',
+                stack: 'stack',
+                area: true,
+                yAxisId: 'rightAxis',
+                color: '#585D5D',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+              {
+                label: 'Nợ phải trả khác',
+                dataKey: 'noPhaiTraKhac',
+                type: 'bar',
+                stack: 'stack',
+                area: true,
+                yAxisId: 'rightAxis',
+                color: '#014388',
+                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              },
+            ];
+            customNHBal2.yAxis = {
+              left: { type: 'bil', piecewise: false },
+              right: { type: 'per', piecewise: true },
+            };
+            newPerf = await mapDataChart(customNHBal2, tabType, {
+              categoryGapRatio: -0.05,
+              barGapRatio: 0,
+            });
+          } catch (error) {
+            console.log('error', error);
+          }
+        } else {
+          try {
+            customNHBal2.chart = false;
+            customNHBal2.series = [
+              {
+                type: 'bar',
+                label: 'Tiền gửi và vay TCTD khác',
+                dataKey: 'tienGuiVaVayCacToChucTinDung',
+                yAxisId: 'rightAxis',
+                stack: 'stack',
+                color: '#C8D0D2',
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+              },
+              {
+                type: 'bar',
+                label: 'Tiền gửi của khách hàng',
+                dataKey: 'tienGuiCuaKhachHang',
+                yAxisId: 'rightAxis',
+                stack: 'stack',
+                color: '#93B6D6',
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+              },
+              {
+                type: 'bar',
+                label: 'Giấy tờ có giá',
+                dataKey: 'phatHanhGiayToCoGia',
+                yAxisId: 'rightAxis',
+                stack: 'stack',
+                color: '#6EA2DF',
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+              },
+              {
+                type: 'bar',
+                label: 'Vốn chủ sở hữu',
+                dataKey: 'vonChuSoHuu',
+                yAxisId: 'rightAxis',
+                stack: 'stack',
+                color: '#585D5D',
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+              },
+              {
+                type: 'bar',
+                label: 'Nợ phải trả khác',
+                dataKey: 'noPhaiTraKhac',
+                yAxisId: 'rightAxis',
+                stack: 'stack',
+                color: '#014388',
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+              },
+            ];
+            customNHBal2.yAxis = {
+              right: { type: 'bil', piecewise: false, showLineReference: true },
+              left: { type: 'bil', piecewise: false },
+            };
+            newPerf = await mapDataChart(customNHBal2, tabType);
+          } catch (error) {
+            console.log('error', error);
+          }
+        }
+        setDataChart((prev) => ({ ...prev, bal2: newPerf }));
+        setCheckedBank((prev) => ({ ...prev, bal2adjust: !prev.bal2adjust }));
       }
       if (typeChart === 'bal3') {
         customNHBal3.year = checkedBank.bal3;
@@ -2301,7 +2705,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#93B6D6',
-                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -2310,7 +2714,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#6EA2DF',
-                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -2319,7 +2723,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#014388',
-                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
             ];
             customNHBal9.yAxis = {
@@ -2418,7 +2822,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#CCBA95',
-                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -2427,7 +2831,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#014388',
-                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -2436,7 +2840,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#6EA2DF',
-                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -2445,7 +2849,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#93B6D6',
-                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -2454,7 +2858,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#C8D0D2',
-                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -2463,7 +2867,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#202222',
-                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
             ];
             customNHBal10.yAxis = {
@@ -2552,7 +2956,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#C8D0D2',
-                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -2561,7 +2965,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#93B6D6',
-                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -2570,7 +2974,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#6EA2DF',
-                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -2579,7 +2983,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#CCBA95',
-                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -2588,7 +2992,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#202222',
-                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
             ];
             customNHBal11.yAxis = {
@@ -2677,7 +3081,7 @@ export const TabChart = () => {
                 stack: 'stack',
                 yAxisId: 'rightAxis',
                 color: '#CCBA95',
-                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -2686,7 +3090,7 @@ export const TabChart = () => {
                 stack: 'stack',
                 yAxisId: 'rightAxis',
                 color: '#014388',
-                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -2695,7 +3099,7 @@ export const TabChart = () => {
                 stack: 'stack',
                 yAxisId: 'rightAxis',
                 color: '#6EA2DF',
-                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -2704,7 +3108,7 @@ export const TabChart = () => {
                 stack: 'stack',
                 yAxisId: 'rightAxis',
                 color: '#C8D0D2',
-                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -2713,7 +3117,7 @@ export const TabChart = () => {
                 stack: 'stack',
                 yAxisId: 'rightAxis',
                 color: '#202222',
-                valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
             ];
             customNHBal12.yAxis = {
@@ -2881,16 +3285,16 @@ export const TabChart = () => {
                     checked?.bal1,
                     'bal1',
                     true,
-                    'bal1ajust',
-                    checked?.bal1ajust
+                    'bal1adjust',
+                    checked?.bal1adjust
                   )}
                   {ChartItem(
                     dataChart?.bal2,
                     checked?.bal2,
                     'bal2',
                     true,
-                    'bal2ajust',
-                    checked?.bal2ajust
+                    'bal2adjust',
+                    checked?.bal2adjust
                   )}
                 </div>
                 <div className="flex gap-8">
@@ -2966,16 +3370,16 @@ export const TabChart = () => {
                     checkedCK?.bal4,
                     'bal4',
                     true,
-                    'bal4ajust',
-                    checkedCK?.bal4ajust
+                    'bal4adjust',
+                    checkedCK?.bal4adjust
                   )}
                   {ChartItem(
                     dataChart?.bal5,
                     checkedCK?.bal5,
                     'bal5',
                     true,
-                    'bal5ajust',
-                    checkedCK?.bal5ajust
+                    'bal5adjust',
+                    checkedCK?.bal5adjust
                   )}
                 </div>
                 <div className="flex gap-8">{ChartItem(dataChart?.perf4, null, 'perf4')}</div>
@@ -2991,20 +3395,21 @@ export const TabChart = () => {
                     checkedCK?.bal2,
                     'bal2',
                     true,
-                    'bal2ajust',
-                    checkedCK?.bal2ajust
+                    'bal2adjust',
+                    checkedCK?.bal2adjust
                   )}
                   {ChartItem(
                     dataChart?.bal3,
                     checkedCK?.bal3,
                     'bal3',
                     true,
-                    'bal3ajust',
-                    checkedCK?.bal3ajust
+                    'bal3adjust',
+                    checkedCK?.bal3adjust
                   )}
                 </div>
                 <div className="flex gap-8">
                   {ChartItem(dataChart?.bal1, checkedCK?.bal1, 'bal1', true)}
+                  {ChartItem(dataChart?.other1, checkedCK?.other1, 'other1', true)}
                 </div>
               </div>
             )}
@@ -3045,7 +3450,14 @@ export const TabChart = () => {
                   {ChartItem(dataChart?.perf2, checkedBank?.perf2, 'perf2', true)}
                 </div>
                 <div className="flex gap-8">
-                  {ChartItem(dataChart?.perf3, checkedBank?.perf3, 'perf3', true)}
+                  {ChartItem(
+                    dataChart?.perf3,
+                    checkedBank?.perf3,
+                    'perf3',
+                    true,
+                    'perf3adjust',
+                    checkedBank?.perf3adjust
+                  )}
                   {ChartItem(dataChart?.perf4, checkedBank?.perf4, 'perf4', true)}
                 </div>
               </div>
@@ -3055,8 +3467,22 @@ export const TabChart = () => {
             {codeValue && (
               <div className="flex flex-col gap-8">
                 <div className="flex gap-8">
-                  {ChartItem(dataChart?.bal1, checkedBank?.bal1, 'bal1', true)}
-                  {ChartItem(dataChart?.bal2, checkedBank?.bal2, 'bal2', true)}
+                  {ChartItem(
+                    dataChart?.bal1,
+                    checkedBank?.bal1,
+                    'bal1',
+                    true,
+                    'bal1adjust',
+                    checkedBank?.bal1adjust
+                  )}
+                  {ChartItem(
+                    dataChart?.bal2,
+                    checkedBank?.bal2,
+                    'bal2',
+                    true,
+                    'bal2adjust',
+                    checkedBank?.bal2adjust
+                  )}
                 </div>
                 <div className="flex gap-8">
                   {ChartItem(dataChart?.bal3, checkedBank?.bal3, 'bal3', true)}

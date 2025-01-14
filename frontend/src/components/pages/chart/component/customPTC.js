@@ -8,7 +8,7 @@ export let customPerfPTC1 = {
       dataKey: 'doanhSoThuan',
       yAxisId: 'leftAxis',
       color: '#C8D0D2',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -16,7 +16,7 @@ export let customPerfPTC1 = {
       dataKey: 'loiNhuanCuaCoDongCongTyMe',
       yAxisId: 'leftAxis',
       color: '#8F9596',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'line',
@@ -53,7 +53,7 @@ export let customPerfPTC2 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#ABB2B4',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -62,7 +62,7 @@ export let customPerfPTC2 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#6EA2DF',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -71,7 +71,7 @@ export let customPerfPTC2 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#202222',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -80,7 +80,7 @@ export let customPerfPTC2 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#0D6B64',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
   ],
   yAxis: {
@@ -99,7 +99,7 @@ export let customPerfPTC3 = {
       yAxisId: 'leftAxis',
       stack: 'stack',
       color: '#C8D0D2',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'line',
@@ -144,7 +144,7 @@ export let customPerfPTC4 = {
       dataKey: 'ebittrailing',
       yAxisId: 'leftAxis',
       color: '#C8D0D2',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
       // highlightScope: {
       //   highlighted: 'item',
       //   faded: 'global',
@@ -157,7 +157,7 @@ export let customPerfPTC4 = {
       yAxisId: 'leftAxis',
       color: '#6EA2DF',
       changeColor: true,
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'line',
@@ -202,7 +202,7 @@ export let customPerfPTC5 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#ABB2B4',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -211,7 +211,7 @@ export let customPerfPTC5 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#981F36',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -219,7 +219,7 @@ export let customPerfPTC5 = {
       dataKey: 'associateTrailing',
       yAxisId: 'rightAxis',
       color: '#0D6B64',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
   ],
   yAxis: {
@@ -237,7 +237,7 @@ export let customPerfPTC6 = {
       dataKey: 'ebitdatrailing',
       yAxisId: 'leftAxis',
       color: '#C8D0D2',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -245,20 +245,19 @@ export let customPerfPTC6 = {
       dataKey: 'ebittrailing',
       yAxisId: 'leftAxis',
       color: '#ABB2B4',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
-      type: 'line',
+      type: 'bar',
       label: 'Lãi vay TTM',
       dataKey: 'interestExpenseTrailing',
-      curve: 'linear',
-      yAxisId: 'rightAxis',
+      yAxisId: 'leftAxis',
       color: '#981F36',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
   ],
   yAxis: {
-    left: { type: 'bil', piecewise: false, showLineReference: true, divide: 2 },
+    left: { type: 'bil', piecewise: false, showLineReference: true },
     right: { type: 'bil', piecewise: true },
   },
 };
@@ -305,6 +304,15 @@ export let customPerfPTC8 = {
   series: [
     {
       type: 'line',
+      label: 'Biên lợi nhuận ròng TTM',
+      dataKey: 'nimgTrailing',
+      curve: 'linear',
+      yAxisId: 'leftAxis',
+      color: '#0D6B64',
+      valueFormatter: (v) => (v === null ? '' : v + ' %'),
+    },
+    {
+      type: 'line',
       label: 'Vòng quay tài sản',
       dataKey: 'assetTurnover',
       curve: 'linear',
@@ -323,15 +331,6 @@ export let customPerfPTC8 = {
     },
     {
       type: 'line',
-      label: 'Biên lợi nhuận ròng TTM',
-      dataKey: 'nimgTrailing',
-      curve: 'linear',
-      yAxisId: 'leftAxis',
-      color: '#0D6B64',
-      valueFormatter: (v) => (v === null ? '' : v + ' %'),
-    },
-    {
-      type: 'line',
       label: '(Nợ + VCSH)/VCSH',
       dataKey: 'dee',
       curve: 'linear',
@@ -341,8 +340,8 @@ export let customPerfPTC8 = {
     },
   ],
   yAxis: {
-    left: { type: 'per', piecewise: true, divide: 2 },
-    right: { type: 'time', piecewise: true, dash4: true },
+    left: { type: 'per', piecewise: true, divide: 1 },
+    right: { type: 'time', piecewise: true, dash3: true },
   },
 };
 
@@ -358,7 +357,7 @@ export let customBalPTC1 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#C8D0D2',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -367,7 +366,7 @@ export let customBalPTC1 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#93B6D6',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -376,7 +375,7 @@ export let customBalPTC1 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#6EA2DF',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -385,7 +384,7 @@ export let customBalPTC1 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#014388',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -394,7 +393,7 @@ export let customBalPTC1 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#2471BE',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -403,7 +402,7 @@ export let customBalPTC1 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#585D5D',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -412,7 +411,7 @@ export let customBalPTC1 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#8F9596',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
   ],
   yAxis: {
@@ -432,7 +431,7 @@ export let customBalPTC2 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#585D5D',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -441,7 +440,7 @@ export let customBalPTC2 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#8F9596',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -450,7 +449,7 @@ export let customBalPTC2 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#ABB2B4',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -459,7 +458,7 @@ export let customBalPTC2 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#CCBA95',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -468,7 +467,7 @@ export let customBalPTC2 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#AD5757',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
   ],
   yAxis: {
@@ -487,7 +486,7 @@ export let customBalPTC3 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#014388',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -495,7 +494,7 @@ export let customBalPTC3 = {
       dataKey: 'dappe',
       yAxisId: 'rightAxis',
       color: '#ABB2B4',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -504,12 +503,12 @@ export let customBalPTC3 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#2471BE',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
   ],
   yAxis: {
     left: { type: 'per', piecewise: false },
-    right: { type: 'bil', piecewise: true, showLineReference: true, opacity: 2 },
+    right: { type: 'bil', piecewise: true, showLineReference: true },
   },
 };
 export let customBalPTC4 = {
@@ -522,7 +521,7 @@ export let customBalPTC4 = {
       dataKey: 'netDebt',
       yAxisId: 'rightAxis',
       color: '#AD5757',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -530,7 +529,7 @@ export let customBalPTC4 = {
       dataKey: 'workingcap',
       yAxisId: 'rightAxis',
       color: '#CCBA95',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
   ],
   yAxis: {
@@ -632,7 +631,7 @@ export let customCFPTC1 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#C8D0D2',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -641,7 +640,7 @@ export let customCFPTC1 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#ABB2B4',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -650,7 +649,7 @@ export let customCFPTC1 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#8F9596',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'line',
@@ -659,7 +658,7 @@ export let customCFPTC1 = {
       curve: 'linear',
       yAxisId: 'rightAxis',
       color: '#2471BE',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
   ],
   yAxis: {
@@ -677,7 +676,7 @@ export let customCFPTC2 = {
       dataKey: 'netIncomeDANWC',
       yAxisId: 'leftAxis',
       color: '#014388',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -685,7 +684,7 @@ export let customCFPTC2 = {
       dataKey: 'netIncomeDANWCCAPEX',
       yAxisId: 'leftAxis',
       color: '#6EA2DF',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'line',
@@ -694,7 +693,7 @@ export let customCFPTC2 = {
       curve: 'linear',
       yAxisId: 'rightAxis',
       color: '#014388',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'line',
@@ -703,7 +702,7 @@ export let customCFPTC2 = {
       curve: 'linear',
       yAxisId: 'rightAxis',
       color: '#6EA2DF',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
   ],
   yAxis: {
@@ -722,7 +721,7 @@ export let customCFPTC3 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#AD5757',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -731,7 +730,7 @@ export let customCFPTC3 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#C8D0D2',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -740,7 +739,7 @@ export let customCFPTC3 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#93B6D6',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -749,7 +748,7 @@ export let customCFPTC3 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#6EA2DF',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'line',
@@ -758,7 +757,7 @@ export let customCFPTC3 = {
       curve: 'linear',
       yAxisId: 'rightAxis',
       color: '#202222',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
   ],
   yAxis: {
@@ -777,7 +776,7 @@ export let customCFPTC4 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#C8D0D2',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -786,7 +785,7 @@ export let customCFPTC4 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#93B6D6',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -795,7 +794,7 @@ export let customCFPTC4 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#8F9596',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -804,7 +803,7 @@ export let customCFPTC4 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#6EA2DF',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
   ],
   yAxis: {
@@ -906,7 +905,7 @@ export let customValPTC3 = {
       dataKey: 'salettm',
       yAxisId: 'leftAxis',
       color: '#C8D0D2',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'line',
@@ -915,7 +914,7 @@ export let customValPTC3 = {
       curve: 'linear',
       yAxisId: 'rightAxis',
       color: '#014388',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
   ],
   yAxis: {
@@ -933,7 +932,7 @@ export let customValPTC4 = {
       dataKey: 'salettm',
       yAxisId: 'leftAxis',
       color: '#C8D0D2',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'line',
@@ -969,7 +968,7 @@ export let customValPTC5 = {
       dataKey: 'nittm',
       yAxisId: 'leftAxis',
       color: '#C8D0D2',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'line',
@@ -978,7 +977,7 @@ export let customValPTC5 = {
       curve: 'linear',
       yAxisId: 'rightAxis',
       color: '#014388',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
   ],
   yAxis: {
@@ -996,7 +995,7 @@ export let customValPTC6 = {
       dataKey: 'nittm',
       yAxisId: 'leftAxis',
       color: '#C8D0D2',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'line',
@@ -1032,7 +1031,7 @@ export let customValPTC7 = {
       dataKey: 'ebitdattm',
       yAxisId: 'leftAxis',
       color: '#C8D0D2',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'line',
@@ -1064,11 +1063,11 @@ export let customValPTC8 = {
   series: [
     {
       type: 'bar',
-      label: 'Vốn chủ sở hữu',
+      label: 'Vốn chủ sở hữu trừ Lợi ích CĐTS',
       dataKey: 'capital',
       yAxisId: 'leftAxis',
       color: '#ABB2B4',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'line',
@@ -1077,7 +1076,7 @@ export let customValPTC8 = {
       curve: 'linear',
       yAxisId: 'rightAxis',
       color: '#014388',
-      valueFormatter: (v) => (v === null ? '' : v + ' tỷ đồng'),
+      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
   ],
   yAxis: {
