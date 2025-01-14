@@ -82,6 +82,7 @@ import './style.scss';
 export const TabChart = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const codeValue = searchParams.get('code') || '';
+  const tabValue = searchParams.get('tab') || '';
   const tab = window.localStorage.getItem('tab');
 
   const [value, setValue] = useState(tab - 0 || 0);
@@ -297,6 +298,7 @@ export const TabChart = () => {
 
   const handleChange = (event, newValue) => {
     window.localStorage.setItem('tab', newValue);
+    setSearchParams({ code: codeValue, tab: event.target.innerText });
     setValue(newValue);
   };
 
@@ -712,11 +714,12 @@ export const TabChart = () => {
       window.localStorage.setItem('tab', 3);
       setValue(3);
     }
-    if (tabType === 'PTC' && value - 0 === 3) {
+    if (tabType === 'PTC' && value - 0 === 3 && tabValue !== 'DÒNG TIỀN') {
       window.localStorage.setItem('tab', 4);
       setValue(4);
     }
     loadData();
+    setSearchParams({ code: codeValue, tab: tabValue });
   }, [codeValue, value, tabType]);
 
   console.log('dataChart', dataChart);
