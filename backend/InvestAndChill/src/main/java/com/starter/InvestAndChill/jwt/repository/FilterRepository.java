@@ -5,13 +5,26 @@ import java.util.List;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
-import com.starter.InvestAndChill.jwt.models.ChungKhoanReport;
-import com.starter.InvestAndChill.jwt.models.PTCCalculationKey;
-import com.starter.InvestAndChill.jwt.models.PhiTaiChinhCalculation;
+import com.starter.InvestAndChill.jwt.models.PTCReportQuy;
+import com.starter.InvestAndChill.jwt.models.ReportKey;
+import com.starter.InvestAndChill.pojo.FilterGiaTangCongSuatDTO;
+import com.starter.InvestAndChill.pojo.FilterNoNhieuSomChiTraDTO;
+import com.starter.InvestAndChill.pojo.FilterPhiTaiChinhDTO;
+import com.starter.InvestAndChill.pojo.FilterTheoDoiPreSalesDTO;
+import com.starter.InvestAndChill.pojo.FilterXuLyKhauHaoNangDTO;
 
-public interface FilterRepository extends JpaRepository<PhiTaiChinhCalculation, PTCCalculationKey>{
-	@Query("select v from view_chung_khoan_nam v where stock_code =:stock_code order by year desc, quarter desc")
-	List<PhiTaiChinhCalculation> findByStockForPerf(@Param("stock_code") String stock,Pageable pageable);
+public interface FilterRepository extends JpaRepository<PTCReportQuy, ReportKey>{
+	
+	@Query(name = "filter.giaTangCongSuat", nativeQuery = true)
+	List<FilterGiaTangCongSuatDTO> findGiaTangCongSuat();
+	
+	@Query(name = "filter.theoDoiPreSales", nativeQuery = true)
+	List<FilterTheoDoiPreSalesDTO> findTheoDoiPreSales();
+	
+	@Query(name = "filter.noNhieuSomChiTra", nativeQuery = true)
+	List<FilterNoNhieuSomChiTraDTO> findNoNhieuSomChiTra();
+	
+	@Query(name = "filter.xuLyKhauHaoNang", nativeQuery = true)
+	List<FilterXuLyKhauHaoNangDTO> findXuLyKhauHaoNang();
 }

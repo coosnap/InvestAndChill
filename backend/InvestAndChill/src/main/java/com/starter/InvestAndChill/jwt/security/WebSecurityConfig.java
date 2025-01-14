@@ -99,6 +99,7 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
         .antMatchers("/api/email/**").permitAll()
         .antMatchers("/api/upload/**").permitAll()
         .antMatchers("/api/report/**").permitAll()
+        .antMatchers("/api/filter/**").permitAll()
         .anyRequest().authenticated();
     
     http.authenticationProvider(authenticationProvider());
