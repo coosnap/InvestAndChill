@@ -1201,6 +1201,7 @@ export const TabChart = () => {
               dataKey: 'netFinancialAdjustTrailing',
               yAxisId: 'leftAxis',
               color: '#6EA2DF',
+              changeColor: true,
               valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
             },
             {
