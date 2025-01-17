@@ -361,16 +361,28 @@ export const TabChart = () => {
           let cf1, cf2, cf3, cf4;
           let val1, val2, val3, val4, val5, val6, val7, val8;
           if (value === 0) {
-            let callPerf1 = mapDataChart(customPerfPTC1, type.type);
-            let callPerf2 = mapDataChart(customPerfPTC2, type.type);
-            let callPerf3 = mapDataChart(customPerfPTC3, type.type);
-            let callPerf4 = mapDataChart(customPerfPTC4, type.type);
+            let callPerf1 = mapDataChart(customPerfPTC1, type.type, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
+            let callPerf2 = mapDataChart(customPerfPTC2, type.type, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
+            let callPerf3 = mapDataChart(customPerfPTC3, type.type, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
+            let callPerf4 = mapDataChart(customPerfPTC4, type.type, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
             let callPerf5 = mapDataChart(customPerfPTC5, type.type, {
-              categoryGapRatio: 0.5,
-              barGapRatio: -1,
+              categoryGapRatio: 0.3,
+              barGapRatio: -0.5,
             });
             let callPerf6 = mapDataChart(customPerfPTC6, type.type, {
-              categoryGapRatio: 0.5,
+              categoryGapRatio: 0.3,
               barGapRatio: -1,
             });
 
@@ -395,21 +407,36 @@ export const TabChart = () => {
           }
 
           if (value === 1) {
-            let callBal1 = mapDataChart(customBalPTC1, type.type);
+            let callBal1 = mapDataChart(customBalPTC1, type.type, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
             let bal2adjust = !checked.bal2adjust
               ? {
                   categoryGapRatio: -0.05,
                   barGapRatio: 0,
                 }
-              : null;
+              : {
+                  categoryGapRatio: 0.3,
+                  barGapRatio: 0,
+                };
             let callBal2 = mapDataChart(customBalPTC2, type.type, bal2adjust);
             let callBal3 = mapDataChart(customBalPTC3, type.type, {
-              categoryGapRatio: 0.5,
+              categoryGapRatio: 0.3,
               barGapRatio: -1,
             });
-            let callBal4 = mapDataChart(customBalPTC4, type.type);
-            let callBal5 = mapDataChart(customBalPTC5, type.type);
-            let callBal6 = mapDataChart(customBalPTC6, type.type);
+            let callBal4 = mapDataChart(customBalPTC4, type.type, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
+            let callBal5 = mapDataChart(customBalPTC5, type.type, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
+            let callBal6 = mapDataChart(customBalPTC6, type.type, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
 
             Promise.all([callBal1, callBal2, callBal3, callBal4, callBal5, callBal6])
               .then((values) => {
@@ -448,10 +475,22 @@ export const TabChart = () => {
           }
 
           if (value === 3) {
-            let callCf1 = mapDataChart(customCFPTC1, type.type);
-            let callCf2 = mapDataChart(customCFPTC2, type.type);
-            let callCf3 = mapDataChart(customCFPTC3, type.type);
-            let callCf4 = mapDataChart(customCFPTC4, type.type);
+            let callCf1 = mapDataChart(customCFPTC1, type.type, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
+            let callCf2 = mapDataChart(customCFPTC2, type.type, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
+            let callCf3 = mapDataChart(customCFPTC3, type.type, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
+            let callCf4 = mapDataChart(customCFPTC4, type.type, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
 
             Promise.all([callCf1, callCf2, callCf3, callCf4])
               .then((values) => {
@@ -472,12 +511,30 @@ export const TabChart = () => {
           if (value === 4) {
             let callVal1 = mapDataChart(customValPTC1, type.type);
             let callVal2 = mapDataChart(customValPTC2, type.type);
-            let callVal3 = mapDataChart(customValPTC3, type.type);
-            let callVal4 = mapDataChart(customValPTC4, type.type);
-            let callVal5 = mapDataChart(customValPTC5, type.type);
-            let callVal6 = mapDataChart(customValPTC6, type.type);
-            let callVal7 = mapDataChart(customValPTC7, type.type);
-            let callVal8 = mapDataChart(customValPTC8, type.type);
+            let callVal3 = mapDataChart(customValPTC3, type.type, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
+            let callVal4 = mapDataChart(customValPTC4, type.type, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
+            let callVal5 = mapDataChart(customValPTC5, type.type, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
+            let callVal6 = mapDataChart(customValPTC6, type.type, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
+            let callVal7 = mapDataChart(customValPTC7, type.type, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
+            let callVal8 = mapDataChart(customValPTC8, type.type, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
 
             Promise.all([
               callVal1,
@@ -518,11 +575,26 @@ export const TabChart = () => {
           let val1, val2, val3, val4;
           let other1;
           if (value === 0) {
-            let callPerf1 = mapDataChart(customPerfCK1, type.type);
-            let callPerf3 = mapDataChart(customPerfCK3, type.type);
-            let callPerf4 = mapDataChart(customPerfCK4, type.type);
-            let callBal4 = mapDataChart(customBalCK4, type.type);
-            let callBal5 = mapDataChart(customBalCK5, type.type);
+            let callPerf1 = mapDataChart(customPerfCK1, type.type, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
+            let callPerf3 = mapDataChart(customPerfCK3, type.type, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
+            let callPerf4 = mapDataChart(customPerfCK4, type.type, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
+            let callBal4 = mapDataChart(customBalCK4, type.type, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
+            let callBal5 = mapDataChart(customBalCK5, type.type, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
 
             Promise.all([callPerf1, callPerf3, callPerf4, callBal4, callBal5])
               .then((values) => {
@@ -543,10 +615,22 @@ export const TabChart = () => {
           }
 
           if (value === 1) {
-            let callBal1 = mapDataChart(customBalCK1, type.type);
-            let callBal2 = mapDataChart(customBalCK2, type.type);
-            let callBal3 = mapDataChart(customBalCK3, type.type);
-            let callOther1 = mapDataChart(customOtherCK1, type.type);
+            let callBal1 = mapDataChart(customBalCK1, type.type, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
+            let callBal2 = mapDataChart(customBalCK2, type.type, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
+            let callBal3 = mapDataChart(customBalCK3, type.type, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
+            let callOther1 = mapDataChart(customOtherCK1, type.type, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
 
             Promise.all([callBal1, callBal2, callBal3, callOther1])
               .then((values) => {
@@ -583,8 +667,14 @@ export const TabChart = () => {
           if (value === 3) {
             let callVal1 = mapDataChart(customValCK1, type.type);
             let callVal2 = mapDataChart(customValCK2, type.type);
-            let callVal3 = mapDataChart(customValCK3, type.type);
-            let callVal4 = mapDataChart(customValCK4, type.type);
+            let callVal3 = mapDataChart(customValCK3, type.type, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
+            let callVal4 = mapDataChart(customValCK4, type.type, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
 
             Promise.all([callVal1, callVal2, callVal3, callVal4])
               .then((values) => {
@@ -607,9 +697,18 @@ export const TabChart = () => {
           let bal1, bal2, bal3, bal4, bal5, bal6, bal7, bal8, bal9, bal10, bal11, bal12;
           let val1, val2, val3, val4;
           if (value === 0) {
-            let callPerf1 = mapDataChart(customNHPerf1, type.type);
-            let callPerf2 = mapDataChart(customNHPerf2, type.type);
-            let callPerf3 = mapDataChart(customNHPerf3, type.type);
+            let callPerf1 = mapDataChart(customNHPerf1, type.type, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
+            let callPerf2 = mapDataChart(customNHPerf2, type.type, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
+            let callPerf3 = mapDataChart(customNHPerf3, type.type, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
             let callPerf4 = mapDataChart(customNHPerf4, type.type);
 
             Promise.all([callPerf1, callPerf2, callPerf3, callPerf4])
@@ -629,17 +728,38 @@ export const TabChart = () => {
           }
 
           if (value === 1) {
-            let callBal1 = mapDataChart(customNHBal1, type.type);
-            let callBal2 = mapDataChart(customNHBal2, type.type);
-            let callBal3 = mapDataChart(customNHBal3, type.type);
-            let callBal4 = mapDataChart(customNHBal4, type.type);
+            let callBal1 = mapDataChart(customNHBal1, type.type, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
+            let callBal2 = mapDataChart(customNHBal2, type.type, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
+            let callBal3 = mapDataChart(customNHBal3, type.type, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
+            let callBal4 = mapDataChart(customNHBal4, type.type, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
             let callBal5 = mapDataChart(customNHBal5, type.type, {
-              categoryGapRatio: 0.5,
+              categoryGapRatio: 0.3,
               barGapRatio: -1,
             });
-            let callBal6 = mapDataChart(customNHBal6, type.type);
-            let callBal7 = mapDataChart(customNHBal7, type.type);
-            let callBal8 = mapDataChart(customNHBal8, type.type);
+            let callBal6 = mapDataChart(customNHBal6, type.type, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
+            let callBal7 = mapDataChart(customNHBal7, type.type, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
+            let callBal8 = mapDataChart(customNHBal8, type.type, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
 
             Promise.all([
               callBal1,
@@ -675,10 +795,22 @@ export const TabChart = () => {
           }
 
           if (value === 2) {
-            let callBal9 = mapDataChart(customNHBal9, type.type);
-            let callBal10 = mapDataChart(customNHBal10, type.type);
-            let callBal11 = mapDataChart(customNHBal11, type.type);
-            let callBal12 = mapDataChart(customNHBal12, type.type);
+            let callBal9 = mapDataChart(customNHBal9, type.type, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
+            let callBal10 = mapDataChart(customNHBal10, type.type, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
+            let callBal11 = mapDataChart(customNHBal11, type.type, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
+            let callBal12 = mapDataChart(customNHBal12, type.type, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
 
             Promise.all([callBal9, callBal10, callBal11, callBal12])
               .then((values) => {
@@ -699,8 +831,14 @@ export const TabChart = () => {
           if (value === 3) {
             let callVal1 = mapDataChart(customNHVal1, type.type);
             let callVal2 = mapDataChart(customNHVal2, type.type);
-            let callVal3 = mapDataChart(customNHVal3, type.type);
-            let callVal4 = mapDataChart(customNHVal4, type.type);
+            let callVal3 = mapDataChart(customNHVal3, type.type, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
+            let callVal4 = mapDataChart(customNHVal4, type.type, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
 
             Promise.all([callVal1, callVal2, callVal3, callVal4])
               .then((values) => {
@@ -1030,13 +1168,19 @@ export const TabChart = () => {
     if (tabType === 'PTC') {
       if (typeChart === 'perf1') {
         customPerfPTC1.year = checked.perf1;
-        let newPerf = await mapDataChart(customPerfPTC1, tabType);
+        let newPerf = await mapDataChart(customPerfPTC1, tabType, {
+          categoryGapRatio: 0.3,
+          barGapRatio: 0,
+        });
         setDataChart((prev) => ({ ...prev, perf1: newPerf }));
         setChecked((prev) => ({ ...prev, perf1: !prev.perf1 }));
       }
       if (typeChart === 'perf2') {
         customPerfPTC2.year = checked.perf2;
-        let newPerf = await mapDataChart(customPerfPTC2, tabType);
+        let newPerf = await mapDataChart(customPerfPTC2, tabType, {
+          categoryGapRatio: 0.3,
+          barGapRatio: 0,
+        });
         setDataChart((prev) => ({ ...prev, perf2: newPerf }));
         setChecked((prev) => ({ ...prev, perf2: !prev.perf2 }));
       }
@@ -1078,7 +1222,10 @@ export const TabChart = () => {
               valueFormatter: (v) => (v === null ? '' : v + ' %'),
             },
           ];
-          let newPerf = await mapDataChart(customPerfPTC4, tabType);
+          let newPerf = await mapDataChart(customPerfPTC4, tabType, {
+            categoryGapRatio: 0.3,
+            barGapRatio: 0,
+          });
           setDataChart((prev) => ({ ...prev, perf4: newPerf }));
           setChecked((prev) => ({ ...prev, perf4: !prev.perf4 }));
         } else {
@@ -1119,7 +1266,10 @@ export const TabChart = () => {
               valueFormatter: (v) => (v === null ? '' : v + ' %'),
             },
           ];
-          let newPerf = await mapDataChart(customPerfPTC4, tabType);
+          let newPerf = await mapDataChart(customPerfPTC4, tabType, {
+            categoryGapRatio: 0.3,
+            barGapRatio: 0,
+          });
           setDataChart((prev) => ({ ...prev, perf4: newPerf }));
           setChecked((prev) => ({ ...prev, perf4: !prev.perf4 }));
         }
@@ -1147,8 +1297,8 @@ export const TabChart = () => {
           };
         }
         let newPerf = await mapDataChart(customPerfPTC5, tabType, {
-          categoryGapRatio: 0.5,
-          barGapRatio: -1,
+          categoryGapRatio: 0.2,
+          barGapRatio: -0.5,
         });
         setDataChart((prev) => ({ ...prev, perf5: newPerf }));
         setChecked((prev) => ({ ...prev, perf5: !prev.perf5 }));
@@ -1161,7 +1311,10 @@ export const TabChart = () => {
       }
       if (typeChart === 'bal1') {
         customBalPTC1.year = checked.bal1;
-        let newPerf = await mapDataChart(customBalPTC1, tabType);
+        let newPerf = await mapDataChart(customBalPTC1, tabType, {
+          categoryGapRatio: 0.3,
+          barGapRatio: 0,
+        });
         setDataChart((prev) => ({ ...prev, bal1: newPerf }));
         setChecked((prev) => ({ ...prev, bal1: !prev.bal1 }));
       }
@@ -1331,7 +1484,10 @@ export const TabChart = () => {
             console.log('error', error);
           }
         }
-        let newPerf = await mapDataChart(customBalPTC1, tabType);
+        let newPerf = await mapDataChart(customBalPTC1, tabType, {
+          categoryGapRatio: 0.3,
+          barGapRatio: 0,
+        });
         setDataChart((prev) => ({ ...prev, bal1: newPerf }));
         setChecked((prev) => ({ ...prev, bal1adjust: !prev.bal1adjust }));
       }
@@ -1344,7 +1500,10 @@ export const TabChart = () => {
             barGapRatio: 0,
           });
         } else {
-          newPerf = await mapDataChart(customBalPTC2, tabType);
+          newPerf = await mapDataChart(customBalPTC2, tabType, {
+            categoryGapRatio: 0.3,
+            barGapRatio: 0,
+          });
         }
         setDataChart((prev) => ({ ...prev, bal2: newPerf }));
         setChecked((prev) => ({ ...prev, bal2: !prev.bal2 }));
@@ -1461,7 +1620,10 @@ export const TabChart = () => {
             left: { type: 'per', piecewise: false, legendNum: 2 },
             right: { type: 'bil', piecewise: false, showLineReference: true },
           };
-          newPerf = await mapDataChart(customBalPTC2, tabType);
+          newPerf = await mapDataChart(customBalPTC2, tabType, {
+            categoryGapRatio: 0.3,
+            barGapRatio: 0,
+          });
         }
         setDataChart((prev) => ({ ...prev, bal2: newPerf }));
         setChecked((prev) => ({ ...prev, bal2adjust: !prev.bal2adjust }));
@@ -1469,7 +1631,7 @@ export const TabChart = () => {
       if (typeChart === 'bal3') {
         customBalPTC3.year = checked.bal3;
         let newPerf = await mapDataChart(customBalPTC3, tabType, {
-          categoryGapRatio: 0.5,
+          categoryGapRatio: 0.3,
           barGapRatio: -1,
         });
         setDataChart((prev) => ({ ...prev, bal3: newPerf }));
@@ -1477,37 +1639,52 @@ export const TabChart = () => {
       }
       if (typeChart === 'bal4') {
         customBalPTC4.year = checked.bal4;
-        let newPerf = await mapDataChart(customBalPTC4, tabType);
+        let newPerf = await mapDataChart(customBalPTC4, tabType, {
+          categoryGapRatio: 0.3,
+          barGapRatio: 0,
+        });
         setDataChart((prev) => ({ ...prev, bal4: newPerf }));
         setChecked((prev) => ({ ...prev, bal4: !prev.bal4 }));
       }
       if (typeChart === 'bal6') {
         customBalPTC6.year = checked.bal6;
-        let newPerf = await mapDataChart(customBalPTC6, tabType);
+        let newPerf = await mapDataChart(customBalPTC6, tabType, {
+          categoryGapRatio: 0.3,
+          barGapRatio: 0,
+        });
         setDataChart((prev) => ({ ...prev, bal6: newPerf }));
         setChecked((prev) => ({ ...prev, bal6: !prev.bal6 }));
       }
       if (typeChart === 'cf1') {
         customCFPTC1.year = checked.cf1;
-        let newPerf = await mapDataChart(customCFPTC1, tabType);
+        let newPerf = await mapDataChart(customCFPTC1, tabType, {
+          categoryGapRatio: 0.3,
+          barGapRatio: 0,
+        });
         setDataChart((prev) => ({ ...prev, cf1: newPerf }));
         setChecked((prev) => ({ ...prev, cf1: !prev.cf1 }));
       }
       if (typeChart === 'cf2') {
         customCFPTC2.year = checked.cf2;
-        let newPerf = await mapDataChart(customCFPTC2, tabType);
+        let newPerf = await mapDataChart(customCFPTC2, tabType, {
+          categoryGapRatio: 0.3,
+          barGapRatio: 0,
+        });
         setDataChart((prev) => ({ ...prev, cf2: newPerf }));
         setChecked((prev) => ({ ...prev, cf2: !prev.cf2 }));
       }
       if (typeChart === 'cf3') {
         customCFPTC3.year = checked.cf3;
-        let newPerf = await mapDataChart(customCFPTC3, tabType);
+        let newPerf = await mapDataChart(customCFPTC3, tabType, {
+          categoryGapRatio: 0.3,
+          barGapRatio: 0,
+        });
         setDataChart((prev) => ({ ...prev, cf3: newPerf }));
         setChecked((prev) => ({ ...prev, cf3: !prev.cf3 }));
       }
       if (typeChart === 'cf3adjust') {
         if (checked.cf3adjust) {
-          customCFPTC3.series = customCFPTC3.series = [
+          customCFPTC3.series = [
             {
               type: 'bar',
               label: 'Nợ vay',
@@ -1554,7 +1731,10 @@ export const TabChart = () => {
               valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
             },
           ];
-          let newPerf = await mapDataChart(customCFPTC3, tabType);
+          let newPerf = await mapDataChart(customCFPTC3, tabType, {
+            categoryGapRatio: 0.3,
+            barGapRatio: 0,
+          });
           setDataChart((prev) => ({ ...prev, cf3: newPerf }));
           setChecked((prev) => ({ ...prev, cf3adjust: !prev.cf3adjust }));
         } else {
@@ -1614,14 +1794,20 @@ export const TabChart = () => {
               valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
             },
           ];
-          let newPerf = await mapDataChart(customCFPTC3, tabType);
+          let newPerf = await mapDataChart(customCFPTC3, tabType, {
+            categoryGapRatio: 0.3,
+            barGapRatio: 0,
+          });
           setDataChart((prev) => ({ ...prev, cf3: newPerf }));
           setChecked((prev) => ({ ...prev, cf3adjust: !prev.cf3adjust }));
         }
       }
       if (typeChart === 'cf4') {
         customCFPTC4.year = checked.cf4;
-        let newPerf = await mapDataChart(customCFPTC4, tabType);
+        let newPerf = await mapDataChart(customCFPTC4, tabType, {
+          categoryGapRatio: 0.3,
+          barGapRatio: 0,
+        });
         setDataChart((prev) => ({ ...prev, cf4: newPerf }));
         setChecked((prev) => ({ ...prev, cf4: !prev.cf4 }));
       }
@@ -1629,7 +1815,10 @@ export const TabChart = () => {
     if (tabType === 'ChungKhoan') {
       if (typeChart === 'perf1') {
         customPerfCK1.year = checkedCK.perf1;
-        let newPerf = await mapDataChart(customPerfCK1, tabType);
+        let newPerf = await mapDataChart(customPerfCK1, tabType, {
+          categoryGapRatio: 0.3,
+          barGapRatio: 0,
+        });
         setDataChart((prev) => ({ ...prev, perf1: newPerf }));
         setCheckedCK((prev) => ({ ...prev, perf1: !prev.perf1 }));
       }
@@ -1641,13 +1830,19 @@ export const TabChart = () => {
       }
       if (typeChart === 'perf3') {
         customPerfCK3.year = checkedCK.perf3;
-        let newPerf = await mapDataChart(customPerfCK3, tabType);
+        let newPerf = await mapDataChart(customPerfCK3, tabType, {
+          categoryGapRatio: 0.3,
+          barGapRatio: 0,
+        });
         setDataChart((prev) => ({ ...prev, perf3: newPerf }));
         setCheckedCK((prev) => ({ ...prev, perf3: !prev.perf3 }));
       }
       if (typeChart === 'bal1') {
         customBalCK1.year = checkedCK.bal1;
-        let newPerf = await mapDataChart(customBalCK1, tabType);
+        let newPerf = await mapDataChart(customBalCK1, tabType, {
+          categoryGapRatio: 0.3,
+          barGapRatio: 0,
+        });
         setDataChart((prev) => ({ ...prev, bal1: newPerf }));
         setCheckedCK((prev) => ({ ...prev, bal1: !prev.bal1 }));
       }
@@ -1660,7 +1855,10 @@ export const TabChart = () => {
             barGapRatio: 0,
           });
         } else {
-          newPerf = await mapDataChart(customBalCK2, tabType);
+          newPerf = await mapDataChart(customBalCK2, tabType, {
+            categoryGapRatio: 0.3,
+            barGapRatio: 0,
+          });
         }
         setDataChart((prev) => ({ ...prev, bal2: newPerf }));
         setCheckedCK((prev) => ({ ...prev, bal2: !prev.bal2 }));
@@ -1800,7 +1998,10 @@ export const TabChart = () => {
               left: { type: 'bil', piecewise: false },
               right: { type: 'bil', piecewise: false, showLineReference: true },
             };
-            newPerf = await mapDataChart(customBalCK2, tabType);
+            newPerf = await mapDataChart(customBalCK2, tabType, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
           } catch (error) {
             console.log('error', error);
           }
@@ -1817,7 +2018,10 @@ export const TabChart = () => {
             barGapRatio: 0,
           });
         } else {
-          newPerf = await mapDataChart(customBalCK3, tabType);
+          newPerf = await mapDataChart(customBalCK3, tabType, {
+            categoryGapRatio: 0.3,
+            barGapRatio: 0,
+          });
         }
         setDataChart((prev) => ({ ...prev, bal3: newPerf }));
         setCheckedCK((prev) => ({ ...prev, bal3: !prev.bal3 }));
@@ -1939,7 +2143,10 @@ export const TabChart = () => {
               left: { type: 'bil', piecewise: false, showLineReference: true },
               right: { type: 'bil', piecewise: false },
             };
-            newPerf = await mapDataChart(customBalCK3, tabType);
+            newPerf = await mapDataChart(customBalCK3, tabType, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
           } catch (error) {
             console.log('error', error);
           }
@@ -1956,7 +2163,10 @@ export const TabChart = () => {
             barGapRatio: 0,
           });
         } else {
-          newPerf = await mapDataChart(customBalCK4, tabType);
+          newPerf = await mapDataChart(customBalCK4, tabType, {
+            categoryGapRatio: 0.3,
+            barGapRatio: 0,
+          });
         }
         setDataChart((prev) => ({ ...prev, bal4: newPerf }));
         setCheckedCK((prev) => ({ ...prev, bal4: !prev.bal4 }));
@@ -2114,7 +2324,10 @@ export const TabChart = () => {
               left: { type: 'bil', piecewise: false },
               right: { type: 'bil', piecewise: false, showLineReference: true },
             };
-            newPerf = await mapDataChart(customBalCK4, tabType);
+            newPerf = await mapDataChart(customBalCK4, tabType, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
           } catch (error) {
             console.log('error', error);
           }
@@ -2132,7 +2345,10 @@ export const TabChart = () => {
                 categoryGapRatio: -0.05,
                 barGapRatio: 0,
               }
-            : null
+            : {
+                categoryGapRatio: 0.3,
+                barGapRatio: 0,
+              }
         );
         setDataChart((prev) => ({ ...prev, bal5: newPerf }));
         setCheckedCK((prev) => ({ ...prev, bal5: !prev.bal5 }));
@@ -2297,7 +2513,10 @@ export const TabChart = () => {
               left: { type: 'bil', piecewise: false },
               right: { type: 'bil', piecewise: false, showLineReference: true },
             };
-            newPerf = await mapDataChart(customBalCK5, tabType);
+            newPerf = await mapDataChart(customBalCK5, tabType, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
           } catch (error) {
             console.log('error', error);
           }
@@ -2307,7 +2526,10 @@ export const TabChart = () => {
       }
       if (typeChart === 'other1') {
         customOtherCK1.year = checkedCK.other1;
-        let newPerf = await mapDataChart(customOtherCK1, tabType);
+        let newPerf = await mapDataChart(customOtherCK1, tabType, {
+          categoryGapRatio: 0.3,
+          barGapRatio: 0,
+        });
         setDataChart((prev) => ({ ...prev, other1: newPerf }));
         setCheckedCK((prev) => ({ ...prev, other1: !prev.other1 }));
       }
@@ -2315,13 +2537,19 @@ export const TabChart = () => {
     if (tabType === 'NganHang') {
       if (typeChart === 'perf1') {
         customNHPerf1.year = checkedBank.perf1;
-        let newPerf = await mapDataChart(customNHPerf1, tabType);
+        let newPerf = await mapDataChart(customNHPerf1, tabType, {
+          categoryGapRatio: 0.3,
+          barGapRatio: 0,
+        });
         setDataChart((prev) => ({ ...prev, perf1: newPerf }));
         setCheckedBank((prev) => ({ ...prev, perf1: !prev.perf1 }));
       }
       if (typeChart === 'perf2') {
         customNHPerf2.year = checkedBank.perf2;
-        let newPerf = await mapDataChart(customNHPerf2, tabType);
+        let newPerf = await mapDataChart(customNHPerf2, tabType, {
+          categoryGapRatio: 0.3,
+          barGapRatio: 0,
+        });
         setDataChart((prev) => ({ ...prev, perf2: newPerf }));
         setCheckedBank((prev) => ({ ...prev, perf2: !prev.perf2 }));
       }
@@ -2334,7 +2562,10 @@ export const TabChart = () => {
             barGapRatio: 0,
           });
         } else {
-          newPerf = await mapDataChart(customNHPerf3, tabType);
+          newPerf = await mapDataChart(customNHPerf3, tabType, {
+            categoryGapRatio: 0.3,
+            barGapRatio: 0,
+          });
         }
         setDataChart((prev) => ({ ...prev, perf3: newPerf }));
         setCheckedBank((prev) => ({ ...prev, perf3: !prev.perf3 }));
@@ -2423,7 +2654,10 @@ export const TabChart = () => {
               right: { type: 'bil', piecewise: false, showLineReference: true },
               left: { type: 'bil', piecewise: false },
             };
-            newPerf = await mapDataChart(customNHPerf3, tabType);
+            newPerf = await mapDataChart(customNHPerf3, tabType, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
           } catch (error) {
             console.log('error', error);
           }
@@ -2446,7 +2680,10 @@ export const TabChart = () => {
             barGapRatio: 0,
           });
         } else {
-          newPerf = await mapDataChart(customNHBal1, tabType);
+          newPerf = await mapDataChart(customNHBal1, tabType, {
+            categoryGapRatio: 0.3,
+            barGapRatio: 0,
+          });
         }
         setDataChart((prev) => ({ ...prev, bal1: newPerf }));
         setCheckedBank((prev) => ({ ...prev, bal1: !prev.bal1 }));
@@ -2554,7 +2791,10 @@ export const TabChart = () => {
               right: { type: 'bil', piecewise: false, showLineReference: true },
               left: { type: 'bil', piecewise: false },
             };
-            newPerf = await mapDataChart(customNHBal1, tabType);
+            newPerf = await mapDataChart(customNHBal1, tabType, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
           } catch (error) {
             console.log('error', error);
           }
@@ -2571,7 +2811,10 @@ export const TabChart = () => {
             barGapRatio: 0,
           });
         } else {
-          newPerf = await mapDataChart(customNHBal2, tabType);
+          newPerf = await mapDataChart(customNHBal2, tabType, {
+            categoryGapRatio: 0.3,
+            barGapRatio: 0,
+          });
         }
         setDataChart((prev) => ({ ...prev, bal2: newPerf }));
         setCheckedBank((prev) => ({ ...prev, bal2: !prev.bal2 }));
@@ -2698,7 +2941,10 @@ export const TabChart = () => {
               right: { type: 'bil', piecewise: false, showLineReference: true },
               left: { type: 'bil', piecewise: false },
             };
-            newPerf = await mapDataChart(customNHBal2, tabType);
+            newPerf = await mapDataChart(customNHBal2, tabType, {
+              categoryGapRatio: 0.3,
+              barGapRatio: 0,
+            });
           } catch (error) {
             console.log('error', error);
           }
@@ -2708,20 +2954,26 @@ export const TabChart = () => {
       }
       if (typeChart === 'bal3') {
         customNHBal3.year = checkedBank.bal3;
-        let newPerf = await mapDataChart(customNHBal3, tabType);
+        let newPerf = await mapDataChart(customNHBal3, tabType, {
+          categoryGapRatio: 0.3,
+          barGapRatio: 0,
+        });
         setDataChart((prev) => ({ ...prev, bal3: newPerf }));
         setCheckedBank((prev) => ({ ...prev, bal3: !prev.bal3 }));
       }
       if (typeChart === 'bal4') {
         customNHBal4.year = checkedBank.bal4;
-        let newPerf = await mapDataChart(customNHBal4, tabType);
+        let newPerf = await mapDataChart(customNHBal4, tabType, {
+          categoryGapRatio: 0.3,
+          barGapRatio: 0,
+        });
         setDataChart((prev) => ({ ...prev, bal4: newPerf }));
         setCheckedBank((prev) => ({ ...prev, bal4: !prev.bal4 }));
       }
       if (typeChart === 'bal5') {
         customNHBal5.year = checkedBank.bal5;
         let newPerf = await mapDataChart(customNHBal5, tabType, {
-          categoryGapRatio: 0.5,
+          categoryGapRatio: 0.3,
           barGapRatio: -1,
         });
         setDataChart((prev) => ({ ...prev, bal5: newPerf }));
@@ -2729,19 +2981,28 @@ export const TabChart = () => {
       }
       if (typeChart === 'bal6') {
         customNHBal6.year = checkedBank.bal6;
-        let newPerf = await mapDataChart(customNHBal6, tabType);
+        let newPerf = await mapDataChart(customNHBal6, tabType, {
+          categoryGapRatio: 0.3,
+          barGapRatio: 0,
+        });
         setDataChart((prev) => ({ ...prev, bal6: newPerf }));
         setCheckedBank((prev) => ({ ...prev, bal6: !prev.bal6 }));
       }
       if (typeChart === 'bal7') {
         customNHBal7.year = checkedBank.bal7;
-        let newPerf = await mapDataChart(customNHBal7, tabType);
+        let newPerf = await mapDataChart(customNHBal7, tabType, {
+          categoryGapRatio: 0.3,
+          barGapRatio: 0,
+        });
         setDataChart((prev) => ({ ...prev, bal7: newPerf }));
         setCheckedBank((prev) => ({ ...prev, bal7: !prev.bal7 }));
       }
       if (typeChart === 'bal8') {
         customNHBal8.year = checkedBank.bal8;
-        let newPerf = await mapDataChart(customNHBal8, tabType);
+        let newPerf = await mapDataChart(customNHBal8, tabType, {
+          categoryGapRatio: 0.3,
+          barGapRatio: 0,
+        });
         setDataChart((prev) => ({ ...prev, bal8: newPerf }));
         setCheckedBank((prev) => ({ ...prev, bal8: !prev.bal8 }));
       }
@@ -2828,7 +3089,10 @@ export const TabChart = () => {
             console.log('error', error);
           }
         }
-        let newPerf = await mapDataChart(customNHBal9, tabType);
+        let newPerf = await mapDataChart(customNHBal9, tabType, {
+          categoryGapRatio: 0.3,
+          barGapRatio: 0,
+        });
         setDataChart((prev) => ({ ...prev, bal9: newPerf }));
         setCheckedBank((prev) => ({ ...prev, bal9adjust: !prev.bal9adjust }));
       }
@@ -2972,7 +3236,10 @@ export const TabChart = () => {
             console.log('error', error);
           }
         }
-        let newPerf = await mapDataChart(customNHBal10, tabType);
+        let newPerf = await mapDataChart(customNHBal10, tabType, {
+          categoryGapRatio: 0.3,
+          barGapRatio: 0,
+        });
         setDataChart((prev) => ({ ...prev, bal10: newPerf }));
         setCheckedBank((prev) => ({ ...prev, bal10adjust: !prev.bal10adjust }));
       }
@@ -3097,7 +3364,10 @@ export const TabChart = () => {
             console.log('error', error);
           }
         }
-        let newPerf = await mapDataChart(customNHBal11, tabType);
+        let newPerf = await mapDataChart(customNHBal11, tabType, {
+          categoryGapRatio: 0.3,
+          barGapRatio: 0,
+        });
         setDataChart((prev) => ({ ...prev, bal11: newPerf }));
         setCheckedBank((prev) => ({ ...prev, bal11adjust: !prev.bal11adjust }));
       }
@@ -3222,7 +3492,10 @@ export const TabChart = () => {
             console.log('error', error);
           }
         }
-        let newPerf = await mapDataChart(customNHBal12, tabType);
+        let newPerf = await mapDataChart(customNHBal12, tabType, {
+          categoryGapRatio: 0.3,
+          barGapRatio: 0,
+        });
         setDataChart((prev) => ({ ...prev, bal12: newPerf }));
         setCheckedBank((prev) => ({ ...prev, bal12adjust: !prev.bal12adjust }));
       }

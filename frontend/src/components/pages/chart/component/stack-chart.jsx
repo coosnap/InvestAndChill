@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 import { ChartsReferenceLine, ChartsTooltip, ChartsYAxis, useYScale } from '@mui/x-charts';
 import { BarPlot } from '@mui/x-charts/BarChart';
 import { ChartsXAxis } from '@mui/x-charts/ChartsXAxis';
-import { AreaPlot, LineHighlightPlot, LinePlot, MarkPlot } from '@mui/x-charts/LineChart';
+import { AreaPlot, LineHighlightPlot, LinePlot } from '@mui/x-charts/LineChart';
 import { ResponsiveChartContainer } from '@mui/x-charts/ResponsiveChartContainer';
 
 export default function NoStackChart(data) {
@@ -115,9 +115,6 @@ export default function NoStackChart(data) {
             display:
               data.data.yAxis.right.marker || data.data.yAxis.left.marker === 0 ? 'block' : 'none',
           },
-          '.MuiBarElement-series-auto-generated-id-0': {
-            opacity: data.data.yAxis.right.opacity || data.data.yAxis.left.opacity === 0 ? 0.5 : 1,
-          },
 
           '.MuiLineElement-series-auto-generated-id-1': {
             strokeDasharray:
@@ -128,9 +125,6 @@ export default function NoStackChart(data) {
           '.MuiMarkElement-series-auto-generated-id-1': {
             display:
               data.data.yAxis.right.marker || data.data.yAxis.left.marker === 1 ? 'block' : 'none',
-          },
-          '.MuiBarElement-series-auto-generated-id-1': {
-            opacity: data.data.yAxis.right.opacity || data.data.yAxis.left.opacity === 1 ? 0.5 : 1,
           },
 
           '.MuiLineElement-series-auto-generated-id-2': {
@@ -143,9 +137,6 @@ export default function NoStackChart(data) {
             display:
               data.data.yAxis.right.marker || data.data.yAxis.left.marker === 2 ? 'block' : 'none',
           },
-          '.MuiBarElement-series-auto-generated-id-2': {
-            opacity: data.data.yAxis.right.opacity || data.data.yAxis.left.opacity === 2 ? 0.5 : 1,
-          },
 
           '.MuiLineElement-series-auto-generated-id-3': {
             strokeDasharray:
@@ -156,9 +147,6 @@ export default function NoStackChart(data) {
           '.MuiMarkElement-series-auto-generated-id-3': {
             display:
               data.data.yAxis.right.marker || data.data.yAxis.left.marker === 3 ? 'block' : 'none',
-          },
-          '.MuiBarElement-series-auto-generated-id-3': {
-            opacity: data.data.yAxis.right.opacity || data.data.yAxis.left.opacity === 3 ? 0.5 : 1,
           },
 
           '.MuiLineElement-series-auto-generated-id-4': {
@@ -171,9 +159,6 @@ export default function NoStackChart(data) {
             display:
               data.data.yAxis.right.marker || data.data.yAxis.left.marker === 4 ? 'block' : 'none',
           },
-          '.MuiBarElement-series-auto-generated-id-4': {
-            opacity: data.data.yAxis.right.opacity || data.data.yAxis.left.opacity === 4 ? 0.5 : 1,
-          },
 
           '.MuiLineElement-series-auto-generated-id-5': {
             strokeDasharray:
@@ -184,9 +169,6 @@ export default function NoStackChart(data) {
           '.MuiMarkElement-series-auto-generated-id-5': {
             display:
               data.data.yAxis.right.marker || data.data.yAxis.left.marker === 5 ? 'block' : 'none',
-          },
-          '.MuiBarElement-series-auto-generated-id-5': {
-            opacity: data.data.yAxis.right.opacity || data.data.yAxis.left.opacity === 5 ? 0.5 : 1,
           },
         }}
       >
@@ -258,7 +240,10 @@ export default function NoStackChart(data) {
             disableTicks
             sx={{
               '.MuiChartsAxis-label': {
-                transform: 'translate(-24px, -164px)',
+                transform: 'translate(13px, -186px) scale(-1, 1)',
+                '& text': {
+                  transform: 'translate(0px, 1px) rotate3d(0, 28, 0, 197.5deg)',
+                },
               },
             }}
           />
@@ -304,7 +289,10 @@ export default function NoStackChart(data) {
             disableTicks
             sx={{
               '.MuiChartsAxis-label': {
-                transform: 'translate(5px, -164px)',
+                transform: 'translate(-9px, -186px) scale(-1, 1)',
+                '& text': {
+                  transform: 'translate(0px, 1px) rotate3d(0, 28, 0, 197.5deg)',
+                },
               },
             }}
           />

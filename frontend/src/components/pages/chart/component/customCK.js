@@ -234,14 +234,14 @@ export let customBalCK1 = {
       label: 'Lãi suất vay',
       dataKey: 'laiVay',
       curve: 'linear',
-      yAxisId: 'rightAxis',
+      yAxisId: 'leftAxis',
       color: '#981F36',
       valueFormatter: (v) => (v === null ? '' : v + ' %'),
     },
   ],
   yAxis: {
-    left: { type: 'per', piecewise: true, divide: 1 },
-    right: { type: 'per', piecewise: true },
+    left: { type: 'per', piecewise: false, divide: 1 },
+    right: { type: 'per', piecewise: false },
   },
 };
 export let customBalCK2 = {

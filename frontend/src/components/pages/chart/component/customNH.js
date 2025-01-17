@@ -695,8 +695,8 @@ export let customNHVal1 = {
     },
   ],
   yAxis: {
-    left: { type: 'bil', piecewise: false },
-    right: { type: 'per', piecewise: true, dash2: true },
+    left: { type: 'per', piecewise: false },
+    right: { type: 'time', piecewise: true, dash2: true },
   },
 };
 export let customNHVal2 = {
@@ -723,8 +723,8 @@ export let customNHVal2 = {
     },
   ],
   yAxis: {
-    left: { type: 'time', piecewise: false },
-    right: { type: 'per', piecewise: true, dash1: true },
+    left: { type: 'time', piecewise: true },
+    right: { type: 'per', piecewise: false, dash1: true },
   },
 };
 export let customNHVal3 = {

@@ -224,7 +224,7 @@ export let customPerfPTC5 = {
   ],
   yAxis: {
     left: { type: 'bil', piecewise: false },
-    right: { type: 'bil', piecewise: false, showLineReference: true, opacity: 2 },
+    right: { type: 'bil', piecewise: false, showLineReference: true },
   },
 };
 export let customPerfPTC6 = {
