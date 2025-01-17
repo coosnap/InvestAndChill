@@ -8,7 +8,7 @@ export let customNHPerf1 = {
       dataKey: 'tongThuNhapHoatDong',
       yAxisId: 'leftAxis',
       color: '#C8D0D2',
-      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -16,7 +16,7 @@ export let customNHPerf1 = {
       dataKey: 'coDongCuaCongTyMe',
       yAxisId: 'leftAxis',
       color: '#8F9596',
-      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'line',
@@ -25,7 +25,7 @@ export let customNHPerf1 = {
       curve: 'linear',
       yAxisId: 'rightAxis',
       color: '#0D6B64',
-      valueFormatter: (v) => (v === null ? '' : v + ' %'),
+      valueFormatter: (v) => (!v ? '' : v + ' %'),
     },
   ],
   yAxis: {
@@ -44,7 +44,7 @@ export let customNHPerf2 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#8F9596',
-      valueFormatter: (v) => (v === null ? '' : v + ' %'),
+      valueFormatter: (v) => (!v ? '' : v + ' %'),
     },
     {
       type: 'bar',
@@ -53,7 +53,7 @@ export let customNHPerf2 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#C8D0D2',
-      valueFormatter: (v) => (v === null ? '' : v + ' %'),
+      valueFormatter: (v) => (!v ? '' : v + ' %'),
     },
     {
       type: 'line',
@@ -62,7 +62,7 @@ export let customNHPerf2 = {
       yAxisId: 'rightAxis',
       curve: 'linear',
       color: '#202222',
-      valueFormatter: (v) => (v === null ? '' : v + ' %'),
+      valueFormatter: (v) => (!v ? '' : v + ' %'),
     },
   ],
   yAxis: {
@@ -81,7 +81,7 @@ export let customNHPerf3 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#8F9596',
-      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -90,7 +90,7 @@ export let customNHPerf3 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#C8D0D2',
-      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -99,7 +99,7 @@ export let customNHPerf3 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#202222',
-      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
   ],
   yAxis: {
@@ -118,7 +118,7 @@ export let customNHPerf4 = {
       curve: 'linear',
       yAxisId: 'leftAxis',
       color: '#013368',
-      valueFormatter: (v) => (v === null ? '' : v + ' %'),
+      valueFormatter: (v) => (!v ? '' : v + ' %'),
     },
     {
       type: 'line',
@@ -127,7 +127,7 @@ export let customNHPerf4 = {
       curve: 'linear',
       yAxisId: 'rightAxis',
       color: '#013368',
-      valueFormatter: (v) => (v === null ? '' : v + ' %'),
+      valueFormatter: (v) => (!v ? '' : v + ' %'),
     },
   ],
   yAxis: {
@@ -147,7 +147,7 @@ export let customNHBal1 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#C8D0D2',
-      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -156,7 +156,7 @@ export let customNHBal1 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#93B6D6',
-      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -165,7 +165,7 @@ export let customNHBal1 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#6EA2DF',
-      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -174,7 +174,7 @@ export let customNHBal1 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#014388',
-      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
   ],
   yAxis: {
@@ -193,7 +193,7 @@ export let customNHBal2 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#C8D0D2',
-      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -202,7 +202,7 @@ export let customNHBal2 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#93B6D6',
-      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -211,7 +211,7 @@ export let customNHBal2 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#6EA2DF',
-      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -220,7 +220,7 @@ export let customNHBal2 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#585D5D',
-      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -229,7 +229,7 @@ export let customNHBal2 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#014388',
-      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
   ],
   yAxis: {
@@ -247,7 +247,7 @@ export let customNHBal3 = {
       dataKey: 'tinDungSVDauNam',
       yAxisId: 'rightAxis',
       color: '#C8D0D2',
-      valueFormatter: (v) => (v === null ? '' : v + ' %'),
+      valueFormatter: (v) => (!v ? '' : v + ' %'),
     },
     {
       type: 'bar',
@@ -255,7 +255,7 @@ export let customNHBal3 = {
       dataKey: 'huyDongSVDauNam',
       yAxisId: 'rightAxis',
       color: '#8F9596',
-      valueFormatter: (v) => (v === null ? '' : v + ' %'),
+      valueFormatter: (v) => (!v ? '' : v + ' %'),
     },
   ],
   yAxis: {
@@ -273,7 +273,7 @@ export let customNHBal4 = {
       dataKey: 'chiPhiHuyDong',
       yAxisId: 'rightAxis',
       color: '#C8D0D2',
-      valueFormatter: (v) => (v === null ? '' : v + ' %'),
+      valueFormatter: (v) => (!v ? '' : v + ' %'),
     },
     {
       type: 'bar',
@@ -281,7 +281,7 @@ export let customNHBal4 = {
       dataKey: 'bienLaiThuan',
       yAxisId: 'rightAxis',
       color: '#8F9596',
-      valueFormatter: (v) => (v === null ? '' : v + ' %'),
+      valueFormatter: (v) => (!v ? '' : v + ' %'),
     },
     {
       type: 'line',
@@ -290,7 +290,7 @@ export let customNHBal4 = {
       curve: 'linear',
       yAxisId: 'leftAxis',
       color: '#6EA2DF',
-      valueFormatter: (v) => (v === null ? '' : v + ' %'),
+      valueFormatter: (v) => (!v ? '' : v + ' %'),
     },
   ],
   yAxis: {
@@ -308,7 +308,7 @@ export let customNHBal5 = {
       dataKey: 'taiSanCoKhac',
       yAxisId: 'leftAxis',
       color: '#C8D0D2',
-      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -316,7 +316,7 @@ export let customNHBal5 = {
       dataKey: 'cacKhoanLaiPhiPhaiThu',
       yAxisId: 'leftAxis',
       color: '#8F9596',
-      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'line',
@@ -325,7 +325,7 @@ export let customNHBal5 = {
       curve: 'linear',
       yAxisId: 'rightAxis',
       color: '#014388',
-      valueFormatter: (v) => (v === null ? '' : v + ' %'),
+      valueFormatter: (v) => (!v ? '' : v + ' %'),
     },
     {
       type: 'line',
@@ -334,7 +334,7 @@ export let customNHBal5 = {
       curve: 'linear',
       yAxisId: 'rightAxis',
       color: '#014388',
-      valueFormatter: (v) => (v === null ? '' : v + ' %'),
+      valueFormatter: (v) => (!v ? '' : v + ' %'),
     },
   ],
   yAxis: {
@@ -353,7 +353,7 @@ export let customNHBal6 = {
       yAxisId: 'leftAxis',
       stack: 'stack',
       color: '#93B6D6',
-      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -362,7 +362,7 @@ export let customNHBal6 = {
       yAxisId: 'leftAxis',
       stack: 'stack',
       color: '#CCBA95',
-      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'line',
@@ -371,7 +371,7 @@ export let customNHBal6 = {
       curve: 'linear',
       yAxisId: 'rightAxis',
       color: '#014388',
-      valueFormatter: (v) => (v === null ? '' : v + ' %'),
+      valueFormatter: (v) => (!v ? '' : v + ' %'),
     },
     {
       type: 'line',
@@ -380,7 +380,7 @@ export let customNHBal6 = {
       curve: 'linear',
       yAxisId: 'rightAxis',
       color: '#981F36',
-      valueFormatter: (v) => (v === null ? '' : v + ' %'),
+      valueFormatter: (v) => (!v ? '' : v + ' %'),
     },
   ],
   yAxis: {
@@ -398,7 +398,7 @@ export let customNHBal7 = {
       dataKey: 'noXau',
       yAxisId: 'leftAxis',
       color: '#CCBA95',
-      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -406,7 +406,7 @@ export let customNHBal7 = {
       dataKey: 'duPhongRuiRoChoVayKhachHang',
       yAxisId: 'leftAxis',
       color: '#C8D0D2',
-      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'line',
@@ -415,7 +415,7 @@ export let customNHBal7 = {
       curve: 'linear',
       yAxisId: 'rightAxis',
       color: '#202222',
-      valueFormatter: (v) => (v === null ? '' : v + ' %'),
+      valueFormatter: (v) => (!v ? '' : v + ' %'),
     },
   ],
   yAxis: {
@@ -433,7 +433,7 @@ export let customNHBal8 = {
       dataKey: 'vonChuSoHuu',
       yAxisId: 'leftAxis',
       color: '#585D5D',
-      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'line',
@@ -442,7 +442,7 @@ export let customNHBal8 = {
       curve: 'linear',
       yAxisId: 'rightAxis',
       color: '#981F36',
-      valueFormatter: (v) => (v === null ? '' : v + ' %'),
+      valueFormatter: (v) => (!v ? '' : v + ' %'),
     },
   ],
   yAxis: {
@@ -461,7 +461,7 @@ export let customNHBal9 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#93B6D6',
-      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -470,7 +470,7 @@ export let customNHBal9 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#6EA2DF',
-      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -479,7 +479,7 @@ export let customNHBal9 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#014388',
-      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
   ],
   yAxis: {
@@ -498,7 +498,7 @@ export let customNHBal10 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#CCBA95',
-      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -507,7 +507,7 @@ export let customNHBal10 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#014388',
-      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -516,7 +516,7 @@ export let customNHBal10 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#6EA2DF',
-      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -525,7 +525,7 @@ export let customNHBal10 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#93B6D6',
-      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -534,7 +534,7 @@ export let customNHBal10 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#C8D0D2',
-      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -543,7 +543,7 @@ export let customNHBal10 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#202222',
-      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
   ],
   yAxis: {
@@ -562,7 +562,7 @@ export let customNHBal11 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#C8D0D2',
-      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -571,7 +571,7 @@ export let customNHBal11 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#93B6D6',
-      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -580,7 +580,7 @@ export let customNHBal11 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#6EA2DF',
-      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -589,7 +589,7 @@ export let customNHBal11 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#CCBA95',
-      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -598,7 +598,7 @@ export let customNHBal11 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#202222',
-      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
   ],
   yAxis: {
@@ -617,7 +617,7 @@ export let customNHBal12 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#CCBA95',
-      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -626,7 +626,7 @@ export let customNHBal12 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#014388',
-      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -635,7 +635,7 @@ export let customNHBal12 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#6EA2DF',
-      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -644,7 +644,7 @@ export let customNHBal12 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#C8D0D2',
-      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'bar',
@@ -653,7 +653,7 @@ export let customNHBal12 = {
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#202222',
-      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
   ],
   yAxis: {
@@ -673,7 +673,7 @@ export let customNHVal1 = {
       curve: 'linear',
       yAxisId: 'leftAxis',
       color: '#013368',
-      valueFormatter: (v) => (v === null ? '' : v + ' %'),
+      valueFormatter: (v) => (!v ? '' : v + ' %'),
     },
     {
       type: 'line',
@@ -682,7 +682,7 @@ export let customNHVal1 = {
       curve: 'linear',
       yAxisId: 'rightAxis',
       color: '#CC8C32',
-      valueFormatter: (v) => (v === null ? '' : v + ' lần'),
+      valueFormatter: (v) => (!v ? '' : v + ' lần'),
     },
     {
       type: 'line',
@@ -691,7 +691,7 @@ export let customNHVal1 = {
       curve: 'linear',
       yAxisId: 'rightAxis',
       color: '#CCBA95',
-      valueFormatter: (v) => (v === null ? '' : v + ' lần'),
+      valueFormatter: (v) => (!v ? '' : v + ' lần'),
     },
   ],
   yAxis: {
@@ -710,7 +710,7 @@ export let customNHVal2 = {
       curve: 'linear',
       yAxisId: 'leftAxis',
       color: '#014388',
-      valueFormatter: (v) => (v === null ? '' : v + ' lần'),
+      valueFormatter: (v) => (!v ? '' : v + ' lần'),
     },
     {
       type: 'line',
@@ -719,7 +719,7 @@ export let customNHVal2 = {
       curve: 'linear',
       yAxisId: 'leftAxis',
       color: '#6EA2DF',
-      valueFormatter: (v) => (v === null ? '' : v + ' lần'),
+      valueFormatter: (v) => (!v ? '' : v + ' lần'),
     },
   ],
   yAxis: {
@@ -738,7 +738,7 @@ export let customNHVal3 = {
       dataKey: 'loiNhuanRongTTM',
       yAxisId: 'leftAxis',
       color: '#C8D0D2',
-      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'line',
@@ -747,7 +747,7 @@ export let customNHVal3 = {
       curve: 'linear',
       yAxisId: 'rightAxis',
       color: '#014388',
-      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
   ],
   yAxis: {
@@ -766,7 +766,7 @@ export let customNHVal4 = {
       dataKey: 'vonChuSoHuu',
       yAxisId: 'leftAxis',
       color: '#ABB2B4',
-      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
       type: 'line',
@@ -775,7 +775,7 @@ export let customNHVal4 = {
       curve: 'linear',
       yAxisId: 'rightAxis',
       color: '#014388',
-      valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
   ],
   yAxis: {

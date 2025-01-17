@@ -1193,7 +1193,7 @@ export const TabChart = () => {
               dataKey: 'ebittrailing',
               yAxisId: 'leftAxis',
               color: '#C8D0D2',
-              valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+              valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
             },
             {
               type: 'bar',
@@ -1202,7 +1202,7 @@ export const TabChart = () => {
               yAxisId: 'leftAxis',
               color: '#6EA2DF',
               changeColor: true,
-              valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+              valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
             },
             {
               type: 'line',
@@ -1211,7 +1211,7 @@ export const TabChart = () => {
               curve: 'linear',
               yAxisId: 'rightAxis',
               color: '#CFAB6D',
-              valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              valueFormatter: (v) => (!v ? '' : v + ' %'),
             },
             {
               type: 'line',
@@ -1220,7 +1220,7 @@ export const TabChart = () => {
               curve: 'linear',
               yAxisId: 'rightAxis',
               color: '#0D6B64',
-              valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              valueFormatter: (v) => (!v ? '' : v + ' %'),
             },
           ];
           let newPerf = await mapDataChart(customPerfPTC4, tabType, {
@@ -1237,7 +1237,7 @@ export const TabChart = () => {
               dataKey: 'ebittrailing',
               yAxisId: 'leftAxis',
               color: '#C8D0D2',
-              valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+              valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
             },
             {
               type: 'bar',
@@ -1246,7 +1246,7 @@ export const TabChart = () => {
               yAxisId: 'leftAxis',
               color: '#6EA2DF',
               changeColor: true,
-              valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+              valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
             },
             {
               type: 'line',
@@ -1255,7 +1255,7 @@ export const TabChart = () => {
               curve: 'linear',
               yAxisId: 'rightAxis',
               color: '#CFAB6D',
-              valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              valueFormatter: (v) => (!v ? '' : v + ' %'),
             },
             {
               type: 'line',
@@ -1264,7 +1264,7 @@ export const TabChart = () => {
               curve: 'linear',
               yAxisId: 'rightAxis',
               color: '#0D6B64',
-              valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              valueFormatter: (v) => (!v ? '' : v + ' %'),
             },
           ];
           let newPerf = await mapDataChart(customPerfPTC4, tabType, {
@@ -1284,7 +1284,7 @@ export const TabChart = () => {
             yAxisId: 'rightAxis',
             stack: 'stack',
             color: '#ABB2B4',
-            valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+            valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
           };
         } else {
           customPerfPTC5.series[0] = {
@@ -1294,7 +1294,7 @@ export const TabChart = () => {
             yAxisId: 'rightAxis',
             stack: 'stack',
             color: '#ABB2B4',
-            valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+            valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
           };
         }
         let newPerf = await mapDataChart(customPerfPTC5, tabType, {
@@ -1333,7 +1333,7 @@ export const TabChart = () => {
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#C8D0D2',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
               {
                 dataKey: 'phaiThu',
@@ -1344,7 +1344,7 @@ export const TabChart = () => {
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#93B6D6',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
               {
                 dataKey: 'hangTonKhoRong',
@@ -1355,7 +1355,7 @@ export const TabChart = () => {
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#6EA2DF',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
               {
                 dataKey: 'taiSanCoDinh',
@@ -1366,7 +1366,7 @@ export const TabChart = () => {
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#014388',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
               {
                 dataKey: 'taiSanDoDangDaiHan',
@@ -1377,7 +1377,7 @@ export const TabChart = () => {
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#2471BE',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
               {
                 dataKey: 'giaTriRongTaiSanDauTu',
@@ -1388,7 +1388,7 @@ export const TabChart = () => {
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#585D5D',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
               {
                 dataKey: 'taiSanKhac',
@@ -1399,7 +1399,7 @@ export const TabChart = () => {
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#8F9596',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
             ];
             customBalPTC1.yAxis = {
@@ -1420,7 +1420,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#C8D0D2',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -1429,7 +1429,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#93B6D6',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -1438,7 +1438,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#6EA2DF',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -1447,7 +1447,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#014388',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -1456,7 +1456,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#2471BE',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -1465,7 +1465,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#585D5D',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -1474,7 +1474,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#8F9596',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
             ];
             customBalPTC1.yAxis = {
@@ -1521,7 +1521,7 @@ export const TabChart = () => {
               stack: 'stack',
               yAxisId: 'rightAxis',
               color: '#585D5D',
-              valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              valueFormatter: (v) => (!v ? '' : v + ' %'),
             },
             {
               dataKey: 'laiChuaPhanPhoi',
@@ -1530,7 +1530,7 @@ export const TabChart = () => {
               yAxisId: 'rightAxis',
               stack: 'stack',
               color: '#8F9596',
-              valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              valueFormatter: (v) => (!v ? '' : v + ' %'),
             },
             {
               dataKey: 'vcshKhac',
@@ -1539,7 +1539,7 @@ export const TabChart = () => {
               yAxisId: 'rightAxis',
               stack: 'stack',
               color: '#ABB2B4',
-              valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              valueFormatter: (v) => (!v ? '' : v + ' %'),
             },
             {
               dataKey: 'noChiemDung',
@@ -1548,7 +1548,7 @@ export const TabChart = () => {
               yAxisId: 'rightAxis',
               stack: 'stack',
               color: '#CCBA95',
-              valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              valueFormatter: (v) => (!v ? '' : v + ' %'),
             },
             {
               dataKey: 'noVay',
@@ -1557,7 +1557,7 @@ export const TabChart = () => {
               yAxisId: 'rightAxis',
               stack: 'stack',
               color: '#AD5757',
-              valueFormatter: (v) => (v === null ? '' : v + ' %'),
+              valueFormatter: (v) => (!v ? '' : v + ' %'),
             },
           ];
           customBalPTC2.yAxis = {
@@ -1578,7 +1578,7 @@ export const TabChart = () => {
               yAxisId: 'rightAxis',
               stack: 'stack',
               color: '#585D5D',
-              valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+              valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
             },
             {
               type: 'bar',
@@ -1587,7 +1587,7 @@ export const TabChart = () => {
               yAxisId: 'rightAxis',
               stack: 'stack',
               color: '#8F9596',
-              valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+              valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
             },
             {
               type: 'bar',
@@ -1596,7 +1596,7 @@ export const TabChart = () => {
               yAxisId: 'rightAxis',
               stack: 'stack',
               color: '#ABB2B4',
-              valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+              valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
             },
             {
               type: 'bar',
@@ -1605,7 +1605,7 @@ export const TabChart = () => {
               yAxisId: 'rightAxis',
               stack: 'stack',
               color: '#CCBA95',
-              valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+              valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
             },
             {
               type: 'bar',
@@ -1614,7 +1614,7 @@ export const TabChart = () => {
               yAxisId: 'rightAxis',
               stack: 'stack',
               color: '#AD5757',
-              valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+              valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
             },
           ];
           customBalPTC2.yAxis = {
@@ -1693,7 +1693,7 @@ export const TabChart = () => {
               yAxisId: 'rightAxis',
               stack: 'stack',
               color: '#AD5757',
-              valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+              valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
             },
             {
               type: 'bar',
@@ -1702,7 +1702,7 @@ export const TabChart = () => {
               yAxisId: 'rightAxis',
               stack: 'stack',
               color: '#C8D0D2',
-              valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+              valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
             },
             {
               type: 'bar',
@@ -1711,7 +1711,7 @@ export const TabChart = () => {
               yAxisId: 'rightAxis',
               stack: 'stack',
               color: '#93B6D6',
-              valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+              valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
             },
             {
               type: 'bar',
@@ -1720,7 +1720,7 @@ export const TabChart = () => {
               yAxisId: 'rightAxis',
               stack: 'stack',
               color: '#6EA2DF',
-              valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+              valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
             },
             {
               type: 'line',
@@ -1729,7 +1729,7 @@ export const TabChart = () => {
               curve: 'linear',
               yAxisId: 'rightAxis',
               color: '#202222',
-              valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+              valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
             },
           ];
           let newPerf = await mapDataChart(customCFPTC3, tabType, {
@@ -1747,7 +1747,7 @@ export const TabChart = () => {
               yAxisId: 'rightAxis',
               stack: 'stack',
               color: '#AD5757',
-              valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+              valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
             },
             {
               type: 'bar',
@@ -1756,7 +1756,7 @@ export const TabChart = () => {
               yAxisId: 'rightAxis',
               stack: 'stack',
               color: '#C8D0D2',
-              valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+              valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
             },
             {
               type: 'bar',
@@ -1765,7 +1765,7 @@ export const TabChart = () => {
               yAxisId: 'rightAxis',
               stack: 'stack',
               color: '#93B6D6',
-              valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+              valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
             },
             {
               type: 'bar',
@@ -1774,7 +1774,7 @@ export const TabChart = () => {
               yAxisId: 'rightAxis',
               stack: 'stack',
               color: '#6EA2DF',
-              valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+              valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
             },
             {
               type: 'line',
@@ -1783,7 +1783,7 @@ export const TabChart = () => {
               curve: 'linear',
               yAxisId: 'rightAxis',
               color: '#202222',
-              valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+              valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
             },
             {
               type: 'bar',
@@ -1792,7 +1792,7 @@ export const TabChart = () => {
               yAxisId: 'rightAxis',
               color: '#2471BE',
               stack: 'stack',
-              valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+              valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
             },
           ];
           let newPerf = await mapDataChart(customCFPTC3, tabType, {
@@ -1877,7 +1877,7 @@ export const TabChart = () => {
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#C8D0D2',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
               {
                 dataKey: 'cacTaiSanTaiChinhThongQuaGhiNhanLaiLo',
@@ -1886,7 +1886,7 @@ export const TabChart = () => {
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#93B6D6',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
               {
                 dataKey: 'cacKhoanDauTuNamGiuDenNgayDaoHan',
@@ -1895,7 +1895,7 @@ export const TabChart = () => {
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#6EA2DF',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
               {
                 dataKey: 'cacKhoanChoVay',
@@ -1904,7 +1904,7 @@ export const TabChart = () => {
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#8F9596',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
               {
                 dataKey: 'cacKhoanTaiChinhSanSangDeBan',
@@ -1913,7 +1913,7 @@ export const TabChart = () => {
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#014388',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
               {
                 dataKey: 'taiSanKhac',
@@ -1922,7 +1922,7 @@ export const TabChart = () => {
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#202222',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
             ];
             customBalCK2.yAxis = {
@@ -1947,7 +1947,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#C8D0D2',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -1956,7 +1956,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#93B6D6',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -1965,7 +1965,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#6EA2DF',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -1974,7 +1974,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#8F9596',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -1983,7 +1983,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#014388',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -1992,7 +1992,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#202222',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
             ];
             customBalCK2.yAxis = {
@@ -2040,7 +2040,7 @@ export const TabChart = () => {
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#585D5D',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
               {
                 label: 'LNST chưa phân phối',
@@ -2049,7 +2049,7 @@ export const TabChart = () => {
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#8F9596',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
               {
                 label: 'VCSH khác',
@@ -2058,7 +2058,7 @@ export const TabChart = () => {
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#ABB2B4',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
               {
                 label: 'Nợ chiếm dụng',
@@ -2067,7 +2067,7 @@ export const TabChart = () => {
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#CCBA95',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
               {
                 label: 'Nợ vay',
@@ -2076,7 +2076,7 @@ export const TabChart = () => {
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#AD5757',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
             ];
             customBalCK3.yAxis = {
@@ -2101,7 +2101,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#585D5D',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -2110,7 +2110,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#8F9596',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -2119,7 +2119,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#ABB2B4',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -2128,7 +2128,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#CCBA95',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -2137,7 +2137,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#AD5757',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
             ];
             customBalCK3.yAxis = {
@@ -2185,7 +2185,7 @@ export const TabChart = () => {
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#93B6D6',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
               {
                 label: 'Cho vay và phải thu',
@@ -2194,7 +2194,7 @@ export const TabChart = () => {
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#8F9596',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
               {
                 label: 'Môi giới chứng khoán',
@@ -2203,7 +2203,7 @@ export const TabChart = () => {
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#C8D0D2',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
               {
                 label: 'HTM',
@@ -2212,7 +2212,7 @@ export const TabChart = () => {
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#6EA2DF',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
               {
                 label: 'AFS',
@@ -2221,7 +2221,7 @@ export const TabChart = () => {
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#014388',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
               {
                 label: 'Bảo lãnh phát hành',
@@ -2230,7 +2230,7 @@ export const TabChart = () => {
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#CFAB6D',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
               {
                 label: 'Khác',
@@ -2239,7 +2239,7 @@ export const TabChart = () => {
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#202222',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
             ];
             customBalCK4.yAxis = {
@@ -2264,7 +2264,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#93B6D6',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -2273,7 +2273,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#8F9596',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -2282,7 +2282,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#C8D0D2',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -2291,7 +2291,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#6EA2DF',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -2300,7 +2300,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#014388',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -2309,7 +2309,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#CFAB6D',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -2318,7 +2318,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#202222',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
             ];
             customBalCK4.yAxis = {
@@ -2368,7 +2368,7 @@ export const TabChart = () => {
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#93B6D6',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
               {
                 label: 'Cho vay và phải thu',
@@ -2378,7 +2378,7 @@ export const TabChart = () => {
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#8F9596',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
               {
                 label: 'Môi giới chứng khoán',
@@ -2388,7 +2388,7 @@ export const TabChart = () => {
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#C8D0D2',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
               {
                 label: 'HTM',
@@ -2398,7 +2398,7 @@ export const TabChart = () => {
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#6EA2DF',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
               {
                 label: 'AFS',
@@ -2408,7 +2408,7 @@ export const TabChart = () => {
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#014388',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
               {
                 label: 'Bảo lãnh phát hành',
@@ -2418,7 +2418,7 @@ export const TabChart = () => {
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#CFAB6D',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
               {
                 label: 'Khác',
@@ -2428,7 +2428,7 @@ export const TabChart = () => {
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#202222',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
             ];
             customBalCK5.yAxis = {
@@ -2453,7 +2453,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#93B6D6',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -2462,7 +2462,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#8F9596',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -2471,7 +2471,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#C8D0D2',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -2480,7 +2480,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#6EA2DF',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -2489,7 +2489,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#014388',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -2498,7 +2498,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#CFAB6D',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -2507,7 +2507,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#202222',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
             ];
             customBalCK5.yAxis = {
@@ -2585,7 +2585,7 @@ export const TabChart = () => {
                 area: true,
                 yAxisId: 'rightAxis',
                 color: '#8F9596',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
               {
                 label: 'Thu nhập từ dịch vụ',
@@ -2595,7 +2595,7 @@ export const TabChart = () => {
                 area: true,
                 yAxisId: 'rightAxis',
                 color: '#C8D0D2',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
               {
                 label: 'Thu nhập khác',
@@ -2605,7 +2605,7 @@ export const TabChart = () => {
                 area: true,
                 yAxisId: 'rightAxis',
                 color: '#202222',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
             ];
             customNHPerf3.yAxis = {
@@ -2630,7 +2630,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#8F9596',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -2639,7 +2639,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#C8D0D2',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -2648,7 +2648,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#202222',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
             ];
             customNHPerf3.yAxis = {
@@ -2703,7 +2703,7 @@ export const TabChart = () => {
                 area: true,
                 yAxisId: 'rightAxis',
                 color: '#C8D0D2',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
               {
                 label: 'Cho vay khác hàng',
@@ -2713,7 +2713,7 @@ export const TabChart = () => {
                 area: true,
                 yAxisId: 'rightAxis',
                 color: '#93B6D6',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
               {
                 label: 'Chứng khoán',
@@ -2723,7 +2723,7 @@ export const TabChart = () => {
                 area: true,
                 yAxisId: 'rightAxis',
                 color: '#6EA2DF',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
               {
                 label: 'Tài sản khác',
@@ -2733,7 +2733,7 @@ export const TabChart = () => {
                 area: true,
                 yAxisId: 'rightAxis',
                 color: '#014388',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
             ];
             customNHBal1.yAxis = {
@@ -2758,7 +2758,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#C8D0D2',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -2767,7 +2767,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#93B6D6',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -2776,7 +2776,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#6EA2DF',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -2785,7 +2785,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#014388',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
             ];
             customNHBal1.yAxis = {
@@ -2834,7 +2834,7 @@ export const TabChart = () => {
                 area: true,
                 yAxisId: 'rightAxis',
                 color: '#C8D0D2',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
               {
                 label: 'Tiền gửi của khách hàng',
@@ -2844,7 +2844,7 @@ export const TabChart = () => {
                 area: true,
                 yAxisId: 'rightAxis',
                 color: '#93B6D6',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
               {
                 label: 'Giấy tờ có giá',
@@ -2854,7 +2854,7 @@ export const TabChart = () => {
                 area: true,
                 yAxisId: 'rightAxis',
                 color: '#6EA2DF',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
               {
                 label: 'Vốn chủ sở hữu',
@@ -2864,7 +2864,7 @@ export const TabChart = () => {
                 area: true,
                 yAxisId: 'rightAxis',
                 color: '#585D5D',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
               {
                 label: 'Nợ phải trả khác',
@@ -2874,7 +2874,7 @@ export const TabChart = () => {
                 area: true,
                 yAxisId: 'rightAxis',
                 color: '#014388',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
             ];
             customNHBal2.yAxis = {
@@ -2899,7 +2899,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#C8D0D2',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -2908,7 +2908,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#93B6D6',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -2917,7 +2917,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#6EA2DF',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -2926,7 +2926,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#585D5D',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -2935,7 +2935,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#014388',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
             ];
             customNHBal2.yAxis = {
@@ -3020,7 +3020,7 @@ export const TabChart = () => {
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#93B6D6',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
               {
                 label: 'Cho vay trung hạn',
@@ -3030,7 +3030,7 @@ export const TabChart = () => {
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#6EA2DF',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
               {
                 label: 'Cho vay dài hạn',
@@ -3040,7 +3040,7 @@ export const TabChart = () => {
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#014388',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
             ];
             customNHBal9.yAxis = {
@@ -3061,7 +3061,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#93B6D6',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -3070,7 +3070,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#6EA2DF',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -3079,7 +3079,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#014388',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
             ];
             customNHBal9.yAxis = {
@@ -3110,7 +3110,7 @@ export const TabChart = () => {
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#CCBA95',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
               {
                 label: 'Công ty TNHH và cổ phần',
@@ -3120,7 +3120,7 @@ export const TabChart = () => {
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#014388',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
               {
                 label: 'Doanh nghiệp nước ngoài',
@@ -3130,7 +3130,7 @@ export const TabChart = () => {
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#6EA2DF',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
               {
                 label: 'Hợp tác xã và công ty tư nhân',
@@ -3140,7 +3140,7 @@ export const TabChart = () => {
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#93B6D6',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
               {
                 label: 'Cá nhân',
@@ -3150,7 +3150,7 @@ export const TabChart = () => {
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#C8D0D2',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
               {
                 label: 'Khác',
@@ -3160,7 +3160,7 @@ export const TabChart = () => {
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#202222',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
             ];
             customNHBal10.yAxis = {
@@ -3181,7 +3181,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#CCBA95',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -3190,7 +3190,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#014388',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -3199,7 +3199,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#6EA2DF',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -3208,7 +3208,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#93B6D6',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -3217,7 +3217,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#C8D0D2',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -3226,7 +3226,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#202222',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
             ];
             customNHBal10.yAxis = {
@@ -3257,7 +3257,7 @@ export const TabChart = () => {
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#C8D0D2',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
               {
                 label: 'Tiền gửi có kỳ hạn',
@@ -3267,7 +3267,7 @@ export const TabChart = () => {
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#93B6D6',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
               {
                 label: 'Tiền gửi tiết kiệm',
@@ -3277,7 +3277,7 @@ export const TabChart = () => {
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#6EA2DF',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
               {
                 label: 'Tiền gửi ký quỹ',
@@ -3287,7 +3287,7 @@ export const TabChart = () => {
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#CCBA95',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
               {
                 label: 'Tiền gửi cho những mục đích riêng biệt',
@@ -3297,7 +3297,7 @@ export const TabChart = () => {
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#202222',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
             ];
             customNHBal11.yAxis = {
@@ -3318,7 +3318,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#C8D0D2',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -3327,7 +3327,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#93B6D6',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -3336,7 +3336,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#6EA2DF',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -3345,7 +3345,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#CCBA95',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -3354,7 +3354,7 @@ export const TabChart = () => {
                 yAxisId: 'rightAxis',
                 stack: 'stack',
                 color: '#202222',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
             ];
             customNHBal11.yAxis = {
@@ -3385,7 +3385,7 @@ export const TabChart = () => {
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#CCBA95',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
               {
                 label: 'Doanh nghiệp tư nhân',
@@ -3395,7 +3395,7 @@ export const TabChart = () => {
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#014388',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
               {
                 label: 'Doanh nghiệp nước ngoài',
@@ -3405,7 +3405,7 @@ export const TabChart = () => {
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#6EA2DF',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
               {
                 label: 'Cá nhân',
@@ -3415,7 +3415,7 @@ export const TabChart = () => {
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#C8D0D2',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
               {
                 label: 'Khác',
@@ -3425,7 +3425,7 @@ export const TabChart = () => {
                 stack: 'total',
                 yAxisId: 'rightAxis',
                 color: '#202222',
-                valueFormatter: (v) => (v === null ? '' : v + ' %'),
+                valueFormatter: (v) => (!v ? '' : v + ' %'),
               },
             ];
             customNHBal12.yAxis = {
@@ -3446,7 +3446,7 @@ export const TabChart = () => {
                 stack: 'stack',
                 yAxisId: 'rightAxis',
                 color: '#CCBA95',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -3455,7 +3455,7 @@ export const TabChart = () => {
                 stack: 'stack',
                 yAxisId: 'rightAxis',
                 color: '#014388',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -3464,7 +3464,7 @@ export const TabChart = () => {
                 stack: 'stack',
                 yAxisId: 'rightAxis',
                 color: '#6EA2DF',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -3473,7 +3473,7 @@ export const TabChart = () => {
                 stack: 'stack',
                 yAxisId: 'rightAxis',
                 color: '#C8D0D2',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
               {
                 type: 'bar',
@@ -3482,7 +3482,7 @@ export const TabChart = () => {
                 stack: 'stack',
                 yAxisId: 'rightAxis',
                 color: '#202222',
-                valueFormatter: (v) => (v === null ? '' : v.toLocaleString() + ' tỷ đồng'),
+                valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
               },
             ];
             customNHBal12.yAxis = {
