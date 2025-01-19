@@ -5,13 +5,13 @@ import java.time.LocalDateTime;
 public class ValuationPhiTaiChinhDTO extends ValuationDTO{
 	
 	//Table report
-	private Double capital;
+	private Double vonChuSoHuuTruLoiIchCDTS;
 	private Double nittm;
 	private Double salettm;
 	private Double roe;
 	private Double ebitdattm;
 	
-public ValuationPhiTaiChinhDTO(String stockCode, String quarter, String year,LocalDateTime date,Double marketcap, Double pe,Double evebitda,Double pb,Double ps,Double roe,Double salettm,Double nittm,Double ebitdattm,Double capital) {
+public ValuationPhiTaiChinhDTO(String stockCode, String quarter, String year,LocalDateTime date,Double marketcap, Double pe,Double evebitda,Double pb,Double ps,Double roe,Double salettm,Double nittm,Double ebitdattm,Double vonChuSoHuuTruLoiIchCDTS) {
 		
 		this.stockCode = stockCode;
 		this.quarter = quarter;
@@ -25,16 +25,21 @@ public ValuationPhiTaiChinhDTO(String stockCode, String quarter, String year,Loc
 		this.salettm = salettm;
 		this.nittm = nittm;
 		this.ebitdattm = ebitdattm;
-		this.capital =capital;
+		this.vonChuSoHuuTruLoiIchCDTS =vonChuSoHuuTruLoiIchCDTS;
 		this.date = date;
 	}
 	
-	public Double getCapital() {
-		return capital;
-	}
-	public void setCapital(Double capital) {
-		this.capital = capital;
-	}
+	
+	public Double getVonChuSoHuuTruLoiIchCDTS() {
+	return vonChuSoHuuTruLoiIchCDTS;
+}
+
+
+public void setVonChuSoHuuTruLoiIchCDTS(Double vonChuSoHuuTruLoiIchCDTS) {
+	this.vonChuSoHuuTruLoiIchCDTS = vonChuSoHuuTruLoiIchCDTS;
+}
+
+
 	public Double getNittm() {
 		return nittm;
 	}

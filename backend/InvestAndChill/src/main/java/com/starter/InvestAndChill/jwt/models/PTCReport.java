@@ -210,6 +210,17 @@ public class PTCReport {
 	@Column(name = "p_b_89")
 	private Double doanhThuChuaThucHien;
 	
+	@Column(name = "p_i_57")
+	private Double EBITDAMarginTTM;
+	
+	public Double getEBITDAMarginTTM() {
+		return EBITDAMarginTTM;
+	}
+
+	public void setEBITDAMarginTTM(Double eBITDAMarginTTM) {
+		EBITDAMarginTTM = eBITDAMarginTTM;
+	}
+
 	public Double getGiaTriThuanDauTuNganHan() {
 		return giaTriThuanDauTuNganHan;
 	}

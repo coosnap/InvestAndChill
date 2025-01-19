@@ -1,4 +1,4 @@
-CREATE VIEW view_phi_tai_chinh_quy AS
+CREATE OR REPLACE VIEW view_phi_tai_chinh_quy AS
 SELECT stock_code ,quarter ,year, 
 p_p_3,
 p_p_23,
@@ -69,11 +69,12 @@ p_i_2,
 p_b_98,
 p_c_49,
 p_c_57,
-p_c_65
+p_c_65,
+p_i_57
 FROM phi_tai_chinh_report ptcr 
 WHERE quarter is not null ;
 
-CREATE VIEW view_phi_tai_chinh_nam AS
+CREATE OR REPLACE VIEW view_phi_tai_chinh_nam AS
 SELECT stock_code ,'0' as quarter ,year, 
 p_p_3,
 p_p_23,
@@ -144,6 +145,7 @@ p_i_2,
 p_b_98,
 p_c_49,
 p_c_57,
-p_c_65
+p_c_65,
+p_i_57
 FROM phi_tai_chinh_report ptcr 
 WHERE quarter is null;

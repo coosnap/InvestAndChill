@@ -72,5 +72,8 @@ public class Constants {
 	 public static final String ChungKhoan_val3 = "Tương quan Lợi nhuận - Vốn hóa";
 	 public static final String ChungKhoan_val4 = "Tương quan Vốn Chủ sở hữu - Vốn hóa";
 	 
+	 public static final String currentYear = "2024";
+	 public static final String currentQuarter = "3";
+	 
 	 public static final String VERSION = "1.0.0";
 }

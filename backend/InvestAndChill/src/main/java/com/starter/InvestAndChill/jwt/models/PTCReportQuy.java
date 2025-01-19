@@ -6,7 +6,9 @@ import javax.persistence.Entity;
 import javax.persistence.NamedNativeQuery;
 import javax.persistence.SqlResultSetMapping;
 
+import com.starter.InvestAndChill.pojo.BoLocDTO;
 import com.starter.InvestAndChill.pojo.FilterGiaTangCongSuatDTO;
+import com.starter.InvestAndChill.pojo.FilterKhaiThacDuoiCongSuatDTO;
 import com.starter.InvestAndChill.pojo.FilterNoNhieuSomChiTraDTO;
 import com.starter.InvestAndChill.pojo.FilterPhiTaiChinhDTO;
 import com.starter.InvestAndChill.pojo.FilterTheoDoiPreSalesDTO;
@@ -20,7 +22,7 @@ import com.starter.InvestAndChill.pojo.FilterXuLyKhauHaoNangDTO;
 	    		+ "	ptcr.stock_code  = v.stock_code\r\n"
 	    		+ "	and ptcr.quarter = v.quarter \r\n"
 	    		+ "	and ptcr.year = v.year\r\n"
-	    		+ "where ptcr.year ='2024' and ptcr.quarter ='3' AND p_i_77 > 0.05 AND p_i_78 > 0.05  ",
+	    		+ "where ptcr.year =:year and ptcr.quarter =:quarter AND p_i_77 > 0.05 AND p_i_78 > 0.05  ",
 	    resultSetMapping = "giaTangCongSuat"
 	)
 @SqlResultSetMapping(
@@ -51,7 +53,7 @@ import com.starter.InvestAndChill.pojo.FilterXuLyKhauHaoNangDTO;
 	    		+ "	ptcr.stock_code  = v.stock_code\r\n"
 	    		+ "	and ptcr.quarter = v.quarter \r\n"
 	    		+ "	and ptcr.year = v.year\r\n"
-	    		+ "where ptcr.year ='2024' and ptcr.quarter ='3' AND p_i_75 > 0.25 ",
+	    		+ "where ptcr.year =:year and ptcr.quarter =:quarter AND p_i_75 > 0.25 ",
 	    resultSetMapping = "theoDoiPreSales"
 	)
 @SqlResultSetMapping(
@@ -80,7 +82,7 @@ import com.starter.InvestAndChill.pojo.FilterXuLyKhauHaoNangDTO;
 	    		+ "	ptcr.stock_code  = v.stock_code\r\n"
 	    		+ "	and ptcr.quarter = v.quarter \r\n"
 	    		+ "	and ptcr.year = v.year\r\n"
-	    		+ "where ptcr.year ='2024' and ptcr.quarter ='3' AND p_i_68 > 0.5 and p_i_69 <= 5 ",
+	    		+ "where ptcr.year =:year and ptcr.quarter =:quarter AND p_i_68 > 0.5 and p_i_69 <= 5 ",
 	    resultSetMapping = "noNhieuSomChiTra"
 	)
 
@@ -111,7 +113,7 @@ import com.starter.InvestAndChill.pojo.FilterXuLyKhauHaoNangDTO;
 	    		+ "	ptcr.stock_code  = v.stock_code\r\n"
 	    		+ "	and ptcr.quarter = v.quarter \r\n"
 	    		+ "	and ptcr.year = v.year\r\n"
-	    		+ "where ptcr.year ='2024' and ptcr.quarter ='3' AND p_i_70 > 0.5 and p_i_73 <= 3 ",
+	    		+ "where ptcr.year =:year and ptcr.quarter =:quarter AND p_i_70 > 0.5 and p_i_73 <= 3 ",
 	    resultSetMapping = "xuLyKhauHaoNang"
 	)
 
@@ -131,6 +133,59 @@ import com.starter.InvestAndChill.pojo.FilterXuLyKhauHaoNangDTO;
 	            @ColumnResult(name = "divyld", type = Double.class),            
 	            @ColumnResult(name = "p_i_70", type = Double.class),
 	            @ColumnResult(name = "p_i_73", type = Double.class),
+	        }
+	    )
+	)
+
+@NamedNativeQuery(
+	    name = "filter.khaiThacDuoiCongSuat",
+	    query = "select ptcr.stock_code ,  ptcr.quarter, ptcr.year,ptcr.p_i_6 as roe, marketcap,pe,pb,evebitda,divyld,ptcr.p_i_79_3 \r\n"
+	    		+ "from phi_tai_chinh_report ptcr left join valuation v on ptcr.stock_code  = v.stock_code\r\n"
+	    		+ "and ptcr.quarter = v.quarter\r\n"
+	    		+ "and ptcr.year = v.year\r\n"
+	    		+ "where \r\n"
+	    		+ "( ( ptcr.year =:yearm1 and ptcr.quarter =:quarterm1) or (ptcr.year =:yearm2 and ptcr.quarter =:quarterm2 ) or\r\n"
+	    		+ "( ptcr.year =:yearm3 and ptcr.quarter =:quarterm3) or ( ptcr.year =:yearm4 and ptcr.quarter =:quarterm4) )\r\n"
+	    		+ "AND p_i_77 > 0.05 AND p_i_78 > 0.05 ",
+	    resultSetMapping = "khaiThacDuoiCongSuat"
+	)
+
+@SqlResultSetMapping(
+	    name = "khaiThacDuoiCongSuat",
+	    classes = @ConstructorResult(
+	        targetClass = FilterKhaiThacDuoiCongSuatDTO.class,
+	        columns = {
+	            @ColumnResult(name = "stock_code", type = String.class),
+	            @ColumnResult(name = "quarter", type = String.class),
+	            @ColumnResult(name = "year", type = String.class),	            
+	            @ColumnResult(name = "marketcap", type = Double.class),
+	            @ColumnResult(name = "roe", type = Double.class),
+	            @ColumnResult(name = "pe", type = Double.class),
+	            @ColumnResult(name = "pb", type = Double.class),
+	            @ColumnResult(name = "evebitda", type = Double.class),
+	            @ColumnResult(name = "divyld", type = Double.class),            
+	            @ColumnResult(name = "p_i_79_3", type = Double.class)
+	        }
+	    )
+	)
+
+@SqlResultSetMapping(
+	    name = "boloc",
+	    classes = @ConstructorResult(
+	        targetClass = BoLocDTO.class,
+	        columns = {
+	        	@ColumnResult(name = "stock_code", type = String.class),
+	            @ColumnResult(name = "p_i_79_1", type = Double.class),
+	            @ColumnResult(name = "p_i_79_2", type = Double.class),
+	            @ColumnResult(name = "p_i_79_3", type = Double.class),	            
+	            @ColumnResult(name = "marketcap", type = Double.class),
+	            @ColumnResult(name = "roe", type = Double.class),
+	            @ColumnResult(name = "roic", type = Double.class),
+	            @ColumnResult(name = "pe", type = Double.class),
+	            @ColumnResult(name = "pb", type = Double.class),
+	            @ColumnResult(name = "evebitda", type = Double.class),            
+	            @ColumnResult(name = "divyld", type = Double.class),
+	            @ColumnResult(name = "netcashmc", type = Double.class)
 	        }
 	    )
 	)

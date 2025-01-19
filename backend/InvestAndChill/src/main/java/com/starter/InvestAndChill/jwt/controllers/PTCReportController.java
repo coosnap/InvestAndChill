@@ -216,6 +216,9 @@ public class PTCReportController {
                     response.setEBITDATrailing(RoundNumber.lamTron(report.getEBITDATrailing()));
                     response.setEBITTrailing(RoundNumber.lamTron(report.getEBITTrailing()));
                     response.setInterestExpenseTrailing(RoundNumber.lamTron(report.getInterestExpenseTrailing()));
+
+                    response.setEBITMarginTTM(RoundNumber.lamTronPhanTram(report.getEBITmTrailing()));
+                    response.setEBITDAMarginTTM(RoundNumber.lamTronPhanTram(report.getEBITDAMarginTTM()));
                     return response;
                 })
                 .collect(Collectors.toList());
@@ -746,7 +749,7 @@ public class PTCReportController {
                 	Val8Response response = new Val8Response();
                 	response.setId(new ValuationKey(report.getStockCode(),report.getQuarter(),report.getYear(),report.getDate()));
                 	response.setTitle(Constants.PTC_val8);
-                	response.setCapital(RoundNumber.lamTron(report.getCapital()));
+                	response.setVonChuSoHuuTruLoiIchCDTS(RoundNumber.lamTron(report.getVonChuSoHuuTruLoiIchCDTS()));
                 	response.setMarketcap(RoundNumber.lamTron(report.getMarketcap()));
                     return response;
                 })

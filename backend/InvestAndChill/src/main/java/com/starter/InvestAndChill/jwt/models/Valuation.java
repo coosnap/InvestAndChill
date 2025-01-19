@@ -41,7 +41,7 @@ import javax.persistence.ConstructorResult;
     		+ "		                stock_code = :stockCode\r\n"
     		+ "		        )\r\n"
     		+ "		        SELECT\r\n"
-    		+ "		        r.*,ptc.p_i_6 as roe, ptc.p_i_1 as salettm, ptc.p_i_3 as nittm, ptc.p_i_56 as ebitdattm, ptc.p_b_98 as capital \r\n"
+    		+ "		        r.*,ptc.p_i_6 as roe, ptc.p_i_1 as salettm, ptc.p_i_3 as nittm, ptc.p_i_56 as ebitdattm, ptc.p_i_20 as vonchusohuu \r\n"
     		+ "		        FROM\r\n"
     		+ "		            ranked_data r LEFT JOIN phi_tai_chinh_report ptc\r\n"
     		+ "		            on r.stock_code = ptc.stock_code\r\n"
@@ -78,7 +78,7 @@ import javax.persistence.ConstructorResult;
 	    		+ "             stock_code = :stockCode\r\n"
 	    		+ "     )\r\n"
 	    		+ "     SELECT\r\n"
-	    		+ "         r.*, nhr.b_i_20 as roe, nhr.b_i_10 as loinhuanrong, nhr.b_b_64 as vonchusohuu\r\n"
+	    		+ "         r.*, nhr.b_i_20 as roe, nhr.b_i_10 as loinhuanrong, nhr.b_i_19 as vonchusohuu\r\n"
 	    		+ "     FROM\r\n"
 	    		+ "         ranked_data r LEFT JOIN ngan_hang_report nhr \r\n"
 	    		+ "         on r.stock_code = nhr.stock_code\r\n"
@@ -115,7 +115,7 @@ import javax.persistence.ConstructorResult;
 	    		+ "             stock_code = :stockCode\r\n"
 	    		+ "     )\r\n"
 	    		+ "     SELECT\r\n"
-	    		+ "         r.*, ckr.c_i_6 as roe, ckr.c_i_3 as loinhuanrong, ckr.c_b_142 as vonchusohuu\r\n"
+	    		+ "         r.*, ckr.c_i_6 as roe, ckr.c_i_3 as loinhuanrong, ckr.c_i_20 as vonchusohuu\r\n"
 	    		+ "     FROM\r\n"
 	    		+ "         ranked_data r LEFT JOIN chung_khoan_report ckr \r\n"
 	    		+ "         on r.stock_code = ckr.stock_code\r\n"
@@ -148,7 +148,7 @@ import javax.persistence.ConstructorResult;
             @ColumnResult(name = "salettm", type = Double.class),
             @ColumnResult(name = "nittm", type = Double.class),
             @ColumnResult(name = "ebitdattm", type = Double.class),
-            @ColumnResult(name = "capital", type = Double.class)
+            @ColumnResult(name = "vonchusohuu", type = Double.class)
         }
     )
 )

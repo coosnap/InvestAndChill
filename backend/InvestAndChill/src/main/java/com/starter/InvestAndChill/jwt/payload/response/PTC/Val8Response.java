@@ -3,13 +3,14 @@ package com.starter.InvestAndChill.jwt.payload.response.PTC;
 import com.starter.InvestAndChill.jwt.payload.response.ValuationResponse;
 
 public class Val8Response extends ValuationResponse{
-	private Double capital;
+	private Double vonChuSoHuuTruLoiIchCDTS;
 	private Double marketcap;
-	public Double getCapital() {
-		return capital;
+	
+	public Double getVonChuSoHuuTruLoiIchCDTS() {
+		return vonChuSoHuuTruLoiIchCDTS;
 	}
-	public void setCapital(Double capital) {
-		this.capital = capital;
+	public void setVonChuSoHuuTruLoiIchCDTS(Double vonChuSoHuuTruLoiIchCDTS) {
+		this.vonChuSoHuuTruLoiIchCDTS = vonChuSoHuuTruLoiIchCDTS;
 	}
 	public Double getMarketcap() {
 		return marketcap;

@@ -7,6 +7,22 @@ public class Perf6Response extends ReportReponse{
 	private Double EBITDATrailing;
 	private Double InterestExpenseTrailing;
 	private Double EBITTrailing;
+	
+	private Double EBITMarginTTM;
+	private Double EBITDAMarginTTM;
+	
+	public Double getEBITMarginTTM() {
+		return EBITMarginTTM;
+	}
+	public void setEBITMarginTTM(Double eBITMarginTTM) {
+		EBITMarginTTM = eBITMarginTTM;
+	}
+	public Double getEBITDAMarginTTM() {
+		return EBITDAMarginTTM;
+	}
+	public void setEBITDAMarginTTM(Double eBITDAMarginTTM) {
+		EBITDAMarginTTM = eBITDAMarginTTM;
+	}
 	public Double getEBITDATrailing() {
 		return EBITDATrailing;
 	}

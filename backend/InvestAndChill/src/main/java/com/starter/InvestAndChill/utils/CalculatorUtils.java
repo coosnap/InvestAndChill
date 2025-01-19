@@ -8,7 +8,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.starter.InvestAndChill.jwt.models.PTCReport;
+import com.starter.InvestAndChill.pojo.BoLocDTO;
 import com.starter.InvestAndChill.pojo.FilterGiaTangCongSuatDTO;
+import com.starter.InvestAndChill.pojo.FilterKhaiThacDuoiCongSuatDTO;
 import com.starter.InvestAndChill.pojo.FilterNoNhieuSomChiTraDTO;
 import com.starter.InvestAndChill.pojo.FilterPhiTaiChinhDTO;
 import com.starter.InvestAndChill.pojo.FilterTheoDoiPreSalesDTO;
@@ -280,6 +282,15 @@ public class CalculatorUtils {
 				        .sorted(Comparator.comparing(FilterXuLyKhauHaoNangDTO::getPi73, Comparator.nullsLast(Comparator.naturalOrder())))
 				        .collect(Collectors.toList());
 				    sortedList = (List<T>) subList; 
+			} else if ("pi793".equals(sortType)) {
+				List<FilterKhaiThacDuoiCongSuatDTO> subList = list.stream()
+				        .filter(item -> item instanceof FilterKhaiThacDuoiCongSuatDTO) 
+				        .map(item -> (FilterKhaiThacDuoiCongSuatDTO) item)             
+				        .collect(Collectors.toList());
+				    subList = subList.stream()
+				        .sorted(Comparator.comparing(FilterKhaiThacDuoiCongSuatDTO::getPi793, Comparator.nullsLast(Comparator.naturalOrder())))
+				        .collect(Collectors.toList());
+				    sortedList = (List<T>) subList; 
 			}
 			
 		} else if ("desc".equals(sortValue)) {
@@ -378,6 +389,15 @@ public class CalculatorUtils {
 				        .sorted(Comparator.comparing(FilterXuLyKhauHaoNangDTO::getPi73, Comparator.nullsLast(Comparator.reverseOrder())))
 				        .collect(Collectors.toList());
 				    sortedList = (List<T>) subList; 
+			} else if ("pi793".equals(sortType)) {
+				List<FilterKhaiThacDuoiCongSuatDTO> subList = list.stream()
+				        .filter(item -> item instanceof FilterKhaiThacDuoiCongSuatDTO) 
+				        .map(item -> (FilterKhaiThacDuoiCongSuatDTO) item)             
+				        .collect(Collectors.toList());
+				    subList = subList.stream()
+				        .sorted(Comparator.comparing(FilterKhaiThacDuoiCongSuatDTO::getPi793, Comparator.nullsLast(Comparator.reverseOrder())))
+				        .collect(Collectors.toList());
+				    sortedList = (List<T>) subList; 
 			}
 		}
 
@@ -385,7 +405,103 @@ public class CalculatorUtils {
 	}
 	
 	
-	
+	public static List<BoLocDTO> filterSortBoLoc(List<BoLocDTO> list, String sortType, String sortValue) {
+		List<BoLocDTO> sortedList = list;
+		if("asc".equals(sortValue)) {
+			if ("pi791".equals(sortType)) {
+				sortedList = list.stream()
+					    .sorted(Comparator.comparing(BoLocDTO::getPi791, Comparator.nullsLast(Comparator.naturalOrder())))
+					    .collect(Collectors.toList());
+			} else if ("pi792".equals(sortType)) {
+				sortedList = list.stream()
+					    .sorted(Comparator.comparing(BoLocDTO::getPi792, Comparator.nullsLast(Comparator.naturalOrder())))
+					    .collect(Collectors.toList());
+			} else if ("pi793".equals(sortType)) {
+				sortedList = list.stream()
+					    .sorted(Comparator.comparing(BoLocDTO::getPi793, Comparator.nullsLast(Comparator.naturalOrder())))
+					    .collect(Collectors.toList());
+			} else if ("marketcap".equals(sortType)) {
+				sortedList = list.stream()
+					    .sorted(Comparator.comparing(BoLocDTO::getMarketcap, Comparator.nullsLast(Comparator.naturalOrder())))
+					    .collect(Collectors.toList());
+			} else if ("roe".equals(sortType)) {
+				sortedList = list.stream()
+					    .sorted(Comparator.comparing(BoLocDTO::getRoe, Comparator.nullsLast(Comparator.naturalOrder())))
+					    .collect(Collectors.toList());
+			} else if ("roic".equals(sortType)) {
+				sortedList = list.stream()
+					    .sorted(Comparator.comparing(BoLocDTO::getRoic, Comparator.nullsLast(Comparator.naturalOrder())))
+					    .collect(Collectors.toList());
+			} else if ("pe".equals(sortType)) {
+				sortedList = list.stream()
+					    .sorted(Comparator.comparing(BoLocDTO::getPe, Comparator.nullsLast(Comparator.naturalOrder())))
+					    .collect(Collectors.toList());
+			} else if ("pb".equals(sortType)) {
+				sortedList = list.stream()
+					    .sorted(Comparator.comparing(BoLocDTO::getPb, Comparator.nullsLast(Comparator.naturalOrder())))
+					    .collect(Collectors.toList());
+			} else if ("evebitda".equals(sortType)) {
+				sortedList = list.stream()
+					    .sorted(Comparator.comparing(BoLocDTO::getEvebitda, Comparator.nullsLast(Comparator.naturalOrder())))
+					    .collect(Collectors.toList());
+			} else if ("divyld".equals(sortType)) {
+				sortedList = list.stream()
+					    .sorted(Comparator.comparing(BoLocDTO::getDivyld, Comparator.nullsLast(Comparator.naturalOrder())))
+					    .collect(Collectors.toList());
+			} else if ("netcashmc".equals(sortType)) {
+				sortedList = list.stream()
+					    .sorted(Comparator.comparing(BoLocDTO::getNetcashmc, Comparator.nullsLast(Comparator.naturalOrder())))
+					    .collect(Collectors.toList());
+			}
+		} else if ("desc".equals(sortValue)) {
+			if ("pi791".equals(sortType)) {
+				sortedList = list.stream()
+					    .sorted(Comparator.comparing(BoLocDTO::getPi791, Comparator.nullsLast(Comparator.reverseOrder())))
+					    .collect(Collectors.toList());
+			} else if ("pi792".equals(sortType)) {
+				sortedList = list.stream()
+					    .sorted(Comparator.comparing(BoLocDTO::getPi792, Comparator.nullsLast(Comparator.reverseOrder())))
+					    .collect(Collectors.toList());
+			} else if ("pi793".equals(sortType)) {
+				sortedList = list.stream()
+					    .sorted(Comparator.comparing(BoLocDTO::getPi793, Comparator.nullsLast(Comparator.reverseOrder())))
+					    .collect(Collectors.toList());
+			} else if ("marketcap".equals(sortType)) {
+				sortedList = list.stream()
+					    .sorted(Comparator.comparing(BoLocDTO::getMarketcap, Comparator.nullsLast(Comparator.reverseOrder())))
+					    .collect(Collectors.toList());
+			} else if ("roe".equals(sortType)) {
+				sortedList = list.stream()
+					    .sorted(Comparator.comparing(BoLocDTO::getRoe, Comparator.nullsLast(Comparator.reverseOrder())))
+					    .collect(Collectors.toList());
+			} else if ("roic".equals(sortType)) {
+				sortedList = list.stream()
+					    .sorted(Comparator.comparing(BoLocDTO::getRoic, Comparator.nullsLast(Comparator.reverseOrder())))
+					    .collect(Collectors.toList());
+			} else if ("pe".equals(sortType)) {
+				sortedList = list.stream()
+					    .sorted(Comparator.comparing(BoLocDTO::getPe, Comparator.nullsLast(Comparator.reverseOrder())))
+					    .collect(Collectors.toList());
+			} else if ("pb".equals(sortType)) {
+				sortedList = list.stream()
+					    .sorted(Comparator.comparing(BoLocDTO::getPb, Comparator.nullsLast(Comparator.reverseOrder())))
+					    .collect(Collectors.toList());
+			} else if ("evebitda".equals(sortType)) {
+				sortedList = list.stream()
+					    .sorted(Comparator.comparing(BoLocDTO::getEvebitda, Comparator.nullsLast(Comparator.reverseOrder())))
+					    .collect(Collectors.toList());
+			} else if ("divyld".equals(sortType)) {
+				sortedList = list.stream()
+					    .sorted(Comparator.comparing(BoLocDTO::getDivyld, Comparator.nullsLast(Comparator.reverseOrder())))
+					    .collect(Collectors.toList());
+			} else if ("netcashmc".equals(sortType)) {
+				sortedList = list.stream()
+					    .sorted(Comparator.comparing(BoLocDTO::getNetcashmc, Comparator.nullsLast(Comparator.reverseOrder())))
+					    .collect(Collectors.toList());
+			}
+		}
+		return sortedList;
+	}
 	
 	
 }
