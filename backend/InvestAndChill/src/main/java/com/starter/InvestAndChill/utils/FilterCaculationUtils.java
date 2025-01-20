@@ -1,15 +1,19 @@
 package com.starter.InvestAndChill.utils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class FilterCaculationUtils {
 	public static void main(String[] args) {
-
-		tinhQuyGanNhat("3","2023",10);
+		List<String> list = new ArrayList<String>();
+		list.add("VND");
+		list.add("SSI");
+		System.out.print(buildQuerySoSanhChiSoChungKhoan(list));
     }
 	
-	public static Map<Integer, Integer> tinhQuyGanNhat(String quyHienTai, String namHienTai, int khoangCach) {
+	public static Map<Integer, Integer> tinhQuyGanNhat(String namHienTai,String quyHienTai, int khoangCach) {
 		Integer quy = Integer.valueOf(quyHienTai);
 		Integer nam = Integer.valueOf(namHienTai);
 		
@@ -21,7 +25,7 @@ public class FilterCaculationUtils {
 			}
 		}
 		Map<Integer, Integer> map = new HashMap<>();
-		map.put(quy, nam);
+		map.put(nam, quy);
 		
 		return map;
 		
@@ -132,6 +136,39 @@ public class FilterCaculationUtils {
 		 		+ "and ptcr.year ='"+ Constants.currentYear +"' and ptcr.quarter ='"+ Constants.currentQuarter +"' \r\n"
 		 		+ "WHERE date = (SELECT MAX(date) FROM valuation)");
 		 return sql.toString();
+	}
+	
+	public static String buildQuerySoSanhChiSoChungKhoan(List<String> listChungKhoan) {
+		String listckStr = "";
+		for (int i=0; i< listChungKhoan.size(); i++) {
+			listckStr += "stock_code = '";
+			listckStr += listChungKhoan.get(i);
+			listckStr += "' or ";
+		}
+		if (listckStr.trim().endsWith("or")) {
+			listckStr = listckStr.substring(0, listckStr.lastIndexOf("or")).trim();
+		}
+		
+		Map<Integer, Integer> map1 = FilterCaculationUtils.tinhQuyGanNhat(Constants.currentYear, Constants.currentQuarter, 1);
+		Map.Entry<Integer, Integer> firstEntry1 = map1.entrySet().iterator().next();
+		
+		Map<Integer, Integer> map2 = FilterCaculationUtils.tinhQuyGanNhat(Constants.currentYear, Constants.currentQuarter, 2);
+		Map.Entry<Integer, Integer> firstEntry2 = map2.entrySet().iterator().next();
+		
+		Map<Integer, Integer> map3 = FilterCaculationUtils.tinhQuyGanNhat(Constants.currentYear, Constants.currentQuarter, 3);
+		Map.Entry<Integer, Integer> firstEntry3 = map3.entrySet().iterator().next();
+		
+		Map<Integer, Integer> map4 = FilterCaculationUtils.tinhQuyGanNhat(Constants.currentYear, Constants.currentQuarter, 4);
+		Map.Entry<Integer, Integer> firstEntry4 = map4.entrySet().iterator().next();
+		
+		StringBuilder sql = new StringBuilder("SELECT stock_code, quarter, year, c_i_6, c_i_7, c_b_142, c_f_158, c_b_205\r\n"
+				+ "FROM chung_khoan_report\r\n"
+				+ "WHERE ("+listckStr+")\r\n"
+				+ "	and ( (year ='"+ Constants.currentYear +"' and quarter ='"+Constants.currentQuarter+"') or (year ='"+ firstEntry1.getKey().toString() +"' and quarter ='"+firstEntry1.getValue().toString()+"') or\r\n"
+				+ "	 (year ='"+firstEntry2.getKey().toString()+"' and quarter ='"+ firstEntry2.getValue().toString() +"') or (year ='"+ firstEntry3.getKey().toString() +"' and quarter ='"+ firstEntry3.getValue().toString() +"') or (year ='"+firstEntry4.getKey().toString()+"' and quarter ='"+ firstEntry4.getValue().toString() +"')  )\r\n"
+				+ "order by stock_code , year asc, quarter asc");
+		 return sql.toString();
+		
 	}
 
 }

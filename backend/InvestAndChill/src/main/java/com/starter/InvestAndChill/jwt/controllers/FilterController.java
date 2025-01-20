@@ -1,6 +1,7 @@
 package com.starter.InvestAndChill.jwt.controllers;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.starter.InvestAndChill.jwt.models.ReportKey;
 import com.starter.InvestAndChill.jwt.payload.response.MessageResponse;
 import com.starter.InvestAndChill.jwt.payload.response.filter.BoLocResponse;
+import com.starter.InvestAndChill.jwt.payload.response.filter.ChungKhoanSoSanhChiSoResponse;
 import com.starter.InvestAndChill.jwt.payload.response.filter.GiaTangCongSuatResponse;
 import com.starter.InvestAndChill.jwt.payload.response.filter.KhaiThacDuoiCongSuatResponse;
 import com.starter.InvestAndChill.jwt.payload.response.filter.NoNhieuSomChiTraResponse;
@@ -26,6 +28,7 @@ import com.starter.InvestAndChill.jwt.payload.response.filter.XuLyKhauHaoNangRes
 import com.starter.InvestAndChill.jwt.repository.BoLocRepository;
 import com.starter.InvestAndChill.jwt.repository.FilterRepository;
 import com.starter.InvestAndChill.pojo.BoLocDTO;
+import com.starter.InvestAndChill.pojo.ChungKhoanSoSanhChiSoDTO;
 import com.starter.InvestAndChill.pojo.FilterGiaTangCongSuatDTO;
 import com.starter.InvestAndChill.pojo.FilterKhaiThacDuoiCongSuatDTO;
 import com.starter.InvestAndChill.pojo.FilterNoNhieuSomChiTraDTO;
@@ -291,12 +294,110 @@ public class FilterController {
 		return new ResponseEntity<>(minMaxDTO, HttpStatus.OK);
 	}
 	
+	@GetMapping("/chungkhoan/list")
+	public ResponseEntity<?> listChungKhoan(){
+		List<String> list = new ArrayList<String>();
+		list = boLocRepository.listChungKhoan();
+		return new ResponseEntity<>(list, HttpStatus.OK);
+	}
 	
 	@PostMapping("/chungkhoan/sosanhchiso")
 	public ResponseEntity<?> chungKhoanSoSanhChiSo(@RequestBody List<String> stringList, @RequestParam(required = false,name = "chart") String chart){
+		List<ChungKhoanSoSanhChiSoDTO> listCkSoSanhChiSoDTO = new ArrayList<ChungKhoanSoSanhChiSoDTO>();
+		listCkSoSanhChiSoDTO = boLocRepository.chungKhoanSoSanhChiSo(stringList);
+		
+		List<ChungKhoanSoSanhChiSoResponse> list = new ArrayList<ChungKhoanSoSanhChiSoResponse>();
+		
+		for (int i=0;i< stringList.size();i++) {
+			ChungKhoanSoSanhChiSoResponse response = new ChungKhoanSoSanhChiSoResponse();
+			String stock = stringList.get(i);
+			response.setStockCode(stock);
+			String[] arrayTime = new String[5];
+			Double[] arrayValue = new Double[5];
+			int n= 0;
+			for (int j=0 ; j< listCkSoSanhChiSoDTO.size();j++) {
+				if (stock.equals(listCkSoSanhChiSoDTO.get(j).getStockCode())) {
+					if ("ci6".equals(chart)) {
+						arrayValue[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getCi6());
+					} else if ("ci7".equals(chart)) {
+						arrayValue[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getCi7());
+					} else if ("cb142".equals(chart)) {
+						arrayValue[n] = RoundNumber.lamTron(listCkSoSanhChiSoDTO.get(j).getCb142());
+					} else if ("cf158".equals(chart)) {
+						arrayValue[n] = RoundNumber.lamTron(listCkSoSanhChiSoDTO.get(j).getCf158());
+					} else if ("cb205".equals(chart)) {
+						arrayValue[n] = RoundNumber.lamTron(listCkSoSanhChiSoDTO.get(j).getCb205());
+					}
+					
+					
+					arrayTime[n] = listCkSoSanhChiSoDTO.get(j).getQuarter() + " - " + listCkSoSanhChiSoDTO.get(j).getYear();
+					n++;
+				}
+			}
+			response.setQuarterYear(arrayTime);
+			response.setArrayValue(arrayValue);
+			list.add(response);
+		}
 		
 		
 		
-		return new ResponseEntity<>("", HttpStatus.OK);
+		
+		return new ResponseEntity<>(list, HttpStatus.OK);
+	}
+	
+	@GetMapping("/nganhang/list")
+	public ResponseEntity<?> listNganHang(){
+		List<String> list = new ArrayList<String>();
+		list = boLocRepository.listNganHang();
+		return new ResponseEntity<>(list, HttpStatus.OK);
+	}
+	
+	@PostMapping("/nganhang/sosanhchiso")
+	public ResponseEntity<?> nganHangSoSanhChiSo(@RequestBody List<String> stringList, @RequestParam(required = false,name = "chart") String chart){
+		List<ChungKhoanSoSanhChiSoDTO> listCkSoSanhChiSoDTO = new ArrayList<ChungKhoanSoSanhChiSoDTO>();
+		listCkSoSanhChiSoDTO = boLocRepository.chungKhoanSoSanhChiSo(stringList);
+		
+		List<ChungKhoanSoSanhChiSoResponse> list = new ArrayList<ChungKhoanSoSanhChiSoResponse>();
+		
+		for (int i=0;i< stringList.size();i++) {
+			ChungKhoanSoSanhChiSoResponse response = new ChungKhoanSoSanhChiSoResponse();
+			String stock = stringList.get(i);
+			response.setStockCode(stock);
+			String[] arrayTime = new String[5];
+			Double[] arrayValue = new Double[5];
+			int n= 0;
+			for (int j=0 ; j< listCkSoSanhChiSoDTO.size();j++) {
+				if (stock.equals(listCkSoSanhChiSoDTO.get(j).getStockCode())) {
+					if ("ci6".equals(chart)) {
+						arrayValue[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getCi6());
+					} else if ("ci7".equals(chart)) {
+						arrayValue[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getCi7());
+					} else if ("cb142".equals(chart)) {
+						arrayValue[n] = RoundNumber.lamTron(listCkSoSanhChiSoDTO.get(j).getCb142());
+					} else if ("cf158".equals(chart)) {
+						arrayValue[n] = RoundNumber.lamTron(listCkSoSanhChiSoDTO.get(j).getCf158());
+					} else if ("cb205".equals(chart)) {
+						arrayValue[n] = RoundNumber.lamTron(listCkSoSanhChiSoDTO.get(j).getCb205());
+					}
+					
+					
+					arrayTime[n] = listCkSoSanhChiSoDTO.get(j).getQuarter() + " - " + listCkSoSanhChiSoDTO.get(j).getYear();
+					n++;
+				}
+			}
+			response.setQuarterYear(arrayTime);
+			response.setArrayValue(arrayValue);
+			list.add(response);
+		}
+		
+//		Map<String, Integer> data = new HashMap<>();
+//        data.put("3 - 2023", 9);
+//        data.put("4 - 2023", 10);
+//        data.put("1 - 2024", 11);
+//        data.put("2 - 2024", 12);
+//        data.put("3 - 2024", 13);
+		
+		
+		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 }

@@ -7,6 +7,7 @@ import javax.persistence.NamedNativeQuery;
 import javax.persistence.SqlResultSetMapping;
 
 import com.starter.InvestAndChill.pojo.BoLocDTO;
+import com.starter.InvestAndChill.pojo.ChungKhoanSoSanhChiSoDTO;
 import com.starter.InvestAndChill.pojo.FilterGiaTangCongSuatDTO;
 import com.starter.InvestAndChill.pojo.FilterKhaiThacDuoiCongSuatDTO;
 import com.starter.InvestAndChill.pojo.FilterNoNhieuSomChiTraDTO;
@@ -218,6 +219,23 @@ import com.starter.InvestAndChill.pojo.MinMaxDTO;
 	            @ColumnResult(name = "divyldMax", type = Double.class),            
 	            @ColumnResult(name = "netcashmcMin", type = Double.class),
 	            @ColumnResult(name = "netcashmcMax", type = Double.class)
+	        }
+	    )
+	)
+
+@SqlResultSetMapping(
+	    name = "chungkhoan.sosanhchiso",
+	    classes = @ConstructorResult(
+	        targetClass = ChungKhoanSoSanhChiSoDTO.class,
+	        columns = {        		
+	        	@ColumnResult(name = "stock_code", type = String.class),
+	            @ColumnResult(name = "quarter", type = String.class),
+	            @ColumnResult(name = "year", type = String.class),
+	            @ColumnResult(name = "c_i_6", type = Double.class),	            
+	            @ColumnResult(name = "c_i_7", type = Double.class),
+	            @ColumnResult(name = "c_b_142", type = Double.class),
+	            @ColumnResult(name = "c_f_158", type = Double.class),
+	            @ColumnResult(name = "c_b_205", type = Double.class)
 	        }
 	    )
 	)
