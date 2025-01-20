@@ -2,6 +2,7 @@ package com.starter.InvestAndChill.jwt.controllers;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -312,30 +313,31 @@ public class FilterController {
 			ChungKhoanSoSanhChiSoResponse response = new ChungKhoanSoSanhChiSoResponse();
 			String stock = stringList.get(i);
 			response.setStockCode(stock);
-			String[] arrayTime = new String[5];
-			Double[] arrayValue = new Double[5];
-			int n= 0;
+			
+			Map<String, Double> map = new LinkedHashMap<>();
+			
 			for (int j=0 ; j< listCkSoSanhChiSoDTO.size();j++) {
 				if (stock.equals(listCkSoSanhChiSoDTO.get(j).getStockCode())) {
+					Double value=null;
+					String time ="";
 					if ("ci6".equals(chart)) {
-						arrayValue[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getCi6());
+						value = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getCi6());
 					} else if ("ci7".equals(chart)) {
-						arrayValue[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getCi7());
+						value = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getCi7());
 					} else if ("cb142".equals(chart)) {
-						arrayValue[n] = RoundNumber.lamTron(listCkSoSanhChiSoDTO.get(j).getCb142());
+						value = RoundNumber.lamTron(listCkSoSanhChiSoDTO.get(j).getCb142());
 					} else if ("cf158".equals(chart)) {
-						arrayValue[n] = RoundNumber.lamTron(listCkSoSanhChiSoDTO.get(j).getCf158());
+						value = RoundNumber.lamTron(listCkSoSanhChiSoDTO.get(j).getCf158());
 					} else if ("cb205".equals(chart)) {
-						arrayValue[n] = RoundNumber.lamTron(listCkSoSanhChiSoDTO.get(j).getCb205());
+						value = RoundNumber.lamTron(listCkSoSanhChiSoDTO.get(j).getCb205());
 					}
 					
 					
-					arrayTime[n] = listCkSoSanhChiSoDTO.get(j).getQuarter() + " - " + listCkSoSanhChiSoDTO.get(j).getYear();
-					n++;
+					time = listCkSoSanhChiSoDTO.get(j).getQuarter() + " - " + listCkSoSanhChiSoDTO.get(j).getYear();
+					map.put(time, value);
 				}
 			}
-			response.setQuarterYear(arrayTime);
-			response.setArrayValue(arrayValue);
+			response.setMapValue(map);
 			list.add(response);
 		}
 		
@@ -352,52 +354,52 @@ public class FilterController {
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 	
-	@PostMapping("/nganhang/sosanhchiso")
-	public ResponseEntity<?> nganHangSoSanhChiSo(@RequestBody List<String> stringList, @RequestParam(required = false,name = "chart") String chart){
-		List<ChungKhoanSoSanhChiSoDTO> listCkSoSanhChiSoDTO = new ArrayList<ChungKhoanSoSanhChiSoDTO>();
-		listCkSoSanhChiSoDTO = boLocRepository.chungKhoanSoSanhChiSo(stringList);
-		
-		List<ChungKhoanSoSanhChiSoResponse> list = new ArrayList<ChungKhoanSoSanhChiSoResponse>();
-		
-		for (int i=0;i< stringList.size();i++) {
-			ChungKhoanSoSanhChiSoResponse response = new ChungKhoanSoSanhChiSoResponse();
-			String stock = stringList.get(i);
-			response.setStockCode(stock);
-			String[] arrayTime = new String[5];
-			Double[] arrayValue = new Double[5];
-			int n= 0;
-			for (int j=0 ; j< listCkSoSanhChiSoDTO.size();j++) {
-				if (stock.equals(listCkSoSanhChiSoDTO.get(j).getStockCode())) {
-					if ("ci6".equals(chart)) {
-						arrayValue[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getCi6());
-					} else if ("ci7".equals(chart)) {
-						arrayValue[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getCi7());
-					} else if ("cb142".equals(chart)) {
-						arrayValue[n] = RoundNumber.lamTron(listCkSoSanhChiSoDTO.get(j).getCb142());
-					} else if ("cf158".equals(chart)) {
-						arrayValue[n] = RoundNumber.lamTron(listCkSoSanhChiSoDTO.get(j).getCf158());
-					} else if ("cb205".equals(chart)) {
-						arrayValue[n] = RoundNumber.lamTron(listCkSoSanhChiSoDTO.get(j).getCb205());
-					}
-					
-					
-					arrayTime[n] = listCkSoSanhChiSoDTO.get(j).getQuarter() + " - " + listCkSoSanhChiSoDTO.get(j).getYear();
-					n++;
-				}
-			}
-			response.setQuarterYear(arrayTime);
-			response.setArrayValue(arrayValue);
-			list.add(response);
-		}
-		
-//		Map<String, Integer> data = new HashMap<>();
-//        data.put("3 - 2023", 9);
-//        data.put("4 - 2023", 10);
-//        data.put("1 - 2024", 11);
-//        data.put("2 - 2024", 12);
-//        data.put("3 - 2024", 13);
-		
-		
-		return new ResponseEntity<>(list, HttpStatus.OK);
-	}
+//	@PostMapping("/nganhang/sosanhchiso")
+//	public ResponseEntity<?> nganHangSoSanhChiSo(@RequestBody List<String> stringList, @RequestParam(required = false,name = "chart") String chart){
+//		List<ChungKhoanSoSanhChiSoDTO> listCkSoSanhChiSoDTO = new ArrayList<ChungKhoanSoSanhChiSoDTO>();
+//		listCkSoSanhChiSoDTO = boLocRepository.chungKhoanSoSanhChiSo(stringList);
+//		
+//		List<ChungKhoanSoSanhChiSoResponse> list = new ArrayList<ChungKhoanSoSanhChiSoResponse>();
+//		
+//		for (int i=0;i< stringList.size();i++) {
+//			ChungKhoanSoSanhChiSoResponse response = new ChungKhoanSoSanhChiSoResponse();
+//			String stock = stringList.get(i);
+//			response.setStockCode(stock);
+//			String[] arrayTime = new String[5];
+//			Double[] arrayValue = new Double[5];
+//			int n= 0;
+//			for (int j=0 ; j< listCkSoSanhChiSoDTO.size();j++) {
+//				if (stock.equals(listCkSoSanhChiSoDTO.get(j).getStockCode())) {
+//					if ("ci6".equals(chart)) {
+//						arrayValue[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getCi6());
+//					} else if ("ci7".equals(chart)) {
+//						arrayValue[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getCi7());
+//					} else if ("cb142".equals(chart)) {
+//						arrayValue[n] = RoundNumber.lamTron(listCkSoSanhChiSoDTO.get(j).getCb142());
+//					} else if ("cf158".equals(chart)) {
+//						arrayValue[n] = RoundNumber.lamTron(listCkSoSanhChiSoDTO.get(j).getCf158());
+//					} else if ("cb205".equals(chart)) {
+//						arrayValue[n] = RoundNumber.lamTron(listCkSoSanhChiSoDTO.get(j).getCb205());
+//					}
+//					
+//					
+//					arrayTime[n] = listCkSoSanhChiSoDTO.get(j).getQuarter() + " - " + listCkSoSanhChiSoDTO.get(j).getYear();
+//					n++;
+//				}
+//			}
+//			response.setQuarterYear(arrayTime);
+//			response.setArrayValue(arrayValue);
+//			list.add(response);
+//		}
+//		
+////		Map<String, Integer> data = new HashMap<>();
+////        data.put("3 - 2023", 9);
+////        data.put("4 - 2023", 10);
+////        data.put("1 - 2024", 11);
+////        data.put("2 - 2024", 12);
+////        data.put("3 - 2024", 13);
+//		
+//		
+//		return new ResponseEntity<>(list, HttpStatus.OK);
+//	}
 }
