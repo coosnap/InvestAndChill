@@ -51,18 +51,18 @@ public class FilterCaculationUtils {
 		
         StringBuilder sql = new StringBuilder("SELECT v.stock_code, p_i_79_1, p_i_79_2, p_i_79_3, marketcap, p_i_6 as roe, p_i_24 as roic, pe, pb, evebitda, divyld, netcashmc\r\n"
         		+ "FROM valuation v left join phi_tai_chinh_report ptcr on ptcr.stock_code  = v.stock_code\r\n"
-        		+ "and ptcr.year ='2024' and ptcr.quarter ='3' \r\n"
+        		+ "and ptcr.year ='"+ Constants.currentYear +"' and ptcr.quarter ='"+ Constants.currentQuarter +"' \r\n"
         		+ "WHERE date = (SELECT MAX(date) FROM valuation) ");
         
         if ("pi791".equals(tangtruongdoanhthu)) {
-   		 	sql.append(" and p_i_79_1 >= ").append(tangtruongdoanhthuMin);
-   		 	sql.append(" and p_i_79_1 <= ").append(tangtruongdoanhthuMax);
+   		 	sql.append(" and p_i_79_1 >= ").append(tangtruongdoanhthuMin / 100);
+   		 	sql.append(" and p_i_79_1 <= ").append(tangtruongdoanhthuMax / 100);
    	 	} else if ("pi792".equals(tangtruongdoanhthu)) {
-   	 		sql.append(" and p_i_79_2 >= ").append(tangtruongdoanhthuMin);
-		 	sql.append(" and p_i_79_2 <= ").append(tangtruongdoanhthuMax);
+   	 		sql.append(" and p_i_79_2 >= ").append(tangtruongdoanhthuMin / 100);
+		 	sql.append(" and p_i_79_2 <= ").append(tangtruongdoanhthuMax / 100);
    	 	} else if ("pi793".equals(tangtruongdoanhthu)) {
-   	 		sql.append(" and p_i_79_3 >= ").append(tangtruongdoanhthuMin);
-		 	sql.append(" and p_i_79_3 <= ").append(tangtruongdoanhthuMax);
+   	 		sql.append(" and p_i_79_3 >= ").append(tangtruongdoanhthuMin / 100);
+		 	sql.append(" and p_i_79_3 <= ").append(tangtruongdoanhthuMax / 100);
    	 	}
         
         if (isChoosing(marketcapMin, marketcapMax)) {
@@ -71,13 +71,13 @@ public class FilterCaculationUtils {
         }
         
         if (isChoosing(roeMin, roeMax)) {
-        	sql.append(" and roe >= ").append(roeMin);
-		 	sql.append(" and roe <= ").append(roeMax);
+        	sql.append(" and roe >= ").append(roeMin / 100);
+		 	sql.append(" and roe <= ").append(roeMax / 100);
         }
         
         if (isChoosing(pi24Min, pi24Max)) {
-        	sql.append(" and p_i_24 >= ").append(pi24Min);
-		 	sql.append(" and p_i_24 <= ").append(pi24Max);
+        	sql.append(" and p_i_24 >= ").append(pi24Min / 100);
+		 	sql.append(" and p_i_24 <= ").append(pi24Max / 100);
         }
         
         if (isChoosing(peMin, peMax)) {
@@ -96,13 +96,13 @@ public class FilterCaculationUtils {
         }
         
         if (isChoosing(divyldMin, divyldMax)) {
-        	sql.append(" and divyld >= ").append(divyldMin);
-		 	sql.append(" and divyld <= ").append(divyldMax);
+        	sql.append(" and divyld >= ").append(divyldMin / 100);
+		 	sql.append(" and divyld <= ").append(divyldMax / 100);
         }
         
         if (isChoosing(netcashmcMin, netcashmcMax)) {
-        	sql.append(" and netcashmc >= ").append(netcashmcMin);
-		 	sql.append(" and netcashmc <= ").append(netcashmcMax);
+        	sql.append(" and netcashmc >= ").append(netcashmcMin / 100);
+		 	sql.append(" and netcashmc <= ").append(netcashmcMax / 100);
         }
 		
 		return sql.toString();
@@ -114,6 +114,24 @@ public class FilterCaculationUtils {
 			return true;
 		else 
 			return false;
+	}
+	
+	public static String buildQueryMinMax() {
+		 StringBuilder sql = new StringBuilder("select min(p_i_79_1) as pi791min, max(p_i_79_1) as pi791max, \r\n"
+		 		+ "	min(p_i_79_2) as pi792min, max(p_i_79_2) as pi792max,\r\n"
+		 		+ "	min(p_i_79_3) as pi793min, max(p_i_79_3) as pi793max,\r\n"
+		 		+ "	min(marketcap) as marketcapmin, max(marketcap) as marketcapmax,\r\n"
+		 		+ "	min(p_i_6) as roemin, max(p_i_6) as roemax,\r\n"
+		 		+ "	min(p_i_24) as pi24min, max(p_i_24) as pi24max,\r\n"
+		 		+ "	min(pe) as pemin, max(pe) as pemax,\r\n"
+		 		+ "	min(pb) as pbmin, max(pb) as pbmax,\r\n"
+		 		+ "	min(evebitda) as evebitdamin, max(evebitda) as evebitdamax,\r\n"
+		 		+ "	min(divyld) as divyldmin, max(divyld) as divyldmax,\r\n"
+		 		+ "	min(netcashmc) as netcashmcmin, max(netcashmc) as netcashmcmax\r\n"
+		 		+ "FROM valuation v left join phi_tai_chinh_report ptcr on ptcr.stock_code  = v.stock_code\r\n"
+		 		+ "and ptcr.year ='"+ Constants.currentYear +"' and ptcr.quarter ='"+ Constants.currentQuarter +"' \r\n"
+		 		+ "WHERE date = (SELECT MAX(date) FROM valuation)");
+		 return sql.toString();
 	}
 
 }

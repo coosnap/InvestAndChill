@@ -32,6 +32,7 @@ import com.starter.InvestAndChill.pojo.FilterNoNhieuSomChiTraDTO;
 import com.starter.InvestAndChill.pojo.FilterPhiTaiChinhDTO;
 import com.starter.InvestAndChill.pojo.FilterTheoDoiPreSalesDTO;
 import com.starter.InvestAndChill.pojo.FilterXuLyKhauHaoNangDTO;
+import com.starter.InvestAndChill.pojo.MinMaxDTO;
 import com.starter.InvestAndChill.utils.CalculatorUtils;
 import com.starter.InvestAndChill.utils.Constants;
 import com.starter.InvestAndChill.utils.FilterCaculationUtils;
@@ -252,5 +253,50 @@ public class FilterController {
 		
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
-
+	
+	@GetMapping("/getMinMax")
+	public ResponseEntity<?> filterGetMinMax(){
+		MinMaxDTO minMaxDTO = new MinMaxDTO();
+		minMaxDTO = boLocRepository.getMinMax();
+		
+		minMaxDTO.setDivyldMax(RoundNumber.lamTronPhanTram(minMaxDTO.getDivyldMax()));
+		minMaxDTO.setDivyldMin(RoundNumber.lamTronPhanTram(minMaxDTO.getDivyldMin()));
+		minMaxDTO.setEvebitdaMax(RoundNumber.lamTronLan(minMaxDTO.getEvebitdaMax()));
+		minMaxDTO.setEvebitdaMin(RoundNumber.lamTronLan(minMaxDTO.getEvebitdaMin()));
+		minMaxDTO.setMarketcapMax(RoundNumber.lamTron(minMaxDTO.getMarketcapMax()));
+		minMaxDTO.setMarketcapMin(RoundNumber.lamTron(minMaxDTO.getMarketcapMin()));
+		
+		minMaxDTO.setNetcashmcMax(RoundNumber.lamTronPhanTram(minMaxDTO.getNetcashmcMax()));
+		minMaxDTO.setNetcashmcMin(RoundNumber.lamTronPhanTram(minMaxDTO.getNetcashmcMin()));
+		minMaxDTO.setPbMax(RoundNumber.lamTronLan(minMaxDTO.getPbMax()));
+		minMaxDTO.setPbMin(RoundNumber.lamTronLan(minMaxDTO.getPbMin()));
+		minMaxDTO.setPeMax(RoundNumber.lamTronLan(minMaxDTO.getPeMax()));
+		minMaxDTO.setPeMin(RoundNumber.lamTronLan(minMaxDTO.getPeMin()));
+		
+		minMaxDTO.setPi24Max(RoundNumber.lamTronPhanTram(minMaxDTO.getPi24Max()));
+		minMaxDTO.setPi24Min(RoundNumber.lamTronPhanTram(minMaxDTO.getPi24Min()));
+		minMaxDTO.setPi791Max(RoundNumber.lamTronPhanTram(minMaxDTO.getPi791Max()));
+		minMaxDTO.setPi791Min(RoundNumber.lamTronPhanTram(minMaxDTO.getPi791Min()));
+		minMaxDTO.setPi792Max(RoundNumber.lamTronPhanTram(minMaxDTO.getPi792Max()));
+		minMaxDTO.setPi792Min(RoundNumber.lamTronPhanTram(minMaxDTO.getPi792Min()));
+		minMaxDTO.setPi793Max(RoundNumber.lamTronPhanTram(minMaxDTO.getPi793Max()));
+		minMaxDTO.setPi793Min(RoundNumber.lamTronPhanTram(minMaxDTO.getPi793Min()));
+		
+		minMaxDTO.setRoeMax(RoundNumber.lamTronPhanTram(minMaxDTO.getRoeMax()));
+		minMaxDTO.setRoeMin(RoundNumber.lamTronPhanTram(minMaxDTO.getRoeMin()));
+		
+		
+		
+		
+		return new ResponseEntity<>(minMaxDTO, HttpStatus.OK);
+	}
+	
+	
+	@PostMapping("/chungkhoan/sosanhchiso")
+	public ResponseEntity<?> chungKhoanSoSanhChiSo(@RequestBody List<String> stringList, @RequestParam(required = false,name = "chart") String chart){
+		
+		
+		
+		return new ResponseEntity<>("", HttpStatus.OK);
+	}
 }

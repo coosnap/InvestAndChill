@@ -13,6 +13,7 @@ import com.starter.InvestAndChill.pojo.FilterNoNhieuSomChiTraDTO;
 import com.starter.InvestAndChill.pojo.FilterPhiTaiChinhDTO;
 import com.starter.InvestAndChill.pojo.FilterTheoDoiPreSalesDTO;
 import com.starter.InvestAndChill.pojo.FilterXuLyKhauHaoNangDTO;
+import com.starter.InvestAndChill.pojo.MinMaxDTO;
 
 @Entity(name = "view_phi_tai_chinh_quy")
 @NamedNativeQuery(
@@ -186,6 +187,37 @@ import com.starter.InvestAndChill.pojo.FilterXuLyKhauHaoNangDTO;
 	            @ColumnResult(name = "evebitda", type = Double.class),            
 	            @ColumnResult(name = "divyld", type = Double.class),
 	            @ColumnResult(name = "netcashmc", type = Double.class)
+	        }
+	    )
+	)
+
+@SqlResultSetMapping(
+	    name = "getminmax",
+	    classes = @ConstructorResult(
+	        targetClass = MinMaxDTO.class,
+	        columns = {        		
+	        	@ColumnResult(name = "pi791Min", type = Double.class),
+	            @ColumnResult(name = "pi791Max", type = Double.class),
+	            @ColumnResult(name = "pi792Min", type = Double.class),
+	            @ColumnResult(name = "pi792Max", type = Double.class),	            
+	            @ColumnResult(name = "pi793Min", type = Double.class),
+	            @ColumnResult(name = "pi793Max", type = Double.class),
+	            @ColumnResult(name = "marketcapMin", type = Double.class),
+	            @ColumnResult(name = "marketcapMax", type = Double.class),
+	            @ColumnResult(name = "roeMin", type = Double.class),
+	            @ColumnResult(name = "roeMax", type = Double.class),            
+	            @ColumnResult(name = "pi24Min", type = Double.class),
+	            @ColumnResult(name = "pi24Max", type = Double.class),           
+	            @ColumnResult(name = "peMin", type = Double.class),
+	            @ColumnResult(name = "peMax", type = Double.class),	            
+	            @ColumnResult(name = "pbMin", type = Double.class),
+	            @ColumnResult(name = "pbMax", type = Double.class),
+	            @ColumnResult(name = "evebitdaMin", type = Double.class),
+	            @ColumnResult(name = "evebitdaMax", type = Double.class),
+	            @ColumnResult(name = "divyldMin", type = Double.class),
+	            @ColumnResult(name = "divyldMax", type = Double.class),            
+	            @ColumnResult(name = "netcashmcMin", type = Double.class),
+	            @ColumnResult(name = "netcashmcMax", type = Double.class)
 	        }
 	    )
 	)

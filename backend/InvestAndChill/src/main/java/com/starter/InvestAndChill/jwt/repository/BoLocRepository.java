@@ -10,6 +10,7 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 
 import com.starter.InvestAndChill.pojo.BoLocDTO;
+import com.starter.InvestAndChill.pojo.MinMaxDTO;
 import com.starter.InvestAndChill.utils.FilterCaculationUtils;
 @Repository
 public class BoLocRepository {
@@ -18,10 +19,19 @@ public class BoLocRepository {
 
     public List<BoLocDTO> boLoc(Map<String, Object> payload) {
     	String sql = FilterCaculationUtils.buildQueryBoLoc(payload);
-
         Query query = entityManager.createNativeQuery(sql, "boloc");
         List<BoLocDTO> list = query.getResultList();
-
         return list;
     }
+    
+    public MinMaxDTO getMinMax() {
+    	String sql = FilterCaculationUtils.buildQueryMinMax();
+    	Query query = entityManager.createNativeQuery(sql,"getminmax");
+    	MinMaxDTO result = (MinMaxDTO) query.getSingleResult();
+    	return result;
+    }
+    
+    
+    
+    
 }
