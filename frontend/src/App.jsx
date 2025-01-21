@@ -17,6 +17,8 @@ import PublicRoute from './components/router/public-route';
 import 'react-toastify/dist/ReactToastify.css';
 import { Charts } from './components/pages/chart';
 import { ToastContainer } from 'react-toastify';
+import { Pattern } from './components/pages/chart/pattern';
+import { Filter } from './components/pages/chart/filter';
 
 const Admin = React.lazy(() => import('./components/admin/Admin'));
 const Buy = React.lazy(() => import('./components/pages/Buy'));
@@ -45,11 +47,31 @@ const routes = [
     ),
   },
   {
-    path: '/chart',
+    path: '/data/chart',
     element: (
       <PublicRoute>
         <Suspense>
           <Charts />
+        </Suspense>
+      </PublicRoute>
+    ),
+  },
+  {
+    path: '/data/pattern',
+    element: (
+      <PublicRoute>
+        <Suspense>
+          <Pattern />
+        </Suspense>
+      </PublicRoute>
+    ),
+  },
+  {
+    path: '/data/filter',
+    element: (
+      <PublicRoute>
+        <Suspense>
+          <Filter />
         </Suspense>
       </PublicRoute>
     ),
@@ -165,13 +187,13 @@ function App() {
   }, [cookies]);
 
   return (
-    <ThemeProvider defaultTheme="light" theme={theme} storageKey="vite-ui-theme">
-      <div className="App">
+    <div className="App">
+      <ThemeProvider defaultTheme="light" theme={theme} storageKey="vite-ui-theme">
         {pathname.includes('/post') ? <></> : <Layout hideHeaderPaths={['/']} />}
         {routesElement}
         <ToastContainer />
-      </div>
-    </ThemeProvider>
+      </ThemeProvider>
+    </div>
   );
 }
 export default App;

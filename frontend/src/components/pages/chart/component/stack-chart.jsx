@@ -1,11 +1,18 @@
 import Box from '@mui/material/Box';
-import { ChartsReferenceLine, ChartsTooltip, ChartsYAxis, useYScale } from '@mui/x-charts';
-import { BarPlot } from '@mui/x-charts/BarChart';
+import { ChartsReferenceLine, ChartsTooltip, ChartsYAxis } from '@mui/x-charts';
+import { BarElement, BarPlot } from '@mui/x-charts/BarChart';
 import { ChartsXAxis } from '@mui/x-charts/ChartsXAxis';
 import { AreaPlot, LineHighlightPlot, LinePlot } from '@mui/x-charts/LineChart';
 import { ResponsiveChartContainer } from '@mui/x-charts/ResponsiveChartContainer';
+import { useEffect, useState } from 'react';
 
 export default function NoStackChart(data) {
+  const [series, setSeries] = useState([]);
+
+  useEffect(() => {
+    setSeries([...data.data.series]);
+  }, [data.data.series]);
+
   function extend(value, max) {
     if (max) {
       if (Math.abs(value) > max) {
@@ -22,28 +29,40 @@ export default function NoStackChart(data) {
     }
   }
 
-  const SlotBarElement = (props) => {
-    const yAxisScale = useYScale('leftAxis');
-    const yAxisValue = yAxisScale.invert(props.style.y.animation.to);
-    const isBelowBar = yAxisValue < 0;
-    const color = isBelowBar ? data.data.yAxis.left.colors[1] : data.data.yAxis.left.colors[0];
+  const BarCustomElement = (props) => {
+    const { data, ...other } = props;
+    let check = props.data.data.series.some((e) => e.dataKey === 'netFinancialAdjustTrailing');
+    const isBelowBar = check
+      ? data.data.dataset[other.ownerState.dataIndex].netFinancialAdjustTrailing < 0
+      : data.data.dataset[other.ownerState.dataIndex].netFinanceialTrailing < 0;
+    const color = isBelowBar ? '#981F36' : '#6EA2DF';
 
-    return props.className.includes('1') ? (
-      <rect
-        fill={color}
-        height={props.style.height.animation.to}
-        width={props.style.width.animation.to}
-        x={props.style.x.animation.to}
-        y={props.style.y.animation.to}
-      />
-    ) : (
-      <rect
-        fill={data.data.yAxis.left.colorsBasic[0]}
-        height={props.style.height.animation.to}
-        width={props.style.width.animation.to}
-        x={props.style.x.animation.to}
-        y={props.style.y.animation.to}
-      />
+    return (
+      props.className.includes('id-1') && (
+        <BarElement
+          {...other}
+          style={{
+            ...props.style,
+            fill: color,
+          }}
+        />
+      )
+    );
+  };
+
+  const BarTranformElement = (props) => {
+    const { style, data, ...other } = props;
+
+    return (
+      props.className.includes('id-2') && (
+        <rect
+          fill={'#981F36'}
+          height={props.style.height.animation.to}
+          width={props.style.width.animation.to}
+          x={props.style.x.animation.to + 4}
+          y={props.style.y.animation.to}
+        />
+      )
     );
   };
 
@@ -137,6 +156,9 @@ export default function NoStackChart(data) {
             display:
               data.data.yAxis.right.marker || data.data.yAxis.left.marker === 2 ? 'block' : 'none',
           },
+          '.MuiBarElement-series-auto-generated-id-2': {
+            display: data.data.yAxis.left.transform ? 'none' : 'block',
+          },
 
           '.MuiLineElement-series-auto-generated-id-3': {
             strokeDasharray:
@@ -172,12 +194,34 @@ export default function NoStackChart(data) {
           },
         }}
       >
-        {data.data.yAxis.left.nagative ? (
-          data.data.series.map(
-            (e, index) => e.changeColor && <BarPlot key={index} slots={{ bar: SlotBarElement }} />
-          )
-        ) : (
-          <BarPlot />
+        <BarPlot />
+        {series.map(
+          (e, index) =>
+            e.transform === '50' && (
+              <BarPlot
+                key={index}
+                slots={{ bar: BarTranformElement }}
+                slotProps={{
+                  bar: {
+                    data,
+                  },
+                }}
+              />
+            )
+        )}
+        {series.map(
+          (e, index) =>
+            e.changeColor && (
+              <BarPlot
+                key={index}
+                slots={{ bar: BarCustomElement }}
+                slotProps={{
+                  bar: {
+                    data,
+                  },
+                }}
+              />
+            )
         )}
         <LinePlot />
         <LineHighlightPlot />

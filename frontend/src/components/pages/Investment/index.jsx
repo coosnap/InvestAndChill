@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 const investData = [
   {
     id: '1',
-    href: '/chart',
+    href: '/data/chart',
     title: 'Dữ liệu và bộ lọc',
     image: '/tag-0.png',
   },

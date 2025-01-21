@@ -16,7 +16,7 @@ import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { Controller, useForm } from 'react-hook-form';
 import { FcReading } from 'react-icons/fc';
-import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { z } from 'zod';
 import { Label } from '../ui/label';
@@ -67,6 +67,7 @@ function stringToSlug(str) {
 
 function Header() {
   const [searchParams, setSearchParams] = useSearchParams();
+  const tabName = window.localStorage.getItem('tabName');
   const initialValue = searchParams.get('code') || '';
   const [inputValue, setInputValue] = useState(initialValue);
 
@@ -88,7 +89,7 @@ function Header() {
 
   useEffect(() => {
     if (inputValue) {
-      setSearchParams({ code: inputValue });
+      setSearchParams({ code: inputValue, tab: tabName });
     } else {
       setSearchParams({});
     }
@@ -261,8 +262,8 @@ function Header() {
           <img src="/logo.jpg" width={48} height={48} />
           <h4 className="ml-3">InvestNChill</h4>
         </a>
-        {pathname.includes('/chart') && (
-          <div className="ml-4 mt-1">
+        {pathname.includes('/data') && (
+          <div className="ml-4 mt-1 flex items-center gap-6">
             <TextField
               sx={{ '& > .MuiOutlinedInput-root': { backgroundColor: 'white' } }}
               variant="outlined"
@@ -273,9 +274,12 @@ function Header() {
               onKeyDown={(e) => {
                 if (e.keyCode == 13) {
                   setInputValue(e.target.value?.toUpperCase());
+                  navigate('/data/chart', { code: inputValue, tab: tabName });
                 }
               }}
             />
+            <a href={'/data/pattern'}>MẪU HÌNH</a>
+            <a href={'/data/filter'}>BỘ LỌC</a>
           </div>
         )}
       </div>

@@ -253,6 +253,7 @@ export let customPerfPTC6 = {
       dataKey: 'interestExpenseTrailing',
       yAxisId: 'leftAxis',
       color: '#981F36',
+      transform: '50',
       valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {

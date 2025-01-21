@@ -2,12 +2,27 @@ import {
   getDataChartBank,
   getDataChartNonFinancial,
   getDataChartStock,
+  getDataChartStockCompare,
+  getListBank,
+  getListStoke,
   getTitle,
   getTypeDataChart,
 } from '@/api/chart';
 import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
-import { Box, FormControlLabel, Stack, styled, Switch, Tab, Tabs } from '@mui/material';
-import { useCallback, useEffect, useState } from 'react';
+import {
+  Autocomplete,
+  Box,
+  Button,
+  Chip,
+  FormControlLabel,
+  Stack,
+  styled,
+  Switch,
+  Tab,
+  Tabs,
+  TextField,
+} from '@mui/material';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import {
   customBalCK1,
@@ -15,6 +30,11 @@ import {
   customBalCK3,
   customBalCK4,
   customBalCK5,
+  customCompCK1,
+  customCompCK2,
+  customCompCK3,
+  customCompCK4,
+  customCompCK5,
   customOtherCK1,
   customPerfCK1,
   customPerfCK2,
@@ -78,7 +98,16 @@ import {
 } from './customPTC';
 import StackChart from './stack-chart';
 
+import {
+  BarPlot,
+  ChartsTooltip,
+  ChartsXAxis,
+  ChartsYAxis,
+  LinePlot,
+  ResponsiveChartContainer,
+} from '@mui/x-charts';
 import './style.scss';
+import CompareChart from './compare-chart';
 
 export const TabChart = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -149,6 +178,17 @@ export const TabChart = () => {
     bal12adjust: true,
   });
   const [isOpened, setIsOpened] = useState(false);
+  let fixedOptions = [{ title: codeValue, id: codeValue }];
+  const [stockCompare, setStockCompare] = useState([]);
+  const [listStock, setListStock] = useState([]);
+  const [listItem, setListItem] = useState([]);
+  const [listData, setListData] = useState([]);
+
+  useEffect(() => {
+    if (codeValue) {
+      setListItem([...fixedOptions]);
+    }
+  }, [codeValue]);
 
   const IOSSwitch = styled((props) => <Switch {...props} />)(() => ({
     width: 74,
@@ -300,6 +340,7 @@ export const TabChart = () => {
 
   const handleChange = (event, newValue) => {
     window.localStorage.setItem('tab', newValue);
+    window.localStorage.setItem('tabName', event.target.innerText);
     setSearchParams({ code: codeValue, tab: event.target.innerText });
     setValue(newValue);
   };
@@ -382,7 +423,7 @@ export const TabChart = () => {
               barGapRatio: -0.5,
             });
             let callPerf6 = mapDataChart(customPerfPTC6, type.type, {
-              categoryGapRatio: 0.3,
+              categoryGapRatio: 0.5,
               barGapRatio: -1,
             });
 
@@ -691,6 +732,11 @@ export const TabChart = () => {
               })
               .catch((error) => console.log('error', error));
           }
+          if (value === 4) {
+            let result = await getListStoke();
+            let temp = result.map((e) => ({ title: e, id: e }));
+            setListData(temp);
+          }
         }
         if (type.type === 'NganHang') {
           let perf1, perf2, perf3, perf4;
@@ -855,6 +901,12 @@ export const TabChart = () => {
               })
               .catch((error) => console.log('error', error));
           }
+
+          if (value === 4) {
+            let result = await getListBank();
+            let temp = result.map((e) => ({ title: e, id: e }));
+            setListData(temp);
+          }
         }
       } catch (error) {
         console.log('error', error);
@@ -863,13 +915,15 @@ export const TabChart = () => {
   };
 
   useEffect(() => {
-    if (tabType !== 'PTC' && value - 0 === 4) {
+    if (tabType !== 'PTC' && value - 0 === 4 && tabValue === 'ĐỊNH GIÁ') {
       window.localStorage.setItem('tab', 3);
       setValue(3);
-    }
-    if (tabType === 'PTC' && value - 0 === 3 && tabValue !== 'DÒNG TIỀN') {
+    } else if (tabType === 'PTC' && value - 0 === 3 && tabValue !== 'DÒNG TIỀN') {
       window.localStorage.setItem('tab', 4);
       setValue(4);
+    } else {
+      window.localStorage.setItem('tab', value - 0);
+      setValue(value - 0);
     }
     loadData();
     setSearchParams({ code: codeValue, tab: tabValue });
@@ -1185,6 +1239,7 @@ export const TabChart = () => {
         setChecked((prev) => ({ ...prev, perf2: !prev.perf2 }));
       }
       if (typeChart === 'perf4') {
+        let newPerf = [];
         if (checked.perf4) {
           customPerfPTC4.series = [
             {
@@ -1223,12 +1278,10 @@ export const TabChart = () => {
               valueFormatter: (v) => (!v ? '' : v + ' %'),
             },
           ];
-          let newPerf = await mapDataChart(customPerfPTC4, tabType, {
+          newPerf = await mapDataChart(customPerfPTC4, tabType, {
             categoryGapRatio: 0.3,
             barGapRatio: 0,
           });
-          setDataChart((prev) => ({ ...prev, perf4: newPerf }));
-          setChecked((prev) => ({ ...prev, perf4: !prev.perf4 }));
         } else {
           customPerfPTC4.series = [
             {
@@ -1267,13 +1320,13 @@ export const TabChart = () => {
               valueFormatter: (v) => (!v ? '' : v + ' %'),
             },
           ];
-          let newPerf = await mapDataChart(customPerfPTC4, tabType, {
+          newPerf = await mapDataChart(customPerfPTC4, tabType, {
             categoryGapRatio: 0.3,
             barGapRatio: 0,
           });
-          setDataChart((prev) => ({ ...prev, perf4: newPerf }));
-          setChecked((prev) => ({ ...prev, perf4: !prev.perf4 }));
         }
+        setDataChart((prev) => ({ ...prev, perf4: newPerf }));
+        setChecked((prev) => ({ ...prev, perf4: !prev.perf4 }));
       }
       if (typeChart === 'perf5') {
         if (checked.perf5) {
@@ -2717,7 +2770,7 @@ export const TabChart = () => {
               },
               {
                 label: 'Chứng khoán',
-                dataKey: 'laiKhac',
+                dataKey: 'chungKhoanTruocDP',
                 type: 'bar',
                 stack: 'stack',
                 area: true,
@@ -3550,6 +3603,61 @@ export const TabChart = () => {
     );
   };
 
+  const balanceSheet = [
+    {
+      code: 'SSI',
+      '3 - 2023': 9,
+      '4 - 2023': 10,
+      '1 - 2024': 11,
+      '2 - 2024': 12,
+      '3 - 2024': 13,
+    },
+    {
+      code: 'VND',
+      '3 - 2023': 7,
+      '4 - 2023': 13,
+      '1 - 2024': 15,
+      '2 - 2024': 14,
+      '3 - 2024': 13,
+    },
+    {
+      code: 'HCM',
+      '3 - 2023': 7,
+      '4 - 2023': 8,
+      '1 - 2024': 10,
+      '2 - 2024': 11,
+      '3 - 2024': 10,
+    },
+  ];
+
+  const handleClickGetDataChart = async () => {
+    let comp1, comp2, comp3, comp4, comp5;
+    let listStoke = listItem.map((e) => e.title);
+    let callComp1 = getDataChartStockCompare(listStoke, 'ci6');
+    let callComp2 = await getDataChartStockCompare(listStoke, 'ci7');
+    let callComp3 = await getDataChartStockCompare(listStoke, 'cb142');
+    let callComp4 = await getDataChartStockCompare(listStoke, 'cf158');
+    let callComp5 = await getDataChartStockCompare(listStoke, 'cb205');
+
+    Promise.all([callComp1, callComp2, callComp3, callComp4, callComp5])
+      .then((values) => {
+        comp1 = values[0];
+        comp2 = values[1];
+        comp3 = values[2];
+        comp4 = values[3];
+        comp5 = values[3];
+        setDataChart({
+          comp1: comp1.map((e) => ({ code: e.stockCode, ...e.mapValue })),
+          comp2: comp2.map((e) => ({ code: e.stockCode, ...e.mapValue })),
+          comp3: comp3.map((e) => ({ code: e.stockCode, ...e.mapValue })),
+          comp4: comp4.map((e) => ({ code: e.stockCode, ...e.mapValue })),
+          comp5: comp5.map((e) => ({ code: e.stockCode, ...e.mapValue })),
+          listStoke,
+        });
+      })
+      .catch((error) => console.log('error', error));
+  };
+
   return (
     <Box sx={{ width: '98%', margin: 'auto' }}>
       {show && (
@@ -3588,15 +3696,20 @@ export const TabChart = () => {
                 'Định giá',
               ].map((e, index) => <Tab key={e} label={e} {...a11yProps(index)} />)}
             {tabType === 'ChungKhoan' &&
-              ['Hiệu quả kinh doanh', 'Tài sản và nguồn vốn', 'Hiểu quả đồng vốn', 'Định giá'].map(
-                (e, index) => <Tab key={e} label={e} {...a11yProps(index)} />
-              )}
+              [
+                'Hiệu quả kinh doanh',
+                'Tài sản và nguồn vốn',
+                'Hiểu quả đồng vốn',
+                'Định giá',
+                'So sánh chỉ số',
+              ].map((e, index) => <Tab key={e} label={e} {...a11yProps(index)} />)}
             {tabType === 'NganHang' &&
               [
                 'Hiệu quả kinh doanh',
                 'Tài sản và nguồn vốn',
                 'Cơ cấu tiền gửi và cho vay',
                 'Định giá',
+                'So sánh chỉ số',
               ].map((e, index) => <Tab key={e} label={e} {...a11yProps(index)} />)}
           </Tabs>
           <Stack direction="row" spacing={1} sx={{ alignItems: 'center' }}>
@@ -3806,6 +3919,125 @@ export const TabChart = () => {
               </div>
             )}
           </CustomTabPanel>
+          <CustomTabPanel value={value} index={4}>
+            <div className="flex flex-col items-center">
+              <div className="flex gap-4">
+                <Autocomplete
+                  multiple
+                  id="fixed-tags-demo"
+                  value={listItem}
+                  onChange={(event, newValue) => {
+                    if (newValue.length < 11) {
+                      setListItem([
+                        ...fixedOptions,
+                        ...newValue.filter((option) => option.title !== fixedOptions[0].title),
+                      ]);
+                    }
+                  }}
+                  isOptionEqualToValue={(option, value) => option.id === value.id}
+                  options={listData}
+                  getOptionLabel={(option) => option.title}
+                  renderTags={(tagValue, getTagProps) =>
+                    tagValue.map((option, index) => {
+                      const { key, ...tagProps } = getTagProps({ index });
+                      return (
+                        <Chip
+                          key={key}
+                          label={option.title}
+                          {...tagProps}
+                          disabled={fixedOptions[0].title === option.title}
+                        />
+                      );
+                    })
+                  }
+                  style={{ minWidth: 470 }}
+                  renderInput={(params) => <TextField {...params} label="Mã đã chọn" />}
+                />
+                <Button onClick={handleClickGetDataChart} variant="contained">
+                  Search
+                </Button>
+              </div>
+              <div className="flex flex-col gap-8 w-full mt-4">
+                <div className="flex gap-8">
+                  <div className="lg:w-1/2 md:w-full">
+                    {dataChart.comp1 && (
+                      <>
+                        <div className="flex">
+                          <div className={`flex flex-1 font-bold text-xl`}>
+                            <span className="cursor-pointer" onClick={handleToggleTitle}>
+                              {'ROE' || ''} {isOpened ? ' [' + codeValue + ']' : ''}
+                            </span>
+                          </div>
+                        </div>
+                        <CompareChart data={dataChart.comp1} series={customCompCK1} />
+                      </>
+                    )}
+                  </div>
+                  <div className="lg:w-1/2 md:w-full">
+                    {dataChart.comp2 && (
+                      <>
+                        <div className="flex">
+                          <div className={`flex flex-1 font-bold text-xl`}>
+                            <span className="cursor-pointer" onClick={handleToggleTitle}>
+                              {'ROA' || ''} {isOpened ? ' [' + codeValue + ']' : ''}
+                            </span>
+                          </div>
+                        </div>
+                        <CompareChart data={dataChart.comp2} series={customCompCK2} />
+                      </>
+                    )}
+                  </div>
+                </div>
+                <div className="flex gap-8">
+                  <div className="lg:w-1/2 md:w-full">
+                    {dataChart.comp3 && (
+                      <>
+                        <div className="flex">
+                          <div className={`flex flex-1 font-bold text-xl`}>
+                            <span className="cursor-pointer" onClick={handleToggleTitle}>
+                              {'Vốn chủ sở hữu' || ''} {isOpened ? ' [' + codeValue + ']' : ''}
+                            </span>
+                          </div>
+                        </div>
+                        <CompareChart data={dataChart.comp3} series={customCompCK3} />
+                      </>
+                    )}
+                  </div>
+                  <div className="lg:w-1/2 md:w-full">
+                    {dataChart.comp4 && (
+                      <>
+                        <div className="flex">
+                          <div className={`flex flex-1 font-bold text-xl`}>
+                            <span className="cursor-pointer" onClick={handleToggleTitle}>
+                              {'Cho vay ký quỹ' || ''} {isOpened ? ' [' + codeValue + ']' : ''}
+                            </span>
+                          </div>
+                        </div>
+                        <CompareChart data={dataChart.comp4} series={customCompCK4} />
+                      </>
+                    )}
+                  </div>
+                </div>
+                <div className="flex gap-8">
+                  <div className="lg:w-1/2 md:w-full">
+                    {dataChart.comp5 && (
+                      <>
+                        <div className="flex">
+                          <div className={`flex flex-1 font-bold text-xl`}>
+                            <span className="cursor-pointer" onClick={handleToggleTitle}>
+                              {'Tiền gửi của khách hàng' || ''}{' '}
+                              {isOpened ? ' [' + codeValue + ']' : ''}
+                            </span>
+                          </div>
+                        </div>
+                        <CompareChart data={dataChart.comp5} series={customCompCK5} />
+                      </>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </CustomTabPanel>
         </>
       )}
       {tabType === 'NganHang' && (
@@ -3922,6 +4154,109 @@ export const TabChart = () => {
                 </div>
               </div>
             )}
+          </CustomTabPanel>
+          <CustomTabPanel value={value} index={4}>
+            <div className="flex flex-col items-center">
+              <div className="flex gap-4">
+                <Autocomplete
+                  multiple
+                  id="fixed-tags-demo"
+                  value={listItem}
+                  onChange={(event, newValue) => {
+                    if (newValue.length < 11) {
+                      setListItem([
+                        ...fixedOptions,
+                        ...newValue.filter((option) => option.title !== fixedOptions[0].title),
+                      ]);
+                    }
+                  }}
+                  isOptionEqualToValue={(option, value) => option.id === value.id}
+                  options={listData}
+                  getOptionLabel={(option) => option.title}
+                  renderTags={(tagValue, getTagProps) =>
+                    tagValue.map((option, index) => {
+                      const { key, ...tagProps } = getTagProps({ index });
+                      return (
+                        <Chip
+                          key={key}
+                          label={option.title}
+                          {...tagProps}
+                          disabled={fixedOptions[0].title === option.title}
+                        />
+                      );
+                    })
+                  }
+                  style={{ minWidth: 470 }}
+                  renderInput={(params) => <TextField {...params} label="Mã đã chọn" />}
+                />
+                <Button onClick={handleClickGetDataChart} variant="contained">
+                  Search
+                </Button>
+              </div>
+              <ResponsiveChartContainer
+                xAxis={[
+                  {
+                    scaleType: 'band',
+                    data: [
+                      'VPB1',
+                      'VPB2',
+                      'VPB3',
+                      'VPB4',
+                      'VPB5',
+                      '$1',
+                      'HDB1',
+                      'HDB2',
+                      'HDB3',
+                      'HDB4',
+                      'HDB5',
+                      '$2',
+                      'TCB1',
+                      'TCB2',
+                      'TCB3',
+                      'TCB4',
+                      'TCB5',
+                    ],
+                    tickInterval: (value) => !value.includes('$'),
+                    valueFormatter: (value, context) =>
+                      context.location === 'tooltip' && value.includes('$') ? '' : value,
+                    categoryGapRatio: 0.05,
+                    barGapRatio: 0,
+                  },
+                ]}
+                series={[
+                  {
+                    type: 'bar',
+                    data: [1, 2, 5, 3, 4, null, 3, 1, 2, 5, 3, null, 1, 2, 3, 5, 1],
+                    label: 'ROE',
+                    stack: '1',
+                    valueFormatter: (v) => (!v ? '' : v + ' %'),
+                  },
+                  {
+                    type: 'bar',
+                    data: [1, 2, 5, 3, 6, null, 3, 1, 2, 5, 1, null, 1, 2, 3, 5, 3],
+                    label: 'ROE',
+                    stack: '1',
+                    valueFormatter: (v) => (!v ? '' : v + ' %'),
+                  },
+                  {
+                    type: 'line',
+                    curve: 'linear',
+                    data: [2, 5, 6, 1, 4, null, 1, 2, 1, 4, 3, null, 3, 1, 2, 5, 1],
+                    label: 'Tiền gửi',
+                    valueFormatter: (v) => (!v ? '' : v + ' tỷ đồng'),
+                  },
+                ]}
+                slotprops={{ legend: { hidden: true } }}
+                width={1000}
+                height={430}
+              >
+                <BarPlot />
+                <LinePlot />
+                <ChartsTooltip />
+                <ChartsYAxis />
+                <ChartsXAxis />
+              </ResponsiveChartContainer>
+            </div>
           </CustomTabPanel>
         </>
       )}
