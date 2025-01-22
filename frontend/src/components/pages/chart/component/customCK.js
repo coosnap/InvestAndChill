@@ -700,7 +700,7 @@ export let customCompCK1 = {
     },
   ],
   yAxis: {
-    left: { type: 'per', piecewise: false },
+    left: { type: 'per', piecewise: false, showLineReference: true },
     right: { type: 'bil', piecewise: false },
   },
 };
@@ -739,7 +739,7 @@ export let customCompCK2 = {
     },
   ],
   yAxis: {
-    left: { type: 'per', piecewise: false },
+    left: { type: 'per', piecewise: false, showLineReference: true },
     right: { type: 'bil', piecewise: false },
   },
 };
@@ -778,7 +778,7 @@ export let customCompCK3 = {
     },
   ],
   yAxis: {
-    left: { type: 'per', piecewise: false },
+    left: { type: 'bil', piecewise: false, showLineReference: true },
     right: { type: 'bil', piecewise: false },
   },
 };
@@ -817,7 +817,7 @@ export let customCompCK4 = {
     },
   ],
   yAxis: {
-    left: { type: 'per', piecewise: false },
+    left: { type: 'bil', piecewise: false, showLineReference: true },
     right: { type: 'bil', piecewise: false },
   },
 };
@@ -856,7 +856,7 @@ export let customCompCK5 = {
     },
   ],
   yAxis: {
-    left: { type: 'per', piecewise: false },
+    left: { type: 'bil', piecewise: false, showLineReference: true },
     right: { type: 'bil', piecewise: false },
   },
 };

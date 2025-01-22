@@ -62,6 +62,24 @@ export async function getDataChartBank(type, code, year, chart) {
   return;
 }
 
+export async function getDataChartBankCompare(data, code) {
+  const response = await fetch(
+    `${import.meta.env.VITE_REACT_APP_API}/api/filter/nganhang/sosanhchiso?chart=${code}`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    }
+  );
+  if (response.status === 200) {
+    const responseBody = await response.json();
+    return responseBody;
+  }
+  return;
+}
+
 export async function getTitle(code) {
   const response = await axiosInstance.get(
     `${import.meta.env.VITE_REACT_APP_API}/api/stock/getTitle/${code}`

@@ -1,5 +1,6 @@
 import {
   getDataChartBank,
+  getDataChartBankCompare,
   getDataChartNonFinancial,
   getDataChartStock,
   getDataChartStockCompare,
@@ -104,10 +105,12 @@ import {
   ChartsXAxis,
   ChartsYAxis,
   LinePlot,
+  MarkPlot,
   ResponsiveChartContainer,
 } from '@mui/x-charts';
 import './style.scss';
 import CompareChart from './compare-chart';
+import CompareBankChart from './compare-bank-chart';
 
 export const TabChart = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -3603,59 +3606,267 @@ export const TabChart = () => {
     );
   };
 
-  const balanceSheet = [
-    {
-      code: 'SSI',
-      '3 - 2023': 9,
-      '4 - 2023': 10,
-      '1 - 2024': 11,
-      '2 - 2024': 12,
-      '3 - 2024': 13,
+  const balanceSheet = {
+    quarter: [
+      'VPB1',
+      'VPB2',
+      'VPB3',
+      'VPB4',
+      'VPB5',
+      '$1',
+      'HDB1',
+      'HDB2',
+      'HDB3',
+      'HDB4',
+      'HDB5',
+      '$2',
+      'TCB1',
+      'TCB2',
+      'TCB3',
+      'TCB4',
+      'TCB5',
+    ],
+    data: {
+      chiphihoatdong: [2, 5, 6, 1, 4, null, 1, 2, 1, 4, 3, null, 3, 1, 2, 5, 1],
+      chiphiduphong: [2, 5, 6, 1, 4, null, 1, 2, 1, 4, 3, null, 3, 1, 2, 5, 1],
+      tongchiphi: [2, 5, 6, 1, 4, null, 1, 2, 1, 4, 3, null, 3, 1, 2, 5, 1],
     },
-    {
-      code: 'VND',
-      '3 - 2023': 7,
-      '4 - 2023': 13,
-      '1 - 2024': 15,
-      '2 - 2024': 14,
-      '3 - 2024': 13,
-    },
-    {
-      code: 'HCM',
-      '3 - 2023': 7,
-      '4 - 2023': 8,
-      '1 - 2024': 10,
-      '2 - 2024': 11,
-      '3 - 2024': 10,
-    },
-  ];
+  };
 
   const handleClickGetDataChart = async () => {
-    let comp1, comp2, comp3, comp4, comp5;
-    let listStoke = listItem.map((e) => e.title);
-    let callComp1 = getDataChartStockCompare(listStoke, 'ci6');
-    let callComp2 = await getDataChartStockCompare(listStoke, 'ci7');
-    let callComp3 = await getDataChartStockCompare(listStoke, 'cb142');
-    let callComp4 = await getDataChartStockCompare(listStoke, 'cf158');
-    let callComp5 = await getDataChartStockCompare(listStoke, 'cb205');
+    if (tabType === 'ChungKhoan') {
+      let comp1, comp2, comp3, comp4, comp5;
+      let listStoke = listItem.map((e) => e.title);
+      let callComp1 = getDataChartStockCompare(listStoke, 'ci6');
+      let callComp2 = getDataChartStockCompare(listStoke, 'ci7');
+      let callComp3 = getDataChartStockCompare(listStoke, 'cb142');
+      let callComp4 = getDataChartStockCompare(listStoke, 'cf158');
+      let callComp5 = getDataChartStockCompare(listStoke, 'cb205');
 
-    Promise.all([callComp1, callComp2, callComp3, callComp4, callComp5])
-      .then((values) => {
-        comp1 = values[0];
-        comp2 = values[1];
-        comp3 = values[2];
-        comp4 = values[3];
-        comp5 = values[3];
-        setDataChart({
-          comp1: comp1.map((e) => ({ code: e.stockCode, ...e.mapValue })),
-          comp2: comp2.map((e) => ({ code: e.stockCode, ...e.mapValue })),
-          comp3: comp3.map((e) => ({ code: e.stockCode, ...e.mapValue })),
-          comp4: comp4.map((e) => ({ code: e.stockCode, ...e.mapValue })),
-          comp5: comp5.map((e) => ({ code: e.stockCode, ...e.mapValue })),
-          listStoke,
-        });
-      })
-      .catch((error) => console.log('error', error));
+      Promise.all([callComp1, callComp2, callComp3, callComp4, callComp5])
+        .then((values) => {
+          comp1 = values[0];
+          comp2 = values[1];
+          comp3 = values[2];
+          comp4 = values[3];
+          comp5 = values[3];
+          setDataChart({
+            comp1: comp1.map((e) => ({ code: e.stockCode, ...e.mapValue })),
+            comp2: comp2.map((e) => ({ code: e.stockCode, ...e.mapValue })),
+            comp3: comp3.map((e) => ({ code: e.stockCode, ...e.mapValue })),
+            comp4: comp4.map((e) => ({ code: e.stockCode, ...e.mapValue })),
+            comp5: comp5.map((e) => ({ code: e.stockCode, ...e.mapValue })),
+            listStoke,
+          });
+        })
+        .catch((error) => console.log('error', error));
+    }
+    if (tabType === 'NganHang') {
+      let comp1, comp2, comp3, comp4, comp5, comp6, comp7, comp8, comp9, comp10;
+      let listStoke = listItem.map((e) => e.title);
+      let callComp1 = getDataChartBankCompare(listStoke, 'comp1');
+      let callComp2 = getDataChartBankCompare(listStoke, 'comp2');
+      let callComp3 = getDataChartBankCompare(listStoke, 'comp3');
+      let callComp4 = getDataChartBankCompare(listStoke, 'comp4');
+      let callComp5 = getDataChartBankCompare(listStoke, 'comp5');
+      let callComp6 = getDataChartBankCompare(listStoke, 'comp6');
+      let callComp7 = getDataChartBankCompare(listStoke, 'comp7');
+      let callComp8 = getDataChartBankCompare(listStoke, 'comp8');
+      let callComp9 = getDataChartBankCompare(listStoke, 'comp9');
+      let callComp10 = getDataChartBankCompare(listStoke, 'comp10');
+
+      Promise.all([
+        callComp1,
+        callComp2,
+        callComp3,
+        callComp4,
+        callComp5,
+        callComp6,
+        callComp7,
+        callComp8,
+        callComp9,
+        callComp10,
+      ])
+        .then((values) => {
+          comp1 = values[0];
+          comp2 = values[1];
+          comp3 = values[2];
+          comp4 = values[3];
+          comp5 = values[4];
+          comp6 = values[5];
+          comp7 = values[6];
+          comp8 = values[7];
+          comp9 = values[8];
+          comp10 = values[9];
+          setDataChart({
+            comp1: {
+              ...comp1,
+              series: [
+                {
+                  type: 'bar',
+                  data: comp1.bi7 || [],
+                  yAxisId: 'leftAxis',
+                  label: 'Chi phí hoạt động',
+                  stack: '1',
+                  valueFormatter: (v) => (!v ? '' : v + ' %'),
+                },
+                {
+                  type: 'bar',
+                  data: comp1.bi8 || [],
+                  yAxisId: 'leftAxis',
+                  label: 'Chi phí dự phòng',
+                  stack: '1',
+                  valueFormatter: (v) => (!v ? '' : v + ' %'),
+                },
+                {
+                  type: 'line',
+                  curve: 'linear',
+                  yAxisId: 'leftAxis',
+                  data: comp1.bi9 || [],
+                  label: 'Tổng chi phí',
+                  valueFormatter: (v) => (!v ? '' : v + ' tỷ đồng'),
+                },
+              ],
+              mark: true,
+            },
+            comp2: {
+              ...comp2,
+              series: [
+                {
+                  type: 'bar',
+                  data: comp2.bi35 || [],
+                  yAxisId: 'leftAxis',
+                  label: 'Tăng trưởng tín dụng sv đầu năm',
+                  valueFormatter: (v) => (!v ? '' : v + ' %'),
+                },
+              ],
+            },
+            comp3: {
+              ...comp3,
+              series: [
+                {
+                  type: 'bar',
+                  data: comp3.bi22 || [],
+                  label: '%NPL',
+                  stack: '1',
+                  yAxisId: 'leftAxis',
+                  valueFormatter: (v) => (!v ? '' : v + ' %'),
+                },
+                {
+                  type: 'bar',
+                  data: comp3.bi23 || [],
+                  label: '%Nợ nhóm 2',
+                  stack: '1',
+                  yAxisId: 'leftAxis',
+                  valueFormatter: (v) => (!v ? '' : v + ' %'),
+                },
+                {
+                  type: 'line',
+                  curve: 'linear',
+                  data: comp3.bi24 || [],
+                  label: '%LLR',
+                  yAxisId: 'rightAxis',
+                  valueFormatter: (v) => (!v ? '' : v + ' %'),
+                },
+              ],
+            },
+            comp4: {
+              ...comp4,
+              series: [
+                {
+                  type: 'bar',
+                  data: comp4.bi26 || [],
+                  yAxisId: 'leftAxis',
+                  label: 'Overdue/Equity',
+                  valueFormatter: (v) => (!v ? '' : v + ' %'),
+                },
+              ],
+            },
+            comp5: {
+              ...comp5,
+              series: [
+                {
+                  type: 'bar',
+                  data: comp5.bi30 || [],
+                  yAxisId: 'leftAxis',
+                  label: 'NIM',
+                  valueFormatter: (v) => (!v ? '' : v + ' %'),
+                },
+              ],
+            },
+            comp6: {
+              ...comp6,
+              series: [
+                {
+                  type: 'bar',
+                  data: comp6.bi29 || [],
+                  label: 'COF',
+                  yAxisId: 'leftAxis',
+                  valueFormatter: (v) => (!v ? '' : v + ' %'),
+                },
+                {
+                  type: 'line',
+                  curve: 'linear',
+                  data: comp6.bi32 || [],
+                  label: 'CASA',
+                  yAxisId: 'rightAxis',
+                  valueFormatter: (v) => (!v ? '' : v + ' %'),
+                },
+              ],
+            },
+            comp7: {
+              ...comp7,
+              series: [
+                {
+                  type: 'bar',
+                  data: comp7.bi20 || [],
+                  yAxisId: 'leftAxis',
+                  label: 'ROE',
+                  valueFormatter: (v) => (!v ? '' : v + ' %'),
+                },
+              ],
+            },
+            comp8: {
+              ...comp8,
+              series: [
+                {
+                  type: 'bar',
+                  data: comp8.bi21 || [],
+                  yAxisId: 'leftAxis',
+                  label: 'ROA',
+                  valueFormatter: (v) => (!v ? '' : v + ' %'),
+                },
+              ],
+            },
+            comp9: {
+              ...comp9,
+              series: [
+                {
+                  type: 'bar',
+                  data: comp9.bi27 || [],
+                  yAxisId: 'leftAxis',
+                  label: 'Tài sản có khác/TTS',
+                  valueFormatter: (v) => (!v ? '' : v + ' %'),
+                },
+              ],
+            },
+            comp10: {
+              ...comp10,
+              series: [
+                {
+                  type: 'bar',
+                  data: comp10.bi25 || [],
+                  yAxisId: 'leftAxis',
+                  label: 'Lãi, phí phải thu/TN từ lãi',
+                  valueFormatter: (v) => (!v ? '' : v + ' %'),
+                },
+              ],
+            },
+            listStoke,
+          });
+        })
+        .catch((error) => console.log('error', error));
+    }
   };
 
   return (
@@ -4193,69 +4404,160 @@ export const TabChart = () => {
                   Search
                 </Button>
               </div>
-              <ResponsiveChartContainer
-                xAxis={[
-                  {
-                    scaleType: 'band',
-                    data: [
-                      'VPB1',
-                      'VPB2',
-                      'VPB3',
-                      'VPB4',
-                      'VPB5',
-                      '$1',
-                      'HDB1',
-                      'HDB2',
-                      'HDB3',
-                      'HDB4',
-                      'HDB5',
-                      '$2',
-                      'TCB1',
-                      'TCB2',
-                      'TCB3',
-                      'TCB4',
-                      'TCB5',
-                    ],
-                    tickInterval: (value) => !value.includes('$'),
-                    valueFormatter: (value, context) =>
-                      context.location === 'tooltip' && value.includes('$') ? '' : value,
-                    categoryGapRatio: 0.05,
-                    barGapRatio: 0,
-                  },
-                ]}
-                series={[
-                  {
-                    type: 'bar',
-                    data: [1, 2, 5, 3, 4, null, 3, 1, 2, 5, 3, null, 1, 2, 3, 5, 1],
-                    label: 'ROE',
-                    stack: '1',
-                    valueFormatter: (v) => (!v ? '' : v + ' %'),
-                  },
-                  {
-                    type: 'bar',
-                    data: [1, 2, 5, 3, 6, null, 3, 1, 2, 5, 1, null, 1, 2, 3, 5, 3],
-                    label: 'ROE',
-                    stack: '1',
-                    valueFormatter: (v) => (!v ? '' : v + ' %'),
-                  },
-                  {
-                    type: 'line',
-                    curve: 'linear',
-                    data: [2, 5, 6, 1, 4, null, 1, 2, 1, 4, 3, null, 3, 1, 2, 5, 1],
-                    label: 'Tiền gửi',
-                    valueFormatter: (v) => (!v ? '' : v + ' tỷ đồng'),
-                  },
-                ]}
-                slotprops={{ legend: { hidden: true } }}
-                width={1000}
-                height={430}
-              >
-                <BarPlot />
-                <LinePlot />
-                <ChartsTooltip />
-                <ChartsYAxis />
-                <ChartsXAxis />
-              </ResponsiveChartContainer>
+              <div className="flex flex-col gap-8 w-full mt-4">
+                <div className="flex gap-8">
+                  <div className="lg:w-1/2 md:w-full">
+                    {dataChart.comp1 && (
+                      <>
+                        <div className="flex">
+                          <div className={`flex flex-1 font-bold text-xl`}>
+                            <span className="cursor-pointer" onClick={handleToggleTitle}>
+                              {'CIR' || ''} {isOpened ? ' [' + codeValue + ']' : ''}
+                            </span>
+                          </div>
+                        </div>
+                        <CompareBankChart data={dataChart.comp1} />
+                      </>
+                    )}
+                  </div>
+                  <div className="lg:w-1/2 md:w-full">
+                    {dataChart.comp2 && (
+                      <>
+                        <div className="flex">
+                          <div className={`flex flex-1 font-bold text-xl`}>
+                            <span className="cursor-pointer" onClick={handleToggleTitle}>
+                              {'Tăng trưởng tín dụng sv đầu năm' || ''}{' '}
+                              {isOpened ? ' [' + codeValue + ']' : ''}
+                            </span>
+                          </div>
+                        </div>
+                        <CompareBankChart data={dataChart.comp2} />
+                      </>
+                    )}
+                  </div>
+                </div>
+                <div className="flex gap-8">
+                  <div className="lg:w-1/2 md:w-full">
+                    {dataChart.comp3 && (
+                      <>
+                        <div className="flex">
+                          <div className={`flex flex-1 font-bold text-xl`}>
+                            <span className="cursor-pointer" onClick={handleToggleTitle}>
+                              {'Overdue & LLR' || ''} {isOpened ? ' [' + codeValue + ']' : ''}
+                            </span>
+                          </div>
+                        </div>
+                        <CompareBankChart data={dataChart.comp3} />
+                      </>
+                    )}
+                  </div>
+                  <div className="lg:w-1/2 md:w-full">
+                    {dataChart.comp4 && (
+                      <>
+                        <div className="flex">
+                          <div className={`flex flex-1 font-bold text-xl`}>
+                            <span className="cursor-pointer" onClick={handleToggleTitle}>
+                              {'Overdue/Equity' || ''} {isOpened ? ' [' + codeValue + ']' : ''}
+                            </span>
+                          </div>
+                        </div>
+                        <CompareBankChart data={dataChart.comp4} />
+                      </>
+                    )}
+                  </div>
+                </div>
+                <div className="flex gap-8">
+                  <div className="lg:w-1/2 md:w-full">
+                    {dataChart.comp5 && (
+                      <>
+                        <div className="flex">
+                          <div className={`flex flex-1 font-bold text-xl`}>
+                            <span className="cursor-pointer" onClick={handleToggleTitle}>
+                              {'NIM' || ''} {isOpened ? ' [' + codeValue + ']' : ''}
+                            </span>
+                          </div>
+                        </div>
+                        <CompareBankChart data={dataChart.comp5} />
+                      </>
+                    )}
+                  </div>
+                  <div className="lg:w-1/2 md:w-full">
+                    {dataChart.comp6 && (
+                      <>
+                        <div className="flex">
+                          <div className={`flex flex-1 font-bold text-xl`}>
+                            <span className="cursor-pointer" onClick={handleToggleTitle}>
+                              {'COF' || ''} {isOpened ? ' [' + codeValue + ']' : ''}
+                            </span>
+                          </div>
+                        </div>
+                        <CompareBankChart data={dataChart.comp6} />
+                      </>
+                    )}
+                  </div>
+                </div>
+                <div className="flex gap-8">
+                  <div className="lg:w-1/2 md:w-full">
+                    {dataChart.comp7 && (
+                      <>
+                        <div className="flex">
+                          <div className={`flex flex-1 font-bold text-xl`}>
+                            <span className="cursor-pointer" onClick={handleToggleTitle}>
+                              {'ROE' || ''} {isOpened ? ' [' + codeValue + ']' : ''}
+                            </span>
+                          </div>
+                        </div>
+                        <CompareBankChart data={dataChart.comp7} />
+                      </>
+                    )}
+                  </div>
+                  <div className="lg:w-1/2 md:w-full">
+                    {dataChart.comp8 && (
+                      <>
+                        <div className="flex">
+                          <div className={`flex flex-1 font-bold text-xl`}>
+                            <span className="cursor-pointer" onClick={handleToggleTitle}>
+                              {'ROA' || ''} {isOpened ? ' [' + codeValue + ']' : ''}
+                            </span>
+                          </div>
+                        </div>
+                        <CompareBankChart data={dataChart.comp8} />
+                      </>
+                    )}
+                  </div>
+                </div>
+                <div className="flex gap-8">
+                  <div className="lg:w-1/2 md:w-full">
+                    {dataChart.comp9 && (
+                      <>
+                        <div className="flex">
+                          <div className={`flex flex-1 font-bold text-xl`}>
+                            <span className="cursor-pointer" onClick={handleToggleTitle}>
+                              {'Tài sản có khác/TTS' || ''} {isOpened ? ' [' + codeValue + ']' : ''}
+                            </span>
+                          </div>
+                        </div>
+                        <CompareBankChart data={dataChart.comp9} />
+                      </>
+                    )}
+                  </div>
+                  <div className="lg:w-1/2 md:w-full">
+                    {dataChart.comp10 && (
+                      <>
+                        <div className="flex">
+                          <div className={`flex flex-1 font-bold text-xl`}>
+                            <span className="cursor-pointer" onClick={handleToggleTitle}>
+                              {'Lãi, phí phải thu/TN từ lãi' || ''}{' '}
+                              {isOpened ? ' [' + codeValue + ']' : ''}
+                            </span>
+                          </div>
+                        </div>
+                        <CompareBankChart data={dataChart.comp10} />
+                      </>
+                    )}
+                  </div>
+                </div>
+              </div>
             </div>
           </CustomTabPanel>
         </>
