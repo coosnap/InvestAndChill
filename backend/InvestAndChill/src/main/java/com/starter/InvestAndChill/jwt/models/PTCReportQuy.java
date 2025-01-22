@@ -15,6 +15,7 @@ import com.starter.InvestAndChill.pojo.FilterPhiTaiChinhDTO;
 import com.starter.InvestAndChill.pojo.FilterTheoDoiPreSalesDTO;
 import com.starter.InvestAndChill.pojo.FilterXuLyKhauHaoNangDTO;
 import com.starter.InvestAndChill.pojo.MinMaxDTO;
+import com.starter.InvestAndChill.pojo.NganHangSoSanhChiSoDTO;
 
 @Entity(name = "view_phi_tai_chinh_quy")
 @NamedNativeQuery(
@@ -236,6 +237,34 @@ import com.starter.InvestAndChill.pojo.MinMaxDTO;
 	            @ColumnResult(name = "c_b_142", type = Double.class),
 	            @ColumnResult(name = "c_f_158", type = Double.class),
 	            @ColumnResult(name = "c_b_205", type = Double.class)
+	        }
+	    )
+	)
+
+
+@SqlResultSetMapping(
+	    name = "nganhang.sosanhchiso",
+	    classes = @ConstructorResult(
+	        targetClass = NganHangSoSanhChiSoDTO.class,
+	        columns = {        		
+	        	@ColumnResult(name = "stock_code", type = String.class),
+	            @ColumnResult(name = "quarter", type = String.class),
+	            @ColumnResult(name = "year", type = String.class),
+	            @ColumnResult(name = "b_i_7", type = Double.class),	            
+	            @ColumnResult(name = "b_i_8", type = Double.class),
+	            @ColumnResult(name = "b_i_9", type = Double.class),
+	            @ColumnResult(name = "b_i_35", type = Double.class),
+	            @ColumnResult(name = "b_i_22", type = Double.class),
+	            @ColumnResult(name = "b_i_23", type = Double.class),
+	            @ColumnResult(name = "b_i_24", type = Double.class),
+	            @ColumnResult(name = "b_i_26", type = Double.class),
+	            @ColumnResult(name = "b_i_30", type = Double.class),
+	            @ColumnResult(name = "b_i_29", type = Double.class),
+	            @ColumnResult(name = "b_i_32", type = Double.class),
+	            @ColumnResult(name = "b_i_20", type = Double.class),
+	            @ColumnResult(name = "b_i_21", type = Double.class),
+	            @ColumnResult(name = "b_i_27", type = Double.class),
+	            @ColumnResult(name = "b_i_25", type = Double.class)
 	        }
 	    )
 	)

@@ -170,5 +170,38 @@ public class FilterCaculationUtils {
 		 return sql.toString();
 		
 	}
+	
+	public static String buildQuerySoSanhChiSoNganHang(List<String> listNganHang) {
+		String listckStr = "";
+		for (int i=0; i< listNganHang.size(); i++) {
+			listckStr += "stock_code = '";
+			listckStr += listNganHang.get(i);
+			listckStr += "' or ";
+		}
+		if (listckStr.trim().endsWith("or")) {
+			listckStr = listckStr.substring(0, listckStr.lastIndexOf("or")).trim();
+		}
+		
+		Map<Integer, Integer> map1 = FilterCaculationUtils.tinhQuyGanNhat(Constants.currentYear, Constants.currentQuarter, 1);
+		Map.Entry<Integer, Integer> firstEntry1 = map1.entrySet().iterator().next();
+		
+		Map<Integer, Integer> map2 = FilterCaculationUtils.tinhQuyGanNhat(Constants.currentYear, Constants.currentQuarter, 2);
+		Map.Entry<Integer, Integer> firstEntry2 = map2.entrySet().iterator().next();
+		
+		Map<Integer, Integer> map3 = FilterCaculationUtils.tinhQuyGanNhat(Constants.currentYear, Constants.currentQuarter, 3);
+		Map.Entry<Integer, Integer> firstEntry3 = map3.entrySet().iterator().next();
+		
+		Map<Integer, Integer> map4 = FilterCaculationUtils.tinhQuyGanNhat(Constants.currentYear, Constants.currentQuarter, 4);
+		Map.Entry<Integer, Integer> firstEntry4 = map4.entrySet().iterator().next();
+		
+		StringBuilder sql = new StringBuilder("select stock_code, quarter, year,b_i_7, b_i_8, b_i_9, b_i_35, b_i_22, b_i_23, b_i_24, b_i_26, b_i_30, b_i_29, b_i_32, b_i_20, b_i_21, b_i_27, b_i_25\r\n"
+				+ "FROM ngan_hang_report nhr \r\n"
+				+ "WHERE ("+listckStr+")\r\n"
+				+ "	and ( (year ='"+ Constants.currentYear +"' and quarter ='"+Constants.currentQuarter+"') or (year ='"+ firstEntry1.getKey().toString() +"' and quarter ='"+firstEntry1.getValue().toString()+"') or\r\n"
+				+ "	 (year ='"+firstEntry2.getKey().toString()+"' and quarter ='"+ firstEntry2.getValue().toString() +"') or (year ='"+ firstEntry3.getKey().toString() +"' and quarter ='"+ firstEntry3.getValue().toString() +"') or (year ='"+firstEntry4.getKey().toString()+"' and quarter ='"+ firstEntry4.getValue().toString() +"')  )\r\n"
+				+ "order by stock_code , year asc, quarter asc");
+		 return sql.toString();
+		
+	}
 
 }

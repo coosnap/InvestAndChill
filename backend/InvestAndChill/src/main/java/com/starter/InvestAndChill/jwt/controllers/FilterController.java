@@ -23,6 +23,17 @@ import com.starter.InvestAndChill.jwt.payload.response.filter.BoLocResponse;
 import com.starter.InvestAndChill.jwt.payload.response.filter.ChungKhoanSoSanhChiSoResponse;
 import com.starter.InvestAndChill.jwt.payload.response.filter.GiaTangCongSuatResponse;
 import com.starter.InvestAndChill.jwt.payload.response.filter.KhaiThacDuoiCongSuatResponse;
+import com.starter.InvestAndChill.jwt.payload.response.filter.NganHangSoSanhChiSoComp10Response;
+import com.starter.InvestAndChill.jwt.payload.response.filter.NganHangSoSanhChiSoComp1Response;
+import com.starter.InvestAndChill.jwt.payload.response.filter.NganHangSoSanhChiSoComp2Response;
+import com.starter.InvestAndChill.jwt.payload.response.filter.NganHangSoSanhChiSoComp3Response;
+import com.starter.InvestAndChill.jwt.payload.response.filter.NganHangSoSanhChiSoComp4Response;
+import com.starter.InvestAndChill.jwt.payload.response.filter.NganHangSoSanhChiSoComp5Response;
+import com.starter.InvestAndChill.jwt.payload.response.filter.NganHangSoSanhChiSoComp6Response;
+import com.starter.InvestAndChill.jwt.payload.response.filter.NganHangSoSanhChiSoComp7Response;
+import com.starter.InvestAndChill.jwt.payload.response.filter.NganHangSoSanhChiSoComp8Response;
+import com.starter.InvestAndChill.jwt.payload.response.filter.NganHangSoSanhChiSoComp9Response;
+import com.starter.InvestAndChill.jwt.payload.response.filter.NganHangSoSanhChiSoResponse;
 import com.starter.InvestAndChill.jwt.payload.response.filter.NoNhieuSomChiTraResponse;
 import com.starter.InvestAndChill.jwt.payload.response.filter.TheoDoiPreSalesResponse;
 import com.starter.InvestAndChill.jwt.payload.response.filter.XuLyKhauHaoNangResponse;
@@ -37,6 +48,7 @@ import com.starter.InvestAndChill.pojo.FilterPhiTaiChinhDTO;
 import com.starter.InvestAndChill.pojo.FilterTheoDoiPreSalesDTO;
 import com.starter.InvestAndChill.pojo.FilterXuLyKhauHaoNangDTO;
 import com.starter.InvestAndChill.pojo.MinMaxDTO;
+import com.starter.InvestAndChill.pojo.NganHangSoSanhChiSoDTO;
 import com.starter.InvestAndChill.utils.CalculatorUtils;
 import com.starter.InvestAndChill.utils.Constants;
 import com.starter.InvestAndChill.utils.FilterCaculationUtils;
@@ -354,52 +366,156 @@ public class FilterController {
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 	
-//	@PostMapping("/nganhang/sosanhchiso")
-//	public ResponseEntity<?> nganHangSoSanhChiSo(@RequestBody List<String> stringList, @RequestParam(required = false,name = "chart") String chart){
-//		List<ChungKhoanSoSanhChiSoDTO> listCkSoSanhChiSoDTO = new ArrayList<ChungKhoanSoSanhChiSoDTO>();
-//		listCkSoSanhChiSoDTO = boLocRepository.chungKhoanSoSanhChiSo(stringList);
-//		
-//		List<ChungKhoanSoSanhChiSoResponse> list = new ArrayList<ChungKhoanSoSanhChiSoResponse>();
-//		
-//		for (int i=0;i< stringList.size();i++) {
-//			ChungKhoanSoSanhChiSoResponse response = new ChungKhoanSoSanhChiSoResponse();
-//			String stock = stringList.get(i);
-//			response.setStockCode(stock);
-//			String[] arrayTime = new String[5];
-//			Double[] arrayValue = new Double[5];
-//			int n= 0;
-//			for (int j=0 ; j< listCkSoSanhChiSoDTO.size();j++) {
-//				if (stock.equals(listCkSoSanhChiSoDTO.get(j).getStockCode())) {
-//					if ("ci6".equals(chart)) {
-//						arrayValue[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getCi6());
-//					} else if ("ci7".equals(chart)) {
-//						arrayValue[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getCi7());
-//					} else if ("cb142".equals(chart)) {
-//						arrayValue[n] = RoundNumber.lamTron(listCkSoSanhChiSoDTO.get(j).getCb142());
-//					} else if ("cf158".equals(chart)) {
-//						arrayValue[n] = RoundNumber.lamTron(listCkSoSanhChiSoDTO.get(j).getCf158());
-//					} else if ("cb205".equals(chart)) {
-//						arrayValue[n] = RoundNumber.lamTron(listCkSoSanhChiSoDTO.get(j).getCb205());
-//					}
-//					
-//					
-//					arrayTime[n] = listCkSoSanhChiSoDTO.get(j).getQuarter() + " - " + listCkSoSanhChiSoDTO.get(j).getYear();
-//					n++;
-//				}
-//			}
-//			response.setQuarterYear(arrayTime);
-//			response.setArrayValue(arrayValue);
-//			list.add(response);
-//		}
-//		
-////		Map<String, Integer> data = new HashMap<>();
-////        data.put("3 - 2023", 9);
-////        data.put("4 - 2023", 10);
-////        data.put("1 - 2024", 11);
-////        data.put("2 - 2024", 12);
-////        data.put("3 - 2024", 13);
-//		
-//		
-//		return new ResponseEntity<>(list, HttpStatus.OK);
-//	}
+	@PostMapping("/nganhang/sosanhchiso")
+	public ResponseEntity<?> nganHangSoSanhChiSo(@RequestBody List<String> stringList, @RequestParam(required = false,name = "chart") String chart){
+		List<NganHangSoSanhChiSoDTO> listCkSoSanhChiSoDTO = new ArrayList<NganHangSoSanhChiSoDTO>();
+		listCkSoSanhChiSoDTO = boLocRepository.nganHangSoSanhChiSo(stringList);
+		
+		
+		
+		int arrayLength = stringList.size()*5 + (stringList.size()-1);
+		String[] arrayBank = new String[arrayLength];
+		Double[] arrayValuebi7 = new Double[arrayLength];
+		Double[] arrayValuebi8 = new Double[arrayLength];
+		Double[] arrayValuebi9 = new Double[arrayLength];
+		Double[] arrayValuebi35 = new Double[arrayLength];
+		Double[] arrayValuebi22 = new Double[arrayLength];
+		Double[] arrayValuebi23 = new Double[arrayLength];
+		Double[] arrayValuebi24 = new Double[arrayLength];
+		Double[] arrayValuebi26 = new Double[arrayLength];
+		Double[] arrayValuebi30 = new Double[arrayLength];
+		Double[] arrayValuebi29 = new Double[arrayLength];
+		Double[] arrayValuebi32 = new Double[arrayLength];
+		Double[] arrayValuebi20 = new Double[arrayLength];
+		Double[] arrayValuebi21 = new Double[arrayLength];
+		Double[] arrayValuebi27 = new Double[arrayLength];
+		Double[] arrayValuebi25 = new Double[arrayLength];
+		
+		
+		int n = 0; // chay cheo mang array
+		int k = 1; // chay theo chi so dola
+		int m = 1; // chay theo chi so arrayBank vd ACB1, ACB2
+		for (int j=0 ; j< listCkSoSanhChiSoDTO.size();j++) {
+			
+			if ((j>0) && (!listCkSoSanhChiSoDTO.get(j).getStockCode().equals(listCkSoSanhChiSoDTO.get(j-1).getStockCode()))) {
+				arrayBank[n] = "$" + k;
+				k++;
+				arrayValuebi7[n] = null;
+				arrayValuebi8[n] = null;
+				arrayValuebi9[n] = null;
+				arrayValuebi35[n] = null;
+				arrayValuebi22[n] = null;
+				arrayValuebi23[n] = null;
+				arrayValuebi24[n] = null;
+				arrayValuebi26[n] = null;
+				arrayValuebi30[n] = null;
+				arrayValuebi29[n] = null;
+				arrayValuebi32[n] = null;
+				arrayValuebi20[n] = null;
+				arrayValuebi21[n] = null;
+				arrayValuebi27[n] = null;
+				arrayValuebi25[n] = null;
+				n++;
+				m =1;
+				arrayBank[n] = listCkSoSanhChiSoDTO.get(j).getStockCode() + m;
+				arrayValuebi7[n] =  RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getBi7());
+				arrayValuebi8[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getBi8());
+				arrayValuebi9[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getBi9());
+				arrayValuebi35[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getBi35());
+				arrayValuebi22[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getBi22());
+				arrayValuebi23[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getBi23());
+				arrayValuebi24[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getBi24());
+				arrayValuebi26[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getBi26());
+				arrayValuebi30[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getBi30());
+				arrayValuebi29[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getBi29());
+				arrayValuebi32[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getBi32());
+				arrayValuebi20[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getBi20());
+				arrayValuebi21[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getBi21());
+				arrayValuebi27[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getBi27());
+				arrayValuebi25[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getBi25());
+			} else {
+				arrayBank[n] = listCkSoSanhChiSoDTO.get(j).getStockCode() + m;
+				arrayValuebi7[n] =  RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getBi7());
+				arrayValuebi8[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getBi8());
+				arrayValuebi9[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getBi9());
+				arrayValuebi35[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getBi35());
+				arrayValuebi22[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getBi22());
+				arrayValuebi23[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getBi23());
+				arrayValuebi24[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getBi24());
+				arrayValuebi26[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getBi26());
+				arrayValuebi30[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getBi30());
+				arrayValuebi29[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getBi29());
+				arrayValuebi32[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getBi32());
+				arrayValuebi20[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getBi20());
+				arrayValuebi21[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getBi21());
+				arrayValuebi27[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getBi27());
+				arrayValuebi25[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getBi25());
+			}
+				
+			
+			n++;
+			m++;
+		}
+		if ("comp1".equals(chart)) {
+			NganHangSoSanhChiSoComp1Response response = new NganHangSoSanhChiSoComp1Response(); 
+			response.setArrayBank(arrayBank);
+			response.setBi7(arrayValuebi7);
+			response.setBi8(arrayValuebi8);
+			response.setBi9(arrayValuebi9);
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		} else if ("comp2".equals(chart)) {
+			NganHangSoSanhChiSoComp2Response response = new NganHangSoSanhChiSoComp2Response(); 
+			response.setArrayBank(arrayBank);
+			response.setBi35(arrayValuebi35);
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		} else if ("comp3".equals(chart)) {
+			NganHangSoSanhChiSoComp3Response response = new NganHangSoSanhChiSoComp3Response(); 
+			response.setArrayBank(arrayBank);
+			response.setBi22(arrayValuebi22);
+			response.setBi22(arrayValuebi23);
+			response.setBi22(arrayValuebi24);
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		} else if ("comp4".equals(chart)) {
+			NganHangSoSanhChiSoComp4Response response = new NganHangSoSanhChiSoComp4Response(); 
+			response.setArrayBank(arrayBank);
+			response.setBi26(arrayValuebi26);
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		} else if ("comp5".equals(chart)) {
+			NganHangSoSanhChiSoComp5Response response = new NganHangSoSanhChiSoComp5Response(); 
+			response.setArrayBank(arrayBank);
+			response.setBi30(arrayValuebi30);
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		} else if ("comp6".equals(chart)) {
+			NganHangSoSanhChiSoComp6Response response = new NganHangSoSanhChiSoComp6Response(); 
+			response.setArrayBank(arrayBank);
+			response.setBi29(arrayValuebi29);
+			response.setBi32(arrayValuebi32);
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		} else if ("comp7".equals(chart)) {
+			NganHangSoSanhChiSoComp7Response response = new NganHangSoSanhChiSoComp7Response(); 
+			response.setArrayBank(arrayBank);
+			response.setBi20(arrayValuebi20);
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		} else if ("comp8".equals(chart)) {
+			NganHangSoSanhChiSoComp8Response response = new NganHangSoSanhChiSoComp8Response(); 
+			response.setArrayBank(arrayBank);
+			response.setBi21(arrayValuebi21);
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		} else if ("comp9".equals(chart)) {
+			NganHangSoSanhChiSoComp9Response response = new NganHangSoSanhChiSoComp9Response(); 
+			response.setArrayBank(arrayBank);
+			response.setBi27(arrayValuebi27);
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		} else if ("comp10".equals(chart)) {
+			NganHangSoSanhChiSoComp10Response response = new NganHangSoSanhChiSoComp10Response(); 
+			response.setArrayBank(arrayBank);
+			response.setBi25(arrayValuebi25);
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		}
+		
+		
+		
+		
+		return new ResponseEntity<>("Vui long nhap chart name", HttpStatus.OK);
+	}
 }
