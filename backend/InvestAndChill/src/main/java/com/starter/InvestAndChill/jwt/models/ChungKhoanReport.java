@@ -123,7 +123,7 @@ public class ChungKhoanReport {
 	//other1
 	@Column(name = "c_b_205")
 	private Double tienGuiCuaKhachHang;
-	@Column(name = "c_f_158")
+	@Column(name = "c_f_159")
 	private Double choVayKyQuy;
 
 	
