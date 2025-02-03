@@ -243,7 +243,7 @@ export let customNHBal3 = {
   series: [
     {
       type: 'bar',
-      label: 'Tăng trưởng tính dụng',
+      label: 'Tăng trưởng tín dụng',
       dataKey: 'tinDungSVDauNam',
       yAxisId: 'rightAxis',
       color: '#C8D0D2',

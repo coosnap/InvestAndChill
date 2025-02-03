@@ -159,3 +159,28 @@ export async function getListBank() {
   }
   return;
 }
+
+export async function getMinMaxValue() {
+  const response = await axiosInstance.get(
+    `${import.meta.env.VITE_REACT_APP_API}/api/filter/getMinMax`
+  );
+  if (response.status === 200) {
+    return response.data;
+  }
+  return;
+}
+
+export async function getFilterChart(data) {
+  const response = await fetch(`${import.meta.env.VITE_REACT_APP_API}/api/filter/boLoc`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+  if (response.status === 200) {
+    const responseBody = await response.json();
+    return responseBody;
+  }
+  return;
+}
