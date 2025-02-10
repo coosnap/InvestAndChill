@@ -20,12 +20,20 @@ import com.starter.InvestAndChill.pojo.NganHangSoSanhChiSoDTO;
 @Entity(name = "view_phi_tai_chinh_quy")
 @NamedNativeQuery(
 	    name = "filter.giaTangCongSuat",
-	    query = "select ptcr.stock_code ,  ptcr.quarter, ptcr.year,ptcr.p_i_6 as roe, marketcap,pe,pb,evebitda,divyld,ptcr.p_i_77, p_i_78 \r\n"
-	    		+ "from phi_tai_chinh_report ptcr left join valuation v on \r\n"
-	    		+ "	ptcr.stock_code  = v.stock_code\r\n"
-	    		+ "	and ptcr.quarter = v.quarter \r\n"
-	    		+ "	and ptcr.year = v.year\r\n"
-	    		+ "where ptcr.year =:year and ptcr.quarter =:quarter AND p_i_77 > 0.05 AND p_i_78 > 0.05  ",
+	    query = "WITH RankedData AS (\r\n"
+	    		+ "    SELECT stock_code, quarter, year, date, marketcap,pe,pb,evebitda,divyld,\r\n"
+	    		+ "           ROW_NUMBER() OVER (PARTITION BY stock_code ORDER BY date DESC) AS rn\r\n"
+	    		+ "    FROM valuation \r\n"
+	    		+ "    WHERE quarter = :quarter AND year = :year \r\n"
+	    		+ ")\r\n"
+	    		+ "SELECT RankedData.stock_code, RankedData.quarter, RankedData.year, ptcr.p_i_6 as roe,marketcap,pe,pb,evebitda,divyld,ptcr.p_i_77, p_i_78\r\n"
+	    		+ "FROM RankedData\r\n"
+	    		+ "INNER JOIN phi_tai_chinh_report ptcr \r\n"
+	    		+ "	on ptcr.stock_code = RankedData.stock_code \r\n"
+	    		+ "	and ptcr.quarter = RankedData.quarter \r\n"
+	    		+ "	and ptcr.year = RankedData.year \r\n"
+	    		+ "WHERE rn = 1 AND p_i_77 > 0.05 AND p_i_78 > 0.05 \r\n"
+	    		+ "ORDER BY stock_code",
 	    resultSetMapping = "giaTangCongSuat"
 	)
 @SqlResultSetMapping(
@@ -50,13 +58,21 @@ import com.starter.InvestAndChill.pojo.NganHangSoSanhChiSoDTO;
 
 
 @NamedNativeQuery(
-	    name = "filter.theoDoiPreSales",
-	    query = "select ptcr.stock_code ,  ptcr.quarter, ptcr.year,ptcr.p_i_6 as roe, marketcap,pe,pb,evebitda,divyld,ptcr.p_i_75 \r\n"
-	    		+ "from phi_tai_chinh_report ptcr left join valuation v on \r\n"
-	    		+ "	ptcr.stock_code  = v.stock_code\r\n"
-	    		+ "	and ptcr.quarter = v.quarter \r\n"
-	    		+ "	and ptcr.year = v.year\r\n"
-	    		+ "where ptcr.year =:year and ptcr.quarter =:quarter AND p_i_75 > 0.25 ",
+	    name = "filter.theoDoiPreSales",		
+		query = "WITH RankedData AS (\r\n"
+				+ "    SELECT stock_code, quarter, year, date, marketcap,pe,pb,evebitda,divyld,\r\n"
+				+ "           ROW_NUMBER() OVER (PARTITION BY stock_code ORDER BY date DESC) AS rn\r\n"
+				+ "    FROM valuation \r\n"
+				+ "    WHERE quarter = :quarter AND year = :year \r\n"
+				+ ")\r\n"
+				+ "SELECT RankedData.stock_code, RankedData.quarter, RankedData.year, ptcr.p_i_6 as roe, marketcap,pe,pb,evebitda,divyld,ptcr.p_i_75\r\n"
+				+ "FROM RankedData\r\n"
+				+ "INNER JOIN phi_tai_chinh_report ptcr \r\n"
+				+ "	on ptcr.stock_code = RankedData.stock_code \r\n"
+				+ "	and ptcr.quarter = RankedData.quarter \r\n"
+				+ "	and ptcr.year = RankedData.year \r\n"
+				+ "WHERE rn = 1 AND p_i_75 > 0.25\r\n"
+				+ "ORDER BY stock_code",
 	    resultSetMapping = "theoDoiPreSales"
 	)
 @SqlResultSetMapping(
@@ -80,12 +96,20 @@ import com.starter.InvestAndChill.pojo.NganHangSoSanhChiSoDTO;
 
 @NamedNativeQuery(
 	    name = "filter.noNhieuSomChiTra",
-	    query = "select ptcr.stock_code ,  ptcr.quarter, ptcr.year,ptcr.p_i_6 as roe, marketcap,pe,pb,evebitda,divyld,ptcr.p_i_68,ptcr.p_i_69 \r\n"
-	    		+ "from phi_tai_chinh_report ptcr left join valuation v on \r\n"
-	    		+ "	ptcr.stock_code  = v.stock_code\r\n"
-	    		+ "	and ptcr.quarter = v.quarter \r\n"
-	    		+ "	and ptcr.year = v.year\r\n"
-	    		+ "where ptcr.year =:year and ptcr.quarter =:quarter AND p_i_68 > 0.5 and p_i_69 <= 5 ",
+	    query = "WITH RankedData AS (\r\n"
+	    		+ "    SELECT stock_code, quarter, year, date, marketcap,pe,pb,evebitda,divyld,\r\n"
+	    		+ "           ROW_NUMBER() OVER (PARTITION BY stock_code ORDER BY date DESC) AS rn\r\n"
+	    		+ "    FROM valuation \r\n"
+	    		+ "    WHERE quarter = :quarter AND year = :year  \r\n"
+	    		+ ")\r\n"
+	    		+ "SELECT RankedData.stock_code, RankedData.quarter, RankedData.year, ptcr.p_i_6 as roe, marketcap,pe,pb,evebitda,divyld,ptcr.p_i_68,ptcr.p_i_69\r\n"
+	    		+ "FROM RankedData\r\n"
+	    		+ "INNER JOIN phi_tai_chinh_report ptcr \r\n"
+	    		+ "	on ptcr.stock_code = RankedData.stock_code \r\n"
+	    		+ "	and ptcr.quarter = RankedData.quarter \r\n"
+	    		+ "	and ptcr.year = RankedData.year \r\n"
+	    		+ "WHERE rn = 1 AND p_i_68 > 0.5 and p_i_69 <= 5\r\n"
+	    		+ "ORDER BY stock_code",
 	    resultSetMapping = "noNhieuSomChiTra"
 	)
 
@@ -111,12 +135,20 @@ import com.starter.InvestAndChill.pojo.NganHangSoSanhChiSoDTO;
 
 @NamedNativeQuery(
 	    name = "filter.xuLyKhauHaoNang",
-	    query = "select ptcr.stock_code ,  ptcr.quarter, ptcr.year,ptcr.p_i_6 as roe, marketcap,pe,pb,evebitda,divyld,ptcr.p_i_70,ptcr.p_i_73 \r\n"
-	    		+ "from phi_tai_chinh_report ptcr left join valuation v on \r\n"
-	    		+ "	ptcr.stock_code  = v.stock_code\r\n"
-	    		+ "	and ptcr.quarter = v.quarter \r\n"
-	    		+ "	and ptcr.year = v.year\r\n"
-	    		+ "where ptcr.year =:year and ptcr.quarter =:quarter AND p_i_70 > 0.5 and p_i_73 <= 3 ",
+	    query = "WITH RankedData AS (\r\n"
+	    		+ "    SELECT stock_code, quarter, year, date, marketcap,pe,pb,evebitda,divyld,\r\n"
+	    		+ "           ROW_NUMBER() OVER (PARTITION BY stock_code ORDER BY date DESC) AS rn\r\n"
+	    		+ "    FROM valuation \r\n"
+	    		+ "    WHERE quarter = :quarter AND year = :year \r\n"
+	    		+ ")\r\n"
+	    		+ "SELECT RankedData.stock_code, RankedData.quarter, RankedData.year, ptcr.p_i_6 as roe, marketcap,pe,pb,evebitda,divyld,ptcr.p_i_70,ptcr.p_i_73\r\n"
+	    		+ "FROM RankedData\r\n"
+	    		+ "INNER JOIN phi_tai_chinh_report ptcr \r\n"
+	    		+ "	on ptcr.stock_code = RankedData.stock_code \r\n"
+	    		+ "	and ptcr.quarter = RankedData.quarter \r\n"
+	    		+ "	and ptcr.year = RankedData.year \r\n"
+	    		+ "WHERE rn = 1 AND p_i_70 > 0.5 and p_i_73 <= 3\r\n"
+	    		+ "ORDER BY stock_code",
 	    resultSetMapping = "xuLyKhauHaoNang"
 	)
 
@@ -142,14 +174,22 @@ import com.starter.InvestAndChill.pojo.NganHangSoSanhChiSoDTO;
 
 @NamedNativeQuery(
 	    name = "filter.khaiThacDuoiCongSuat",
-	    query = "select ptcr.stock_code ,  ptcr.quarter, ptcr.year,ptcr.p_i_6 as roe, marketcap,pe,pb,evebitda,divyld,ptcr.p_i_79_3 \r\n"
-	    		+ "from phi_tai_chinh_report ptcr left join valuation v on ptcr.stock_code  = v.stock_code\r\n"
-	    		+ "and ptcr.quarter = v.quarter\r\n"
-	    		+ "and ptcr.year = v.year\r\n"
-	    		+ "where \r\n"
-	    		+ "( ( ptcr.year =:yearm1 and ptcr.quarter =:quarterm1) or (ptcr.year =:yearm2 and ptcr.quarter =:quarterm2 ) or\r\n"
-	    		+ "( ptcr.year =:yearm3 and ptcr.quarter =:quarterm3) or ( ptcr.year =:yearm4 and ptcr.quarter =:quarterm4) )\r\n"
-	    		+ "AND p_i_77 > 0.05 AND p_i_78 > 0.05 ",
+		query = "WITH RankedData AS (\r\n"
+				+ "    SELECT stock_code, quarter, year, date, marketcap,pe,pb,evebitda,divyld,\r\n"
+				+ "           ROW_NUMBER() OVER (PARTITION BY stock_code ORDER BY date DESC) AS rn\r\n"
+				+ "    FROM valuation \r\n"
+				+ "where \r\n"
+	    		+ "( ( year =:yearm1 and quarter =:quarterm1) or (year =:yearm2 and quarter =:quarterm2 ) or\r\n"
+	    		+ "( year =:yearm3 and quarter =:quarterm3) or ( year =:yearm4 and quarter =:quarterm4) )\r\n"
+				+ ")\r\n"
+				+ "SELECT RankedData.stock_code, RankedData.quarter, RankedData.year, ptcr.p_i_6 as roe, marketcap,pe,pb,evebitda,divyld,ptcr.p_i_79_3\r\n"
+				+ "FROM RankedData\r\n"
+				+ "INNER JOIN phi_tai_chinh_report ptcr \r\n"
+				+ "	on ptcr.stock_code = RankedData.stock_code \r\n"
+				+ "	and ptcr.quarter = RankedData.quarter \r\n"
+				+ "	and ptcr.year = RankedData.year \r\n"
+				+ "WHERE rn = 1 AND p_i_77 > 0.05 AND p_i_78 > 0.05 \r\n"
+				+ "ORDER BY stock_code",
 	    resultSetMapping = "khaiThacDuoiCongSuat"
 	)
 

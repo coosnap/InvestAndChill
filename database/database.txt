@@ -3,7 +3,12 @@ CREATE DATABASE investnchilldb;
 Dang nhap bang postgres:
 sudo -i -u postgres
 
-psql -U postgres -d investnchilldb -f /var/tmp/dump-d1re3fkrj0ginj-202412021525.sql
+psql -U postgres -d investnchilldb -f /var/tmp/databasebk.sql
 pg_restore -U postgres -d investnchilldb /var/tmp/dump-d1re3fkrj0ginj-202412021525.sql
+
+
+
+pg_dump -h 103.1.239.154 -p 5432 -U postgres -d investnchilldb -F c -f /root/db/backup_file.dump
+
 
 

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class FilterCaculationUtils {
 	public static void main(String[] args) {
@@ -33,24 +34,43 @@ public class FilterCaculationUtils {
 	
 	public static String buildQueryBoLoc(Map<String, Object> payload) {
 		String tangtruongdoanhthu = (String )payload.get("tangtruongdoanhthu");
-		  Double tangtruongdoanhthuMin = (Double )payload.get("tangtruongdoanhthuMin");
-		  Double tangtruongdoanhthuMax = (Double )payload.get("tangtruongdoanhthuMax");
-		  Double marketcapMin = (Double )payload.get("marketcapMin");
-		  Double marketcapMax = (Double )payload.get("marketcapMax");
-		  Double roeMin = (Double )payload.get("roeMin");
-		  Double roeMax = (Double )payload.get("roeMax");
-		  Double pi24Min = (Double )payload.get("pi24Min");
-		  Double pi24Max = (Double )payload.get("pi24Max");
-		  Double peMin = (Double )payload.get("peMin");
-		  Double peMax = (Double )payload.get("peMax");
-		  Double pbMin = (Double )payload.get("pbMin");
-		  Double pbMax = (Double )payload.get("pbMax");
-		  Double evebitdaMin = (Double )payload.get("evebitdaMin");
-		  Double evebitdaMax = (Double )payload.get("evebitdaMax");
-		  Double divyldMin = (Double )payload.get("divyldMin");
-		  Double divyldMax = (Double )payload.get("divyldMax");
-		  Double netcashmcMin = (Double )payload.get("netcashmcMin");
-		  Double netcashmcMax = (Double )payload.get("netcashmcMax");
+//		  Double tangtruongdoanhthuMin = (Double )payload.get("tangtruongdoanhthuMin");
+//		  Double tangtruongdoanhthuMax = (Double )payload.get("tangtruongdoanhthuMax");
+//		  Double marketcapMin = (Double )payload.get("marketcapMin");
+//		  Double marketcapMax = (Double )payload.get("marketcapMax");
+//		  Double roeMin = (Double )payload.get("roeMin");
+//		  Double roeMax = (Double )payload.get("roeMax");
+//		  Double pi24Min = (Double )payload.get("pi24Min");
+//		  Double pi24Max = (Double )payload.get("pi24Max");
+//		  Double peMin = (Double )payload.get("peMin");
+//		  Double peMax = (Double )payload.get("peMax");
+//		  Double pbMin = (Double )payload.get("pbMin");
+//		  Double pbMax = (Double )payload.get("pbMax");
+//		  Double evebitdaMin = (Double )payload.get("evebitdaMin");
+//		  Double evebitdaMax = (Double )payload.get("evebitdaMax");
+//		  Double divyldMin = (Double )payload.get("divyldMin");
+//		  Double divyldMax = (Double )payload.get("divyldMax");
+//		  Double netcashmcMin = (Double )payload.get("netcashmcMin");
+//		  Double netcashmcMax = (Double )payload.get("netcashmcMax");
+		  
+		  Double tangtruongdoanhthuMin = Optional.ofNullable((String)payload.get("tangtruongdoanhthuMin")).map(Double::valueOf).orElse(null); 
+		  Double tangtruongdoanhthuMax = Optional.ofNullable((String)payload.get("tangtruongdoanhthuMax")).map(Double::valueOf).orElse(null);
+		  Double marketcapMin = Optional.ofNullable((String)payload.get("marketcapMin")).map(Double::valueOf).orElse(null);
+		  Double marketcapMax = Optional.ofNullable((String)payload.get("marketcapMax")).map(Double::valueOf).orElse(null);
+		  Double roeMin = Optional.ofNullable((String)payload.get("roeMin")).map(Double::valueOf).orElse(null);
+		  Double roeMax = Optional.ofNullable((String)payload.get("roeMax")).map(Double::valueOf).orElse(null);
+		  Double pi24Min = Optional.ofNullable((String)payload.get("pi24Min")).map(Double::valueOf).orElse(null);
+		  Double pi24Max = Optional.ofNullable((String)payload.get("pi24Max")).map(Double::valueOf).orElse(null);
+		  Double peMin = Optional.ofNullable((String)payload.get("peMin")).map(Double::valueOf).orElse(null);
+		  Double peMax = Optional.ofNullable((String)payload.get("peMax")).map(Double::valueOf).orElse(null);
+		  Double pbMin = Optional.ofNullable((String)payload.get("pbMin")).map(Double::valueOf).orElse(null);
+		  Double pbMax = Optional.ofNullable((String)payload.get("pbMax")).map(Double::valueOf).orElse(null);
+		  Double evebitdaMin = Optional.ofNullable((String)payload.get("evebitdaMin")).map(Double::valueOf).orElse(null);
+		  Double evebitdaMax = Optional.ofNullable((String)payload.get("evebitdaMax")).map(Double::valueOf).orElse(null);
+		  Double divyldMin = Optional.ofNullable((String)payload.get("divyldMin")).map(Double::valueOf).orElse(null);
+		  Double divyldMax = Optional.ofNullable((String)payload.get("divyldMax")).map(Double::valueOf).orElse(null);
+		  Double netcashmcMin = Optional.ofNullable((String)payload.get("netcashmcMin")).map(Double::valueOf).orElse(null);
+		  Double netcashmcMax = Optional.ofNullable((String)payload.get("netcashmcMax")).map(Double::valueOf).orElse(null);
 		
 		
         StringBuilder sql = new StringBuilder("SELECT v.stock_code, p_i_79_1, p_i_79_2, p_i_79_3, marketcap, p_i_6 as roe, p_i_24 as roic, pe, pb, evebitda, divyld, netcashmc\r\n"
@@ -75,8 +95,8 @@ public class FilterCaculationUtils {
         }
         
         if (isChoosing(roeMin, roeMax)) {
-        	sql.append(" and roe >= ").append(roeMin / 100);
-		 	sql.append(" and roe <= ").append(roeMax / 100);
+        	sql.append(" and p_i_6 >= ").append(roeMin / 100);
+		 	sql.append(" and p_i_6 <= ").append(roeMax / 100);
         }
         
         if (isChoosing(pi24Min, pi24Max)) {

@@ -1,4 +1,4 @@
-CREATE VIEW view_chung_khoan_quy AS
+CREATE OR REPLACE VIEW view_chung_khoan_quy AS
 SELECT stock_code ,quarter ,year, 
 c_p_21,
 c_p_72,
@@ -46,11 +46,11 @@ c_i_55,
 c_i_57,
 c_i_58,
 c_b_205,
-c_f_158
+c_f_159
 FROM chung_khoan_report ckr 
 WHERE quarter is not null ;
 
-CREATE VIEW view_chung_khoan_nam AS
+CREATE OR REPLACE VIEW view_chung_khoan_nam AS
 SELECT stock_code ,'0' as quarter,year, 
 c_p_21,
 c_p_72,
@@ -98,7 +98,7 @@ c_i_55,
 c_i_57,
 c_i_58,
 c_b_205,
-c_f_158
+c_f_159
 FROM chung_khoan_report ckr 
 WHERE quarter is null ;
 
