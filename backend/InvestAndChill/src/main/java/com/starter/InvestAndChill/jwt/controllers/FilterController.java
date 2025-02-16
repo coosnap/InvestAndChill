@@ -65,10 +65,14 @@ public class FilterController {
 	BoLocRepository boLocRepository;
 	
 	@GetMapping("/giaTangCongSuat")
-	public ResponseEntity<?> filterGiaTangCongSuat(@RequestParam(required = false,name = "sortType") String sortType,@RequestParam(required = false,name = "sortValue") String sortValue) {
+	public ResponseEntity<?> filterGiaTangCongSuat(@RequestParam(required = false,name = "sortType") String sortType,@RequestParam(required = false,name = "sortValue") String sortValue,
+			@RequestParam(required = false,name = "quarter") String quarter,@RequestParam(required = false,name = "year") String year) {
 		List<FilterGiaTangCongSuatDTO> listfilter = new ArrayList<FilterGiaTangCongSuatDTO>();
-		
-		listfilter =  filterRepository.findGiaTangCongSuat(Constants.currentYear, Constants.currentQuarter);
+		if ((quarter != null) && (year != null) && (!quarter.isBlank()) && (!year.isBlank())) {
+			listfilter =  filterRepository.findGiaTangCongSuat(year, quarter);
+		} else {
+			listfilter =  filterRepository.findGiaTangCongSuat(Constants.currentYear, Constants.currentQuarter);
+		}
 		
 		if (listfilter.isEmpty()) {
 			return new ResponseEntity<>(new MessageResponse("Data is empty"), HttpStatus.OK);
@@ -97,10 +101,15 @@ public class FilterController {
 	}
 	
 	@GetMapping("/theoDoiPreSales")
-	public ResponseEntity<?> filterTheoDoiPreSales(@RequestParam(required = false,name = "sortType") String sortType,@RequestParam(required = false,name = "sortValue") String sortValue) {
+	public ResponseEntity<?> filterTheoDoiPreSales(@RequestParam(required = false,name = "sortType") String sortType,@RequestParam(required = false,name = "sortValue") String sortValue,
+			@RequestParam(required = false,name = "quarter") String quarter,@RequestParam(required = false,name = "year") String year) {
 		List<FilterTheoDoiPreSalesDTO> listfilter = new ArrayList<FilterTheoDoiPreSalesDTO>();
 		
-		listfilter =  filterRepository.findTheoDoiPreSales(Constants.currentYear, Constants.currentQuarter);
+		if ((quarter != null) && (year != null) && (!quarter.isBlank()) && (!year.isBlank())) {
+			listfilter =  filterRepository.findTheoDoiPreSales(year, quarter);
+		} else {
+			listfilter =  filterRepository.findTheoDoiPreSales(Constants.currentYear, Constants.currentQuarter);
+		}
 		
 		if (listfilter.isEmpty()) {
 			return new ResponseEntity<>(new MessageResponse("Data is empty"), HttpStatus.OK);
@@ -128,10 +137,15 @@ public class FilterController {
 	}
 	
 	@GetMapping("/noNhieuNhungSomChiTra")
-	public ResponseEntity<?> filterNoNhieuNhungSomChiTra(@RequestParam(required = false,name = "sortType") String sortType,@RequestParam(required = false,name = "sortValue") String sortValue) {
+	public ResponseEntity<?> filterNoNhieuNhungSomChiTra(@RequestParam(required = false,name = "sortType") String sortType,@RequestParam(required = false,name = "sortValue") String sortValue,
+			@RequestParam(required = false,name = "quarter") String quarter,@RequestParam(required = false,name = "year") String year) {
 		List<FilterNoNhieuSomChiTraDTO> listfilter = new ArrayList<FilterNoNhieuSomChiTraDTO>();
 		
-		listfilter =  filterRepository.findNoNhieuSomChiTra(Constants.currentYear, Constants.currentQuarter);
+		if ((quarter != null) && (year != null) && (!quarter.isBlank()) && (!year.isBlank())) {
+			listfilter =  filterRepository.findNoNhieuSomChiTra(year, quarter);
+		} else {
+			listfilter =  filterRepository.findNoNhieuSomChiTra(Constants.currentYear, Constants.currentQuarter);
+		}
 		
 		if (listfilter.isEmpty()) {
 			return new ResponseEntity<>(new MessageResponse("Data is empty"), HttpStatus.OK);
@@ -161,10 +175,15 @@ public class FilterController {
 	
 	
 	@GetMapping("/xuLyKhauHaoNang")
-	public ResponseEntity<?> filterxuLyKhauHaoNang(@RequestParam(required = false,name = "sortType") String sortType,@RequestParam(required = false,name = "sortValue") String sortValue) {
+	public ResponseEntity<?> filterxuLyKhauHaoNang(@RequestParam(required = false,name = "sortType") String sortType,@RequestParam(required = false,name = "sortValue") String sortValue,
+			@RequestParam(required = false,name = "quarter") String quarter,@RequestParam(required = false,name = "year") String year) {
 		List<FilterXuLyKhauHaoNangDTO> listfilter = new ArrayList<FilterXuLyKhauHaoNangDTO>();
 		
-		listfilter =  filterRepository.findXuLyKhauHaoNang(Constants.currentYear, Constants.currentQuarter);
+		if ((quarter != null) && (year != null) && (!quarter.isBlank()) && (!year.isBlank())) {
+			listfilter =  filterRepository.findXuLyKhauHaoNang(year, quarter);
+		} else {
+			listfilter =  filterRepository.findXuLyKhauHaoNang(Constants.currentYear, Constants.currentQuarter);
+		}
 		
 		if (listfilter.isEmpty()) {
 			return new ResponseEntity<>(new MessageResponse("Data is empty"), HttpStatus.OK);
@@ -194,19 +213,29 @@ public class FilterController {
 	
 	
 	@GetMapping("/khaiThacDuoiCongSuat")
-	public ResponseEntity<?> filterKhaiThacDuoiCongSuat(@RequestParam(required = false,name = "sortType") String sortType,@RequestParam(required = false,name = "sortValue") String sortValue) {
+	public ResponseEntity<?> filterKhaiThacDuoiCongSuat(@RequestParam(required = false,name = "sortType") String sortType,@RequestParam(required = false,name = "sortValue") String sortValue,
+			@RequestParam(required = false,name = "quarter") String quarter,@RequestParam(required = false,name = "year") String year) {
 		List<FilterKhaiThacDuoiCongSuatDTO> listfilter = new ArrayList<FilterKhaiThacDuoiCongSuatDTO>();
 		
-		Map<Integer, Integer> map1 = FilterCaculationUtils.tinhQuyGanNhat(Constants.currentYear, Constants.currentQuarter, 1);
+		String currentYear = Constants.currentYear;
+		String currentQuarter = Constants.currentQuarter;
+		
+		if ((quarter != null) && (year != null) && (!quarter.isBlank()) && (!year.isBlank())) {
+			currentYear = year;
+			currentQuarter = quarter;
+		}
+		
+		
+		Map<Integer, Integer> map1 = FilterCaculationUtils.tinhQuyGanNhat(currentYear, currentQuarter, 1);
 		Map.Entry<Integer, Integer> firstEntry1 = map1.entrySet().iterator().next();
 		
-		Map<Integer, Integer> map2 = FilterCaculationUtils.tinhQuyGanNhat(Constants.currentYear, Constants.currentQuarter, 2);
+		Map<Integer, Integer> map2 = FilterCaculationUtils.tinhQuyGanNhat(currentYear, currentQuarter, 2);
 		Map.Entry<Integer, Integer> firstEntry2 = map2.entrySet().iterator().next();
 		
-		Map<Integer, Integer> map3 = FilterCaculationUtils.tinhQuyGanNhat(Constants.currentYear, Constants.currentQuarter, 3);
+		Map<Integer, Integer> map3 = FilterCaculationUtils.tinhQuyGanNhat(currentYear, currentQuarter, 3);
 		Map.Entry<Integer, Integer> firstEntry3 = map3.entrySet().iterator().next();
 		
-		Map<Integer, Integer> map4 = FilterCaculationUtils.tinhQuyGanNhat(Constants.currentYear, Constants.currentQuarter, 4);
+		Map<Integer, Integer> map4 = FilterCaculationUtils.tinhQuyGanNhat(currentYear, currentQuarter, 4);
 		Map.Entry<Integer, Integer> firstEntry4 = map4.entrySet().iterator().next();
 		listfilter =  filterRepository.findKhaiThacDuoiCongSuat(firstEntry1.getKey().toString(), firstEntry1.getValue().toString(),
 				firstEntry2.getKey().toString(), firstEntry2.getValue().toString(),
@@ -472,8 +501,8 @@ public class FilterController {
 			NganHangSoSanhChiSoComp3Response response = new NganHangSoSanhChiSoComp3Response(); 
 			response.setArrayBank(arrayBank);
 			response.setBi22(arrayValuebi22);
-			response.setBi22(arrayValuebi23);
-			response.setBi22(arrayValuebi24);
+			response.setBi23(arrayValuebi23);
+			response.setBi24(arrayValuebi24);
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		} else if ("comp4".equals(chart)) {
 			NganHangSoSanhChiSoComp4Response response = new NganHangSoSanhChiSoComp4Response(); 

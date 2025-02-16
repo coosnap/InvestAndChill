@@ -1,5 +1,6 @@
 package com.starter.InvestAndChill.jwt.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -46,8 +47,16 @@ public class BoLocRepository {
 		String sql = FilterCaculationUtils.buildQuerySoSanhChiSoNganHang(listNganHang);
 		Query query = entityManager.createNativeQuery(sql, "nganhang.sosanhchiso");
 		List<NganHangSoSanhChiSoDTO> list = query.getResultList();
+		List<NganHangSoSanhChiSoDTO> sortList = new ArrayList<NganHangSoSanhChiSoDTO>();
+		for (int i=0; i< listNganHang.size();i++) {
+			for (int j=0;j<list.size();j++) {
+				if (list.get(j).getStockCode().equals(listNganHang.get(i))) {
+					sortList.add(list.get(j));
+				}
+			}
+		}
 		
-		return list;
+		return sortList;
 	}
 	
 	public List<String> listChungKhoan() {
