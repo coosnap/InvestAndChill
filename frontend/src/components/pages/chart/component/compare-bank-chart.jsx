@@ -31,7 +31,7 @@ export default function CompareBankChart(data) {
         height={450}
         sx={{
           '.MuiLineElement-series-auto-generated-id-2': {
-            display: 'none',
+            display: data.data.mark ? 'none' : 'block',
           },
         }}
       >

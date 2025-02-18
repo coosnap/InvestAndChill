@@ -212,8 +212,7 @@ export default function NoStackChart(data) {
         <BarPlot />
         {data.data.series.map(
           (e, index) =>
-            e.transform === '50' ||
-            (e.opacity === '50' && (
+            (e.transform == '50' || e.opacity == '50') && (
               <BarPlot
                 key={index}
                 slots={{ bar: BarTranformElement }}
@@ -223,7 +222,7 @@ export default function NoStackChart(data) {
                   },
                 }}
               />
-            ))
+            )
         )}
         {series.map(
           (e, index) =>

@@ -3752,7 +3752,7 @@ export const TabChart = () => {
                   yAxisId: 'leftAxis',
                   data: comp1.bi9 || [],
                   label: 'Tổng chi phí',
-                  valueFormatter: (v) => (!v ? '' : v + ' tỷ đồng'),
+                  valueFormatter: (v) => (!v ? '' : v + ' %'),
                 },
               ],
               mark: true,
