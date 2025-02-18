@@ -90,9 +90,17 @@ export async function getTitle(code) {
   return;
 }
 
-export async function getIncreaseCapacity() {
+export async function getIncreaseCapacity(condition) {
   const response = await axiosInstance.get(
-    `${import.meta.env.VITE_REACT_APP_API}/api/filter/giaTangCongSuat`
+    `${import.meta.env.VITE_REACT_APP_API}/api/filter/giaTangCongSuat${
+      condition
+        ? condition.year && condition.quarter
+          ? '?year=' + condition.year.$y + '&quarter=' + condition.quarter
+          : condition.year && !condition.quarter
+          ? '?year=' + condition.year.$y
+          : '?quarter=' + condition.quarter
+        : ''
+    }`
   );
   if (response.status === 200) {
     return response.data;
@@ -100,9 +108,17 @@ export async function getIncreaseCapacity() {
   return;
 }
 
-export async function getFollowPreSales() {
+export async function getFollowPreSales(condition) {
   const response = await axiosInstance.get(
-    `${import.meta.env.VITE_REACT_APP_API}/api/filter/theoDoiPreSales`
+    `${import.meta.env.VITE_REACT_APP_API}/api/filter/theoDoiPreSales${
+      condition
+        ? condition.year && condition.quarter
+          ? '?year=' + condition.year.$y + '&quarter=' + condition.quarter
+          : condition.year && !condition.quarter
+          ? '?year=' + condition.year.$y
+          : '?quarter=' + condition.quarter
+        : ''
+    }`
   );
   if (response.status === 200) {
     return response.data;
@@ -110,9 +126,17 @@ export async function getFollowPreSales() {
   return;
 }
 
-export async function getOweALot() {
+export async function getOweALot(condition) {
   const response = await axiosInstance.get(
-    `${import.meta.env.VITE_REACT_APP_API}/api/filter/noNhieuNhungSomChiTra`
+    `${import.meta.env.VITE_REACT_APP_API}/api/filter/noNhieuNhungSomChiTra${
+      condition
+        ? condition.year && condition.quarter
+          ? '?year=' + condition.year.$y + '&quarter=' + condition.quarter
+          : condition.year && !condition.quarter
+          ? '?year=' + condition.year.$y
+          : '?quarter=' + condition.quarter
+        : ''
+    }`
   );
   if (response.status === 200) {
     return response.data;
@@ -120,9 +144,17 @@ export async function getOweALot() {
   return;
 }
 
-export async function getDepreciationHandling() {
+export async function getDepreciationHandling(condition) {
   const response = await axiosInstance.get(
-    `${import.meta.env.VITE_REACT_APP_API}/api/filter/xuLyKhauHaoNang`
+    `${import.meta.env.VITE_REACT_APP_API}/api/filter/xuLyKhauHaoNang${
+      condition
+        ? condition.year && condition.quarter
+          ? '?year=' + condition.year.$y + '&quarter=' + condition.quarter
+          : condition.year && !condition.quarter
+          ? '?year=' + condition.year.$y
+          : '?quarter=' + condition.quarter
+        : ''
+    }`
   );
   if (response.status === 200) {
     return response.data;
@@ -130,9 +162,17 @@ export async function getDepreciationHandling() {
   return;
 }
 
-export async function getExploitationBelowCapacity() {
+export async function getExploitationBelowCapacity(condition) {
   const response = await axiosInstance.get(
-    `${import.meta.env.VITE_REACT_APP_API}/api/filter/khaiThacDuoiCongSuat`
+    `${import.meta.env.VITE_REACT_APP_API}/api/filter/khaiThacDuoiCongSuat${
+      condition
+        ? condition.year && condition.quarter
+          ? '?year=' + condition.year.$y + '&quarter=' + condition.quarter
+          : condition.year && !condition.quarter
+          ? '?year=' + condition.year.$y
+          : '?quarter=' + condition.quarter
+        : ''
+    }`
   );
   if (response.status === 200) {
     return response.data;

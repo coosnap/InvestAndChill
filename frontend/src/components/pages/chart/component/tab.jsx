@@ -23,7 +23,7 @@ import {
   Tabs,
   TextField,
 } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import {
   customBalCK1,
@@ -99,18 +99,9 @@ import {
 } from './customPTC';
 import StackChart from './stack-chart';
 
-import {
-  BarPlot,
-  ChartsTooltip,
-  ChartsXAxis,
-  ChartsYAxis,
-  LinePlot,
-  MarkPlot,
-  ResponsiveChartContainer,
-} from '@mui/x-charts';
-import './style.scss';
-import CompareChart from './compare-chart';
 import CompareBankChart from './compare-bank-chart';
+import CompareChart from './compare-chart';
+import './style.scss';
 
 export const TabChart = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -186,6 +177,9 @@ export const TabChart = () => {
   const [listStock, setListStock] = useState([]);
   const [listItem, setListItem] = useState([]);
   const [listData, setListData] = useState([]);
+
+  const dragItem = useRef(0);
+  const draggedOverItem = useRef(0);
 
   useEffect(() => {
     if (codeValue) {
@@ -406,8 +400,8 @@ export const TabChart = () => {
           let val1, val2, val3, val4, val5, val6, val7, val8;
           if (value === 0) {
             let callPerf1 = mapDataChart(customPerfPTC1, type.type, {
-              categoryGapRatio: 0.3,
-              barGapRatio: 0,
+              categoryGapRatio: 0.2,
+              barGapRatio: -0.5,
             });
             let callPerf2 = mapDataChart(customPerfPTC2, type.type, {
               categoryGapRatio: 0.3,
@@ -948,7 +942,10 @@ export const TabChart = () => {
       setChecked((prev) => ({ ...prev, chart: !prev.chart }));
       try {
         customPerfPTC1.year = checked.chart;
-        let newPerf1 = await mapDataChart(customPerfPTC1, tabType);
+        let newPerf1 = await mapDataChart(customPerfPTC1, tabType, {
+          categoryGapRatio: 0.2,
+          barGapRatio: -0.5,
+        });
         setDataChart((prev) => ({ ...prev, perf1: newPerf1 }));
         setChecked((prev) => ({ ...prev, perf1: !checked.chart }));
       } catch (error) {
@@ -956,7 +953,10 @@ export const TabChart = () => {
       }
       try {
         customPerfPTC2.year = checked.chart;
-        let newPerf2 = await mapDataChart(customPerfPTC2, tabType);
+        let newPerf2 = await mapDataChart(customPerfPTC2, tabType, {
+          categoryGapRatio: 0.3,
+          barGapRatio: 0,
+        });
         setDataChart((prev) => ({ ...prev, perf2: newPerf2 }));
         setChecked((prev) => ({ ...prev, perf2: !checked.chart }));
       } catch (error) {
@@ -972,7 +972,10 @@ export const TabChart = () => {
       }
       try {
         customBalPTC1.year = checked.chart;
-        let newBal1 = await mapDataChart(customBalPTC1, tabType);
+        let newBal1 = await mapDataChart(customBalPTC1, tabType, {
+          categoryGapRatio: 0.3,
+          barGapRatio: 0,
+        });
         setDataChart((prev) => ({ ...prev, bal1: newBal1 }));
         setChecked((prev) => ({ ...prev, bal1: !checked.chart }));
       } catch (error) {
@@ -980,7 +983,10 @@ export const TabChart = () => {
       }
       try {
         customBalPTC2.year = checked.chart;
-        let newBal2 = await mapDataChart(customBalPTC2, tabType);
+        let newBal2 = await mapDataChart(customBalPTC2, tabType, {
+          categoryGapRatio: 0.3,
+          barGapRatio: 0,
+        });
         setDataChart((prev) => ({ ...prev, bal2: newBal2 }));
         setChecked((prev) => ({ ...prev, bal2: !checked.chart }));
       } catch (error) {
@@ -988,7 +994,10 @@ export const TabChart = () => {
       }
       try {
         customBalPTC3.year = checked.chart;
-        let newBal3 = await mapDataChart(customBalPTC3, tabType);
+        let newBal3 = await mapDataChart(customBalPTC3, tabType, {
+          categoryGapRatio: 0.3,
+          barGapRatio: -1,
+        });
         setDataChart((prev) => ({ ...prev, bal3: newBal3 }));
         setChecked((prev) => ({ ...prev, bal3: !checked.chart }));
       } catch (error) {
@@ -996,7 +1005,10 @@ export const TabChart = () => {
       }
       try {
         customBalPTC4.year = checked.chart;
-        let newBal4 = await mapDataChart(customBalPTC4, tabType);
+        let newBal4 = await mapDataChart(customBalPTC4, tabType, {
+          categoryGapRatio: 0.3,
+          barGapRatio: 0,
+        });
         setDataChart((prev) => ({ ...prev, bal4: newBal4 }));
         setChecked((prev) => ({ ...prev, bal4: !checked.chart }));
       } catch (error) {
@@ -1004,7 +1016,10 @@ export const TabChart = () => {
       }
       try {
         customBalPTC6.year = checked.chart;
-        let newBal6 = await mapDataChart(customBalPTC6, tabType);
+        let newBal6 = await mapDataChart(customBalPTC6, tabType, {
+          categoryGapRatio: 0.3,
+          barGapRatio: 0,
+        });
         setDataChart((prev) => ({ ...prev, bal6: newBal6 }));
         setChecked((prev) => ({ ...prev, bal6: !checked.chart }));
       } catch (error) {
@@ -1226,8 +1241,8 @@ export const TabChart = () => {
       if (typeChart === 'perf1') {
         customPerfPTC1.year = checked.perf1;
         let newPerf = await mapDataChart(customPerfPTC1, tabType, {
-          categoryGapRatio: 0.3,
-          barGapRatio: 0,
+          categoryGapRatio: 0.2,
+          barGapRatio: -0.5,
         });
         setDataChart((prev) => ({ ...prev, perf1: newPerf }));
         setChecked((prev) => ({ ...prev, perf1: !prev.perf1 }));
@@ -3633,6 +3648,10 @@ export const TabChart = () => {
     },
   };
 
+  const getTooltipValue = (data) => {
+    return Object.keys(data).filter((e) => e !== 'code');
+  };
+
   const handleClickGetDataChart = async () => {
     if (tabType === 'ChungKhoan') {
       let comp1, comp2, comp3, comp4, comp5;
@@ -3645,12 +3664,21 @@ export const TabChart = () => {
 
       Promise.all([callComp1, callComp2, callComp3, callComp4, callComp5])
         .then((values) => {
+          let tooltipValue = getTooltipValue(values[0][0].mapValue);
           comp1 = values[0];
           comp2 = values[1];
           comp3 = values[2];
           comp4 = values[3];
           comp5 = values[3];
+          // console.log('customCompCK1', {
+          //   ...customCompCK1,
+          //   series: customCompCK1.series.map((e, index) => ({
+          //     ...customCompCK1.series[index],
+          //     dataKey: tooltipValue[index],
+          //   })),
+          // });
           setDataChart({
+            ttValue: tooltipValue,
             comp1: comp1.map((e) => ({ code: e.stockCode, ...e.mapValue })),
             comp2: comp2.map((e) => ({ code: e.stockCode, ...e.mapValue })),
             comp3: comp3.map((e) => ({ code: e.stockCode, ...e.mapValue })),
@@ -3869,6 +3897,14 @@ export const TabChart = () => {
     }
   };
 
+  const handleSort = () => {
+    const listItemClone = [...listItem];
+    const temp = listItemClone[dragItem.current];
+    listItemClone[dragItem.current] = listItemClone[draggedOverItem.current];
+    listItemClone[draggedOverItem.current] = temp;
+    setListItem(listItemClone);
+  };
+
   return (
     <Box sx={{ width: '98%', margin: 'auto' }}>
       {show && (
@@ -4032,12 +4068,12 @@ export const TabChart = () => {
                 {ChartItem(dataChart?.val2, checked?.val2, 'val2')}
               </div>
               <div className="flex gap-8">
-                {ChartItem(dataChart?.val3, checked?.val3, 'val3')}
                 {ChartItem(dataChart?.val4, checked?.val4, 'val4')}
+                {ChartItem(dataChart?.val3, checked?.val3, 'val3')}
               </div>
               <div className="flex gap-8">
-                {ChartItem(dataChart?.val5, checked?.val5, 'val5')}
                 {ChartItem(dataChart?.val6, checked?.val6, 'val6')}
+                {ChartItem(dataChart?.val5, checked?.val5, 'val5')}
               </div>
               <div className="flex gap-8">
                 {ChartItem(dataChart?.val7, checked?.val7, 'val7')}
@@ -4132,41 +4168,63 @@ export const TabChart = () => {
           </CustomTabPanel>
           <CustomTabPanel value={value} index={4}>
             <div className="flex flex-col items-center">
-              <div className="flex gap-4">
-                <Autocomplete
-                  multiple
-                  id="fixed-tags-demo"
-                  value={listItem}
-                  onChange={(event, newValue) => {
-                    if (newValue.length < 11) {
-                      setListItem([
-                        ...fixedOptions,
-                        ...newValue.filter((option) => option.title !== fixedOptions[0].title),
-                      ]);
+              <div className="flex flex-col gap-4">
+                <div className="flex gap-4">
+                  <Autocomplete
+                    multiple
+                    id="fixed-tags-demo"
+                    value={listItem}
+                    onChange={(event, newValue) => {
+                      if (newValue.length < 11) {
+                        setListItem([
+                          ...fixedOptions,
+                          ...newValue.filter((option) => option.title !== fixedOptions[0].title),
+                        ]);
+                      }
+                    }}
+                    isOptionEqualToValue={(option, value) => option.id === value.id}
+                    options={listData}
+                    getOptionLabel={(option) => option.title}
+                    renderTags={(tagValue, getTagProps) =>
+                      tagValue.map((option, index) => {
+                        const { key, ...tagProps } = getTagProps({ index });
+                        return (
+                          // <Chip
+                          //   key={key}
+                          //   label={option.title}
+                          //   {...tagProps}
+                          //   disabled={fixedOptions[0].title === option.title}
+                          // />
+                          <></>
+                        );
+                      })
                     }
-                  }}
-                  isOptionEqualToValue={(option, value) => option.id === value.id}
-                  options={listData}
-                  getOptionLabel={(option) => option.title}
-                  renderTags={(tagValue, getTagProps) =>
-                    tagValue.map((option, index) => {
-                      const { key, ...tagProps } = getTagProps({ index });
-                      return (
-                        <Chip
-                          key={key}
-                          label={option.title}
-                          {...tagProps}
-                          disabled={fixedOptions[0].title === option.title}
-                        />
-                      );
-                    })
-                  }
-                  style={{ minWidth: 470 }}
-                  renderInput={(params) => <TextField {...params} label="Mã đã chọn" />}
-                />
-                <Button onClick={handleClickGetDataChart} variant="contained">
-                  Search
-                </Button>
+                    style={{ minWidth: 470 }}
+                    renderInput={(params) => <TextField {...params} label="Mã đã chọn" />}
+                  />
+                  <Button onClick={handleClickGetDataChart} variant="contained">
+                    Search
+                  </Button>
+                </div>
+                <div className="flex">
+                  {listItem.map((e, index) => (
+                    <div
+                      key={e.id}
+                      className="ml-2"
+                      draggable
+                      onDragStart={() => (dragItem.current = index)}
+                      onDragEnter={() => (draggedOverItem.current = index)}
+                      onDragEnd={handleSort}
+                      onDragOver={(e) => e.preventDefault()}
+                    >
+                      <Chip
+                        label={e.title}
+                        disabled={fixedOptions[0].title === e.title}
+                        onDelete={() => setListItem(listItem.filter((f) => f.title !== e.title))}
+                      />
+                    </div>
+                  ))}
+                </div>
               </div>
               <div className="flex flex-col gap-8 w-full mt-4">
                 <div className="flex gap-8">
@@ -4176,7 +4234,7 @@ export const TabChart = () => {
                         <div className="flex">
                           <div className={`flex flex-1 font-bold text-xl`}>
                             <span className="cursor-pointer" onClick={handleToggleTitle}>
-                              {'ROE' || ''} {isOpened ? ' [' + codeValue + ']' : ''}
+                              {'ROE'} {isOpened ? ' [' + codeValue + ']' : ''}
                             </span>
                           </div>
                         </div>
@@ -4190,7 +4248,7 @@ export const TabChart = () => {
                         <div className="flex">
                           <div className={`flex flex-1 font-bold text-xl`}>
                             <span className="cursor-pointer" onClick={handleToggleTitle}>
-                              {'ROA' || ''} {isOpened ? ' [' + codeValue + ']' : ''}
+                              {'ROA'} {isOpened ? ' [' + codeValue + ']' : ''}
                             </span>
                           </div>
                         </div>
@@ -4206,7 +4264,7 @@ export const TabChart = () => {
                         <div className="flex">
                           <div className={`flex flex-1 font-bold text-xl`}>
                             <span className="cursor-pointer" onClick={handleToggleTitle}>
-                              {'Vốn chủ sở hữu' || ''} {isOpened ? ' [' + codeValue + ']' : ''}
+                              {'Vốn chủ sở hữu'} {isOpened ? ' [' + codeValue + ']' : ''}
                             </span>
                           </div>
                         </div>
@@ -4220,7 +4278,7 @@ export const TabChart = () => {
                         <div className="flex">
                           <div className={`flex flex-1 font-bold text-xl`}>
                             <span className="cursor-pointer" onClick={handleToggleTitle}>
-                              {'Cho vay ký quỹ' || ''} {isOpened ? ' [' + codeValue + ']' : ''}
+                              {'Cho vay ký quỹ'} {isOpened ? ' [' + codeValue + ']' : ''}
                             </span>
                           </div>
                         </div>
@@ -4236,8 +4294,7 @@ export const TabChart = () => {
                         <div className="flex">
                           <div className={`flex flex-1 font-bold text-xl`}>
                             <span className="cursor-pointer" onClick={handleToggleTitle}>
-                              {'Tiền gửi của khách hàng' || ''}{' '}
-                              {isOpened ? ' [' + codeValue + ']' : ''}
+                              {'Tiền gửi của khách hàng'} {isOpened ? ' [' + codeValue + ']' : ''}
                             </span>
                           </div>
                         </div>
@@ -4368,41 +4425,55 @@ export const TabChart = () => {
           </CustomTabPanel>
           <CustomTabPanel value={value} index={4}>
             <div className="flex flex-col items-center">
-              <div className="flex gap-4">
-                <Autocomplete
-                  multiple
-                  id="fixed-tags-demo"
-                  value={listItem}
-                  onChange={(event, newValue) => {
-                    if (newValue.length < 11) {
-                      setListItem([
-                        ...fixedOptions,
-                        ...newValue.filter((option) => option.title !== fixedOptions[0].title),
-                      ]);
+              <div className="flex flex-col gap-4">
+                <div className="flex gap-4">
+                  <Autocomplete
+                    multiple
+                    id="fixed-tags-demo"
+                    value={listItem}
+                    onChange={(event, newValue) => {
+                      if (newValue.length < 11) {
+                        setListItem([
+                          ...fixedOptions,
+                          ...newValue.filter((option) => option.title !== fixedOptions[0].title),
+                        ]);
+                      }
+                    }}
+                    isOptionEqualToValue={(option, value) => option.id === value.id}
+                    options={listData}
+                    getOptionLabel={(option) => option.title}
+                    renderTags={(tagValue, getTagProps) =>
+                      tagValue.map((option, index) => {
+                        const { key, ...tagProps } = getTagProps({ index });
+                        return <></>;
+                      })
                     }
-                  }}
-                  isOptionEqualToValue={(option, value) => option.id === value.id}
-                  options={listData}
-                  getOptionLabel={(option) => option.title}
-                  renderTags={(tagValue, getTagProps) =>
-                    tagValue.map((option, index) => {
-                      const { key, ...tagProps } = getTagProps({ index });
-                      return (
-                        <Chip
-                          key={key}
-                          label={option.title}
-                          {...tagProps}
-                          disabled={fixedOptions[0].title === option.title}
-                        />
-                      );
-                    })
-                  }
-                  style={{ minWidth: 470 }}
-                  renderInput={(params) => <TextField {...params} label="Mã đã chọn" />}
-                />
-                <Button onClick={handleClickGetDataChart} variant="contained">
-                  Search
-                </Button>
+                    style={{ minWidth: 470 }}
+                    renderInput={(params) => <TextField {...params} label="Mã đã chọn" />}
+                  />
+                  <Button onClick={handleClickGetDataChart} variant="contained">
+                    Search
+                  </Button>
+                </div>
+                <div className="flex">
+                  {listItem.map((e, index) => (
+                    <div
+                      key={e.id}
+                      className="ml-2"
+                      draggable
+                      onDragStart={() => (dragItem.current = index)}
+                      onDragEnter={() => (draggedOverItem.current = index)}
+                      onDragEnd={handleSort}
+                      onDragOver={(e) => e.preventDefault()}
+                    >
+                      <Chip
+                        label={e.title}
+                        disabled={fixedOptions[0].title === e.title}
+                        onDelete={() => setListItem(listItem.filter((f) => f.title !== e.title))}
+                      />
+                    </div>
+                  ))}
+                </div>
               </div>
               <div className="flex flex-col gap-8 w-full mt-4">
                 <div className="flex gap-8">
@@ -4412,7 +4483,7 @@ export const TabChart = () => {
                         <div className="flex">
                           <div className={`flex flex-1 font-bold text-xl`}>
                             <span className="cursor-pointer" onClick={handleToggleTitle}>
-                              {'CIR' || ''} {isOpened ? ' [' + codeValue + ']' : ''}
+                              {'CIR'} {isOpened ? ' [' + codeValue + ']' : ''}
                             </span>
                           </div>
                         </div>
@@ -4426,7 +4497,7 @@ export const TabChart = () => {
                         <div className="flex">
                           <div className={`flex flex-1 font-bold text-xl`}>
                             <span className="cursor-pointer" onClick={handleToggleTitle}>
-                              {'Tăng trưởng tín dụng sv đầu năm' || ''}{' '}
+                              {'Tăng trưởng tín dụng sv đầu năm'}{' '}
                               {isOpened ? ' [' + codeValue + ']' : ''}
                             </span>
                           </div>
@@ -4443,7 +4514,7 @@ export const TabChart = () => {
                         <div className="flex">
                           <div className={`flex flex-1 font-bold text-xl`}>
                             <span className="cursor-pointer" onClick={handleToggleTitle}>
-                              {'Overdue & LLR' || ''} {isOpened ? ' [' + codeValue + ']' : ''}
+                              {'Overdue & LLR'} {isOpened ? ' [' + codeValue + ']' : ''}
                             </span>
                           </div>
                         </div>
@@ -4457,7 +4528,7 @@ export const TabChart = () => {
                         <div className="flex">
                           <div className={`flex flex-1 font-bold text-xl`}>
                             <span className="cursor-pointer" onClick={handleToggleTitle}>
-                              {'Overdue/Equity' || ''} {isOpened ? ' [' + codeValue + ']' : ''}
+                              {'Overdue/Equity'} {isOpened ? ' [' + codeValue + ']' : ''}
                             </span>
                           </div>
                         </div>
@@ -4473,7 +4544,7 @@ export const TabChart = () => {
                         <div className="flex">
                           <div className={`flex flex-1 font-bold text-xl`}>
                             <span className="cursor-pointer" onClick={handleToggleTitle}>
-                              {'NIM' || ''} {isOpened ? ' [' + codeValue + ']' : ''}
+                              {'NIM'} {isOpened ? ' [' + codeValue + ']' : ''}
                             </span>
                           </div>
                         </div>
@@ -4487,7 +4558,7 @@ export const TabChart = () => {
                         <div className="flex">
                           <div className={`flex flex-1 font-bold text-xl`}>
                             <span className="cursor-pointer" onClick={handleToggleTitle}>
-                              {'COF' || ''} {isOpened ? ' [' + codeValue + ']' : ''}
+                              {'COF'} {isOpened ? ' [' + codeValue + ']' : ''}
                             </span>
                           </div>
                         </div>
@@ -4503,7 +4574,7 @@ export const TabChart = () => {
                         <div className="flex">
                           <div className={`flex flex-1 font-bold text-xl`}>
                             <span className="cursor-pointer" onClick={handleToggleTitle}>
-                              {'ROE' || ''} {isOpened ? ' [' + codeValue + ']' : ''}
+                              {'ROE'} {isOpened ? ' [' + codeValue + ']' : ''}
                             </span>
                           </div>
                         </div>
@@ -4517,7 +4588,7 @@ export const TabChart = () => {
                         <div className="flex">
                           <div className={`flex flex-1 font-bold text-xl`}>
                             <span className="cursor-pointer" onClick={handleToggleTitle}>
-                              {'ROA' || ''} {isOpened ? ' [' + codeValue + ']' : ''}
+                              {'ROA'} {isOpened ? ' [' + codeValue + ']' : ''}
                             </span>
                           </div>
                         </div>
@@ -4533,7 +4604,7 @@ export const TabChart = () => {
                         <div className="flex">
                           <div className={`flex flex-1 font-bold text-xl`}>
                             <span className="cursor-pointer" onClick={handleToggleTitle}>
-                              {'Tài sản có khác/TTS' || ''} {isOpened ? ' [' + codeValue + ']' : ''}
+                              {'Tài sản có khác/TTS'} {isOpened ? ' [' + codeValue + ']' : ''}
                             </span>
                           </div>
                         </div>
@@ -4547,7 +4618,7 @@ export const TabChart = () => {
                         <div className="flex">
                           <div className={`flex flex-1 font-bold text-xl`}>
                             <span className="cursor-pointer" onClick={handleToggleTitle}>
-                              {'Lãi, phí phải thu/TN từ lãi' || ''}{' '}
+                              {'Lãi, phí phải thu/TN từ lãi'}{' '}
                               {isOpened ? ' [' + codeValue + ']' : ''}
                             </span>
                           </div>

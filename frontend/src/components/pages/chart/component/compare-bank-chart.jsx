@@ -1,11 +1,16 @@
 import Box from '@mui/material/Box';
-import { ChartsReferenceLine, ChartsTooltip, ChartsYAxis, LinePlot, MarkPlot } from '@mui/x-charts';
+import {
+  ChartsLegend,
+  ChartsReferenceLine,
+  ChartsTooltip,
+  ChartsYAxis,
+  LinePlot,
+} from '@mui/x-charts';
 import { BarPlot } from '@mui/x-charts/BarChart';
 import { ChartsXAxis } from '@mui/x-charts/ChartsXAxis';
 import { ResponsiveChartContainer } from '@mui/x-charts/ResponsiveChartContainer';
 
 export default function CompareBankChart(data) {
-  console.log('data', data);
   return (
     <Box sx={{ width: '100%', backgroundColor: '#FFF8DC', position: 'relative' }}>
       <ResponsiveChartContainer
@@ -33,7 +38,7 @@ export default function CompareBankChart(data) {
         <BarPlot />
         <LinePlot />
         <ChartsTooltip />
-        {data.data.mark && <MarkPlot />}
+        {/* {data.data.mark && <MarkPlot />} */}
         <ChartsXAxis disableTicks />
         <ChartsYAxis
           disableLine
@@ -58,6 +63,18 @@ export default function CompareBankChart(data) {
             '.MuiChartsAxis-label': {
               transform: 'translate(14px, -174px)',
               writingMode: 'vertical-rl',
+            },
+          }}
+        />
+        <ChartsLegend
+          padding={{ bottom: 10, top: 10, left: 35, right: 35 }}
+          labelStyle={{ fontSize: 12 }}
+          slotProps={{
+            legend: {
+              itemMarkHeight: 10,
+              itemMarkWidth: 10,
+              markGap: 2,
+              itemGap: 8,
             },
           }}
         />

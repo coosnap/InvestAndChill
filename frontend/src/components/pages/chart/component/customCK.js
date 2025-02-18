@@ -670,12 +670,6 @@ export let customCompCK1 = {
   series: [
     {
       type: 'bar',
-      dataKey: '3 - 2023',
-      label: '3 - 2023',
-      valueFormatter: (v) => (!v ? '' : v + ' %'),
-    },
-    {
-      type: 'bar',
       dataKey: '4 - 2023',
       label: '4 - 2023',
       valueFormatter: (v) => (!v ? '' : v + ' %'),
@@ -696,6 +690,12 @@ export let customCompCK1 = {
       type: 'bar',
       dataKey: '3 - 2024',
       label: '3 - 2024',
+      valueFormatter: (v) => (!v ? '' : v + ' %'),
+    },
+    {
+      type: 'bar',
+      dataKey: '4 - 2024',
+      label: '4 - 2024',
       valueFormatter: (v) => (!v ? '' : v + ' %'),
     },
   ],
@@ -709,12 +709,6 @@ export let customCompCK2 = {
   series: [
     {
       type: 'bar',
-      dataKey: '3 - 2023',
-      label: '3 - 2023',
-      valueFormatter: (v) => (!v ? '' : v + ' %'),
-    },
-    {
-      type: 'bar',
       dataKey: '4 - 2023',
       label: '4 - 2023',
       valueFormatter: (v) => (!v ? '' : v + ' %'),
@@ -735,6 +729,12 @@ export let customCompCK2 = {
       type: 'bar',
       dataKey: '3 - 2024',
       label: '3 - 2024',
+      valueFormatter: (v) => (!v ? '' : v + ' %'),
+    },
+    {
+      type: 'bar',
+      dataKey: '4 - 2024',
+      label: '4 - 2024',
       valueFormatter: (v) => (!v ? '' : v + ' %'),
     },
   ],
@@ -748,12 +748,6 @@ export let customCompCK3 = {
   series: [
     {
       type: 'bar',
-      dataKey: '3 - 2023',
-      label: '3 - 2023',
-      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
-    },
-    {
-      type: 'bar',
       dataKey: '4 - 2023',
       label: '4 - 2023',
       valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
@@ -775,6 +769,12 @@ export let customCompCK3 = {
       dataKey: '3 - 2024',
       label: '3 - 2024',
       valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
+    },
+    {
+      type: 'bar',
+      dataKey: '4 - 2024',
+      label: '4 - 2024',
+      valueFormatter: (v) => (!v ? '' : v + ' %'),
     },
   ],
   yAxis: {
@@ -787,12 +787,6 @@ export let customCompCK4 = {
   series: [
     {
       type: 'bar',
-      dataKey: '3 - 2023',
-      label: '3 - 2023',
-      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
-    },
-    {
-      type: 'bar',
       dataKey: '4 - 2023',
       label: '4 - 2023',
       valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
@@ -814,6 +808,12 @@ export let customCompCK4 = {
       dataKey: '3 - 2024',
       label: '3 - 2024',
       valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
+    },
+    {
+      type: 'bar',
+      dataKey: '4 - 2024',
+      label: '4 - 2024',
+      valueFormatter: (v) => (!v ? '' : v + ' %'),
     },
   ],
   yAxis: {
@@ -826,12 +826,6 @@ export let customCompCK5 = {
   series: [
     {
       type: 'bar',
-      dataKey: '3 - 2023',
-      label: '3 - 2023',
-      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
-    },
-    {
-      type: 'bar',
       dataKey: '4 - 2023',
       label: '4 - 2023',
       valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
@@ -853,6 +847,12 @@ export let customCompCK5 = {
       dataKey: '3 - 2024',
       label: '3 - 2024',
       valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
+    },
+    {
+      type: 'bar',
+      dataKey: '4 - 2024',
+      label: '4 - 2024',
+      valueFormatter: (v) => (!v ? '' : v + ' %'),
     },
   ],
   yAxis: {

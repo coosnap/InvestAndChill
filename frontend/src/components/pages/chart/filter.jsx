@@ -30,6 +30,12 @@ export const Filter = () => {
   useEffect(() => {
     (async () => {
       let result = await getMinMaxValue();
+      setValueMinMax(result);
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
       let tableList = await getFilterChart(chartFilter);
       if (tableList) {
         let temp = tableList.map((e) => ({ ...e, id: e.stockCode }));
@@ -50,7 +56,6 @@ export const Filter = () => {
           ],
           rows: temp,
         });
-        setValueMinMax(result);
       }
     })();
   }, [chartFilter]);

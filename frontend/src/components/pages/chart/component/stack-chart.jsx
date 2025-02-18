@@ -51,16 +51,22 @@ export default function NoStackChart(data) {
   };
 
   const BarTranformElement = (props) => {
-    const { style, data, ...other } = props;
+    const { style, data, ownerState, ...other } = props;
 
     return (
-      props.className.includes('id-2') && (
+      (props.className.includes(`id-${data.data.yAxis.left.transform}`) ||
+        props.className.includes(`id-${data.data.yAxis.right.opacity}`)) && (
         <rect
-          fill={'#981F36'}
+          fill={ownerState.color}
           height={props.style.height.animation.to}
           width={props.style.width.animation.to}
-          x={props.style.x.animation.to + 4}
-          y={props.style.y.animation.to}
+          x={
+            data.data.yAxis.left.transform
+              ? (props.style.x.animation.to || 0) + 4
+              : props.style.x.animation.to || 0
+          }
+          y={props.style.y.animation.to || 0}
+          opacity={data.data.yAxis.right.opacity ? 0.5 : 1}
         />
       )
     );
@@ -124,6 +130,9 @@ export default function NoStackChart(data) {
           bottom: 35,
         }}
         sx={{
+          '.MuiBarElement-series-auto-generated-id-0': {
+            display: data.data.yAxis.right.opacity === 0 ? 'none' : 'block',
+          },
           '.MuiLineElement-series-auto-generated-id-0': {
             strokeDasharray:
               data.data.yAxis.right.dash0 || data.data.yAxis.left.dash0 ? '5 5' : null,
@@ -135,6 +144,9 @@ export default function NoStackChart(data) {
               data.data.yAxis.right.marker || data.data.yAxis.left.marker === 0 ? 'block' : 'none',
           },
 
+          '.MuiBarElement-series-auto-generated-id-1': {
+            display: data.data.yAxis.right.opacity === 1 ? 'none' : 'block',
+          },
           '.MuiLineElement-series-auto-generated-id-1': {
             strokeDasharray:
               data.data.yAxis.right.dash1 || data.data.yAxis.left.dash1 ? '5 5' : null,
@@ -157,7 +169,10 @@ export default function NoStackChart(data) {
               data.data.yAxis.right.marker || data.data.yAxis.left.marker === 2 ? 'block' : 'none',
           },
           '.MuiBarElement-series-auto-generated-id-2': {
-            display: data.data.yAxis.left.transform ? 'none' : 'block',
+            display:
+              data.data.yAxis.left.transform === 2 || data.data.yAxis.right.opacity === 2
+                ? 'none'
+                : 'block',
           },
 
           '.MuiLineElement-series-auto-generated-id-3': {
@@ -195,9 +210,10 @@ export default function NoStackChart(data) {
         }}
       >
         <BarPlot />
-        {series.map(
+        {data.data.series.map(
           (e, index) =>
-            e.transform === '50' && (
+            e.transform === '50' ||
+            (e.opacity === '50' && (
               <BarPlot
                 key={index}
                 slots={{ bar: BarTranformElement }}
@@ -207,7 +223,7 @@ export default function NoStackChart(data) {
                   },
                 }}
               />
-            )
+            ))
         )}
         {series.map(
           (e, index) =>

@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import { ChartFilter } from '@/store/chart';
+import { Unstable_NumberInput as NumberInput } from '@mui/base';
 import {
   Box,
   Checkbox,
@@ -8,11 +9,31 @@ import {
   Select,
   Slider,
   styled,
-  TextField,
 } from '@mui/material';
-import { AddToPhotosOutlined, DeleteOutline } from '@mui/icons-material';
-import { ChartFilter } from '@/store/chart';
+import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
+
+const InputRoot = styled('div')(
+  ({ theme }) => `
+  border-radius: 8px;
+  border: 1px solid grey;
+  padding: 4px;
+`
+);
+
+const InputElement = styled('input')(
+  ({ theme }) => `
+  font-size: 0.875rem;
+  font-family: inherit;
+  font-weight: 400;
+  line-height: 1.5;
+  background: inherit;
+  border: none;
+  border-radius: inherit;
+  padding: 4px;
+  outline: 0;
+`
+);
 
 const AirbnbSlider = styled(Slider)(({ theme }) => ({
   color: '#07298D',
@@ -195,6 +216,127 @@ const FilterItem = (props) => {
     }
   };
 
+  const handleChangeEnter = (e, pos) => {
+    let value = e.target.value - 0;
+    if (props.field === 'tangtruongdoanhthu') {
+      if (pos === 'min') {
+        setChartFilter((prev) => ({
+          ...prev,
+          tangtruongdoanhthuMin: Number(value).toFixed(1),
+        }));
+      } else {
+        setChartFilter((prev) => ({
+          ...prev,
+          tangtruongdoanhthuMax: Number(value).toFixed(1),
+        }));
+      }
+    }
+    if (props.field === 'marketcap') {
+      if (pos === 'min') {
+        setChartFilter((prev) => ({
+          ...prev,
+          marketcapMin: Number(value).toFixed(1),
+        }));
+      } else {
+        setChartFilter((prev) => ({
+          ...prev,
+          marketcapMax: Number(value).toFixed(1),
+        }));
+      }
+    }
+    if (props.field === 'roe') {
+      if (pos === 'min') {
+        setChartFilter((prev) => ({
+          ...prev,
+          roeMin: Number(value).toFixed(1),
+        }));
+      } else {
+        setChartFilter((prev) => ({
+          ...prev,
+          roeMax: Number(value).toFixed(1),
+        }));
+      }
+    }
+    if (props.field === 'pi24') {
+      if (pos === 'min') {
+        setChartFilter((prev) => ({
+          ...prev,
+          pi24Min: Number(value).toFixed(1),
+        }));
+      } else {
+        setChartFilter((prev) => ({
+          ...prev,
+          pi24Max: Number(value).toFixed(1),
+        }));
+      }
+    }
+    if (props.field === 'pe') {
+      if (pos === 'min') {
+        setChartFilter((prev) => ({
+          ...prev,
+          peMin: Number(value).toFixed(1),
+        }));
+      } else {
+        setChartFilter((prev) => ({
+          ...prev,
+          peMax: Number(value).toFixed(1),
+        }));
+      }
+    }
+    if (props.field === 'pb') {
+      if (pos === 'min') {
+        setChartFilter((prev) => ({
+          ...prev,
+          pbMin: Number(value).toFixed(1),
+        }));
+      } else {
+        setChartFilter((prev) => ({
+          ...prev,
+          pbMax: Number(value).toFixed(1),
+        }));
+      }
+    }
+    if (props.field === 'evebitda') {
+      if (pos === 'min') {
+        setChartFilter((prev) => ({
+          ...prev,
+          evebitdaMin: Number(value).toFixed(1),
+        }));
+      } else {
+        setChartFilter((prev) => ({
+          ...prev,
+          evebitdaMax: Number(value).toFixed(1),
+        }));
+      }
+    }
+    if (props.field === 'divyld') {
+      if (pos === 'min') {
+        setChartFilter((prev) => ({
+          ...prev,
+          divyldMin: Number(value).toFixed(1),
+        }));
+      } else {
+        setChartFilter((prev) => ({
+          ...prev,
+          divyldMax: Number(value).toFixed(1),
+        }));
+      }
+    }
+    if (props.field === 'netcash') {
+      if (pos === 'min') {
+        setChartFilter((prev) => ({
+          ...prev,
+          netcashMin: Number(value).toFixed(1),
+        }));
+      } else {
+        setChartFilter((prev) => ({
+          ...prev,
+          netcashMax: Number(value).toFixed(1),
+        }));
+      }
+    }
+  };
+
   const handleChangeDay = (event) => {
     props.setDay(event.target.value);
   };
@@ -350,10 +492,10 @@ const FilterItem = (props) => {
 
   const handleChangeValue = (mm, e) => {
     if (mm === 'min') {
-      setValue([e.target.value, value[1]]);
+      setValue([e.target.value - 0, value[1]]);
     }
     if (mm === 'max') {
-      setValue([value[0], e.target.value]);
+      setValue([value[0], e.target.value - 0]);
     }
   };
 
@@ -384,13 +526,23 @@ const FilterItem = (props) => {
             </Select>
           </div>
         )}
-        <div className="flex min-w-20 max-w-32">
-          <TextField
+        <div className="flex min-w-20">
+          <NumberInput
+            slots={{
+              root: InputRoot,
+              input: InputElement,
+            }}
             disabled={!props.filterSelect}
             value={value[0]}
             onInput={(e) => handleChangeValue('min', e)}
             variant="outlined"
-            size="small"
+            style={{ '.base-NumberInput-input': { backgroundColor: 'transparent' } }}
+            blurOnSelect
+            onKeyDown={(e) => {
+              if (e.code === 'Enter') {
+                handleChangeEnter(e, 'min');
+              }
+            }}
           />
         </div>
         <Box sx={{ width: 360, display: 'flex', alignItems: 'center' }}>
@@ -404,13 +556,22 @@ const FilterItem = (props) => {
             onChangeCommitted={handleCommitSlider}
           />
         </Box>
-        <div className="flex min-w-20 max-w-32">
-          <TextField
+        <div className="flex min-w-20">
+          <NumberInput
+            slots={{
+              root: InputRoot,
+              input: InputElement,
+            }}
             disabled={!props.filterSelect}
             value={value[1]}
             onInput={(e) => handleChangeValue('max', e)}
             variant="outlined"
             size="small"
+            onKeyDown={(e) => {
+              if (e.code === 'Enter') {
+                handleChangeEnter(e, 'max');
+              }
+            }}
           />
         </div>
         {/* <Box sx={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>

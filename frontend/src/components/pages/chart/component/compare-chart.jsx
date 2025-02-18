@@ -1,5 +1,5 @@
 import Box from '@mui/material/Box';
-import { ChartsReferenceLine, ChartsTooltip, ChartsYAxis } from '@mui/x-charts';
+import { ChartsLegend, ChartsReferenceLine, ChartsTooltip, ChartsYAxis } from '@mui/x-charts';
 import { BarPlot } from '@mui/x-charts/BarChart';
 import { ChartsXAxis } from '@mui/x-charts/ChartsXAxis';
 import { ResponsiveChartContainer } from '@mui/x-charts/ResponsiveChartContainer';
@@ -54,6 +54,18 @@ export default function CompareChart(data) {
             }}
           />
         )}
+        <ChartsLegend
+          padding={{ bottom: 10, top: 10, left: 35, right: 35 }}
+          labelStyle={{ fontSize: 12 }}
+          slotProps={{
+            legend: {
+              itemMarkHeight: 10,
+              itemMarkWidth: 10,
+              markGap: 2,
+              itemGap: 8,
+            },
+          }}
+        />
         <ChartsReferenceLine y={0} lineStyle={{ strokeWidth: '1px !important' }} />
       </ResponsiveChartContainer>
     </Box>

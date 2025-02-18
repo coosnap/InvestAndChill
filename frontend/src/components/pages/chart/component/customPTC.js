@@ -16,6 +16,7 @@ export let customPerfPTC1 = {
       dataKey: 'loiNhuanCuaCoDongCongTyMe',
       yAxisId: 'leftAxis',
       color: '#8F9596',
+      opacity: '50',
       valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
@@ -38,8 +39,8 @@ export let customPerfPTC1 = {
     },
   ],
   yAxis: {
-    left: { type: 'bil', piecewise: false, showLineReference: true, divide: 2 },
-    right: { type: 'per', piecewise: true },
+    left: { type: 'bil', piecewise: true, showLineReference: true, divide: 2 },
+    right: { type: 'per', piecewise: true, opacity: 1 },
   },
 };
 export let customPerfPTC2 = {
@@ -219,12 +220,13 @@ export let customPerfPTC5 = {
       dataKey: 'associateTrailing',
       yAxisId: 'rightAxis',
       color: '#0D6B64',
+      opacity: '50',
       valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
   ],
   yAxis: {
     left: { type: 'bil', piecewise: false },
-    right: { type: 'bil', piecewise: false, showLineReference: true },
+    right: { type: 'bil', piecewise: false, showLineReference: true, opacity: 2 },
   },
 };
 export let customPerfPTC6 = {
@@ -276,8 +278,8 @@ export let customPerfPTC6 = {
     },
   ],
   yAxis: {
-    left: { type: 'bil', piecewise: false, showLineReference: true, transform: true },
-    right: { type: 'per', piecewise: false },
+    left: { type: 'bil', piecewise: false, showLineReference: true, transform: 2 },
+    right: { type: 'per', piecewise: false, opacity: 2 },
   },
 };
 export let customPerfPTC7 = {
