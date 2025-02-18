@@ -37,7 +37,10 @@ export const Filter = () => {
   useEffect(() => {
     (async () => {
       let tableList = await getFilterChart(chartFilter);
-      if (tableList.message === 'Data is empty') return;
+      if (tableList.message === 'Data is empty') {
+        setData((prev) => ({ ...prev, rows: [] }));
+        return;
+      }
       let temp = tableList.map((e) => ({ ...e, id: e.stockCode }));
       setData({
         columns: [
