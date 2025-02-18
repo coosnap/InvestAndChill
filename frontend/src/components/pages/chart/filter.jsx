@@ -37,26 +37,25 @@ export const Filter = () => {
   useEffect(() => {
     (async () => {
       let tableList = await getFilterChart(chartFilter);
-      if (tableList) {
-        let temp = tableList.map((e) => ({ ...e, id: e.stockCode }));
-        setData({
-          columns: [
-            { field: 'stockCode', headerName: 'Stoke Code' },
-            { field: 'pi791', headerName: '%Sales YoY', flex: 1 },
-            { field: 'pi792', headerName: '%Sales YoY TB 2 năm', flex: 1 },
-            { field: 'pi793', headerName: '%Sales YoY TB 3 năm', flex: 1 },
-            { field: 'marketcap', headerName: 'Vốn hóa' },
-            { field: 'roe', headerName: 'ROE' },
-            { field: 'roic', headerName: 'ROIC' },
-            { field: 'pe', headerName: 'PE' },
-            { field: 'pb', headerName: 'PB' },
-            { field: 'evebitda', headerName: 'EVEBITDA', flex: 1 },
-            { field: 'divyld', headerName: 'Dividend Yield', width: 150 },
-            { field: 'netcashmc', headerName: 'NetCash/Vốn hóa', flex: 1 },
-          ],
-          rows: temp,
-        });
-      }
+      if (tableList.message === 'Data is empty') return;
+      let temp = tableList.map((e) => ({ ...e, id: e.stockCode }));
+      setData({
+        columns: [
+          { field: 'stockCode', headerName: 'Stoke Code' },
+          { field: 'pi791', headerName: '%Sales YoY', flex: 1 },
+          { field: 'pi792', headerName: '%Sales YoY TB 2 năm', flex: 1 },
+          { field: 'pi793', headerName: '%Sales YoY TB 3 năm', flex: 1 },
+          { field: 'marketcap', headerName: 'Vốn hóa' },
+          { field: 'roe', headerName: 'ROE' },
+          { field: 'roic', headerName: 'ROIC' },
+          { field: 'pe', headerName: 'PE' },
+          { field: 'pb', headerName: 'PB' },
+          { field: 'evebitda', headerName: 'EVEBITDA', flex: 1 },
+          { field: 'divyld', headerName: 'Dividend Yield', width: 150 },
+          { field: 'netcashmc', headerName: 'NetCash/Vốn hóa', flex: 1 },
+        ],
+        rows: temp,
+      });
     })();
   }, [chartFilter]);
 

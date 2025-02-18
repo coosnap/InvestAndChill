@@ -536,8 +536,6 @@ const FilterItem = (props) => {
             value={value[0]}
             onInput={(e) => handleChangeValue('min', e)}
             variant="outlined"
-            style={{ '.base-NumberInput-input': { backgroundColor: 'transparent' } }}
-            blurOnSelect
             onKeyDown={(e) => {
               if (e.code === 'Enter') {
                 handleChangeEnter(e, 'min');
