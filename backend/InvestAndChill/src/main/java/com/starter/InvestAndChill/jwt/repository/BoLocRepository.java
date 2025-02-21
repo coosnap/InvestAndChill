@@ -39,8 +39,16 @@ public class BoLocRepository {
 		String sql = FilterCaculationUtils.buildQuerySoSanhChiSoChungKhoan(listChungKhoan);
 		Query query = entityManager.createNativeQuery(sql, "chungkhoan.sosanhchiso");
 		List<ChungKhoanSoSanhChiSoDTO> list = query.getResultList();
+		List<ChungKhoanSoSanhChiSoDTO> sortList = new ArrayList<ChungKhoanSoSanhChiSoDTO>();
+		for (int i=0; i< listChungKhoan.size();i++) {
+			for (int j=0;j<list.size();j++) {
+				if (list.get(j).getStockCode().equals(listChungKhoan.get(i))) {
+					sortList.add(list.get(j));
+				}
+			}
+		}
 		
-		return list;
+		return sortList;
 	}
 	
 	public List<NganHangSoSanhChiSoDTO> nganHangSoSanhChiSo(List<String> listNganHang) {
