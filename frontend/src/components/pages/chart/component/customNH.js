@@ -16,6 +16,7 @@ export let customNHPerf1 = {
       dataKey: 'coDongCuaCongTyMe',
       yAxisId: 'leftAxis',
       color: '#8F9596',
+      opacity: '50',
       valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
@@ -30,7 +31,7 @@ export let customNHPerf1 = {
   ],
   yAxis: {
     left: { type: 'bil', piecewise: false, divide: 2 },
-    right: { type: 'per', piecewise: true },
+    right: { type: 'per', piecewise: true, opacity: 1 },
   },
 };
 export let customNHPerf2 = {
