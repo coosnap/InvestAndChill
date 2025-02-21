@@ -31,11 +31,6 @@ import {
   customBalCK3,
   customBalCK4,
   customBalCK5,
-  customCompCK1,
-  customCompCK2,
-  customCompCK3,
-  customCompCK4,
-  customCompCK5,
   customOtherCK1,
   customPerfCK1,
   customPerfCK2,
@@ -97,9 +92,8 @@ import {
   customValPTC7,
   customValPTC8,
 } from './customPTC';
-import StackChart from './stack-chart';
+import Chart from './chart';
 
-import CompareBankChart from './compare-bank-chart';
 import CompareChart from './compare-chart';
 import './style.scss';
 
@@ -614,8 +608,8 @@ export const TabChart = () => {
           let other1;
           if (value === 0) {
             let callPerf1 = mapDataChart(customPerfCK1, type.type, {
-              categoryGapRatio: 0.3,
-              barGapRatio: 0,
+              categoryGapRatio: 0.2,
+              barGapRatio: -0.5,
             });
             let callPerf3 = mapDataChart(customPerfCK3, type.type, {
               categoryGapRatio: 0.3,
@@ -741,8 +735,8 @@ export const TabChart = () => {
           let val1, val2, val3, val4;
           if (value === 0) {
             let callPerf1 = mapDataChart(customNHPerf1, type.type, {
-              categoryGapRatio: 0.3,
-              barGapRatio: 0,
+              categoryGapRatio: 0.2,
+              barGapRatio: -0.5,
             });
             let callPerf2 = mapDataChart(customNHPerf2, type.type, {
               categoryGapRatio: 0.3,
@@ -1062,7 +1056,10 @@ export const TabChart = () => {
       setCheckedCK((prev) => ({ ...prev, chart: !prev.chart }));
       try {
         customPerfCK1.year = checkedCK.chart;
-        let newPerf1 = await mapDataChart(customPerfCK1, tabType);
+        let newPerf1 = await mapDataChart(customPerfCK1, tabType, {
+          categoryGapRatio: 0.2,
+          barGapRatio: -0.5,
+        });
         setDataChart((prev) => ({ ...prev, perf1: newPerf1 }));
         setCheckedCK((prev) => ({ ...prev, perf1: !checkedCK.chart }));
       } catch (error) {
@@ -1138,7 +1135,10 @@ export const TabChart = () => {
       setCheckedBank((prev) => ({ ...prev, chart: !prev.chart }));
       try {
         customNHPerf1.year = checkedBank.chart;
-        let newPerf = await mapDataChart(customNHPerf1, tabType);
+        let newPerf = await mapDataChart(customNHPerf1, tabType, {
+          categoryGapRatio: 0.2,
+          barGapRatio: -0.5,
+        });
         setDataChart((prev) => ({ ...prev, perf1: newPerf }));
         setCheckedBank((prev) => ({ ...prev, perf1: !prev.perf1 }));
       } catch (error) {
@@ -1239,8 +1239,52 @@ export const TabChart = () => {
   const handleToggle = async (typeChart) => {
     if (tabType === 'PTC') {
       if (typeChart === 'perf1') {
-        customPerfPTC1.year = checked.perf1;
-        let newPerf = await mapDataChart(customPerfPTC1, tabType, {
+        let perfPTC1 = {
+          type: 'perf1',
+          year: checked.perf1,
+          series: [
+            {
+              type: 'bar',
+              label: 'Doanh thu thuần',
+              dataKey: 'doanhSoThuan',
+              yAxisId: 'leftAxis',
+              color: '#C8D0D2',
+              valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
+            },
+            {
+              type: 'bar',
+              label: 'Lợi nhuận ròng',
+              dataKey: 'loiNhuanCuaCoDongCongTyMe',
+              yAxisId: 'leftAxis',
+              color: '#8F9596',
+              opacity: '50',
+              valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
+            },
+            {
+              type: 'line',
+              label: ' Biên lợi nhuận gộp',
+              dataKey: 'bienLaiGop',
+              curve: 'linear',
+              yAxisId: 'rightAxis',
+              color: '#CC8C32',
+              valueFormatter: (v) => (!v ? '' : v + ' %'),
+            },
+            {
+              type: 'line',
+              label: 'Biên lợi nhuận ròng',
+              dataKey: 'bienLaiRong',
+              curve: 'linear',
+              yAxisId: 'rightAxis',
+              color: '#0D6B64',
+              valueFormatter: (v) => (!v ? '' : v + ' %'),
+            },
+          ],
+          yAxis: {
+            left: { type: 'bil', piecewise: true, showLineReference: true, divide: 2 },
+            right: { type: 'per', piecewise: true, opacity: 1 },
+          },
+        };
+        let newPerf = await mapDataChart(perfPTC1, tabType, {
           categoryGapRatio: 0.2,
           barGapRatio: -0.5,
         });
@@ -1886,10 +1930,54 @@ export const TabChart = () => {
     }
     if (tabType === 'ChungKhoan') {
       if (typeChart === 'perf1') {
-        customPerfCK1.year = checkedCK.perf1;
-        let newPerf = await mapDataChart(customPerfCK1, tabType, {
-          categoryGapRatio: 0.3,
-          barGapRatio: 0,
+        let perfCK1 = {
+          type: 'perf1',
+          year: checkedCK.perf1 == true ? true : false,
+          series: [
+            {
+              type: 'bar',
+              label: 'Doanh thu thuần',
+              dataKey: 'doanhSoThuan',
+              yAxisId: 'leftAxis',
+              color: '#C8D0D2',
+              valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
+            },
+            {
+              type: 'bar',
+              label: 'Lợi nhuận ròng',
+              dataKey: 'loiNhuanCuaCoDongCongTyMe',
+              yAxisId: 'leftAxis',
+              color: '#8F9596',
+              opacity: '50',
+              valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
+            },
+            {
+              type: 'line',
+              label: 'Biên lãi gộp',
+              dataKey: 'bienLaiGop',
+              curve: 'linear',
+              yAxisId: 'rightAxis',
+              color: '#CC8C32',
+              valueFormatter: (v) => (!v ? '' : v + ' %'),
+            },
+            {
+              type: 'line',
+              label: 'Biên lãi ròng',
+              dataKey: 'bienLaiRong',
+              curve: 'linear',
+              yAxisId: 'rightAxis',
+              color: '#0D6B64',
+              valueFormatter: (v) => (!v ? '' : v + ' %'),
+            },
+          ],
+          yAxis: {
+            left: { type: 'bil', piecewise: true, divide: 2 },
+            right: { type: 'per', piecewise: false, opacity: 1 },
+          },
+        };
+        let newPerf = await mapDataChart(perfCK1, tabType, {
+          categoryGapRatio: 0.2,
+          barGapRatio: -0.5,
         });
         setDataChart((prev) => ({ ...prev, perf1: newPerf }));
         setCheckedCK((prev) => ({ ...prev, perf1: !prev.perf1 }));
@@ -2608,10 +2696,45 @@ export const TabChart = () => {
     }
     if (tabType === 'NganHang') {
       if (typeChart === 'perf1') {
-        customNHPerf1.year = checkedBank.perf1;
-        let newPerf = await mapDataChart(customNHPerf1, tabType, {
-          categoryGapRatio: 0.3,
-          barGapRatio: 0,
+        let NHPerf1 = {
+          type: 'perf1',
+          year: checkedBank.perf1 == true ? true : false,
+          series: [
+            {
+              type: 'bar',
+              label: 'Tổng thu nhập hoạt động',
+              dataKey: 'tongThuNhapHoatDong',
+              yAxisId: 'leftAxis',
+              color: '#C8D0D2',
+              valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
+            },
+            {
+              type: 'bar',
+              label: 'Lợi nhuận ròng',
+              dataKey: 'coDongCuaCongTyMe',
+              yAxisId: 'leftAxis',
+              color: '#8F9596',
+              opacity: '50',
+              valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
+            },
+            {
+              type: 'line',
+              label: 'Biên lãi ròng',
+              dataKey: 'bienLaiRong',
+              curve: 'linear',
+              yAxisId: 'rightAxis',
+              color: '#0D6B64',
+              valueFormatter: (v) => (!v ? '' : v + ' %'),
+            },
+          ],
+          yAxis: {
+            left: { type: 'bil', piecewise: false, divide: 2 },
+            right: { type: 'per', piecewise: true, opacity: 1 },
+          },
+        };
+        let newPerf = await mapDataChart(NHPerf1, tabType, {
+          categoryGapRatio: 0.2,
+          barGapRatio: -0.5,
         });
         setDataChart((prev) => ({ ...prev, perf1: newPerf }));
         setCheckedBank((prev) => ({ ...prev, perf1: !prev.perf1 }));
@@ -3601,7 +3724,7 @@ export const TabChart = () => {
                 <FormControlLabel
                   checked={!checkedAdjust}
                   onChange={() => handleToggle(addjust)}
-                  control={<IOSSwitchAdjust sx={{ m: 1 }} defaultChecked disableRipple />}
+                  control={<IOSSwitchAdjust sx={{ m: 1 }} disableRipple />}
                 />
               </Stack>
             )}
@@ -3610,12 +3733,12 @@ export const TabChart = () => {
                 <FormControlLabel
                   checked={!checked}
                   onChange={() => handleToggle(type)}
-                  control={<IOSSwitch sx={{ m: 1 }} defaultChecked disableRipple />}
+                  control={<IOSSwitch sx={{ m: 1 }} disableRipple />}
                 />
               </Stack>
             )}
           </div>
-          {dataChart && <StackChart data={dataChart} />}
+          {dataChart && <Chart data={dataChart} />}
         </div>
       )
     );
@@ -3648,42 +3771,84 @@ export const TabChart = () => {
     },
   };
 
-  const getTooltipValue = (data) => {
-    return Object.keys(data).filter((e) => e !== 'code');
-  };
-
   const handleClickGetDataChart = async () => {
     if (tabType === 'ChungKhoan') {
       let comp1, comp2, comp3, comp4, comp5;
       let listStoke = listItem.map((e) => e.title);
-      let callComp1 = getDataChartStockCompare(listStoke, 'ci6');
-      let callComp2 = getDataChartStockCompare(listStoke, 'ci7');
-      let callComp3 = getDataChartStockCompare(listStoke, 'cb142');
-      let callComp4 = getDataChartStockCompare(listStoke, 'cf158');
-      let callComp5 = getDataChartStockCompare(listStoke, 'cb205');
+      let callComp1 = getDataChartStockCompare(listStoke, 'comp1');
+      let callComp2 = getDataChartStockCompare(listStoke, 'comp2');
+      let callComp3 = getDataChartStockCompare(listStoke, 'comp3');
+      let callComp4 = getDataChartStockCompare(listStoke, 'comp4');
+      let callComp5 = getDataChartStockCompare(listStoke, 'comp5');
 
       Promise.all([callComp1, callComp2, callComp3, callComp4, callComp5])
         .then((values) => {
-          let tooltipValue = getTooltipValue(values[0][0].mapValue);
           comp1 = values[0];
           comp2 = values[1];
           comp3 = values[2];
           comp4 = values[3];
-          comp5 = values[3];
-          // console.log('customCompCK1', {
-          //   ...customCompCK1,
-          //   series: customCompCK1.series.map((e, index) => ({
-          //     ...customCompCK1.series[index],
-          //     dataKey: tooltipValue[index],
-          //   })),
-          // });
+          comp5 = values[4];
           setDataChart({
-            ttValue: tooltipValue,
-            comp1: comp1.map((e) => ({ code: e.stockCode, ...e.mapValue })),
-            comp2: comp2.map((e) => ({ code: e.stockCode, ...e.mapValue })),
-            comp3: comp3.map((e) => ({ code: e.stockCode, ...e.mapValue })),
-            comp4: comp4.map((e) => ({ code: e.stockCode, ...e.mapValue })),
-            comp5: comp5.map((e) => ({ code: e.stockCode, ...e.mapValue })),
+            comp1: {
+              ...comp1,
+              series: [
+                {
+                  type: 'bar',
+                  data: comp1.ci6 || [],
+                  yAxisId: 'leftAxis',
+                  label: 'ROE',
+                  valueFormatter: (v) => (!v ? '' : v + ' %'),
+                },
+              ],
+            },
+            comp2: {
+              ...comp2,
+              series: [
+                {
+                  type: 'bar',
+                  data: comp2.ci7 || [],
+                  yAxisId: 'leftAxis',
+                  label: 'ROA',
+                  valueFormatter: (v) => (!v ? '' : v + ' %'),
+                },
+              ],
+            },
+            comp3: {
+              ...comp3,
+              series: [
+                {
+                  type: 'bar',
+                  data: comp3.cb142 || [],
+                  yAxisId: 'leftAxis',
+                  label: 'Vốn chủ sở hữu',
+                  valueFormatter: (v) => (!v ? '' : v + ' tỷ đồng'),
+                },
+              ],
+            },
+            comp4: {
+              ...comp4,
+              series: [
+                {
+                  type: 'bar',
+                  data: comp4.cf159 || [],
+                  yAxisId: 'leftAxis',
+                  label: 'Cho vay ký quỹ',
+                  valueFormatter: (v) => (!v ? '' : v + ' tỷ đồng'),
+                },
+              ],
+            },
+            comp5: {
+              ...comp5,
+              series: [
+                {
+                  type: 'bar',
+                  data: comp5.cb205 || [],
+                  yAxisId: 'leftAxis',
+                  label: 'Tiền gửi của khách hàng',
+                  valueFormatter: (v) => (!v ? '' : v + ' tỷ đồng'),
+                },
+              ],
+            },
             listStoke,
           });
         })
@@ -3964,21 +4129,21 @@ export const TabChart = () => {
               <FormControlLabel
                 checked={!checked.chart}
                 onChange={() => handleToggleSum()}
-                control={<IOSSwitchSum sx={{ m: 1 }} defaultChecked disableRipple />}
+                control={<IOSSwitchSum sx={{ m: 1 }} disableRipple />}
               />
             )}
             {tabType === 'ChungKhoan' && (
               <FormControlLabel
                 checked={!checkedCK.chart}
                 onChange={() => handleToggleSum()}
-                control={<IOSSwitchSum sx={{ m: 1 }} defaultChecked disableRipple />}
+                control={<IOSSwitchSum sx={{ m: 1 }} disableRipple />}
               />
             )}
             {tabType === 'NganHang' && (
               <FormControlLabel
                 checked={!checkedBank.chart}
                 onChange={() => handleToggleSum()}
-                control={<IOSSwitchSum sx={{ m: 1 }} defaultChecked disableRipple />}
+                control={<IOSSwitchSum sx={{ m: 1 }} disableRipple />}
               />
             )}
           </Stack>
@@ -4238,7 +4403,7 @@ export const TabChart = () => {
                             </span>
                           </div>
                         </div>
-                        <CompareChart data={dataChart.comp1} series={customCompCK1} />
+                        <CompareChart data={dataChart.comp1} type={'ChungKhoan'} />
                       </>
                     )}
                   </div>
@@ -4252,7 +4417,7 @@ export const TabChart = () => {
                             </span>
                           </div>
                         </div>
-                        <CompareChart data={dataChart.comp2} series={customCompCK2} />
+                        <CompareChart data={dataChart.comp2} type={'ChungKhoan'} />
                       </>
                     )}
                   </div>
@@ -4268,7 +4433,7 @@ export const TabChart = () => {
                             </span>
                           </div>
                         </div>
-                        <CompareChart data={dataChart.comp3} series={customCompCK3} />
+                        <CompareChart data={dataChart.comp3} type={'ChungKhoan'} />
                       </>
                     )}
                   </div>
@@ -4282,7 +4447,7 @@ export const TabChart = () => {
                             </span>
                           </div>
                         </div>
-                        <CompareChart data={dataChart.comp4} series={customCompCK4} />
+                        <CompareChart data={dataChart.comp4} type={'ChungKhoan'} />
                       </>
                     )}
                   </div>
@@ -4298,7 +4463,7 @@ export const TabChart = () => {
                             </span>
                           </div>
                         </div>
-                        <CompareChart data={dataChart.comp5} series={customCompCK5} />
+                        <CompareChart data={dataChart.comp5} type={'ChungKhoan'} />
                       </>
                     )}
                   </div>
@@ -4487,7 +4652,7 @@ export const TabChart = () => {
                             </span>
                           </div>
                         </div>
-                        <CompareBankChart data={dataChart.comp1} />
+                        <CompareChart data={dataChart.comp1} type={'NganHang'} />
                       </>
                     )}
                   </div>
@@ -4502,7 +4667,7 @@ export const TabChart = () => {
                             </span>
                           </div>
                         </div>
-                        <CompareBankChart data={dataChart.comp2} />
+                        <CompareChart data={dataChart.comp2} type={'NganHang'} />
                       </>
                     )}
                   </div>
@@ -4518,7 +4683,7 @@ export const TabChart = () => {
                             </span>
                           </div>
                         </div>
-                        <CompareBankChart data={dataChart.comp3} />
+                        <CompareChart data={dataChart.comp3} type={'NganHang'} />
                       </>
                     )}
                   </div>
@@ -4532,7 +4697,7 @@ export const TabChart = () => {
                             </span>
                           </div>
                         </div>
-                        <CompareBankChart data={dataChart.comp4} />
+                        <CompareChart data={dataChart.comp4} type={'NganHang'} />
                       </>
                     )}
                   </div>
@@ -4548,7 +4713,7 @@ export const TabChart = () => {
                             </span>
                           </div>
                         </div>
-                        <CompareBankChart data={dataChart.comp5} />
+                        <CompareChart data={dataChart.comp5} type={'NganHang'} />
                       </>
                     )}
                   </div>
@@ -4562,7 +4727,7 @@ export const TabChart = () => {
                             </span>
                           </div>
                         </div>
-                        <CompareBankChart data={dataChart.comp6} />
+                        <CompareChart data={dataChart.comp6} type={'NganHang'} />
                       </>
                     )}
                   </div>
@@ -4578,7 +4743,7 @@ export const TabChart = () => {
                             </span>
                           </div>
                         </div>
-                        <CompareBankChart data={dataChart.comp7} />
+                        <CompareChart data={dataChart.comp7} type={'NganHang'} />
                       </>
                     )}
                   </div>
@@ -4592,7 +4757,7 @@ export const TabChart = () => {
                             </span>
                           </div>
                         </div>
-                        <CompareBankChart data={dataChart.comp8} />
+                        <CompareChart data={dataChart.comp8} type={'NganHang'} />
                       </>
                     )}
                   </div>
@@ -4608,7 +4773,7 @@ export const TabChart = () => {
                             </span>
                           </div>
                         </div>
-                        <CompareBankChart data={dataChart.comp9} />
+                        <CompareChart data={dataChart.comp9} type={'NganHang'} />
                       </>
                     )}
                   </div>
@@ -4623,7 +4788,7 @@ export const TabChart = () => {
                             </span>
                           </div>
                         </div>
-                        <CompareBankChart data={dataChart.comp10} />
+                        <CompareChart data={dataChart.comp10} type={'NganHang'} />
                       </>
                     )}
                   </div>

@@ -16,6 +16,7 @@ export let customPerfCK1 = {
       dataKey: 'loiNhuanCuaCoDongCongTyMe',
       yAxisId: 'leftAxis',
       color: '#8F9596',
+      opacity: '50',
       valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
     },
     {
@@ -39,7 +40,7 @@ export let customPerfCK1 = {
   ],
   yAxis: {
     left: { type: 'bil', piecewise: true, divide: 2 },
-    right: { type: 'per', piecewise: false },
+    right: { type: 'per', piecewise: false, opacity: 1 },
   },
 };
 export let customPerfCK2 = {
@@ -661,202 +662,6 @@ export let customOtherCK1 = {
   ],
   yAxis: {
     left: { type: 'bil', piecewise: false },
-    right: { type: 'bil', piecewise: false },
-  },
-};
-
-export let customCompCK1 = {
-  type: 'ci6',
-  series: [
-    {
-      type: 'bar',
-      dataKey: '4 - 2023',
-      label: '4 - 2023',
-      valueFormatter: (v) => (!v ? '' : v + ' %'),
-    },
-    {
-      type: 'bar',
-      dataKey: '1 - 2024',
-      label: '1 - 2024',
-      valueFormatter: (v) => (!v ? '' : v + ' %'),
-    },
-    {
-      type: 'bar',
-      dataKey: '2 - 2024',
-      label: '2 - 2024',
-      valueFormatter: (v) => (!v ? '' : v + ' %'),
-    },
-    {
-      type: 'bar',
-      dataKey: '3 - 2024',
-      label: '3 - 2024',
-      valueFormatter: (v) => (!v ? '' : v + ' %'),
-    },
-    {
-      type: 'bar',
-      dataKey: '4 - 2024',
-      label: '4 - 2024',
-      valueFormatter: (v) => (!v ? '' : v + ' %'),
-    },
-  ],
-  yAxis: {
-    left: { type: 'per', piecewise: false, showLineReference: true },
-    right: { type: 'bil', piecewise: false },
-  },
-};
-export let customCompCK2 = {
-  type: 'ci7',
-  series: [
-    {
-      type: 'bar',
-      dataKey: '4 - 2023',
-      label: '4 - 2023',
-      valueFormatter: (v) => (!v ? '' : v + ' %'),
-    },
-    {
-      type: 'bar',
-      dataKey: '1 - 2024',
-      label: '1 - 2024',
-      valueFormatter: (v) => (!v ? '' : v + ' %'),
-    },
-    {
-      type: 'bar',
-      dataKey: '2 - 2024',
-      label: '2 - 2024',
-      valueFormatter: (v) => (!v ? '' : v + ' %'),
-    },
-    {
-      type: 'bar',
-      dataKey: '3 - 2024',
-      label: '3 - 2024',
-      valueFormatter: (v) => (!v ? '' : v + ' %'),
-    },
-    {
-      type: 'bar',
-      dataKey: '4 - 2024',
-      label: '4 - 2024',
-      valueFormatter: (v) => (!v ? '' : v + ' %'),
-    },
-  ],
-  yAxis: {
-    left: { type: 'per', piecewise: false, showLineReference: true },
-    right: { type: 'bil', piecewise: false },
-  },
-};
-export let customCompCK3 = {
-  type: 'cb142',
-  series: [
-    {
-      type: 'bar',
-      dataKey: '4 - 2023',
-      label: '4 - 2023',
-      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
-    },
-    {
-      type: 'bar',
-      dataKey: '1 - 2024',
-      label: '1 - 2024',
-      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
-    },
-    {
-      type: 'bar',
-      dataKey: '2 - 2024',
-      label: '2 - 2024',
-      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
-    },
-    {
-      type: 'bar',
-      dataKey: '3 - 2024',
-      label: '3 - 2024',
-      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
-    },
-    {
-      type: 'bar',
-      dataKey: '4 - 2024',
-      label: '4 - 2024',
-      valueFormatter: (v) => (!v ? '' : v + ' %'),
-    },
-  ],
-  yAxis: {
-    left: { type: 'bil', piecewise: false, showLineReference: true },
-    right: { type: 'bil', piecewise: false },
-  },
-};
-export let customCompCK4 = {
-  type: 'cf158',
-  series: [
-    {
-      type: 'bar',
-      dataKey: '4 - 2023',
-      label: '4 - 2023',
-      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
-    },
-    {
-      type: 'bar',
-      dataKey: '1 - 2024',
-      label: '1 - 2024',
-      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
-    },
-    {
-      type: 'bar',
-      dataKey: '2 - 2024',
-      label: '2 - 2024',
-      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
-    },
-    {
-      type: 'bar',
-      dataKey: '3 - 2024',
-      label: '3 - 2024',
-      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
-    },
-    {
-      type: 'bar',
-      dataKey: '4 - 2024',
-      label: '4 - 2024',
-      valueFormatter: (v) => (!v ? '' : v + ' %'),
-    },
-  ],
-  yAxis: {
-    left: { type: 'bil', piecewise: false, showLineReference: true },
-    right: { type: 'bil', piecewise: false },
-  },
-};
-export let customCompCK5 = {
-  type: 'cb205',
-  series: [
-    {
-      type: 'bar',
-      dataKey: '4 - 2023',
-      label: '4 - 2023',
-      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
-    },
-    {
-      type: 'bar',
-      dataKey: '1 - 2024',
-      label: '1 - 2024',
-      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
-    },
-    {
-      type: 'bar',
-      dataKey: '2 - 2024',
-      label: '2 - 2024',
-      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
-    },
-    {
-      type: 'bar',
-      dataKey: '3 - 2024',
-      label: '3 - 2024',
-      valueFormatter: (v) => (!v ? '' : v.toLocaleString() + ' tỷ đồng'),
-    },
-    {
-      type: 'bar',
-      dataKey: '4 - 2024',
-      label: '4 - 2024',
-      valueFormatter: (v) => (!v ? '' : v + ' %'),
-    },
-  ],
-  yAxis: {
-    left: { type: 'bil', piecewise: false, showLineReference: true },
     right: { type: 'bil', piecewise: false },
   },
 };
