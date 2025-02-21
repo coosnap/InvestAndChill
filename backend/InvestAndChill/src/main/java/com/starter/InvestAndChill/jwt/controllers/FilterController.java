@@ -20,6 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.starter.InvestAndChill.jwt.models.ReportKey;
 import com.starter.InvestAndChill.jwt.payload.response.MessageResponse;
 import com.starter.InvestAndChill.jwt.payload.response.filter.BoLocResponse;
+import com.starter.InvestAndChill.jwt.payload.response.filter.ChungKhoanSoSanhChiSo1Response;
+import com.starter.InvestAndChill.jwt.payload.response.filter.ChungKhoanSoSanhChiSo2Response;
+import com.starter.InvestAndChill.jwt.payload.response.filter.ChungKhoanSoSanhChiSo3Response;
+import com.starter.InvestAndChill.jwt.payload.response.filter.ChungKhoanSoSanhChiSo4Response;
+import com.starter.InvestAndChill.jwt.payload.response.filter.ChungKhoanSoSanhChiSo5Response;
 import com.starter.InvestAndChill.jwt.payload.response.filter.ChungKhoanSoSanhChiSoResponse;
 import com.starter.InvestAndChill.jwt.payload.response.filter.GiaTangCongSuatResponse;
 import com.starter.InvestAndChill.jwt.payload.response.filter.KhaiThacDuoiCongSuatResponse;
@@ -252,7 +257,7 @@ public class FilterController {
 		for (int i=0;i< listfilter.size();i++) {
 			FilterKhaiThacDuoiCongSuatDTO report = listfilter.get(i);
 			KhaiThacDuoiCongSuatResponse response = new KhaiThacDuoiCongSuatResponse();
-			response.setId(new ReportKey(report.getStockCode(),report.getQuarter(),report.getYear()));	
+			response.setId(new ReportKey(report.getStockCode(),currentQuarter,currentYear));	
 			response.setDivyld(RoundNumber.lamTron(report.getDivyld()));
 			response.setEvebitda(RoundNumber.lamTronLan(report.getEvebitda()));
 			response.setMarketcap(RoundNumber.lamTron(report.getMarketcap()));
@@ -343,49 +348,88 @@ public class FilterController {
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 	
+	
 	@PostMapping("/chungkhoan/sosanhchiso")
 	public ResponseEntity<?> chungKhoanSoSanhChiSo(@RequestBody List<String> stringList, @RequestParam(required = false,name = "chart") String chart){
 		List<ChungKhoanSoSanhChiSoDTO> listCkSoSanhChiSoDTO = new ArrayList<ChungKhoanSoSanhChiSoDTO>();
 		listCkSoSanhChiSoDTO = boLocRepository.chungKhoanSoSanhChiSo(stringList);
 		
-		List<ChungKhoanSoSanhChiSoResponse> list = new ArrayList<ChungKhoanSoSanhChiSoResponse>();
+		int arrayLength = stringList.size()*5 + (stringList.size()-1);
+		String[] arrayChungKhoan = new String[arrayLength];
+		Double[] arrayValueci6 = new Double[arrayLength];
+		Double[] arrayValueci7 = new Double[arrayLength];
+		Double[] arrayValuecb142 = new Double[arrayLength];
+		Double[] arrayValuecf159 = new Double[arrayLength];
+		Double[] arrayValuecb205 = new Double[arrayLength];
 		
-		for (int i=0;i< stringList.size();i++) {
-			ChungKhoanSoSanhChiSoResponse response = new ChungKhoanSoSanhChiSoResponse();
-			String stock = stringList.get(i);
-			response.setStockCode(stock);
+		int n = 0; // chay cheo mang array
+		int k = 1; // chay theo chi so dola
+		int m = 1; // chay theo chi so arrayBank vd ACB1, ACB2
+		for (int j=0 ; j< listCkSoSanhChiSoDTO.size();j++) {
 			
-			Map<String, Double> map = new LinkedHashMap<>();
-			
-			for (int j=0 ; j< listCkSoSanhChiSoDTO.size();j++) {
-				if (stock.equals(listCkSoSanhChiSoDTO.get(j).getStockCode())) {
-					Double value=null;
-					String time ="";
-					if ("ci6".equals(chart)) {
-						value = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getCi6());
-					} else if ("ci7".equals(chart)) {
-						value = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getCi7());
-					} else if ("cb142".equals(chart)) {
-						value = RoundNumber.lamTron(listCkSoSanhChiSoDTO.get(j).getCb142());
-					} else if ("cf158".equals(chart)) {
-						value = RoundNumber.lamTron(listCkSoSanhChiSoDTO.get(j).getCf158());
-					} else if ("cb205".equals(chart)) {
-						value = RoundNumber.lamTron(listCkSoSanhChiSoDTO.get(j).getCb205());
-					}
-					
-					
-					time = listCkSoSanhChiSoDTO.get(j).getQuarter() + " - " + listCkSoSanhChiSoDTO.get(j).getYear();
-					map.put(time, value);
-				}
+			if ((j>0) && (!listCkSoSanhChiSoDTO.get(j).getStockCode().equals(listCkSoSanhChiSoDTO.get(j-1).getStockCode()))) {
+				arrayChungKhoan[n] = "$" + k;
+				k++;
+				arrayValueci6[n] = null;
+				arrayValueci7[n] = null;
+				arrayValuecb142[n] = null;
+				arrayValuecf159[n] = null;
+				arrayValuecb205[n] = null;
+				n++;
+				m =1;
+				arrayChungKhoan[n] = listCkSoSanhChiSoDTO.get(j).getStockCode() + "- Q" + listCkSoSanhChiSoDTO.get(j).getQuarter() + " - " + listCkSoSanhChiSoDTO.get(j).getYear();				
+				arrayValueci6[n] =  RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getCi6());
+				arrayValueci7[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getCi7());
+				arrayValuecb142[n] = RoundNumber.lamTron(listCkSoSanhChiSoDTO.get(j).getCb142());
+				arrayValuecf159[n] = RoundNumber.lamTron(listCkSoSanhChiSoDTO.get(j).getCf159());
+				arrayValuecb205[n] = RoundNumber.lamTron(listCkSoSanhChiSoDTO.get(j).getCb205());
+				
+			} else {
+				arrayChungKhoan[n] = listCkSoSanhChiSoDTO.get(j).getStockCode() + "- Q" + listCkSoSanhChiSoDTO.get(j).getQuarter() + " - " + listCkSoSanhChiSoDTO.get(j).getYear();		
+				arrayValueci6[n] =  RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getCi6());
+				arrayValueci7[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getCi7());
+				arrayValuecb142[n] = RoundNumber.lamTron(listCkSoSanhChiSoDTO.get(j).getCb142());
+				arrayValuecf159[n] = RoundNumber.lamTron(listCkSoSanhChiSoDTO.get(j).getCf159());
+				arrayValuecb205[n] = RoundNumber.lamTron(listCkSoSanhChiSoDTO.get(j).getCb205());
 			}
-			response.setMapValue(map);
-			list.add(response);
+				
+			
+			n++;
+			m++;
+		}
+		
+		if ("comp1".equals(chart)) {
+			ChungKhoanSoSanhChiSo1Response response = new ChungKhoanSoSanhChiSo1Response(); 
+			response.setArrayChungKhoan(arrayChungKhoan);
+			response.setCi6(arrayValueci6);
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		} else if ("comp2".equals(chart)) {
+			ChungKhoanSoSanhChiSo2Response response = new ChungKhoanSoSanhChiSo2Response(); 
+			response.setArrayChungKhoan(arrayChungKhoan);
+			response.setCi7(arrayValueci7);
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		} else if ("comp3".equals(chart)) {
+			ChungKhoanSoSanhChiSo3Response response = new ChungKhoanSoSanhChiSo3Response(); 
+			response.setArrayChungKhoan(arrayChungKhoan);
+			response.setCb142(arrayValuecb142);
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		} else if ("comp4".equals(chart)) {
+			ChungKhoanSoSanhChiSo4Response response = new ChungKhoanSoSanhChiSo4Response(); 
+			response.setArrayChungKhoan(arrayChungKhoan);
+			response.setCf159(arrayValuecf159);
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		} else if ("comp5".equals(chart)) {
+			ChungKhoanSoSanhChiSo5Response response = new ChungKhoanSoSanhChiSo5Response(); 
+			response.setArrayChungKhoan(arrayChungKhoan);
+			response.setCb205(arrayValuecb205);
+			return new ResponseEntity<>(response, HttpStatus.OK);
 		}
 		
 		
+		return new ResponseEntity<>("Vui long nhap chart name", HttpStatus.OK);
 		
 		
-		return new ResponseEntity<>(list, HttpStatus.OK);
+		
 	}
 	
 	@GetMapping("/nganhang/list")
@@ -446,7 +490,8 @@ public class FilterController {
 				arrayValuebi25[n] = null;
 				n++;
 				m =1;
-				arrayBank[n] = listCkSoSanhChiSoDTO.get(j).getStockCode() + m;
+				//arrayBank[n] = listCkSoSanhChiSoDTO.get(j).getStockCode() + m;
+				arrayBank[n] = listCkSoSanhChiSoDTO.get(j).getStockCode() + "- Q" + listCkSoSanhChiSoDTO.get(j).getQuarter() + " - " + listCkSoSanhChiSoDTO.get(j).getYear();				
 				arrayValuebi7[n] =  RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getBi7());
 				arrayValuebi8[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getBi8());
 				arrayValuebi9[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getBi9());
@@ -463,7 +508,8 @@ public class FilterController {
 				arrayValuebi27[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getBi27());
 				arrayValuebi25[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getBi25());
 			} else {
-				arrayBank[n] = listCkSoSanhChiSoDTO.get(j).getStockCode() + m;
+				//arrayBank[n] = listCkSoSanhChiSoDTO.get(j).getStockCode() + m;
+				arrayBank[n] = listCkSoSanhChiSoDTO.get(j).getStockCode() + "- Q" + listCkSoSanhChiSoDTO.get(j).getQuarter() + " - " + listCkSoSanhChiSoDTO.get(j).getYear();		
 				arrayValuebi7[n] =  RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getBi7());
 				arrayValuebi8[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getBi8());
 				arrayValuebi9[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getBi9());

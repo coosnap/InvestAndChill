@@ -275,7 +275,7 @@ import com.starter.InvestAndChill.pojo.NganHangSoSanhChiSoDTO;
 	            @ColumnResult(name = "c_i_6", type = Double.class),	            
 	            @ColumnResult(name = "c_i_7", type = Double.class),
 	            @ColumnResult(name = "c_b_142", type = Double.class),
-	            @ColumnResult(name = "c_f_158", type = Double.class),
+	            @ColumnResult(name = "c_f_159", type = Double.class),
 	            @ColumnResult(name = "c_b_205", type = Double.class)
 	        }
 	    )

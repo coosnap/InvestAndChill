@@ -181,7 +181,7 @@ public class FilterCaculationUtils {
 		Map<Integer, Integer> map4 = FilterCaculationUtils.tinhQuyGanNhat(Constants.currentYear, Constants.currentQuarter, 4);
 		Map.Entry<Integer, Integer> firstEntry4 = map4.entrySet().iterator().next();
 		
-		StringBuilder sql = new StringBuilder("SELECT stock_code, quarter, year, c_i_6, c_i_7, c_b_142, c_f_158, c_b_205\r\n"
+		StringBuilder sql = new StringBuilder("SELECT stock_code, quarter, year, c_i_6, c_i_7, c_b_142, c_f_159, c_b_205\r\n"
 				+ "FROM chung_khoan_report\r\n"
 				+ "WHERE ("+listckStr+")\r\n"
 				+ "	and ( (year ='"+ Constants.currentYear +"' and quarter ='"+Constants.currentQuarter+"') or (year ='"+ firstEntry1.getKey().toString() +"' and quarter ='"+firstEntry1.getValue().toString()+"') or\r\n"

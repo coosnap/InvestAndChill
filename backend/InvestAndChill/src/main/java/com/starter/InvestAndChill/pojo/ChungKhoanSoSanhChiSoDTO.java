@@ -8,7 +8,7 @@ public class ChungKhoanSoSanhChiSoDTO {
 	private Double ci6;
 	private Double ci7;
 	private Double cb142;
-	private Double cf158;
+	private Double cf159;
 	private Double cb205;
 	
 	
@@ -22,7 +22,7 @@ public class ChungKhoanSoSanhChiSoDTO {
 		this.ci6 = ci6;
 		this.ci7 = ci7;
 		this.cb142 = cb142;
-		this.cf158 = cf158;
+		this.cf159 = cf158;
 		this.cb205 = cb205;
 	}
 	public String getStockCode() {
@@ -61,11 +61,11 @@ public class ChungKhoanSoSanhChiSoDTO {
 	public void setCb142(Double cb142) {
 		this.cb142 = cb142;
 	}
-	public Double getCf158() {
-		return cf158;
+	public Double getCf159() {
+		return cf159;
 	}
-	public void setCf158(Double cf158) {
-		this.cf158 = cf158;
+	public void setCf159(Double cf159) {
+		this.cf159 = cf159;
 	}
 	public Double getCb205() {
 		return cb205;
