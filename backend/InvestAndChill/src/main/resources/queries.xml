@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<queries>
+    <query id="giaTangCongSuat">
+			WITH RankedData AS (
+				SELECT stock_code, quarter, year, date, marketcap,pe,pb,evebitda,divyld,
+					ROW_NUMBER() OVER (PARTITION BY stock_code ORDER BY date DESC) AS rn
+				FROM valuation
+				WHERE quarter = :quarter AND year = :year
+				)
+			SELECT RankedData.stock_code, RankedData.quarter, RankedData.year, ptcr.p_i_6 as roe,marketcap,pe,pb,evebitda,divyld,ptcr.p_i_77, p_i_78
+			FROM RankedData
+			INNER JOIN phi_tai_chinh_report ptcr
+			on ptcr.stock_code = RankedData.stock_code
+			and ptcr.quarter = RankedData.quarter
+			and ptcr.year = RankedData.year
+			WHERE rn = 1 AND p_i_77 > 0.05 AND p_i_78 > 0.05
+    </query>
+    <query id="theoDoiPreSales">
+			WITH RankedData AS (
+				SELECT stock_code, quarter, year, date, marketcap,pe,pb,evebitda,divyld,
+					ROW_NUMBER() OVER (PARTITION BY stock_code ORDER BY date DESC) AS rn
+				FROM valuation
+				WHERE quarter = :quarter AND year = :year
+				)
+			SELECT RankedData.stock_code, RankedData.quarter, RankedData.year, ptcr.p_i_6 as roe, marketcap,pe,pb,evebitda,divyld,ptcr.p_i_75
+			FROM RankedData
+			INNER JOIN phi_tai_chinh_report ptcr
+			on ptcr.stock_code = RankedData.stock_code
+			and ptcr.quarter = RankedData.quarter
+			and ptcr.year = RankedData.year
+			WHERE rn = 1 AND p_i_75 > 0.25
+    </query>
+    <query id="noNhieuSomChiTra">
+			WITH RankedData AS (
+				SELECT stock_code, quarter, year, date, marketcap,pe,pb,evebitda,divyld,
+					ROW_NUMBER() OVER (PARTITION BY stock_code ORDER BY date DESC) AS rn
+				FROM valuation
+				WHERE quarter = :quarter AND year = :year
+				)
+			SELECT RankedData.stock_code, RankedData.quarter, RankedData.year, ptcr.p_i_6 as roe, marketcap,pe,pb,evebitda,divyld,ptcr.p_i_68,ptcr.p_i_69
+			FROM RankedData
+			INNER JOIN phi_tai_chinh_report ptcr
+			on ptcr.stock_code = RankedData.stock_code
+			and ptcr.quarter = RankedData.quarter
+			and ptcr.year = RankedData.year
+			WHERE rn = 1 AND p_i_68 > 0.5 and p_i_69 &lt;= 5
+    </query>
+    <query id="xuLyKhauHaoNang">
+			WITH RankedData AS (
+				SELECT stock_code, quarter, year, date, marketcap,pe,pb,evebitda,divyld,
+					ROW_NUMBER() OVER (PARTITION BY stock_code ORDER BY date DESC) AS rn
+				FROM valuation
+				WHERE quarter = :quarter AND year = :year
+				)
+			SELECT RankedData.stock_code, RankedData.quarter, RankedData.year, ptcr.p_i_6 as roe, marketcap,pe,pb,evebitda,divyld,ptcr.p_i_70,ptcr.p_i_73
+			FROM RankedData
+			INNER JOIN phi_tai_chinh_report ptcr
+			on ptcr.stock_code = RankedData.stock_code
+			and ptcr.quarter = RankedData.quarter
+			and ptcr.year = RankedData.year
+			WHERE rn = 1 AND p_i_70 > 0.5 and p_i_73 &lt;= 3
+    </query>
+    <query id="khaiThacDuoiCongSuat">
+			WITH RankedData AS (
+				SELECT stock_code, quarter, year, date, marketcap,pe,pb,evebitda,divyld,
+					   ROW_NUMBER() OVER (PARTITION BY stock_code ORDER BY date DESC) AS rn
+				FROM valuation
+				where 
+					( ( year =:yearm1 and quarter =:quarterm1) or (year =:yearm2 and quarter =:quarterm2 ) or
+					( year =:yearm3 and quarter =:quarterm3) or ( year =:yearm4 and quarter =:quarterm4) )
+				)
+			SELECT RankedData.stock_code, RankedData.quarter, RankedData.year, ptcr.p_i_6 as roe, marketcap,pe,pb,evebitda,divyld,ptcr.p_i_79_3
+			FROM RankedData
+			INNER JOIN phi_tai_chinh_report ptcr
+			on ptcr.stock_code = RankedData.stock_code
+			and ptcr.quarter = RankedData.quarter
+			and ptcr.year = RankedData.year
+			WHERE rn = 1 AND p_i_77 > 0.05 AND p_i_78 > 0.05
+    </query>
+    
+</queries>

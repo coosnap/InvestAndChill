@@ -1,6 +1,10 @@
 package com.starter.InvestAndChill.pojo;
 
 public class FilterNoNhieuSomChiTraDTO extends FilterPhiTaiChinhDTO{
+	public FilterNoNhieuSomChiTraDTO() {
+		
+	}
+	
 	protected Double pi68;
 	protected Double pi69;
 	

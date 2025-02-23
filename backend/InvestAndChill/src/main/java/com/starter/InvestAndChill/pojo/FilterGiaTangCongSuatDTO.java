@@ -4,6 +4,10 @@ public class FilterGiaTangCongSuatDTO extends FilterPhiTaiChinhDTO{
 	protected Double pi77;
 	protected Double pi78;
 	
+	public FilterGiaTangCongSuatDTO() {
+		
+	}
+	
 	public FilterGiaTangCongSuatDTO(String stockCode, String quarter, String year, Double marketcap,Double roe,Double pe,Double pb,Double evebitda,Double divyld, Double pi77, Double pi78) {
 	this.stockCode = stockCode;
 	this.quarter =quarter;

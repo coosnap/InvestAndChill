@@ -32,26 +32,8 @@ public class FilterCaculationUtils {
 		
 	}
 	
-	public static String buildQueryBoLoc(Map<String, Object> payload) {
+	public static String buildQueryBoLoc(Map<String, Object> payload,String orderQuery) {
 		String tangtruongdoanhthu = (String )payload.get("tangtruongdoanhthu");
-//		  Double tangtruongdoanhthuMin = (Double )payload.get("tangtruongdoanhthuMin");
-//		  Double tangtruongdoanhthuMax = (Double )payload.get("tangtruongdoanhthuMax");
-//		  Double marketcapMin = (Double )payload.get("marketcapMin");
-//		  Double marketcapMax = (Double )payload.get("marketcapMax");
-//		  Double roeMin = (Double )payload.get("roeMin");
-//		  Double roeMax = (Double )payload.get("roeMax");
-//		  Double pi24Min = (Double )payload.get("pi24Min");
-//		  Double pi24Max = (Double )payload.get("pi24Max");
-//		  Double peMin = (Double )payload.get("peMin");
-//		  Double peMax = (Double )payload.get("peMax");
-//		  Double pbMin = (Double )payload.get("pbMin");
-//		  Double pbMax = (Double )payload.get("pbMax");
-//		  Double evebitdaMin = (Double )payload.get("evebitdaMin");
-//		  Double evebitdaMax = (Double )payload.get("evebitdaMax");
-//		  Double divyldMin = (Double )payload.get("divyldMin");
-//		  Double divyldMax = (Double )payload.get("divyldMax");
-//		  Double netcashmcMin = (Double )payload.get("netcashmcMin");
-//		  Double netcashmcMax = (Double )payload.get("netcashmcMax");
 		  
 		  Double tangtruongdoanhthuMin = Optional.ofNullable((String)payload.get("tangtruongdoanhthuMin")).map(Double::valueOf).orElse(null); 
 		  Double tangtruongdoanhthuMax = Optional.ofNullable((String)payload.get("tangtruongdoanhthuMax")).map(Double::valueOf).orElse(null);
@@ -127,6 +109,10 @@ public class FilterCaculationUtils {
         if (isChoosing(netcashmcMin, netcashmcMax)) {
         	sql.append(" and netcashmc >= ").append(netcashmcMin / 100);
 		 	sql.append(" and netcashmc <= ").append(netcashmcMax / 100);
+        }
+        
+        if (!orderQuery.isEmpty()) {
+        	sql.append(orderQuery);
         }
 		
 		return sql.toString();

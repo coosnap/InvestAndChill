@@ -4,6 +4,10 @@ public class FilterXuLyKhauHaoNangDTO extends FilterPhiTaiChinhDTO{
 	private Double pi70;
 	private Double pi73;
 	
+	public FilterXuLyKhauHaoNangDTO() {
+		
+	}
+	
 	public FilterXuLyKhauHaoNangDTO(String stockCode, String quarter, String year, Double marketcap,Double roe,Double pe,Double pb,Double evebitda,Double divyld, Double pi70, Double pi73) {
 		this.stockCode = stockCode;
 		this.quarter =quarter;

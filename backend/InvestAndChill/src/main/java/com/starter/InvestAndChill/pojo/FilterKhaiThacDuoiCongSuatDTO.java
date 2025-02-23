@@ -3,6 +3,10 @@ package com.starter.InvestAndChill.pojo;
 public class FilterKhaiThacDuoiCongSuatDTO extends FilterPhiTaiChinhDTO{
 	private Double pi793;
 	
+	public FilterKhaiThacDuoiCongSuatDTO() {
+		
+	}
+	
 	public FilterKhaiThacDuoiCongSuatDTO(String stockCode, String quarter, String year, Double marketcap,Double roe,Double pe,Double pb,Double evebitda,Double divyld, Double pi793) {
 		this.stockCode = stockCode;
 		this.quarter =quarter;
