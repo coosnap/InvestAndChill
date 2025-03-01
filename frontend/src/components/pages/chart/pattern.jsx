@@ -128,7 +128,7 @@ export const Pattern = () => {
         {...other}
       >
         {value === index && (
-          <Box sx={{ padding: 3 }}>
+          <Box sx={{ padding: 3, paddingTop: 0 }}>
             <Typography>{children}</Typography>
           </Box>
         )}
@@ -146,7 +146,7 @@ export const Pattern = () => {
   const FilterComponent = () => {
     return (
       <div className="flex items-end gap-4 mb-4">
-        <FormControl sx={{ width: '10rem' }}>
+        <FormControl sx={{ width: '10rem' }} size="small">
           <InputLabel
             id="quarter-select-label"
             sx={{
@@ -179,6 +179,7 @@ export const Pattern = () => {
               sx={{ width: '10%' }}
               value={condition?.year ? dayjs(condition?.year) : dayjs()}
               onChange={(newValue) => setCondition((prev) => ({ ...prev, year: newValue }))}
+              slotProps={{ textField: { size: 'small' } }}
             />
           </DemoContainer>
         </LocalizationProvider>
@@ -188,7 +189,12 @@ export const Pattern = () => {
 
   return (
     <Box
-      sx={{ flexGrow: 1, display: 'flex', height: '100vh', marginTop: '2rem', marginLeft: '1rem' }}
+      sx={{
+        flexGrow: 1,
+        display: 'flex',
+        marginTop: '2rem',
+        marginLeft: '1rem',
+      }}
     >
       <Tabs
         orientation="vertical"
@@ -200,9 +206,9 @@ export const Pattern = () => {
         }}
       >
         <Tab label="Gia tăng công suất" {...a11yProps(0)} />
-        <Tab label="Theo dõi Pre-Sales" {...a11yProps(1)} />
-        <Tab label="DN nợ nhiều, nhưng có điều kiện sớm chi trả" {...a11yProps(2)} />
-        <Tab label="Xử lý Khấu hao nặng" {...a11yProps(3)} />
+        <Tab label="Chiếm dụng vốn của khách hàng" {...a11yProps(1)} />
+        <Tab label="Dòng tiền trả nợ tốt" {...a11yProps(2)} />
+        <Tab label="Chi phí khấu hao nhiều" {...a11yProps(3)} />
         <Tab label="Khai thác dưới công suất" {...a11yProps(4)} />
       </Tabs>
       <TabPanel value={value} index={0}>
@@ -213,6 +219,7 @@ export const Pattern = () => {
           initialState={{ pagination: { paginationModel } }}
           pageSizeOptions={[10]}
           disableColumnMenu
+          rowHeight={40}
           sx={{
             border: 1,
             borderColor: '#EDE9DC',
@@ -228,6 +235,7 @@ export const Pattern = () => {
           initialState={{ pagination: { paginationModel } }}
           pageSizeOptions={[10]}
           disableColumnMenu
+          rowHeight={40}
           sx={{
             border: 1,
             borderColor: '#EDE9DC',
@@ -243,6 +251,7 @@ export const Pattern = () => {
           initialState={{ pagination: { paginationModel } }}
           pageSizeOptions={[10]}
           disableColumnMenu
+          rowHeight={40}
           sx={{
             border: 1,
             borderColor: '#EDE9DC',
@@ -258,6 +267,7 @@ export const Pattern = () => {
           initialState={{ pagination: { paginationModel } }}
           pageSizeOptions={[10]}
           disableColumnMenu
+          rowHeight={40}
           sx={{
             border: 1,
             borderColor: '#EDE9DC',
@@ -273,6 +283,7 @@ export const Pattern = () => {
           initialState={{ pagination: { paginationModel } }}
           pageSizeOptions={[10]}
           disableColumnMenu
+          rowHeight={40}
           sx={{
             border: 1,
             borderColor: '#EDE9DC',
