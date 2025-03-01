@@ -66,7 +66,7 @@ export default function NoStackChart(data) {
               : props.style.x.animation.to || 0
           }
           y={props.style.y.animation.to || 0}
-          opacity={data.data.yAxis.right.opacity ? 0.5 : 1}
+          opacity={data.data.yAxis.right.opacity ? 0.7 : 1}
         />
       )
     );

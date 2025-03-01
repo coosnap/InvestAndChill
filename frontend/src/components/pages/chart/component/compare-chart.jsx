@@ -9,7 +9,6 @@ import {
 import { BarPlot } from '@mui/x-charts/BarChart';
 import { ChartsXAxis } from '@mui/x-charts/ChartsXAxis';
 import { ResponsiveChartContainer } from '@mui/x-charts/ResponsiveChartContainer';
-import { useEffect } from 'react';
 
 export default function CompareBankChart(data) {
   let start = 2;
@@ -64,6 +63,18 @@ export default function CompareBankChart(data) {
         slotprops={{ legend: { hidden: true } }}
         height={450}
         sx={{
+          '.MuiBarElement-series-auto-generated-id-0:nth-of-type(2)': {
+            opacity: 0.9,
+          },
+          '.MuiBarElement-series-auto-generated-id-0:nth-of-type(3)': {
+            opacity: 0.8,
+          },
+          '.MuiBarElement-series-auto-generated-id-0:nth-of-type(4)': {
+            opacity: 0.7,
+          },
+          '.MuiBarElement-series-auto-generated-id-0:nth-of-type(5)': {
+            opacity: 0.6,
+          },
           '.MuiLineElement-series-auto-generated-id-2': {
             display: data.data.mark ? 'none' : 'block',
           },
@@ -74,19 +85,40 @@ export default function CompareBankChart(data) {
         <ChartsTooltip />
         {/* {data.data.mark && <MarkPlot />} */}
         <ChartsXAxis disableTicks />
-        <ChartsYAxis
-          disableLine
-          disableTicks
-          axisId="leftAxis"
-          position="left"
-          label="%"
-          sx={{
-            '.MuiChartsAxis-label': {
-              transform: 'translate(-9px, -174px)',
-              writingMode: 'vertical-rl',
-            },
-          }}
-        />
+        {data.data.yAxis.left.type == 'bil' && (
+          <ChartsYAxis
+            axisId="leftAxis"
+            position="left"
+            label="tỷ đồng"
+            disableLine
+            disableTicks
+            sx={{
+              '.MuiChartsAxis-label': {
+                transform: 'translate(-3px, -194px) scale(-1, 1)',
+                '& text': {
+                  transform: 'translate(0px, 1px) rotate3d(0, 28, 0, 197.5deg)',
+                },
+              },
+            }}
+          />
+        )}
+        {data.data.yAxis.left.type == 'per' && (
+          <ChartsYAxis
+            disableLine
+            disableTicks
+            axisId="leftAxis"
+            position="left"
+            label="%"
+            sx={{
+              '.MuiChartsAxis-label': {
+                transform: 'translate(12px, -190px) scale(-1, 1)',
+                '& text': {
+                  transform: 'translate(0px, 1px) rotate3d(0, 28, 0, 197.5deg)',
+                },
+              },
+            }}
+          />
+        )}
         <ChartsYAxis
           disableLine
           disableTicks
@@ -95,8 +127,10 @@ export default function CompareBankChart(data) {
           label="%"
           sx={{
             '.MuiChartsAxis-label': {
-              transform: 'translate(14px, -174px)',
-              writingMode: 'vertical-rl',
+              transform: 'translate(-12px, -190px) scale(-1, 1)',
+              '& text': {
+                transform: 'translate(0px, 1px) rotate3d(0, 28, 0, 197.5deg)',
+              },
             },
           }}
         />

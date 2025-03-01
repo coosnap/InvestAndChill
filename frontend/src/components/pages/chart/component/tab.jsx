@@ -3744,33 +3744,6 @@ export const TabChart = () => {
     );
   };
 
-  const balanceSheet = {
-    quarter: [
-      'VPB1',
-      'VPB2',
-      'VPB3',
-      'VPB4',
-      'VPB5',
-      '$1',
-      'HDB1',
-      'HDB2',
-      'HDB3',
-      'HDB4',
-      'HDB5',
-      '$2',
-      'TCB1',
-      'TCB2',
-      'TCB3',
-      'TCB4',
-      'TCB5',
-    ],
-    data: {
-      chiphihoatdong: [2, 5, 6, 1, 4, null, 1, 2, 1, 4, 3, null, 3, 1, 2, 5, 1],
-      chiphiduphong: [2, 5, 6, 1, 4, null, 1, 2, 1, 4, 3, null, 3, 1, 2, 5, 1],
-      tongchiphi: [2, 5, 6, 1, 4, null, 1, 2, 1, 4, 3, null, 3, 1, 2, 5, 1],
-    },
-  };
-
   const handleClickGetDataChart = async () => {
     if (tabType === 'ChungKhoan') {
       let comp1, comp2, comp3, comp4, comp5;
@@ -3797,9 +3770,14 @@ export const TabChart = () => {
                   data: comp1.ci6 || [],
                   yAxisId: 'leftAxis',
                   label: 'ROE',
+                  color: '#013368',
                   valueFormatter: (v) => (!v ? '' : v + ' %'),
                 },
               ],
+              yAxis: {
+                left: { type: 'per' },
+                right: { type: 'bil' },
+              },
             },
             comp2: {
               ...comp2,
@@ -3809,9 +3787,14 @@ export const TabChart = () => {
                   data: comp2.ci7 || [],
                   yAxisId: 'leftAxis',
                   label: 'ROA',
+                  color: '#2471BE',
                   valueFormatter: (v) => (!v ? '' : v + ' %'),
                 },
               ],
+              yAxis: {
+                left: { type: 'per' },
+                right: { type: 'bil' },
+              },
             },
             comp3: {
               ...comp3,
@@ -3821,9 +3804,14 @@ export const TabChart = () => {
                   data: comp3.cb142 || [],
                   yAxisId: 'leftAxis',
                   label: 'Vốn chủ sở hữu',
+                  color: '#585D5D',
                   valueFormatter: (v) => (!v ? '' : v + ' tỷ đồng'),
                 },
               ],
+              yAxis: {
+                left: { type: 'bil' },
+                right: { type: 'bil' },
+              },
             },
             comp4: {
               ...comp4,
@@ -3833,9 +3821,14 @@ export const TabChart = () => {
                   data: comp4.cf159 || [],
                   yAxisId: 'leftAxis',
                   label: 'Cho vay ký quỹ',
+                  color: '#93B6D6',
                   valueFormatter: (v) => (!v ? '' : v + ' tỷ đồng'),
                 },
               ],
+              yAxis: {
+                left: { type: 'bil' },
+                right: { type: 'bil' },
+              },
             },
             comp5: {
               ...comp5,
@@ -3845,9 +3838,14 @@ export const TabChart = () => {
                   data: comp5.cb205 || [],
                   yAxisId: 'leftAxis',
                   label: 'Tiền gửi của khách hàng',
+                  color: '#C8D0D2',
                   valueFormatter: (v) => (!v ? '' : v + ' tỷ đồng'),
                 },
               ],
+              yAxis: {
+                left: { type: 'bil' },
+                right: { type: 'bil' },
+              },
             },
             listStoke,
           });
@@ -3901,6 +3899,7 @@ export const TabChart = () => {
                   yAxisId: 'leftAxis',
                   label: 'Chi phí hoạt động',
                   stack: '1',
+                  color: '#8F9596',
                   valueFormatter: (v) => (!v ? '' : v + ' %'),
                 },
                 {
@@ -3909,6 +3908,7 @@ export const TabChart = () => {
                   yAxisId: 'leftAxis',
                   label: 'Chi phí dự phòng',
                   stack: '1',
+                  color: '#C8D0D2',
                   valueFormatter: (v) => (!v ? '' : v + ' %'),
                 },
                 {
@@ -3917,9 +3917,14 @@ export const TabChart = () => {
                   yAxisId: 'leftAxis',
                   data: comp1.bi9 || [],
                   label: 'Tổng chi phí',
+                  color: '#202222',
                   valueFormatter: (v) => (!v ? '' : v + ' %'),
                 },
               ],
+              yAxis: {
+                left: { type: 'per' },
+                right: { type: 'per' },
+              },
               mark: true,
             },
             comp2: {
@@ -3930,9 +3935,14 @@ export const TabChart = () => {
                   data: comp2.bi35 || [],
                   yAxisId: 'leftAxis',
                   label: 'Tăng trưởng tín dụng sv đầu năm',
+                  color: '#C8D0D2',
                   valueFormatter: (v) => (!v ? '' : v + ' %'),
                 },
               ],
+              yAxis: {
+                left: { type: 'per' },
+                right: { type: 'per' },
+              },
             },
             comp3: {
               ...comp3,
@@ -3943,6 +3953,7 @@ export const TabChart = () => {
                   label: '%NPL',
                   stack: '1',
                   yAxisId: 'leftAxis',
+                  color: '#CCBA95',
                   valueFormatter: (v) => (!v ? '' : v + ' %'),
                 },
                 {
@@ -3951,6 +3962,7 @@ export const TabChart = () => {
                   label: '%Nợ nhóm 2',
                   stack: '1',
                   yAxisId: 'leftAxis',
+                  color: '#93B6D6',
                   valueFormatter: (v) => (!v ? '' : v + ' %'),
                 },
                 {
@@ -3959,9 +3971,14 @@ export const TabChart = () => {
                   data: comp3.bi24 || [],
                   label: '%LLR',
                   yAxisId: 'rightAxis',
+                  color: '#202222',
                   valueFormatter: (v) => (!v ? '' : v + ' %'),
                 },
               ],
+              yAxis: {
+                left: { type: 'per' },
+                right: { type: 'per' },
+              },
             },
             comp4: {
               ...comp4,
@@ -3971,9 +3988,14 @@ export const TabChart = () => {
                   data: comp4.bi26 || [],
                   yAxisId: 'leftAxis',
                   label: 'Overdue/Equity',
+                  color: '#585D5D',
                   valueFormatter: (v) => (!v ? '' : v + ' %'),
                 },
               ],
+              yAxis: {
+                left: { type: 'per' },
+                right: { type: 'per' },
+              },
             },
             comp5: {
               ...comp5,
@@ -3983,9 +4005,14 @@ export const TabChart = () => {
                   data: comp5.bi30 || [],
                   yAxisId: 'leftAxis',
                   label: 'NIM',
+                  color: '#8F9596',
                   valueFormatter: (v) => (!v ? '' : v + ' %'),
                 },
               ],
+              yAxis: {
+                left: { type: 'per' },
+                right: { type: 'per' },
+              },
             },
             comp6: {
               ...comp6,
@@ -3995,6 +4022,7 @@ export const TabChart = () => {
                   data: comp6.bi29 || [],
                   label: 'COF',
                   yAxisId: 'leftAxis',
+                  color: '#C8D0D2',
                   valueFormatter: (v) => (!v ? '' : v + ' %'),
                 },
                 {
@@ -4003,9 +4031,14 @@ export const TabChart = () => {
                   data: comp6.bi32 || [],
                   label: 'CASA',
                   yAxisId: 'rightAxis',
+                  color: '#6EA2DF',
                   valueFormatter: (v) => (!v ? '' : v + ' %'),
                 },
               ],
+              yAxis: {
+                left: { type: 'per' },
+                right: { type: 'per' },
+              },
             },
             comp7: {
               ...comp7,
@@ -4015,9 +4048,14 @@ export const TabChart = () => {
                   data: comp7.bi20 || [],
                   yAxisId: 'leftAxis',
                   label: 'ROE',
+                  color: '#013368',
                   valueFormatter: (v) => (!v ? '' : v + ' %'),
                 },
               ],
+              yAxis: {
+                left: { type: 'per' },
+                right: { type: 'per' },
+              },
             },
             comp8: {
               ...comp8,
@@ -4027,9 +4065,14 @@ export const TabChart = () => {
                   data: comp8.bi21 || [],
                   yAxisId: 'leftAxis',
                   label: 'ROA',
+                  color: '#2471BE',
                   valueFormatter: (v) => (!v ? '' : v + ' %'),
                 },
               ],
+              yAxis: {
+                left: { type: 'per' },
+                right: { type: 'per' },
+              },
             },
             comp9: {
               ...comp9,
@@ -4039,9 +4082,14 @@ export const TabChart = () => {
                   data: comp9.bi27 || [],
                   yAxisId: 'leftAxis',
                   label: 'Tài sản có khác/TTS',
+                  color: '#C8D0D2',
                   valueFormatter: (v) => (!v ? '' : v + ' %'),
                 },
               ],
+              yAxis: {
+                left: { type: 'per' },
+                right: { type: 'per' },
+              },
             },
             comp10: {
               ...comp10,
@@ -4051,9 +4099,14 @@ export const TabChart = () => {
                   data: comp10.bi25 || [],
                   yAxisId: 'leftAxis',
                   label: 'Lãi, phí phải thu/TN từ lãi',
+                  color: '#8F9596',
                   valueFormatter: (v) => (!v ? '' : v + ' %'),
                 },
               ],
+              yAxis: {
+                left: { type: 'per' },
+                right: { type: 'per' },
+              },
             },
             listStoke,
           });
@@ -4545,16 +4598,6 @@ export const TabChart = () => {
                     checkedBank?.bal9adjust
                   )}
                   {ChartItem(
-                    dataChart?.bal10,
-                    null,
-                    'bal10',
-                    false,
-                    'bal10adjust',
-                    checkedBank?.bal10adjust
-                  )}
-                </div>
-                <div className="flex gap-8">
-                  {ChartItem(
                     dataChart?.bal11,
                     null,
                     'bal11',
@@ -4562,14 +4605,24 @@ export const TabChart = () => {
                     'bal11adjust',
                     checkedBank?.bal11adjust
                   )}
-                  {ChartItem(
+                  {/* {ChartItem(
+                    dataChart?.bal10,
+                    null,
+                    'bal10',
+                    false,
+                    'bal10adjust',
+                    checkedBank?.bal10adjust
+                  )} */}
+                </div>
+                <div className="flex gap-8">
+                  {/* {ChartItem(
                     dataChart?.bal12,
                     null,
                     'bal12',
                     false,
                     'bal12adjust',
                     checkedBank?.bal12adjust
-                  )}
+                  )} */}
                 </div>
               </div>
             )}

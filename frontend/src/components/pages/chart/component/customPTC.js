@@ -600,8 +600,8 @@ export let customBalPTC6 = {
   series: [
     {
       type: 'bar',
-      label: 'Vay ngắn hạn/VCSH',
-      dataKey: 'vayNganHanVCSH',
+      label: 'Vay dài hạn/VCSH',
+      dataKey: 'vayDaiHanVCSH',
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#8F9596',
@@ -609,8 +609,8 @@ export let customBalPTC6 = {
     },
     {
       type: 'bar',
-      label: 'Vay dài hạn/VCSH',
-      dataKey: 'vayDaiHanVCSH',
+      label: 'Vay ngắn hạn/VCSH',
+      dataKey: 'vayNganHanVCSH',
       yAxisId: 'rightAxis',
       stack: 'stack',
       color: '#C8D0D2',
@@ -773,7 +773,7 @@ export let customCFPTC3 = {
     },
     {
       type: 'line',
-      label: 'Nợ ròng',
+      label: 'Tiền ròng',
       dataKey: 'netDebt',
       curve: 'linear',
       yAxisId: 'rightAxis',
