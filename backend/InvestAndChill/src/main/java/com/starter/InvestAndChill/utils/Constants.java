@@ -20,7 +20,7 @@ public class Constants {
 	 public static final String PTC_cf1 = "Lưu chuyển tiền tệ";
 	 public static final String PTC_cf2 = "Dòng tiền";
 	 public static final String PTC_cf3 = "Diễn biến nợ ròng";
-	 public static final String PTC_cf4 = "Chiếm dụng vốn";
+	 public static final String PTC_cf4 = "Chiếm dụng vốn của khách hàng";
 	 
 	 public static final String PTC_val1 = "PE & EV / EBITDA";
 	 public static final String PTC_val2 = "PB & ROE";

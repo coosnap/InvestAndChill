@@ -192,14 +192,16 @@ public class CalculatorUtils {
 	
 	public static String convertSortToQueryString(String[] sort) {
 		String orderQuery = "";
-		if (sort.length > 0) {
-			orderQuery =" order by ";
-			for (int i=0;i<sort.length;i++) {
-				String[] sortParts = sort[i].split(",");
-				orderQuery += sortParts[0] + " " + sortParts[1] + ",";
+		if (sort != null) {
+			if (sort.length > 0) {
+				orderQuery =" order by ";
+				for (int i=0;i<sort.length;i++) {
+					String[] sortParts = sort[i].split(",");
+					orderQuery += sortParts[0] + " " + sortParts[1] + ",";
+				}
 			}
+			orderQuery = orderQuery.substring(0, orderQuery.length() - 1);
 		}
-		orderQuery = orderQuery.substring(0, orderQuery.length() - 1);
 		return orderQuery;
 		
 	}

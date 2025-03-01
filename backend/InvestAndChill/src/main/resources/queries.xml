@@ -43,7 +43,7 @@
 			on ptcr.stock_code = RankedData.stock_code
 			and ptcr.quarter = RankedData.quarter
 			and ptcr.year = RankedData.year
-			WHERE rn = 1 AND p_i_68 > 0.5 and p_i_69 &lt;= 5
+			WHERE rn = 1 AND p_i_68 > 0.5 and p_i_69 &lt; 5 and p_i_69 > 1
     </query>
     <query id="xuLyKhauHaoNang">
 			WITH RankedData AS (
