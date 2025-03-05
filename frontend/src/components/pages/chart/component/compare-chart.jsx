@@ -56,16 +56,16 @@ export default function CompareBankChart(data) {
         slotprops={{ legend: { hidden: true } }}
         height={450}
         sx={{
-          '.MuiBarElement-series-auto-generated-id-0:nth-of-type(2)': {
+          '.MuiBarElement-series-auto-generated-id-0:nth-of-type(6n - 4)': {
             opacity: 0.9,
           },
-          '.MuiBarElement-series-auto-generated-id-0:nth-of-type(3)': {
+          '.MuiBarElement-series-auto-generated-id-0:nth-of-type(6n - 3)': {
             opacity: 0.8,
           },
-          '.MuiBarElement-series-auto-generated-id-0:nth-of-type(4)': {
+          '.MuiBarElement-series-auto-generated-id-0:nth-of-type(6n - 2)': {
             opacity: 0.7,
           },
-          '.MuiBarElement-series-auto-generated-id-0:nth-of-type(5)': {
+          '.MuiBarElement-series-auto-generated-id-0:nth-of-type(6n - 1)': {
             opacity: 0.6,
           },
           '.MuiLineElement-series-auto-generated-id-2': {
