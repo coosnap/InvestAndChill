@@ -211,13 +211,16 @@ export async function getMinMaxValue() {
 }
 
 export async function getFilterChart(data) {
-  const response = await fetch(`${import.meta.env.VITE_REACT_APP_API}/api/filter/boLoc`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  });
+  const response = await fetch(
+    `${import.meta.env.VITE_REACT_APP_API}/api/filter/boLoc?sort=Stock_code,asc`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    }
+  );
   if (response.status === 200) {
     const responseBody = await response.json();
     return responseBody;
