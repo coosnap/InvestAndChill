@@ -59,13 +59,25 @@ export default function CompareBankChart(data) {
           '.MuiBarElement-series-auto-generated-id-0:nth-of-type(6n - 4)': {
             opacity: 0.9,
           },
+          '.MuiBarElement-series-auto-generated-id-1:nth-of-type(6n - 4)': {
+            opacity: 0.9,
+          },
           '.MuiBarElement-series-auto-generated-id-0:nth-of-type(6n - 3)': {
+            opacity: 0.8,
+          },
+          '.MuiBarElement-series-auto-generated-id-1:nth-of-type(6n - 3)': {
             opacity: 0.8,
           },
           '.MuiBarElement-series-auto-generated-id-0:nth-of-type(6n - 2)': {
             opacity: 0.7,
           },
+          '.MuiBarElement-series-auto-generated-id-1:nth-of-type(6n - 2)': {
+            opacity: 0.7,
+          },
           '.MuiBarElement-series-auto-generated-id-0:nth-of-type(6n - 1)': {
+            opacity: 0.6,
+          },
+          '.MuiBarElement-series-auto-generated-id-1:nth-of-type(6n - 1)': {
             opacity: 0.6,
           },
           '.MuiLineElement-series-auto-generated-id-2': {
