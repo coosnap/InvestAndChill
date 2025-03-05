@@ -14,7 +14,7 @@ export default function CompareBankChart(data) {
     data?.data?.arrayBank?.map((e) => {
       if (e.includes('$')) count++;
     });
-    if (count > 0) {
+    if (count >= 0) {
       for (let i = 0; i <= count; i++) {
         if (i === 0) arr.push(data.data.arrayBank[2]);
         else arr.push(data.data.arrayBank[(start += 6)]);
