@@ -5,6 +5,7 @@ import { ChartsXAxis } from '@mui/x-charts/ChartsXAxis';
 import { AreaPlot, LineHighlightPlot, LinePlot } from '@mui/x-charts/LineChart';
 import { ResponsiveChartContainer } from '@mui/x-charts/ResponsiveChartContainer';
 import { useEffect, useState } from 'react';
+import { ItemTooltip } from './tooltip';
 
 export default function NoStackChart(data) {
   const [series, setSeries] = useState([]);
@@ -126,7 +127,7 @@ export default function NoStackChart(data) {
         margin={{
           left: data.data.yAxis.left.type == 'per' ? 50 : 70,
           right: data.data.yAxis.right.type == 'bil' ? 70 : 50,
-          top: 130,
+          top: 80,
           bottom: 35,
         }}
         sx={{
@@ -368,7 +369,8 @@ export default function NoStackChart(data) {
             },
           }}
         /> */}
-        <ChartsTooltip />
+        {/* <ChartsTooltip /> */}
+        <ItemTooltip />
       </ResponsiveChartContainer>
       <div className="absolute top-0 w-full flex flex-wrap justify-center items-center mt-2">
         {data.data.yAxis.left.legendNum ? (

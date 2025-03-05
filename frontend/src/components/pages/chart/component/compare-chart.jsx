@@ -1,14 +1,9 @@
 import Box from '@mui/material/Box';
-import {
-  ChartsLegend,
-  ChartsReferenceLine,
-  ChartsTooltip,
-  ChartsYAxis,
-  LinePlot,
-} from '@mui/x-charts';
+import { ChartsLegend, ChartsReferenceLine, ChartsYAxis, LinePlot } from '@mui/x-charts';
 import { BarPlot } from '@mui/x-charts/BarChart';
 import { ChartsXAxis } from '@mui/x-charts/ChartsXAxis';
 import { ResponsiveChartContainer } from '@mui/x-charts/ResponsiveChartContainer';
+import { ItemTooltip } from './tooltip';
 
 export default function CompareBankChart(data) {
   let start = 2;
@@ -82,7 +77,8 @@ export default function CompareBankChart(data) {
       >
         <BarPlot />
         <LinePlot />
-        <ChartsTooltip />
+        {/* <ChartsTooltip /> */}
+        <ItemTooltip />
         {/* {data.data.mark && <MarkPlot />} */}
         <ChartsXAxis disableTicks />
         {data.data.yAxis.left.type == 'bil' && (
