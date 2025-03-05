@@ -25,15 +25,13 @@ export default function CompareBankChart(data) {
     data?.data?.arrayChungKhoan?.map((e) => {
       if (e.includes('$')) count++;
     });
-    if (count > 0) {
+    if (count >= 0) {
       for (let i = 0; i <= count; i++) {
         if (i === 0) arr.push(data.data.arrayChungKhoan[2]);
         else arr.push(data.data.arrayChungKhoan[(start += 6)]);
       }
     }
   }
-  // useEffect(() => {
-  // }, []);
 
   return (
     <Box sx={{ width: '100%', backgroundColor: '#FFF8DC', position: 'relative' }}>
