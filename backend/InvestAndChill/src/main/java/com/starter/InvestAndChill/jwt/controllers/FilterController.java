@@ -393,7 +393,7 @@ public class FilterController {
 				arrayValuecb205[n] = null;
 				n++;
 				m =1;
-				arrayChungKhoan[n] = listCkSoSanhChiSoDTO.get(j).getStockCode() + "- Q" + listCkSoSanhChiSoDTO.get(j).getQuarter() + " - " + listCkSoSanhChiSoDTO.get(j).getYear();				
+				arrayChungKhoan[n] = listCkSoSanhChiSoDTO.get(j).getStockCode() + " Q" + listCkSoSanhChiSoDTO.get(j).getQuarter() + "." + listCkSoSanhChiSoDTO.get(j).getYear();				
 				arrayValueci6[n] =  RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getCi6());
 				arrayValueci7[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getCi7());
 				arrayValuecb142[n] = RoundNumber.lamTron(listCkSoSanhChiSoDTO.get(j).getCb142());
@@ -401,7 +401,7 @@ public class FilterController {
 				arrayValuecb205[n] = RoundNumber.lamTron(listCkSoSanhChiSoDTO.get(j).getCb205());
 				
 			} else {
-				arrayChungKhoan[n] = listCkSoSanhChiSoDTO.get(j).getStockCode() + "- Q" + listCkSoSanhChiSoDTO.get(j).getQuarter() + " - " + listCkSoSanhChiSoDTO.get(j).getYear();		
+				arrayChungKhoan[n] = listCkSoSanhChiSoDTO.get(j).getStockCode() + " Q" + listCkSoSanhChiSoDTO.get(j).getQuarter() + "." + listCkSoSanhChiSoDTO.get(j).getYear();		
 				arrayValueci6[n] =  RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getCi6());
 				arrayValueci7[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getCi7());
 				arrayValuecb142[n] = RoundNumber.lamTron(listCkSoSanhChiSoDTO.get(j).getCb142());
@@ -506,7 +506,7 @@ public class FilterController {
 				arrayValuebi25[n] = null;
 				n++;
 				m =1;
-				arrayBank[n] = listCkSoSanhChiSoDTO.get(j).getStockCode() + "- Q" + listCkSoSanhChiSoDTO.get(j).getQuarter() + " - " + listCkSoSanhChiSoDTO.get(j).getYear();				
+				arrayBank[n] = listCkSoSanhChiSoDTO.get(j).getStockCode() + " Q" + listCkSoSanhChiSoDTO.get(j).getQuarter() + "." + listCkSoSanhChiSoDTO.get(j).getYear();				
 				arrayValuebi7[n] =  RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getBi7());
 				arrayValuebi8[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getBi8());
 				arrayValuebi9[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getBi9());
@@ -523,7 +523,7 @@ public class FilterController {
 				arrayValuebi27[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getBi27());
 				arrayValuebi25[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getBi25());
 			} else {
-				arrayBank[n] = listCkSoSanhChiSoDTO.get(j).getStockCode() + "- Q" + listCkSoSanhChiSoDTO.get(j).getQuarter() + " - " + listCkSoSanhChiSoDTO.get(j).getYear();		
+				arrayBank[n] = listCkSoSanhChiSoDTO.get(j).getStockCode() + " Q" + listCkSoSanhChiSoDTO.get(j).getQuarter() + "." + listCkSoSanhChiSoDTO.get(j).getYear();		
 				arrayValuebi7[n] =  RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getBi7());
 				arrayValuebi8[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getBi8());
 				arrayValuebi9[n] = RoundNumber.lamTronPhanTram(listCkSoSanhChiSoDTO.get(j).getBi9());

@@ -193,7 +193,9 @@ public class CalculatorUtils {
 	public static String convertSortToQueryString(String[] sort) {
 		String orderQuery = "";
 		if (sort != null) {
-			if (sort.length > 0) {
+			if ((sort.length == 2) && (!sort[0].contains(",")) ){
+				orderQuery =" order by " + sort[0] + " " + sort[1] + ",";
+			} else if (sort.length > 0) {
 				orderQuery =" order by ";
 				for (int i=0;i<sort.length;i++) {
 					String[] sortParts = sort[i].split(",");
