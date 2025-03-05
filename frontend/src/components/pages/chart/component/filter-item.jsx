@@ -504,7 +504,7 @@ const FilterItem = (props) => {
   }, [props.data.min, props.data.max]);
 
   return (
-    <div className="flex items-center justify-between w-[80%]">
+    <div className="flex items-center justify-between w-full">
       <FormGroup>
         <FormControlLabel
           control={<Checkbox value={false} onClick={handleClickCheckBox} />}

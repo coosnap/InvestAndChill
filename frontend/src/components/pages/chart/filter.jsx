@@ -65,7 +65,7 @@ export const Filter = () => {
   return (
     <div className="flex gap-4 pt-6 justify-center">
       <div className="flex flex-col flex-1">
-        <div className="flex flex-col items-center gap-2">
+        <div className="flex flex-col items-center gap-2 h-40 overflow-auto w-[80%] m-auto">
           <FilterItem
             data={{
               label: 'Tăng trưởng doanh thu',
