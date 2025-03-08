@@ -84,6 +84,7 @@ p {
   font-size: 3.5rem;
   position: absolute;
   top: 10rem;
+  left: 5rem;
   opacity: 0.2;
   transform: rotate(-25deg);
 }

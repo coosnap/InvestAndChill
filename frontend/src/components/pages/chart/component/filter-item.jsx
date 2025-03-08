@@ -520,9 +520,9 @@ const FilterItem = (props) => {
               onChange={handleChangeDay}
               size="small"
             >
-              <MenuItem value={1}>%Sales YoY</MenuItem>
-              <MenuItem value={2}>%Sales YoY TB 2 năm</MenuItem>
-              <MenuItem value={3}>%Sales YoY TB 3 năm</MenuItem>
+              <MenuItem value={1}>TT DTT YoY</MenuItem>
+              <MenuItem value={2}>TT DTT vs TB 2 năm YoY</MenuItem>
+              <MenuItem value={3}>TT DTT vs TB 3 năm YoY</MenuItem>
             </Select>
           </div>
         )}

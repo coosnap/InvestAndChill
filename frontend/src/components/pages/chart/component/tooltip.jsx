@@ -18,7 +18,7 @@ export function ItemTooltip() {
       <Popper
         sx={{
           pointerEvents: 'none',
-          opacity: 0.5,
+          // opacity: 0.5,
           zIndex: (theme) => theme.zIndex.modal,
         }}
         open
@@ -38,11 +38,11 @@ export function ItemTooltip() {
           sx={{
             m: 1,
             borderWidth: 0,
-            // table: { borderWidth: 0 },
             borderRadius: 0.5,
+            backgroundColor: 'rgba(255, 255, 255, 0.2)',
             thead: {
               td: {
-                px: 2,
+                px: 1,
                 py: 0.5,
               },
             },
@@ -63,7 +63,7 @@ export function ItemTooltip() {
                   colSpan={3}
                   style={{ borderWidth: 0, borderBottom: '1px solid rgba(0, 0, 0, 0.12)' }}
                 >
-                  <Typography fontSize={16}>{tooltipData.axisFormattedValue}</Typography>
+                  <Typography fontSize={12}>{tooltipData.axisFormattedValue}</Typography>
                 </td>
               </tr>
             </thead>
@@ -81,12 +81,12 @@ export function ItemTooltip() {
                     />
                   </td>
                   <td style={{ borderWidth: 0 }}>
-                    <Typography fontSize={14} fontWeight="light">
+                    <Typography fontSize={10} fontWeight="light">
                       {seriesItem.formattedLabel}
                     </Typography>
                   </td>
                   <td style={{ textAlign: 'right', borderWidth: 0 }}>
-                    <Typography fontSize={14}>{seriesItem.formattedValue}</Typography>
+                    <Typography fontSize={10}>{seriesItem.formattedValue}</Typography>
                   </td>
                 </tr>
               ))}
