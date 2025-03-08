@@ -8,21 +8,61 @@ export const columns = [
     width: '100',
     type: 'number',
     sortable: false,
+    valueGetter: (value, row) =>
+      `${!row.marketcap?.toString()?.includes('.') ? row.marketcap + '.0' : row.marketcap}`,
   },
-  { field: 'pb', headerName: 'PB', width: '100', type: 'number', sortable: false },
-  { field: 'pe', headerName: 'PE', width: '100', type: 'number', sortable: false },
+  {
+    field: 'pb',
+    headerName: 'PB',
+    width: '100',
+    type: 'number',
+    sortable: false,
+    valueGetter: (value, row) =>
+      `${
+        !row.pb?.toString()?.includes('.')
+          ? row.pb + '.00'
+          : row.pb.toString()?.split('.')[1]?.length === 1
+          ? row.pb + '0'
+          : row.pb
+      }`,
+  },
+  {
+    field: 'pe',
+    headerName: 'PE',
+    width: '100',
+    type: 'number',
+    sortable: false,
+    valueGetter: (value, row) =>
+      `${
+        !row.pe?.toString()?.includes('.')
+          ? row.pe + '.00'
+          : row.pe.toString()?.split('.')[1]?.length === 1
+          ? row.pe + '0'
+          : row.pe
+      }`,
+  },
   {
     field: 'roe',
     headerName: 'ROE (%)',
     width: '80',
     type: 'number',
     sortable: false,
+    valueGetter: (value, row) =>
+      `${!row.roe?.toString()?.includes('.') ? row.roe + '.0' : row.roe}`,
   },
   {
     field: 'evebitda',
     headerName: 'EV/EBITDA',
     type: 'number',
     sortable: false,
+    valueGetter: (value, row) =>
+      `${
+        !row.evebitda?.toString()?.includes('.')
+          ? row.evebitda + '.00'
+          : row.evebitda.toString()?.split('.')[1]?.length === 1
+          ? row.evebitda + '0'
+          : row.evebitda
+      }`,
   },
   {
     field: 'divyld',
@@ -30,6 +70,8 @@ export const columns = [
     width: '110',
     type: 'number',
     sortable: false,
+    valueGetter: (value, row) =>
+      `${!row.divyld?.toString()?.includes('.') ? row.divyld + '.0' : row.divyld}`,
   },
 ];
 
@@ -41,6 +83,8 @@ export const columns0 = [
     width: '170',
     type: 'number',
     sortable: false,
+    valueGetter: (value, row) =>
+      `${!row.pi77?.toString()?.includes('.') ? row.pi77 + '.0' : row.pi77}`,
   },
   {
     field: 'pi78',
@@ -48,6 +92,8 @@ export const columns0 = [
     width: '140',
     type: 'number',
     sortable: false,
+    valueGetter: (value, row) =>
+      `${!row.pi78?.toString()?.includes('.') ? row.pi78 + '.0' : row.pi78}`,
   },
 ];
 
@@ -59,6 +105,8 @@ export const columns1 = [
     width: '210',
     type: 'number',
     sortable: false,
+    valueGetter: (value, row) =>
+      `${!row.pi75?.toString()?.includes('.') ? row.pi75 + '.0' : row.pi75}`,
   },
   // {
   //   field: 'fullName',
@@ -78,6 +126,8 @@ export const columns2 = [
     width: '230',
     type: 'number',
     sortable: false,
+    valueGetter: (value, row) =>
+      `${!row.pi68?.toString()?.includes('.') ? row.pi68 + '.0' : row.pi68}`,
   },
   {
     field: 'pi69',
@@ -85,6 +135,8 @@ export const columns2 = [
     width: '170',
     type: 'number',
     sortable: false,
+    valueGetter: (value, row) =>
+      `${!row.pi69?.toString()?.includes('.') ? row.pi69 + '.0' : row.pi69}`,
   },
 ];
 
@@ -96,6 +148,8 @@ export const columns3 = [
     width: '180',
     type: 'number',
     sortable: false,
+    valueGetter: (value, row) =>
+      `${!row.pi70?.toString()?.includes('.') ? row.pi70 + '.0' : row.pi70}`,
   },
   {
     field: 'pi73',
@@ -103,6 +157,8 @@ export const columns3 = [
     width: '160',
     type: 'number',
     sortable: false,
+    valueGetter: (value, row) =>
+      `${!row.pi73?.toString()?.includes('.') ? row.pi73 + '.0' : row.pi73}`,
   },
 ];
 
@@ -114,5 +170,7 @@ export const columns4 = [
     width: '100',
     type: 'number',
     sortable: false,
+    valueGetter: (value, row) =>
+      `${!row.pi793?.toString()?.includes('.') ? row.pi793 + '.0' : row.pi793}`,
   },
 ];

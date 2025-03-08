@@ -5,20 +5,7 @@ import {
   getIncreaseCapacity,
   getOweALot,
 } from '@/api/chart';
-import AddIcon from '@mui/icons-material/Add';
-import DeleteIcon from '@mui/icons-material/Delete';
-import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
-import SwapVertIcon from '@mui/icons-material/SwapVert';
-import {
-  Autocomplete,
-  Dialog,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Popover,
-  Select,
-  TextField,
-} from '@mui/material';
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
@@ -27,9 +14,9 @@ import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import dayjs from 'dayjs';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { DataGridComponent } from './component/data-grid';
-import SortItem from './component/sort-item';
+import { SortPopupComponent } from './component/sort-popup';
 import { columns0, columns1, columns2, columns3, columns4 } from './customPT';
 
 export const Pattern = () => {
@@ -198,42 +185,6 @@ export const Pattern = () => {
     );
   };
 
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [anchorElPopover, setAnchorElPopover] = useState(null);
-  const [sortValue, setSortValue] = useState([
-    { headerName: 'stockCode', adesc: 'asc' },
-    { headerName: 'year', adesc: 'asc' },
-  ]);
-
-  const dragItem = useRef(0);
-  const draggedOverItem = useRef(0);
-  const open = Boolean(anchorEl);
-  const id = open ? 'simple-popper' : undefined;
-
-  const openPopover = Boolean(anchorElPopover);
-  const idPopover = openPopover ? 'simple-popover' : undefined;
-
-  const handleClick = (event) => {
-    setAnchorEl(anchorEl ? null : event.currentTarget);
-  };
-
-  const handleClickPopover = (event) => {
-    setAnchorElPopover(anchorElPopover ? null : event.currentTarget);
-  };
-
-  const handleRemove = (value) => {
-    const findItem = sortValue.findIndex((item) => item.headerName === value.headerName);
-    setSortValue(sortValue.splice(findItem - 1, 1));
-  };
-
-  const handleSort = () => {
-    const listItemClone = [...sortValue];
-    const temp = listItemClone[dragItem.current];
-    listItemClone[dragItem.current] = listItemClone[draggedOverItem.current];
-    listItemClone[draggedOverItem.current] = temp;
-    setSortValue(listItemClone);
-  };
-
   return (
     <Box
       sx={{
@@ -260,95 +211,7 @@ export const Pattern = () => {
       </Tabs>
       <TabPanel value={value} index={0}>
         <div className="flex items-center gap-4">
-          <div>
-            <button
-              aria-describedby={id}
-              type="button"
-              onClick={handleClick}
-              className="border border-gray rounded-full mb-2 p-1"
-            >
-              <SwapVertIcon />
-            </button>
-            <Dialog
-              onClose={handleClick}
-              id={id}
-              open={open}
-              anchorel={anchorEl}
-              hideBackdrop
-              sx={{
-                '& .MuiDialog-container': {
-                  justifyContent: 'flex-start',
-                  alignItems: 'flex-start',
-                },
-
-                '& .MuiPaper-root': {
-                  top: '115px',
-                  left: '115px',
-                  boxShadow: 'none',
-                },
-              }}
-            >
-              <div className="bg-[#f9eec1] rounded">
-                <div className="pt-3">
-                  {sortValue.map((item, index) => (
-                    <div
-                      key={item.headerName}
-                      className="flex items-center ml-2 cursor-pointer"
-                      draggable
-                      onDragStart={() => (dragItem.current = index)}
-                      onDragEnter={() => (draggedOverItem.current = index)}
-                      onDragEnd={handleSort}
-                      onDragOver={(e) => e.preventDefault()}
-                    >
-                      <DragIndicatorIcon fontSize="small" />
-                      <SortItem columns={columns0} item={item} handleRemove={handleRemove} />
-                    </div>
-                  ))}
-                </div>
-                <div className="flex flex-col ml-4 pb-4 gap-2">
-                  <button
-                    className="flex items-center text-sm w-[92px]"
-                    aria-describedby={id}
-                    onClick={handleClickPopover}
-                  >
-                    <AddIcon fontSize="small" />
-                    <span className="ml-1">Add sort</span>
-                  </button>
-                  <Popover
-                    id={idPopover}
-                    open={openPopover}
-                    anchorEl={anchorElPopover}
-                    onClose={handleClickPopover}
-                    anchorOrigin={{
-                      vertical: 'bottom',
-                      horizontal: 'left',
-                    }}
-                    sx={{
-                      '& .MuiPopover-paper': {
-                        top: '280px !important',
-                        left: '158px !important',
-                        boxShadow: 'none',
-                      },
-                    }}
-                  >
-                    <div className="bg-[#ffeea8] h-[200px] p-4">
-                      <Autocomplete
-                        disablePortal
-                        size="small"
-                        options={[{ label: 'The Shawshank Redemption', year: 1994 }]}
-                        sx={{ width: 300 }}
-                        renderInput={(params) => <TextField {...params} />}
-                      />
-                    </div>
-                  </Popover>
-                  <button className="flex items-center text-sm w-[92px]" onClick={() => {}}>
-                    <DeleteIcon fontSize="small" />
-                    <span className="ml-1">Delete sort</span>
-                  </button>
-                </div>
-              </div>
-            </Dialog>
-          </div>
+          <SortPopupComponent columns={columns0} />
           <FilterComponent />
         </div>
         <DataGridComponent tableData={tableData} columns={columns0} />

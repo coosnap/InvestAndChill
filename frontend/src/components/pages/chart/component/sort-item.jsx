@@ -3,8 +3,7 @@ import { FormControl, MenuItem, Select } from '@mui/material';
 import { useState } from 'react';
 
 export default function SortItem(props) {
-  const { columns, item, handleRemove, sortValue, setSortValue } = props;
-  console.log('columns', columns);
+  const { columns, item, handleRemove } = props;
 
   const [itemValue, setItemValue] = useState(item);
 
@@ -26,7 +25,7 @@ export default function SortItem(props) {
     <div className="flex gap-4 pr-4 pl-2 py-2">
       <FormControl>
         <Select
-          value={itemValue.headerName}
+          value={itemValue.field}
           size="small"
           onChange={handleChangeHeaderName}
           style={{ height: 30 }}
@@ -57,8 +56,8 @@ export default function SortItem(props) {
             },
           }}
         >
-          <MenuItem value="asc">Ascending</MenuItem>
-          <MenuItem value="desc">Descending</MenuItem>
+          <MenuItem value="asc">Tăng</MenuItem>
+          <MenuItem value="desc">Giảm</MenuItem>
         </Select>
       </FormControl>
       <button onClick={handleRemoveSort}>
