@@ -1,5 +1,6 @@
 package com.starter.InvestAndChill.jwt.controllers;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -27,6 +28,7 @@ import com.starter.InvestAndChill.jwt.repository.CKRepositoryQuy;
 import com.starter.InvestAndChill.jwt.repository.NganHangRepositoryQuy;
 import com.starter.InvestAndChill.jwt.repository.PTCRepositoryQuy;
 import com.starter.InvestAndChill.jwt.repository.StockSymbolRepository;
+import com.starter.InvestAndChill.jwt.repository.ValuationPTCRepository;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -45,6 +47,9 @@ public class StockSymbolController {
 	@Autowired
 	NganHangRepositoryQuy nhRepository;
 	
+	@Autowired
+	ValuationPTCRepository valuationPTCReposiroty;
+	
 	@GetMapping("/all")
 	//@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<List<StockSymbol>> allAccess(@RequestParam(required = false,name = "type") String type) {
@@ -58,12 +63,6 @@ public class StockSymbolController {
 			} else {
 				stockSymbolRepository.findAll().forEach(stockSymbols::add);
 			}
-			
-//			if (size == null) {
-//				stockSymbolRepository.findAll().forEach(stockSymbols::add);
-//			} else {
-//				stockSymbolRepository.findBySizeOfCompany(size).forEach(stockSymbols::add);
-//			}
 			
 			if (stockSymbols.isEmpty()) {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -95,16 +94,24 @@ public class StockSymbolController {
 	public ResponseEntity<?> Stocktype(@PathVariable String id) {
 		try {
 			Long ptcReportNumber = ptcRepository.checkStockIsBelongTo(id);
+			LocalDateTime time = valuationPTCReposiroty.findRecentDate(id);
+			TypeResponse typeResponse;
 			if (ptcReportNumber > 0) {
-				return new ResponseEntity<>(new TypeResponse(id,"PTC"), HttpStatus.OK);
+				typeResponse = new TypeResponse(id,"PTC");
+				typeResponse.setRecentDate(time);
+				return new ResponseEntity<>(typeResponse, HttpStatus.OK);
 			}
 			Long ckReportNumber = ckRepository.checkStockIsBelongTo(id);
 			if (ckReportNumber > 0) {
-				return new ResponseEntity<>(new TypeResponse(id,"ChungKhoan"), HttpStatus.OK);
+				typeResponse = new TypeResponse(id,"ChungKhoan");
+				typeResponse.setRecentDate(time);
+				return new ResponseEntity<>(typeResponse, HttpStatus.OK);
 			}
 			Long nhReportNumber = nhRepository.checkStockIsBelongTo(id);
 			if (nhReportNumber > 0) {
-				return new ResponseEntity<>(new TypeResponse(id,"NganHang"), HttpStatus.OK);
+				typeResponse = new TypeResponse(id,"NganHang");
+				typeResponse.setRecentDate(time);
+				return new ResponseEntity<>(typeResponse, HttpStatus.OK);
 			}
 			
 			return new ResponseEntity<>(null, HttpStatus.OK);

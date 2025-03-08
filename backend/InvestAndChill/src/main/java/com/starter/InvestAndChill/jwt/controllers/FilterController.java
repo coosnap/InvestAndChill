@@ -89,7 +89,7 @@ public class FilterController {
 			response.setId(new ReportKey(report.getStockCode(),report.getQuarter(),report.getYear()));	
 			response.setDivyld(RoundNumber.lamTron(report.getDivyld()));
 			response.setEvebitda(RoundNumber.lamTronLan(report.getEvebitda()));
-			response.setMarketcap(RoundNumber.lamTron(report.getMarketcap()));
+			response.setMarketcap(RoundNumber.lamTronLan(report.getMarketcap()));
 			response.setPb(RoundNumber.lamTronLan(report.getPb()));
 			response.setPe(RoundNumber.lamTronLan(report.getPe()));
 			response.setRoe(RoundNumber.lamTronPhanTram(report.getRoe()));
