@@ -261,10 +261,10 @@ function Login() {
   if (isLoading) return <Loader />;
 
   return (
-    <div className="h-full bg-primary">
+    <div className="h-full w-screen bg-primary">
       {/* {isLoading ? <Loader /> : ''} */}
-      <div className="sm:w-[80%] vm:w-[90%] flex sm:flex-row vm:flex-col mx-auto gap-4 pb-8">
-        <div className="sm:w-1/2 vm:w-full flex flex-col gap-4">
+      <div className="vm:w-[90%] sm:w-[80%] flex sm:flex-row vm:flex-col mx-auto gap-4 pb-8">
+        <div className="vm:w-full sm:w-1/2 flex flex-col gap-4">
           <div className="flex justify-center rounded-2xl bg-white gap-4 px-8 py-4">
             {articleId.title ? (
               <div className="w-full h-[350px] border bg-second overflow-y-auto rounded-md p-4">
@@ -325,7 +325,7 @@ function Login() {
               )}
           </div>
         </div>
-        <div className="sm:w-1/2 vm:w-full flex flex-col gap-4">
+        <div className="vm:w-full sm:w-1/2 flex flex-col gap-4">
           <div className="rounded-2xl bg-white shadow-2xl flex flex-col items-center justify-center py-4">
             <div className="flex items-center justify-center text-3xl lg:text-2xl font-semibold text-gray-900">
               Đăng nhập

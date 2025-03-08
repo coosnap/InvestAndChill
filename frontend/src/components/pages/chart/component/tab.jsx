@@ -167,8 +167,6 @@ export const TabChart = () => {
   });
   const [isOpened, setIsOpened] = useState(false);
   let fixedOptions = [{ title: codeValue, id: codeValue }];
-  const [stockCompare, setStockCompare] = useState([]);
-  const [listStock, setListStock] = useState([]);
   const [listItem, setListItem] = useState([]);
   const [listData, setListData] = useState([]);
 
@@ -904,6 +902,12 @@ export const TabChart = () => {
       }
     }
   };
+
+  useEffect(() => {
+    if (value === 4) {
+      handleClickGetDataChart();
+    }
+  }, [value]);
 
   useEffect(() => {
     if (tabType !== 'PTC' && value - 0 === 4 && tabValue === 'ĐỊNH GIÁ') {

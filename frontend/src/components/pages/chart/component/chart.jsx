@@ -74,9 +74,9 @@ export default function NoStackChart(data) {
   };
 
   return (
-    <Box sx={{ width: '100%', backgroundColor: '#FFF8DC', position: 'relative' }}>
+    <Box sx={{ width: '100%', backgroundColor: 'transparent', position: 'relative' }}>
+      <div className="water-mark-chart"></div>
       <ResponsiveChartContainer
-        // className="water-mark-chart"
         dataset={data.data.dataset}
         series={data.data.series}
         xAxis={[

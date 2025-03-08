@@ -16,8 +16,8 @@ export default function CompareBankChart(data) {
     });
     if (count >= 0) {
       for (let i = 0; i <= count; i++) {
-        if (i === 0) arr.push(data.data.arrayBank[2]);
-        else arr.push(data.data.arrayBank[(start += 6)]);
+        if (i === 0) arr.push(data?.data?.arrayBank?.[2]);
+        else arr.push(data.data.arrayBank?.[(start += 6)]);
       }
     }
   }
@@ -27,14 +27,15 @@ export default function CompareBankChart(data) {
     });
     if (count >= 0) {
       for (let i = 0; i <= count; i++) {
-        if (i === 0) arr.push(data.data.arrayChungKhoan[2]);
-        else arr.push(data.data.arrayChungKhoan[(start += 6)]);
+        if (i === 0) arr.push(data?.data?.arrayChungKhoan[2]);
+        else arr.push(data.data?.arrayChungKhoan?.[(start += 6)]);
       }
     }
   }
 
   return (
     <Box sx={{ width: '100%', backgroundColor: '#FFF8DC', position: 'relative' }}>
+      <div className="water-mark-chart"></div>
       <ResponsiveChartContainer
         xAxis={[
           {
@@ -43,7 +44,7 @@ export default function CompareBankChart(data) {
             tickInterval: (value) => !value.includes('$') && arr.includes(value),
             valueFormatter: (value, context) =>
               context.location === 'tick'
-                ? value.substring(0, 3)
+                ? value.substring(0, 4)
                 : context.location === 'tooltip' && value.includes('$')
                 ? ''
                 : value,
@@ -56,29 +57,29 @@ export default function CompareBankChart(data) {
         slotprops={{ legend: { hidden: true } }}
         height={450}
         sx={{
+          '.MuiBarElement-series-auto-generated-id-1:nth-of-type(6n - 6)': {
+            opacity: 0.6,
+          },
+          '.MuiBarElement-series-auto-generated-id-0:nth-of-type(6n - 5)': {
+            opacity: 0.6,
+          },
+          '.MuiBarElement-series-auto-generated-id-1:nth-of-type(6n - 5)': {
+            opacity: 0.7,
+          },
           '.MuiBarElement-series-auto-generated-id-0:nth-of-type(6n - 4)': {
-            opacity: 0.9,
+            opacity: 0.7,
           },
           '.MuiBarElement-series-auto-generated-id-1:nth-of-type(6n - 4)': {
-            opacity: 0.9,
+            opacity: 0.8,
           },
           '.MuiBarElement-series-auto-generated-id-0:nth-of-type(6n - 3)': {
             opacity: 0.8,
           },
           '.MuiBarElement-series-auto-generated-id-1:nth-of-type(6n - 3)': {
-            opacity: 0.8,
+            opacity: 0.9,
           },
           '.MuiBarElement-series-auto-generated-id-0:nth-of-type(6n - 2)': {
-            opacity: 0.7,
-          },
-          '.MuiBarElement-series-auto-generated-id-1:nth-of-type(6n - 2)': {
-            opacity: 0.7,
-          },
-          '.MuiBarElement-series-auto-generated-id-0:nth-of-type(6n - 1)': {
-            opacity: 0.6,
-          },
-          '.MuiBarElement-series-auto-generated-id-1:nth-of-type(6n - 1)': {
-            opacity: 0.6,
+            opacity: 0.9,
           },
           '.MuiLineElement-series-auto-generated-id-2': {
             display: data.data.mark ? 'none' : 'block',
