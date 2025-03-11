@@ -1,12 +1,12 @@
+import { SortValue } from '@/store/pattern';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import SwapVertIcon from '@mui/icons-material/SwapVert';
 import { Dialog, Popover, TextField } from '@mui/material';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import SortItem from './sort-item';
 import { useRecoilState } from 'recoil';
-import { SortValue } from '@/store/pattern';
+import SortItem from './sort-item';
 
 export const SortPopupComponent = (props) => {
   const { columns, tableData, setStringCondition } = props;
@@ -14,6 +14,7 @@ export const SortPopupComponent = (props) => {
   const [dataChooseSort, setDataChooseSort] = useState('');
   const [anchorEl, setAnchorEl] = useState(null);
   const [anchorElPopover, setAnchorElPopover] = useState(null);
+  const [openDialog, setOpenDialog] = useState(true);
 
   const [sortValue, setSortValue] = useRecoilState(SortValue);
 
@@ -28,6 +29,7 @@ export const SortPopupComponent = (props) => {
 
   const handleClick = (event) => {
     setAnchorEl(anchorEl ? null : event.currentTarget);
+    setOpenDialog(!openDialog);
   };
 
   const handleClickPopover = (event) => {
@@ -101,9 +103,8 @@ export const SortPopupComponent = (props) => {
         <SwapVertIcon />
       </button>
       <Dialog
-        onClose={handleClick}
         id={id}
-        open={open}
+        open={openDialog}
         anchorel={anchorEl}
         hideBackdrop
         sx={{
@@ -113,13 +114,15 @@ export const SortPopupComponent = (props) => {
           },
 
           '& .MuiPaper-root': {
+            position: 'absolute',
             top: '115px',
-            left: '115px',
+            right: 0,
             boxShadow: 'none',
+            backgroundColor: 'rgba(255, 248, 220, 0.7)',
           },
         }}
       >
-        <div className="bg-[#f9eec1] rounded">
+        <div className="rounded">
           <div className="pt-3">
             {sortValue.map((item, index) => (
               <div
@@ -136,7 +139,7 @@ export const SortPopupComponent = (props) => {
               </div>
             ))}
           </div>
-          <div className="flex flex-col ml-4 pb-4 gap-2">
+          <div className="flex flex-col ml-4 gap-2">
             <button
               className="flex items-center text-sm w-[92px]"
               aria-describedby={id}
@@ -151,20 +154,22 @@ export const SortPopupComponent = (props) => {
               anchorEl={anchorElPopover}
               onClose={handleClickPopover}
               anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
+                vertical: 'top',
+                horizontal: 'right',
               }}
               sx={{
                 '& .MuiPopover-paper': {
+                  position: 'relative',
                   top: '148px !important',
-                  left: '470px !important',
+                  left: '57% !important',
                   boxShadow: 'none',
-                  backgroundColor: '#ccc',
+                  backgroundColor: 'rgba(255, 248, 220, 0.7)',
                   maxHeight: '300px',
+                  maxWidth: '300px',
                 },
               }}
             >
-              <div className="px-4 pt-4 bg-[#f9eec1]">
+              <div className="px-4 pt-4">
                 <TextField
                   value={searchValue}
                   size="small"
@@ -176,7 +181,7 @@ export const SortPopupComponent = (props) => {
                   {dataChooseSort &&
                     dataChooseSort?.map((item, index) => (
                       <div
-                        className="cursor-pointer hover:bg-[#ffeda3] p-3"
+                        className="cursor-pointer hover:bg-[#ffeda3] px-3 py-2"
                         key={item.field}
                         onClick={() => handleChooseSortItem(item)}
                       >
@@ -190,6 +195,9 @@ export const SortPopupComponent = (props) => {
               <DeleteIcon fontSize="small" />
               <span className="ml-1">Delete sort</span>
             </button>
+          </div>
+          <div className="flex justify-end mr-4 pb-4 cursor-pointer" onClick={handleClick}>
+            Close
           </div>
         </div>
       </Dialog>

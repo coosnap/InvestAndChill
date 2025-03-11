@@ -90,7 +90,8 @@ export async function getTitle(code) {
   return;
 }
 
-export async function getIncreaseCapacity(condition, str) {
+export async function getIncreaseCapacity(condition, str, patternFilter) {
+  let marketcapStr = `&marketcapmin=${patternFilter.marketcapMin}&marketcapmax=${patternFilter.marketcapMax}`;
   const response = await axiosInstance.get(
     `${import.meta.env.VITE_REACT_APP_API}/api/filter/giaTangCongSuat${
       condition
@@ -100,7 +101,7 @@ export async function getIncreaseCapacity(condition, str) {
           ? '?year=' + condition.year.$y
           : '?quarter=' + condition.quarter
         : ''
-    }${str}`
+    }${str}${marketcapStr}`
   );
   if (response.status === 200) {
     return response.data;

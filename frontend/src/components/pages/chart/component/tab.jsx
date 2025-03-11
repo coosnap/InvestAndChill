@@ -4404,6 +4404,7 @@ export const TabChart = () => {
                         ]);
                       }
                     }}
+                    autoHighlight={true}
                     isOptionEqualToValue={(option, value) => option.id === value.id}
                     options={listData}
                     getOptionLabel={(option) => option.title}
@@ -4661,6 +4662,7 @@ export const TabChart = () => {
                         ]);
                       }
                     }}
+                    autoHighlight={true}
                     isOptionEqualToValue={(option, value) => option.id === value.id}
                     options={listData}
                     getOptionLabel={(option) => option.title}

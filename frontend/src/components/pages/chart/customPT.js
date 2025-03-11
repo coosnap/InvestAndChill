@@ -9,7 +9,11 @@ export const columns = [
     type: 'number',
     sortable: false,
     valueGetter: (value, row) =>
-      `${!row.marketcap?.toString()?.includes('.') ? row.marketcap + '.0' : row.marketcap}`,
+      `${
+        !row.marketcap?.toString()?.includes('.')
+          ? row.marketcap.toLocaleString() + '.0'
+          : row.marketcap.toLocaleString()
+      }`,
   },
   {
     field: 'pb',
@@ -20,10 +24,10 @@ export const columns = [
     valueGetter: (value, row) =>
       `${
         !row.pb?.toString()?.includes('.')
-          ? row.pb + '.00'
+          ? row.pb.toLocaleString() + '.00'
           : row.pb.toString()?.split('.')[1]?.length === 1
-          ? row.pb + '0'
-          : row.pb
+          ? row.pb.toLocaleString() + '0'
+          : row.pb.toLocaleString()
       }`,
   },
   {
@@ -35,10 +39,10 @@ export const columns = [
     valueGetter: (value, row) =>
       `${
         !row.pe?.toString()?.includes('.')
-          ? row.pe + '.00'
+          ? row.pe.toLocaleString() + '.00'
           : row.pe.toString()?.split('.')[1]?.length === 1
-          ? row.pe + '0'
-          : row.pe
+          ? row.pe.toLocaleString() + '0'
+          : row.pe.toLocaleString()
       }`,
   },
   {
@@ -48,7 +52,11 @@ export const columns = [
     type: 'number',
     sortable: false,
     valueGetter: (value, row) =>
-      `${!row.roe?.toString()?.includes('.') ? row.roe + '.0' : row.roe}`,
+      `${
+        !row.roe?.toString()?.includes('.')
+          ? row.roe.toLocaleString() + '.0'
+          : row.roe.toLocaleString()
+      }`,
   },
   {
     field: 'evebitda',
@@ -58,10 +66,10 @@ export const columns = [
     valueGetter: (value, row) =>
       `${
         !row.evebitda?.toString()?.includes('.')
-          ? row.evebitda + '.00'
+          ? row.evebitda.toLocaleString() + '.00'
           : row.evebitda.toString()?.split('.')[1]?.length === 1
-          ? row.evebitda + '0'
-          : row.evebitda
+          ? row.evebitda.toLocaleString() + '0'
+          : row.evebitda.toLocaleString()
       }`,
   },
   {
@@ -71,7 +79,11 @@ export const columns = [
     type: 'number',
     sortable: false,
     valueGetter: (value, row) =>
-      `${!row.divyld?.toString()?.includes('.') ? row.divyld + '.0' : row.divyld}`,
+      `${
+        !row.divyld?.toString()?.includes('.')
+          ? row.divyld.toLocaleString() + '.0'
+          : row.divyld.toLocaleString()
+      }`,
   },
 ];
 
@@ -84,7 +96,11 @@ export const columns0 = [
     type: 'number',
     sortable: false,
     valueGetter: (value, row) =>
-      `${!row.pi77?.toString()?.includes('.') ? row.pi77 + '.0' : row.pi77}`,
+      `${
+        !row.pi77?.toString()?.includes('.')
+          ? row.pi77.toLocaleString() + '.0'
+          : row.pi77.toLocaleString()
+      }`,
   },
   {
     field: 'pi78',
@@ -93,7 +109,11 @@ export const columns0 = [
     type: 'number',
     sortable: false,
     valueGetter: (value, row) =>
-      `${!row.pi78?.toString()?.includes('.') ? row.pi78 + '.0' : row.pi78}`,
+      `${
+        !row.pi78?.toString()?.includes('.')
+          ? row.pi78.toLocaleString() + '.0'
+          : row.pi78.toLocaleString()
+      }`,
   },
 ];
 
@@ -106,7 +126,11 @@ export const columns1 = [
     type: 'number',
     sortable: false,
     valueGetter: (value, row) =>
-      `${!row.pi75?.toString()?.includes('.') ? row.pi75 + '.0' : row.pi75}`,
+      `${
+        !row.pi75?.toString()?.includes('.')
+          ? row.pi75.toLocaleString() + '.0'
+          : row.pi75.toLocaleString()
+      }`,
   },
   // {
   //   field: 'fullName',
@@ -127,7 +151,11 @@ export const columns2 = [
     type: 'number',
     sortable: false,
     valueGetter: (value, row) =>
-      `${!row.pi68?.toString()?.includes('.') ? row.pi68 + '.0' : row.pi68}`,
+      `${
+        !row.pi68?.toString()?.includes('.')
+          ? row.pi68.toLocaleString() + '.0'
+          : row.pi68.toLocaleString()
+      }`,
   },
   {
     field: 'pi69',
@@ -136,7 +164,11 @@ export const columns2 = [
     type: 'number',
     sortable: false,
     valueGetter: (value, row) =>
-      `${!row.pi69?.toString()?.includes('.') ? row.pi69 + '.0' : row.pi69}`,
+      `${
+        !row.pi69?.toString()?.includes('.')
+          ? row.pi69.toLocaleString() + '.0'
+          : row.pi69.toLocaleString()
+      }`,
   },
 ];
 
@@ -149,7 +181,11 @@ export const columns3 = [
     type: 'number',
     sortable: false,
     valueGetter: (value, row) =>
-      `${!row.pi70?.toString()?.includes('.') ? row.pi70 + '.0' : row.pi70}`,
+      `${
+        !row.pi70?.toString()?.includes('.')
+          ? row.pi70.toLocaleString() + '.0'
+          : row.pi70.toLocaleString()
+      }`,
   },
   {
     field: 'pi73',
@@ -158,7 +194,11 @@ export const columns3 = [
     type: 'number',
     sortable: false,
     valueGetter: (value, row) =>
-      `${!row.pi73?.toString()?.includes('.') ? row.pi73 + '.0' : row.pi73}`,
+      `${
+        !row.pi73?.toString()?.includes('.')
+          ? row.pi73.toLocaleString() + '.0'
+          : row.pi73.toLocaleString()
+      }`,
   },
 ];
 
@@ -171,6 +211,10 @@ export const columns4 = [
     type: 'number',
     sortable: false,
     valueGetter: (value, row) =>
-      `${!row.pi793?.toString()?.includes('.') ? row.pi793 + '.0' : row.pi793}`,
+      `${
+        !row.pi793?.toString()?.includes('.')
+          ? row.pi793.toLocaleString() + '.0'
+          : row.pi793.toLocaleString()
+      }`,
   },
 ];

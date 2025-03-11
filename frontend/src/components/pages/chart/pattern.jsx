@@ -3,8 +3,10 @@ import {
   getExploitationBelowCapacity,
   getFollowPreSales,
   getIncreaseCapacity,
+  getMinMaxValue,
   getOweALot,
 } from '@/api/chart';
+import { PatternFilter } from '@/store/chart';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
@@ -15,7 +17,9 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
+import { useRecoilValue } from 'recoil';
 import { DataGridComponent } from './component/data-grid';
+import FilterItem from './component/filter-item';
 import { SortPopupComponent } from './component/sort-popup';
 import { columns0, columns1, columns2, columns3, columns4 } from './customPT';
 
@@ -24,6 +28,9 @@ export const Pattern = () => {
   const [condition, setCondition] = useState({ quarter: '1', year: dayjs() });
   const [tableData, setTableData] = useState([]);
   const [stringCondition, setStringCondition] = useState('');
+  const [valueMinMax, setValueMinMax] = useState({});
+
+  const patternFilter = useRecoilValue(PatternFilter);
 
   const currentYear = dayjs();
 
@@ -42,7 +49,7 @@ export const Pattern = () => {
     let temp = [];
     if (value === 0) {
       if (condition.quarter) {
-        result = await getIncreaseCapacity(condition, stringCondition);
+        result = await getIncreaseCapacity(condition, stringCondition, patternFilter);
         if (result?.length > 0) {
           temp = convertData(result);
         }
@@ -80,12 +87,24 @@ export const Pattern = () => {
         }
       }
     }
-    setTableData(temp);
+    if (temp.message) {
+      setTableData([]);
+      return;
+    } else {
+      setTableData(temp);
+    }
   };
 
   useEffect(() => {
+    (async () => {
+      let result = await getMinMaxValue();
+      setValueMinMax(result);
+    })();
+  }, []);
+
+  useEffect(() => {
     getDataTable();
-  }, [value, condition, stringCondition]);
+  }, [value, condition, stringCondition, patternFilter]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -121,7 +140,7 @@ export const Pattern = () => {
   const FilterComponent = () => {
     return (
       <div className="flex items-end gap-4 mb-4">
-        <FormControl sx={{ width: '10rem' }} size="small">
+        <FormControl sx={{ width: '6rem' }} size="small">
           <InputLabel
             id="quarter-select-label"
             sx={{
@@ -150,13 +169,23 @@ export const Pattern = () => {
               views={['year']}
               yearsOrder="desc"
               maxDate={currentYear}
-              sx={{ width: '10%' }}
+              sx={{
+                width: '6rem',
+              }}
               value={condition?.year ? dayjs(condition?.year) : dayjs()}
               onChange={(newValue) => setCondition((prev) => ({ ...prev, year: newValue }))}
               slotProps={{ textField: { size: 'small' } }}
             />
           </DemoContainer>
         </LocalizationProvider>
+        <FilterItem
+          data={{
+            label: 'Vốn Hóa',
+            min: valueMinMax.marketcapMin,
+            max: valueMinMax.marketcapMax,
+          }}
+          field="marketcap"
+        />
       </div>
     );
   };
@@ -187,12 +216,14 @@ export const Pattern = () => {
       </Tabs>
       <TabPanel value={value} index={0}>
         <div className="flex items-center gap-4">
-          <SortPopupComponent
-            columns={columns0}
-            tableData={tableData}
-            setStringCondition={setStringCondition}
-          />
           <FilterComponent />
+          <div className="flex flex-1 justify-end">
+            <SortPopupComponent
+              columns={columns0.filter((e) => e.field !== 'quarter' && e.field !== 'year')}
+              tableData={tableData}
+              setStringCondition={setStringCondition}
+            />
+          </div>
         </div>
         <DataGridComponent tableData={tableData} columns={columns0} />
       </TabPanel>

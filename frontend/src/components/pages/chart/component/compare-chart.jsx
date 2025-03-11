@@ -44,7 +44,7 @@ export default function CompareBankChart(data) {
             tickInterval: (value) => !value.includes('$') && arr.includes(value),
             valueFormatter: (value, context) =>
               context.location === 'tick'
-                ? value.substring(0, 4)
+                ? value?.split(' ')?.[0]
                 : context.location === 'tooltip' && value.includes('$')
                 ? ''
                 : value,

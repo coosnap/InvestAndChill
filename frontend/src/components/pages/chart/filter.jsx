@@ -1,10 +1,9 @@
 import { getFilterChart, getMinMaxValue } from '@/api/chart';
-import Box from '@mui/material/Box';
+import { ChartFilter } from '@/store/chart';
 import { DataGrid } from '@mui/x-data-grid';
 import { useEffect, useState } from 'react';
+import { useRecoilValue } from 'recoil';
 import FilterItem from './component/filter-item';
-import { useRecoilState } from 'recoil';
-import { ChartFilter } from '@/store/chart';
 
 // const paginationModel = { page: 0, pageSize: 10 };
 
@@ -23,8 +22,7 @@ export const Filter = () => {
     netcash: false,
   });
 
-  const [chartFilter, setChartFilter] = useRecoilState(ChartFilter);
-  // console.log('chartFilter', chartFilter);
+  const chartFilter = useRecoilValue(ChartFilter);
   const [data, setData] = useState({ rows: [], columns: [] });
 
   useEffect(() => {
@@ -45,17 +43,159 @@ export const Filter = () => {
       setData({
         columns: [
           { field: 'stockCode', headerName: 'Mã cổ phiếu' },
-          { field: 'pi791', headerName: 'TT DTT YoY (%)', flex: 1, type: 'number' },
-          { field: 'pi792', headerName: 'TT DTT vs TB 2 năm YoY (%)', flex: 1, type: 'number' },
-          { field: 'pi793', headerName: 'TT DTT vs TB 3 năm YoY (%)', flex: 1, type: 'number' },
-          { field: 'marketcap', headerName: 'Vốn hóa', type: 'number' },
-          { field: 'roe', headerName: 'ROE (%)', type: 'number' },
-          { field: 'roic', headerName: 'ROIC (%)', type: 'number' },
-          { field: 'pe', headerName: 'PE', type: 'number' },
-          { field: 'pb', headerName: 'PB', type: 'number' },
-          { field: 'evebitda', headerName: 'EV/EBITDA', flex: 1, type: 'number' },
-          { field: 'divyld', headerName: 'Tỉ suất cổ tức', width: 150, type: 'number' },
-          { field: 'netcashmc', headerName: 'Tiền ròng/Vốn hóa', flex: 1, type: 'number' },
+          {
+            field: 'pi791',
+            headerName: 'TT DTT YoY (%)',
+            flex: 1,
+            type: 'number',
+            valueGetter: (value, row) =>
+              `${
+                value
+                  ? !row.pi791?.toString()?.includes('.')
+                    ? row.pi791.toLocaleString() + '.0'
+                    : row.pi791.toLocaleString()
+                  : ''
+              }`,
+          },
+          {
+            field: 'pi792',
+            headerName: 'TT DTT vs TB 2 năm YoY (%)',
+            flex: 1,
+            type: 'number',
+            valueGetter: (value, row) =>
+              `${
+                value
+                  ? !row.pi792?.toString()?.includes('.')
+                    ? row.pi792.toLocaleString() + '.0'
+                    : row.pi792.toLocaleString()
+                  : ''
+              }`,
+          },
+          {
+            field: 'pi793',
+            headerName: 'TT DTT vs TB 3 năm YoY (%)',
+            flex: 1,
+            type: 'number',
+            valueGetter: (value, row) =>
+              `${
+                value
+                  ? !row.pi793?.toString()?.includes('.')
+                    ? row.pi793.toLocaleString() + '.0'
+                    : row.pi793.toLocaleString()
+                  : ''
+              }`,
+          },
+          {
+            field: 'marketcap',
+            headerName: 'Vốn hóa',
+            type: 'number',
+            valueGetter: (value, row) =>
+              `${
+                !row.marketcap?.toString()?.includes('.')
+                  ? row.marketcap.toLocaleString() + '.0'
+                  : row.marketcap.toLocaleString()
+              }`,
+          },
+          {
+            field: 'roe',
+            headerName: 'ROE (%)',
+            type: 'number',
+            valueGetter: (value, row) =>
+              `${
+                value
+                  ? !row.roe?.toString()?.includes('.')
+                    ? row.roe.toLocaleString() + '.0'
+                    : row.roe.toLocaleString()
+                  : ''
+              }`,
+          },
+          {
+            field: 'roic',
+            headerName: 'ROIC (%)',
+            type: 'number',
+            valueGetter: (value, row) =>
+              `${
+                value
+                  ? !row.roic?.toString()?.includes('.')
+                    ? row.roic.toLocaleString() + '.0'
+                    : row.roic.toLocaleString()
+                  : ''
+              }`,
+          },
+          {
+            field: 'pe',
+            headerName: 'PE',
+            type: 'number',
+            valueGetter: (value, row) =>
+              `${
+                value
+                  ? !row.pe?.toString()?.includes('.')
+                    ? row.pe.toLocaleString() + '.00'
+                    : row.pe.toString()?.split('.')[1]?.length === 1
+                    ? row.pe.toLocaleString() + '0'
+                    : row.pe.toLocaleString()
+                  : ''
+              }`,
+          },
+          {
+            field: 'pb',
+            headerName: 'PB',
+            type: 'number',
+            valueGetter: (value, row) =>
+              `${
+                value
+                  ? !row.pb?.toString()?.includes('.')
+                    ? row.pb.toLocaleString() + '.00'
+                    : row.pb.toString()?.split('.')[1]?.length === 1
+                    ? row.pb.toLocaleString() + '0'
+                    : row.pb.toLocaleString()
+                  : ''
+              }`,
+          },
+          {
+            field: 'evebitda',
+            headerName: 'EV/EBITDA',
+            flex: 1,
+            type: 'number',
+            valueGetter: (value, row) =>
+              `${
+                value
+                  ? !row.evebitda?.toString()?.includes('.')
+                    ? row.evebitda.toLocaleString() + '.00'
+                    : row.evebitda.toString()?.split('.')[1]?.length === 1
+                    ? row.evebitda.toLocaleString() + '0'
+                    : row.evebitda.toLocaleString()
+                  : ''
+              }`,
+          },
+          {
+            field: 'divyld',
+            headerName: 'Tỉ suất cổ tức',
+            width: 150,
+            type: 'number',
+            valueGetter: (value, row) =>
+              `${
+                value
+                  ? !row.divyld?.toString()?.includes('.')
+                    ? row.divyld.toLocaleString() + '.0'
+                    : row.divyld.toLocaleString()
+                  : ''
+              }`,
+          },
+          {
+            field: 'netcashmc',
+            headerName: 'Tiền ròng/Vốn hóa',
+            flex: 1,
+            type: 'number',
+            valueGetter: (value, row) =>
+              `${
+                value
+                  ? !row.netcashmc?.toString()?.includes('.')
+                    ? row.netcashmc.toLocaleString() + '.0'
+                    : row.netcashmc.toLocaleString()
+                  : ''
+              }`,
+          },
         ],
         rows: temp,
       });

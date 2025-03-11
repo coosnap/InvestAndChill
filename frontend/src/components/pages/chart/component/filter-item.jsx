@@ -1,8 +1,9 @@
-import { ChartFilter } from '@/store/chart';
+import { ChartFilter, PatternFilter } from '@/store/chart';
 import { Unstable_NumberInput as NumberInput } from '@mui/base';
 import {
   Box,
   Checkbox,
+  FormControl,
   FormControlLabel,
   FormGroup,
   MenuItem,
@@ -11,7 +12,7 @@ import {
   styled,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 
 const InputRoot = styled('div')(
   ({ theme }) => `
@@ -69,8 +70,8 @@ const FilterItem = (props) => {
   const min = props.data.min;
   const max = props.data.max;
   const [value, setValue] = useState([0, 100]);
-  const [chartFilter, setChartFilter] = useRecoilState(ChartFilter);
-  // console.log(chartFilter);
+  const setChartFilter = useSetRecoilState(ChartFilter);
+  const setPatternFilter = useSetRecoilState(PatternFilter);
 
   const handleChangeSlider = (event, newValue) => {
     setValue(newValue);
@@ -95,17 +96,25 @@ const FilterItem = (props) => {
       }
     }
     if (props.field === 'marketcap') {
-      if (props.filterSelect) {
-        setChartFilter((prev) => ({
+      if (props.setFilterSelect) {
+        if (props.filterSelect) {
+          setChartFilter((prev) => ({
+            ...prev,
+            marketcapMin: Number(newValue[0]).toFixed(1),
+            marketcapMax: Number(newValue[1]).toFixed(1),
+          }));
+        } else {
+          setChartFilter((prev) => ({
+            ...prev,
+            marketcapMin: null,
+            marketcapMax: null,
+          }));
+        }
+      } else {
+        setPatternFilter((prev) => ({
           ...prev,
           marketcapMin: Number(newValue[0]).toFixed(1),
           marketcapMax: Number(newValue[1]).toFixed(1),
-        }));
-      } else {
-        setChartFilter((prev) => ({
-          ...prev,
-          marketcapMin: null,
-          marketcapMax: null,
         }));
       }
     }
@@ -232,16 +241,30 @@ const FilterItem = (props) => {
       }
     }
     if (props.field === 'marketcap') {
-      if (pos === 'min') {
-        setChartFilter((prev) => ({
-          ...prev,
-          marketcapMin: Number(value).toFixed(1),
-        }));
+      if (props.setFilterSelect) {
+        if (pos === 'min') {
+          setChartFilter((prev) => ({
+            ...prev,
+            marketcapMin: Number(value).toFixed(1),
+          }));
+        } else {
+          setChartFilter((prev) => ({
+            ...prev,
+            marketcapMax: Number(value).toFixed(1),
+          }));
+        }
       } else {
-        setChartFilter((prev) => ({
-          ...prev,
-          marketcapMax: Number(value).toFixed(1),
-        }));
+        if (pos === 'min') {
+          setPatternFilter((prev) => ({
+            ...prev,
+            marketcapMin: Number(value).toFixed(1),
+          }));
+        } else {
+          setPatternFilter((prev) => ({
+            ...prev,
+            marketcapMax: Number(value).toFixed(1),
+          }));
+        }
       }
     }
     if (props.field === 'roe') {
@@ -504,14 +527,16 @@ const FilterItem = (props) => {
   }, [props.data.min, props.data.max]);
 
   return (
-    <div className="flex items-center justify-between w-full">
-      <FormGroup>
-        <FormControlLabel
-          control={<Checkbox value={false} onClick={handleClickCheckBox} />}
-          label={props.data.label}
-        />
-      </FormGroup>
-      <div className="flex flex-1 justify-end gap-4">
+    <div className={`flex items-center justify-between ${!props.setFilterSelect ? '' : 'w-full'}`}>
+      {props.setFilterSelect && (
+        <FormGroup>
+          <FormControlLabel
+            control={<Checkbox value={false} onClick={handleClickCheckBox} />}
+            label={props.data.label}
+          />
+        </FormGroup>
+      )}
+      <div className={`flex gap-4 ${!props.setFilterSelect ? '' : 'flex-1 justify-end'}`}>
         {props.day && (
           <div className="flex">
             <Select
@@ -526,13 +551,24 @@ const FilterItem = (props) => {
             </Select>
           </div>
         )}
-        <div className="flex min-w-20">
+        <div className={`flex ${!props.setFilterSelect ? '' : 'min-w-20'}`}>
           <NumberInput
             slots={{
               root: InputRoot,
               input: InputElement,
             }}
-            disabled={!props.filterSelect}
+            sx={{
+              position: 'relative',
+              width: '8rem',
+              height: '2.4rem',
+              '& > .base-NumberInput-input': {
+                position: 'absolute',
+                top: '3px',
+                width: !props.setFilterSelect ? '7.5rem' : '100%',
+              },
+            }}
+            margin="normal"
+            disabled={!props.filterSelect && props.setFilterSelect}
             value={value[0]}
             onInput={(e) => handleChangeValue('min', e)}
             variant="outlined"
@@ -543,9 +579,15 @@ const FilterItem = (props) => {
             }}
           />
         </div>
-        <Box sx={{ width: 360, display: 'flex', alignItems: 'center' }}>
+        <Box
+          sx={{
+            width: props.filterSelect ? 360 : 250,
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
           <AirbnbSlider
-            disabled={!props.filterSelect}
+            disabled={!props.filterSelect && props.setFilterSelect}
             value={value}
             min={min}
             max={max}
@@ -554,13 +596,23 @@ const FilterItem = (props) => {
             onChangeCommitted={handleCommitSlider}
           />
         </Box>
-        <div className="flex min-w-20">
+        <div className={`flex ${!props.setFilterSelect ? 'min-w-5' : 'min-w-20'}`}>
           <NumberInput
             slots={{
               root: InputRoot,
               input: InputElement,
             }}
-            disabled={!props.filterSelect}
+            sx={{
+              position: 'relative',
+              width: '8rem',
+              height: '2.4rem',
+              '& > .base-NumberInput-input': {
+                position: 'absolute',
+                top: '3px',
+                width: '7.5rem',
+              },
+            }}
+            disabled={!props.filterSelect && props.setFilterSelect}
             value={value[1]}
             onInput={(e) => handleChangeValue('max', e)}
             variant="outlined"

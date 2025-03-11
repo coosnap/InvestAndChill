@@ -31,32 +31,6 @@ export default function SortItem(props) {
           })
         );
         break;
-      case 'year':
-        setSortValue((prev) =>
-          [...prev].map((e) => {
-            if (e.field === replaceItem[indexItem].field) {
-              return {
-                ...e,
-                field: 'year',
-                headerName: 'Năm',
-              };
-            } else return e;
-          })
-        );
-        break;
-      case 'quarter':
-        setSortValue((prev) =>
-          [...prev].map((e) => {
-            if (e.field === replaceItem[indexItem].field) {
-              return {
-                ...e,
-                field: 'quarter',
-                headerName: 'Quý',
-              };
-            } else return e;
-          })
-        );
-        break;
       case 'marketcap':
         setSortValue((prev) =>
           [...prev].map((e) => {
@@ -187,12 +161,9 @@ export default function SortItem(props) {
     handleRemove(itemValue);
   };
 
-  console.log('sortValue', sortValue);
-
   const disabledItem = useCallback(
     (option) => {
-      // return (sortValue && sortValue?.some((e) => e.field === option.field)) || false;
-      return false;
+      return (sortValue?.length > 0 && sortValue?.some((e) => e.field === option.field)) || false;
     },
     [fieldValue, sortValue]
   );
@@ -213,11 +184,14 @@ export default function SortItem(props) {
           }}
         >
           {columns &&
-            columns?.map((option, index) => (
-              <MenuItem key={option.field} value={option.field} disabled={disabledItem(option)}>
-                {option.headerName}
-              </MenuItem>
-            ))}
+            columns?.map(
+              (option) =>
+                (option.field !== 'quarter' || option.field !== 'year') && (
+                  <MenuItem key={option.field} value={option.field} disabled={disabledItem(option)}>
+                    {option.headerName}
+                  </MenuItem>
+                )
+            )}
         </Select>
       </FormControl>
       <FormControl>

@@ -33,18 +33,11 @@ const investData = [
 
 function Investment() {
   const navigate = useNavigate();
-  const [index, setIndex] = useState(0);
   // const [isLoading, setIsLoading] = useState(true);
 
   const handleClickCard = (id, path) => {
-    setIndex(id);
-    if (id === index) navigate(path);
+    navigate(path);
   };
-
-  // const mod = (n, m) => {
-  //   let result = n % m;
-  //   return result >= 0 ? result : result + m;
-  // };
 
   // if (isLoading) {
   //   return <Loader />;
@@ -55,7 +48,7 @@ function Investment() {
       <div className="flex justify-center gap-8">
         {investData.map((e) => {
           return (
-            <article
+            <div
               key={e.id}
               onClick={() => handleClickCard(e.id, e.href)}
               className={`w-1/4 flex items-center justify-center cursor-pointer bg-white px-7 vm:my-2 sm:py-4 rounded-box opacity-75`}
@@ -78,7 +71,7 @@ function Investment() {
                   </h6>
                 </div>
               </div>
-            </article>
+            </div>
           );
         })}
       </div>
