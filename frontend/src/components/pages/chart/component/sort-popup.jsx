@@ -2,18 +2,20 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import SwapVertIcon from '@mui/icons-material/SwapVert';
-import { Autocomplete, Dialog, Popover, TextField } from '@mui/material';
-import { useRef, useState } from 'react';
+import { Dialog, Popover, TextField } from '@mui/material';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import SortItem from './sort-item';
+import { useRecoilState } from 'recoil';
+import { SortValue } from '@/store/pattern';
 
 export const SortPopupComponent = (props) => {
-  const { columns } = props;
+  const { columns, tableData, setStringCondition } = props;
+  const [searchValue, setSearchValue] = useState('');
+  const [dataChooseSort, setDataChooseSort] = useState('');
   const [anchorEl, setAnchorEl] = useState(null);
   const [anchorElPopover, setAnchorElPopover] = useState(null);
-  const [sortValue, setSortValue] = useState([
-    { field: 'stockCode', headerName: 'Mã cổ phiếu', adesc: 'asc' },
-    { field: 'year', headerName: 'Năm', adesc: 'asc' },
-  ]);
+
+  const [sortValue, setSortValue] = useRecoilState(SortValue);
 
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popper' : undefined;
@@ -33,8 +35,10 @@ export const SortPopupComponent = (props) => {
   };
 
   const handleRemove = (value) => {
+    let temp = [...sortValue];
     const findItem = sortValue.findIndex((item) => item.headerName === value.headerName);
-    setSortValue(sortValue.splice(findItem - 1, 1));
+    temp.splice(findItem, 1);
+    setSortValue([...temp]);
   };
 
   const handleSort = () => {
@@ -45,6 +49,46 @@ export const SortPopupComponent = (props) => {
     setSortValue(listItemClone);
   };
 
+  const afterSortData = useMemo(() => {
+    let temp = columns?.filter(
+      (item) => sortValue.findIndex((e) => e.headerName === item.headerName) === -1
+    );
+    return temp.map((item) => ({
+      id: item.field,
+      field: item.field,
+      headerName: item.headerName,
+      adesc: 'asc',
+    }));
+  }, [columns, sortValue]);
+
+  useEffect(() => {
+    setDataChooseSort([...afterSortData]);
+  }, [afterSortData]);
+
+  useEffect(() => {
+    let strCond = '';
+    for (let i = 0; i < sortValue.length; i++) {
+      strCond += '&sort=' + sortValue[i].field + ',' + sortValue[i].adesc;
+    }
+    setStringCondition(strCond.replace('stockCode', 'Stock_code'));
+  }, [sortValue]);
+
+  const handleChooseSortItem = (item) => {
+    setSortValue([...sortValue, { field: item.field, headerName: item.headerName, adesc: 'asc' }]);
+    setAnchorElPopover(null);
+    setSearchValue('');
+  };
+
+  const handleRemoveAllSort = () => {
+    setSortValue([{ field: 'stockCode', headerName: 'Mã cổ phiếu', adesc: 'asc' }]);
+  };
+
+  const handleFindItem = (value) => {
+    setSearchValue(value);
+    const findItem = afterSortData.filter((item) => item.headerName.toLowerCase().includes(value));
+    setDataChooseSort(findItem);
+  };
+
   return (
     <div>
       <button
@@ -52,6 +96,7 @@ export const SortPopupComponent = (props) => {
         type="button"
         onClick={handleClick}
         className="border border-gray rounded-full mb-2 p-1"
+        disabled={tableData.length === 0}
       >
         <SwapVertIcon />
       </button>
@@ -87,7 +132,7 @@ export const SortPopupComponent = (props) => {
                 onDragOver={(e) => e.preventDefault()}
               >
                 <DragIndicatorIcon fontSize="small" />
-                <SortItem columns={columns} item={item} handleRemove={handleRemove} />
+                <SortItem item={item} handleRemove={handleRemove} columns={columns} />
               </div>
             ))}
           </div>
@@ -111,23 +156,37 @@ export const SortPopupComponent = (props) => {
               }}
               sx={{
                 '& .MuiPopover-paper': {
-                  top: '275px !important',
-                  left: '143px !important',
+                  top: '148px !important',
+                  left: '470px !important',
                   boxShadow: 'none',
+                  backgroundColor: '#ccc',
+                  maxHeight: '300px',
                 },
               }}
             >
-              <div className="bg-[#ffeea8] h-[200px] p-4">
-                <Autocomplete
-                  disablePortal
+              <div className="px-4 pt-4 bg-[#f9eec1]">
+                <TextField
+                  value={searchValue}
                   size="small"
-                  options={[{ label: 'The Shawshank Redemption', year: 1994 }]}
-                  sx={{ width: 300 }}
-                  renderInput={(params) => <TextField {...params} />}
+                  id="outlined-basic"
+                  variant="outlined"
+                  onChange={(e) => handleFindItem(e.target.value)}
                 />
+                <div className="flex flex-col py-3">
+                  {dataChooseSort &&
+                    dataChooseSort?.map((item, index) => (
+                      <div
+                        className="cursor-pointer hover:bg-[#ffeda3] p-3"
+                        key={item.field}
+                        onClick={() => handleChooseSortItem(item)}
+                      >
+                        {item.headerName}
+                      </div>
+                    ))}
+                </div>
               </div>
             </Popover>
-            <button className="flex items-center text-sm w-[92px]" onClick={() => {}}>
+            <button className="flex items-center text-sm w-[92px]" onClick={handleRemoveAllSort}>
               <DeleteIcon fontSize="small" />
               <span className="ml-1">Delete sort</span>
             </button>

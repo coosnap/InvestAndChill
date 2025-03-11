@@ -22,12 +22,13 @@ import { columns0, columns1, columns2, columns3, columns4 } from './customPT';
 export const Pattern = () => {
   const [value, setValue] = useState(0);
   const [condition, setCondition] = useState({ quarter: '1', year: dayjs() });
-  const [tableData, setTableData] = useState(0);
+  const [tableData, setTableData] = useState([]);
+  const [stringCondition, setStringCondition] = useState('');
 
   const currentYear = dayjs();
 
   const convertData = (data) => {
-    return data.map((e, index) => ({
+    return data?.map((e, index) => ({
       ...e,
       id: index,
       stockCode: e.id.stockCode,
@@ -41,65 +42,40 @@ export const Pattern = () => {
     let temp = [];
     if (value === 0) {
       if (condition.quarter) {
-        result = await getIncreaseCapacity(condition);
-        if (result) {
-          temp = convertData(result);
-        }
-      } else {
-        result = await getIncreaseCapacity();
-        if (result) {
+        result = await getIncreaseCapacity(condition, stringCondition);
+        if (result?.length > 0) {
           temp = convertData(result);
         }
       }
     }
     if (value === 1) {
       if (condition) {
-        result = await getFollowPreSales(condition);
-        if (result) {
-          temp = convertData(result);
-        }
-      } else {
-        result = await getFollowPreSales();
-        if (result) {
+        result = await getFollowPreSales(condition, '&sort=Stock_code,asc');
+        if (result?.length > 0) {
           temp = convertData(result);
         }
       }
     }
     if (value === 2) {
       if (condition) {
-        result = await getOweALot(condition);
-        if (result) {
-          temp = convertData(result);
-        }
-      } else {
-        result = await getOweALot();
-        if (result) {
+        result = await getOweALot(condition, '&sort=Stock_code,asc');
+        if (result?.length > 0) {
           temp = convertData(result);
         }
       }
     }
     if (value === 3) {
       if (condition) {
-        result = await getDepreciationHandling(condition);
-        if (result) {
-          temp = convertData(result);
-        }
-      } else {
-        result = await getDepreciationHandling();
-        if (result) {
+        result = await getDepreciationHandling(condition, '&sort=Stock_code,asc');
+        if (result?.length > 0) {
           temp = convertData(result);
         }
       }
     }
     if (value === 4) {
       if (condition) {
-        result = await getExploitationBelowCapacity(condition);
-        if (result) {
-          temp = convertData(result);
-        }
-      } else {
-        result = await getExploitationBelowCapacity();
-        if (result) {
+        result = await getExploitationBelowCapacity(condition, '&sort=Stock_code,asc');
+        if (result?.length > 0) {
           temp = convertData(result);
         }
       }
@@ -109,7 +85,7 @@ export const Pattern = () => {
 
   useEffect(() => {
     getDataTable();
-  }, [value, condition]);
+  }, [value, condition, stringCondition]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -211,7 +187,11 @@ export const Pattern = () => {
       </Tabs>
       <TabPanel value={value} index={0}>
         <div className="flex items-center gap-4">
-          <SortPopupComponent columns={columns0} />
+          <SortPopupComponent
+            columns={columns0}
+            tableData={tableData}
+            setStringCondition={setStringCondition}
+          />
           <FilterComponent />
         </div>
         <DataGridComponent tableData={tableData} columns={columns0} />

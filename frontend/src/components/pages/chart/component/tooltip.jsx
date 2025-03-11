@@ -39,7 +39,7 @@ export function ItemTooltip() {
             m: 1,
             borderWidth: 0,
             borderRadius: 0.5,
-            backgroundColor: 'rgba(255, 255, 255, 0.2)',
+            backgroundColor: 'rgba(255, 248, 220, 0.4)',
             thead: {
               td: {
                 px: 1,
@@ -63,7 +63,9 @@ export function ItemTooltip() {
                   colSpan={3}
                   style={{ borderWidth: 0, borderBottom: '1px solid rgba(0, 0, 0, 0.12)' }}
                 >
-                  <Typography fontSize={12}>{tooltipData.axisFormattedValue}</Typography>
+                  <Typography fontSize={12} sx={{ fontWeight: 'bold' }}>
+                    {tooltipData.axisFormattedValue}
+                  </Typography>
                 </td>
               </tr>
             </thead>
@@ -81,12 +83,14 @@ export function ItemTooltip() {
                     />
                   </td>
                   <td style={{ borderWidth: 0 }}>
-                    <Typography fontSize={10} fontWeight="light">
+                    <Typography fontSize={10} sx={{ fontWeight: 'bold' }}>
                       {seriesItem.formattedLabel}
                     </Typography>
                   </td>
                   <td style={{ textAlign: 'right', borderWidth: 0 }}>
-                    <Typography fontSize={10}>{seriesItem.formattedValue}</Typography>
+                    <Typography fontSize={10} sx={{ fontWeight: 'bold' }}>
+                      {seriesItem.formattedValue}
+                    </Typography>
                   </td>
                 </tr>
               ))}

@@ -90,7 +90,7 @@ export async function getTitle(code) {
   return;
 }
 
-export async function getIncreaseCapacity(condition) {
+export async function getIncreaseCapacity(condition, str) {
   const response = await axiosInstance.get(
     `${import.meta.env.VITE_REACT_APP_API}/api/filter/giaTangCongSuat${
       condition
@@ -100,7 +100,7 @@ export async function getIncreaseCapacity(condition) {
           ? '?year=' + condition.year.$y
           : '?quarter=' + condition.quarter
         : ''
-    }`
+    }${str}`
   );
   if (response.status === 200) {
     return response.data;

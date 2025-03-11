@@ -44,7 +44,7 @@ export const Filter = () => {
       let temp = tableList.map((e) => ({ ...e, id: e.stockCode }));
       setData({
         columns: [
-          { field: 'stockCode', headerName: 'Stoke Code' },
+          { field: 'stockCode', headerName: 'Mã cổ phiếu' },
           { field: 'pi791', headerName: 'TT DTT YoY (%)', flex: 1, type: 'number' },
           { field: 'pi792', headerName: 'TT DTT vs TB 2 năm YoY (%)', flex: 1, type: 'number' },
           { field: 'pi793', headerName: 'TT DTT vs TB 3 năm YoY (%)', flex: 1, type: 'number' },
@@ -90,7 +90,7 @@ export const Filter = () => {
           />
           <FilterItem
             data={{
-              label: 'MarketCap',
+              label: 'Vốn Hóa',
               min: valueMinMax.marketcapMin,
               max: valueMinMax.marketcapMax,
             }}

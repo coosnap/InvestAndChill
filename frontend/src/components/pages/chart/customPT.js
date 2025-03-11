@@ -101,7 +101,7 @@ export const columns1 = [
   ...columns,
   {
     field: 'pi75',
-    headerName: 'Presales/Sales Traiing',
+    headerName: 'Chiếm dụng vốn/DTT 12T',
     width: '210',
     type: 'number',
     sortable: false,

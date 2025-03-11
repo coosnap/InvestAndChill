@@ -63,11 +63,11 @@ export default function NoStackChart(data) {
           width={props.style.width.animation.to}
           x={
             data.data.yAxis.left.transform
-              ? (props.style.x.animation.to || 0) + 4
+              ? (props.style.x.animation.to || 0) + 4.5
               : props.style.x.animation.to || 0
           }
           y={props.style.y.animation.to || 0}
-          opacity={data.data.yAxis.right.opacity ? 0.7 : 1}
+          opacity={data.data.yAxis.right.opacity ? 0.6 : 1}
         />
       )
     );
@@ -384,7 +384,7 @@ export default function NoStackChart(data) {
                         <div className="w-0.5 h-4 mr-2 bg-white"></div>
                       )}
                       <div className="w-2 h-2 mr-1" style={{ backgroundColor: e.color }}></div>
-                      <span className="text-xs whitespace-nowrap">{e.label}</span>
+                      <span className="text-xs whitespace-nowrap font-bold">{e.label}</span>
                     </div>
                   )
               )}
@@ -398,7 +398,7 @@ export default function NoStackChart(data) {
                         <div className="w-0.5 h-4 mr-2 bg-white"></div>
                       )}
                       <div className="w-2 h-2 mr-1" style={{ backgroundColor: e.color }}></div>
-                      <span className="text-xs whitespace-nowrap">{e.label}</span>
+                      <span className="text-xs whitespace-nowrap font-bold">{e.label}</span>
                     </div>
                   )
               )}
@@ -412,7 +412,7 @@ export default function NoStackChart(data) {
                   <div className="w-0.5 h-4 mr-2 bg-white"></div>
                 )}
                 <div className="w-2 h-2 mr-1" style={{ backgroundColor: e.color }}></div>
-                <span className="text-xs whitespace-nowrap">{e.label}</span>
+                <span className="text-xs whitespace-nowrap font-bold">{e.label}</span>
               </div>
             ))}
           </div>

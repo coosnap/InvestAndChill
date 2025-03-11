@@ -68,25 +68,28 @@ p {
 
 .water-mark::after {
   z-index: 0;
-  content: 'https://investnchil.com';
-  color: red;
-  font-size: 5.5rem;
+  content: 'InvestNChill.com';
+  color: #9b926c;
+  font-size: 3rem;
   position: absolute;
-  top: 14rem;
-  opacity: 0.2;
-  transform: rotate(-35deg);
+  bottom: 1rem;
+  right: 2rem;
+  opacity: 0.3;
+  font-weight: bold;
+  /* transform: rotate(-35deg); */
 }
 
 .water-mark-chart::after {
   z-index: 0;
-  content: 'https://investnchil.com';
-  color: red;
-  font-size: 3.5rem;
+  content: 'InvestNChill.com';
+  color: #a8a390;
+  font-size: 2rem;
   position: absolute;
-  top: 10rem;
-  left: 5rem;
+  top: 5rem;
+  left: 13rem;
   opacity: 0.2;
-  transform: rotate(-25deg);
+  font-weight: bold;
+  /* transform: rotate(-25deg); */
 }
 
 .chart {
