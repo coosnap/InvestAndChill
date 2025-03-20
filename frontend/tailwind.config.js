@@ -22,7 +22,7 @@ export default {
         primary: '#FFF8DC',
         second: '#F3E5AB',
         third: '#AAD6FA',
-        fourth: '#C5F6FA',
+        fourth: '#00264B',
       },
     },
   },

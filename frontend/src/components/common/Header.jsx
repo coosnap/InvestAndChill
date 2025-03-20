@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import AccountBoxRoundedIcon from '@mui/icons-material/AccountBoxRounded';
 import {
   Dialog,
   DialogActions,
@@ -15,12 +16,12 @@ import {
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { Controller, useForm } from 'react-hook-form';
-import { FcReading } from 'react-icons/fc';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { z } from 'zod';
 import { Label } from '../ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
+import KeyboardDoubleArrowUpIcon from '@mui/icons-material/KeyboardDoubleArrowUp';
 
 const passwordSchema = z
   .object({
@@ -253,14 +254,14 @@ function Header() {
   };
 
   return (
-    <div className="navbar flex items-center bg-fourth py-2 sm:px-8 vm:px-2">
+    <div className="navbar flex items-center bg-fourth py-3 sm:px-8 vm:px-2">
       <div className="flex flex-1">
         <a
           href="/invest"
           className="flex items-center text-3xl tracking-tighter font-semibold text-[#DA5800]"
         >
-          <img src="/logo.jpg" width={48} height={48} />
-          <h4 className="ml-3">InvestNChill</h4>
+          {/* <img src="/logo.jpg" width={48} height={48} /> */}
+          <h5 className="text-white">InvestNChill.com</h5>
         </a>
         {pathname.includes('/data') && (
           <div className="ml-4 mt-1 flex items-center gap-6">
@@ -278,15 +279,23 @@ function Header() {
                 }
               }}
             />
-            <a href={'/data/pattern'}>MẪU HÌNH</a>
-            <a href={'/data/filter'}>BỘ LỌC</a>
+            <a className="text-white" href={'/data/pattern'}>
+              MẪU HÌNH
+            </a>
+            <a className="text-white" href={'/data/filter'}>
+              BỘ LỌC
+            </a>
           </div>
         )}
       </div>
       <Popover open={showPop} onOpenChange={setShowPop}>
+        <a href="/product" className="flex items-center text-white mr-2">
+          <KeyboardDoubleArrowUpIcon />
+          <span>Sản phẩm</span>
+        </a>
         <PopoverTrigger asChild>
           <button>
-            <FcReading className="w-[40px] h-[40px] border border-orange-500 rounded-full p-1" />
+            <AccountBoxRoundedIcon fontSize="large" sx={{ color: '#E9E9E9' }} />
           </button>
         </PopoverTrigger>
         <PopoverContent className="w-80 bg-white">

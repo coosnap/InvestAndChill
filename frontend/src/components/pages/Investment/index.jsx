@@ -15,12 +15,12 @@ const investData = [
     title: 'Câu chuyện đầu tư',
     image: '/tag-1.webp',
   },
-  {
-    id: '3',
-    href: '/product',
-    title: 'Sản phẩm dịch vụ',
-    image: '/tag-4.webp',
-  },
+  // {
+  //   id: '3',
+  //   href: '/product',
+  //   title: 'Sản phẩm dịch vụ',
+  //   image: '/tag-4.webp',
+  // },
   // {
   //   id: '4',
   //   href: '/question',
@@ -44,38 +44,45 @@ function Investment() {
   // }
 
   return (
-    <div className="flex justify-center items-center relative mx-auto min-h-[calc(100vh-66px)] bg-primary">
-      <div className="flex justify-center gap-8">
-        {investData.map((e) => {
-          return (
-            <div
-              key={e.id}
-              onClick={() => handleClickCard(e.id, e.href)}
-              className={`w-1/4 flex items-center justify-center cursor-pointer bg-white px-7 vm:my-2 sm:py-4 rounded-box opacity-75`}
-            >
-              <div className="group relative flex flex-col items-center">
-                {e?.icon ? (
-                  <div>
-                    <svg
-                      height="auto"
-                      width="auto"
-                      dangerouslySetInnerHTML={{ __html: e.icon }}
-                    ></svg>
+    <>
+      <div className="flex justify-center mt-10">
+        <div className="flex items-center justify-center w-1/3 min-h-40 bg-[#156082] text-center text-white p-4 rounded-2xl border-2 border-[#052737] text-xl">
+          Chúng tôi chọn tin điều gì?
+        </div>
+      </div>
+      <div className="flex justify-center items-center relative mx-auto min-h-[calc(100vh-166px)] bg-primary">
+        <div className="flex justify-center gap-8">
+          {investData.map((e) => {
+            return (
+              <div
+                key={e.id}
+                onClick={() => handleClickCard(e.id, e.href)}
+                className={`w-1/4 flex items-center justify-center cursor-pointer bg-white px-7 vm:my-2 sm:py-4 rounded-box opacity-75`}
+              >
+                <div className="group relative flex flex-col items-center">
+                  {e?.icon ? (
+                    <div>
+                      <svg
+                        height="auto"
+                        width="auto"
+                        dangerouslySetInnerHTML={{ __html: e.icon }}
+                      ></svg>
+                    </div>
+                  ) : (
+                    <img src={e?.image} alt="" />
+                  )}
+                  <div className="mt-5 pb-8 text-center">
+                    <h6 className="uppercase font-semibold text-gray-900 group-hover:text-gray-600">
+                      {e.title}
+                    </h6>
                   </div>
-                ) : (
-                  <img src={e?.image} alt="" />
-                )}
-                <div className="mt-5 pb-8 text-center">
-                  <h6 className="uppercase font-semibold text-gray-900 group-hover:text-gray-600">
-                    {e.title}
-                  </h6>
                 </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

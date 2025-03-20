@@ -19,6 +19,7 @@ import { Charts } from './components/pages/chart';
 import { ToastContainer } from 'react-toastify';
 import { Pattern } from './components/pages/chart/pattern';
 import { Filter } from './components/pages/chart/filter';
+import Footer from './components/common/Footer';
 
 const Admin = React.lazy(() => import('./components/admin/Admin'));
 const Buy = React.lazy(() => import('./components/pages/Buy'));
@@ -91,6 +92,7 @@ const routes = [
     element: (
       <PrivateRoute>
         <Investment />
+        <Footer />
       </PrivateRoute>
     ),
   },
