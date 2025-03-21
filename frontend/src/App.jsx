@@ -6,9 +6,6 @@ import { Outlet, useLocation, useRoutes } from 'react-router-dom';
 import './App.css';
 import { ThemeProvider } from './ThemeProvider';
 import Header from './components/common/Header';
-import Category from './components/pages/Category';
-import Investment from './components/pages/Investment';
-import Detail from './components/pages/detail';
 import Login from './components/pages/login';
 import AdminRoute from './components/router/admin-route';
 import PrivateRoute from './components/router/private-route';
@@ -19,8 +16,11 @@ import { Charts } from './components/pages/chart';
 import { ToastContainer } from 'react-toastify';
 import { Pattern } from './components/pages/chart/pattern';
 import { Filter } from './components/pages/chart/filter';
-import Footer from './components/common/Footer';
 
+const Detail = React.lazy(() => import('./components/pages/detail'));
+const Investment = React.lazy(() => import('./components/pages/Investment'));
+const Category = React.lazy(() => import('./components/pages/Category'));
+const Footer = React.lazy(() => import('./components/common/Footer'));
 const Admin = React.lazy(() => import('./components/admin/Admin'));
 const Buy = React.lazy(() => import('./components/pages/Buy'));
 const NotFound = React.lazy(() => import('./components/pages/NotFound'));
@@ -43,7 +43,9 @@ const routes = [
     path: '/',
     element: (
       <PublicRoute>
-        <Login />
+        <Suspense>
+          <Login />
+        </Suspense>
       </PublicRoute>
     ),
   },
@@ -91,8 +93,10 @@ const routes = [
     path: '/invest',
     element: (
       <PrivateRoute>
-        <Investment />
-        <Footer />
+        <Suspense>
+          <Investment />
+          <Footer />
+        </Suspense>
       </PrivateRoute>
     ),
   },
@@ -100,7 +104,9 @@ const routes = [
     path: '/category',
     element: (
       <PrivateRoute>
-        <Category />
+        <Suspense>
+          <Category />
+        </Suspense>
       </PrivateRoute>
     ),
   },
@@ -128,7 +134,9 @@ const routes = [
     path: '/detail',
     element: (
       <PrivateRoute>
-        <Detail />
+        <Suspense>
+          <Detail />
+        </Suspense>
       </PrivateRoute>
     ),
   },

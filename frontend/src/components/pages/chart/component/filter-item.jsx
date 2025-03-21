@@ -1,9 +1,8 @@
-import { ChartFilter, PatternFilter } from '@/store/chart';
+import { ChartFilter } from '@/store/chart';
 import { Unstable_NumberInput as NumberInput } from '@mui/base';
 import {
   Box,
   Checkbox,
-  FormControl,
   FormControlLabel,
   FormGroup,
   MenuItem,
@@ -67,14 +66,15 @@ const AirbnbSlider = styled(Slider)(({ theme }) => ({
 }));
 
 const FilterItem = (props) => {
-  const min = props.data.min;
-  const max = props.data.max;
   const [value, setValue] = useState([0, 100]);
   const setChartFilter = useSetRecoilState(ChartFilter);
-  const setPatternFilter = useSetRecoilState(PatternFilter);
 
   const handleChangeSlider = (event, newValue) => {
-    setValue(newValue);
+    if (!props.type) {
+      setValue(newValue);
+    } else {
+      props.setValue(newValue);
+    }
   };
 
   const handleCommitSlider = (event, newValue) => {
@@ -96,25 +96,17 @@ const FilterItem = (props) => {
       }
     }
     if (props.field === 'marketcap') {
-      if (props.setFilterSelect) {
-        if (props.filterSelect) {
-          setChartFilter((prev) => ({
-            ...prev,
-            marketcapMin: Number(newValue[0]).toFixed(1),
-            marketcapMax: Number(newValue[1]).toFixed(1),
-          }));
-        } else {
-          setChartFilter((prev) => ({
-            ...prev,
-            marketcapMin: null,
-            marketcapMax: null,
-          }));
-        }
-      } else {
-        setPatternFilter((prev) => ({
+      if (!props.type) {
+        setChartFilter((prev) => ({
           ...prev,
           marketcapMin: Number(newValue[0]).toFixed(1),
           marketcapMax: Number(newValue[1]).toFixed(1),
+        }));
+      } else {
+        setChartFilter((prev) => ({
+          ...prev,
+          marketcapMin: null,
+          marketcapMax: null,
         }));
       }
     }
@@ -241,7 +233,7 @@ const FilterItem = (props) => {
       }
     }
     if (props.field === 'marketcap') {
-      if (props.setFilterSelect) {
+      if (!props.type) {
         if (pos === 'min') {
           setChartFilter((prev) => ({
             ...prev,
@@ -255,15 +247,9 @@ const FilterItem = (props) => {
         }
       } else {
         if (pos === 'min') {
-          setPatternFilter((prev) => ({
-            ...prev,
-            marketcapMin: Number(value).toFixed(1),
-          }));
+          props.setValue((prev) => [Number(value).toFixed(1), prev[1]]);
         } else {
-          setPatternFilter((prev) => ({
-            ...prev,
-            marketcapMax: Number(value).toFixed(1),
-          }));
+          props.setValue((prev) => [prev[0], Number(value).toFixed(1)]);
         }
       }
     }
@@ -569,7 +555,7 @@ const FilterItem = (props) => {
             }}
             margin="normal"
             disabled={!props.filterSelect && props.setFilterSelect}
-            value={value[0]}
+            value={!props.type ? value[0] : props.value[0]}
             onInput={(e) => handleChangeValue('min', e)}
             variant="outlined"
             onKeyDown={(e) => {
@@ -581,16 +567,16 @@ const FilterItem = (props) => {
         </div>
         <Box
           sx={{
-            width: props.filterSelect ? 360 : 250,
+            width: props.type === 'pattern' ? 360 : 250,
             display: 'flex',
             alignItems: 'center',
           }}
         >
           <AirbnbSlider
             disabled={!props.filterSelect && props.setFilterSelect}
-            value={value}
-            min={min}
-            max={max}
+            value={!props.type ? value : props.value}
+            min={props.data.min}
+            max={props.data.max}
             step={1}
             onChange={handleChangeSlider}
             onChangeCommitted={handleCommitSlider}
@@ -613,7 +599,7 @@ const FilterItem = (props) => {
               },
             }}
             disabled={!props.filterSelect && props.setFilterSelect}
-            value={value[1]}
+            value={!props.type ? value[1] : props.value[1]}
             onInput={(e) => handleChangeValue('max', e)}
             variant="outlined"
             size="small"

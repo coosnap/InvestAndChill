@@ -6,7 +6,6 @@ import {
   getMinMaxValue,
   getOweALot,
 } from '@/api/chart';
-import { PatternFilter } from '@/store/chart';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
@@ -17,7 +16,6 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
-import { useRecoilValue } from 'recoil';
 import { DataGridComponent } from './component/data-grid';
 import FilterItem from './component/filter-item';
 import { SortPopupComponent } from './component/sort-popup';
@@ -29,8 +27,7 @@ export const Pattern = () => {
   const [tableData, setTableData] = useState([]);
   const [stringCondition, setStringCondition] = useState('');
   const [valueMinMax, setValueMinMax] = useState({});
-
-  const patternFilter = useRecoilValue(PatternFilter);
+  const [valueSlider, setValueSlider] = useState([0, 100]);
 
   const currentYear = dayjs();
 
@@ -49,7 +46,7 @@ export const Pattern = () => {
     let temp = [];
     if (value === 0) {
       if (condition.quarter) {
-        result = await getIncreaseCapacity(condition, stringCondition, patternFilter);
+        result = await getIncreaseCapacity(condition, stringCondition, valueSlider);
         if (result?.length > 0) {
           temp = convertData(result);
         }
@@ -57,7 +54,7 @@ export const Pattern = () => {
     }
     if (value === 1) {
       if (condition) {
-        result = await getFollowPreSales(condition, '&sort=Stock_code,asc');
+        result = await getFollowPreSales(condition, stringCondition, valueSlider);
         if (result?.length > 0) {
           temp = convertData(result);
         }
@@ -65,7 +62,7 @@ export const Pattern = () => {
     }
     if (value === 2) {
       if (condition) {
-        result = await getOweALot(condition, '&sort=Stock_code,asc');
+        result = await getOweALot(condition, stringCondition, valueSlider);
         if (result?.length > 0) {
           temp = convertData(result);
         }
@@ -73,7 +70,7 @@ export const Pattern = () => {
     }
     if (value === 3) {
       if (condition) {
-        result = await getDepreciationHandling(condition, '&sort=Stock_code,asc');
+        result = await getDepreciationHandling(condition, stringCondition, valueSlider);
         if (result?.length > 0) {
           temp = convertData(result);
         }
@@ -81,7 +78,7 @@ export const Pattern = () => {
     }
     if (value === 4) {
       if (condition) {
-        result = await getExploitationBelowCapacity(condition, '&sort=Stock_code,asc');
+        result = await getExploitationBelowCapacity(condition, stringCondition, valueSlider);
         if (result?.length > 0) {
           temp = convertData(result);
         }
@@ -98,13 +95,16 @@ export const Pattern = () => {
   useEffect(() => {
     (async () => {
       let result = await getMinMaxValue();
-      setValueMinMax(result);
+      if (result) {
+        setValueMinMax(result);
+        setValueSlider([result.marketcapMin, result.marketcapMax]);
+      }
     })();
   }, []);
 
   useEffect(() => {
     getDataTable();
-  }, [value, condition, stringCondition, patternFilter]);
+  }, [value, condition, stringCondition, valueSlider]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -185,6 +185,9 @@ export const Pattern = () => {
             max: valueMinMax.marketcapMax,
           }}
           field="marketcap"
+          type="pattern"
+          value={valueSlider}
+          setValue={setValueSlider}
         />
       </div>
     );

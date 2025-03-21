@@ -2,10 +2,8 @@ import { getFilterChart, getMinMaxValue } from '@/api/chart';
 import { ChartFilter } from '@/store/chart';
 import { DataGrid } from '@mui/x-data-grid';
 import { useEffect, useState } from 'react';
-import { useRecoilValue } from 'recoil';
 import FilterItem from './component/filter-item';
-
-// const paginationModel = { page: 0, pageSize: 10 };
+import { useRecoilValue } from 'recoil';
 
 export const Filter = () => {
   const [day, setDay] = useState(1);
@@ -310,7 +308,7 @@ export const Filter = () => {
           />
         </div>
         <div className="flex justify-center mt-4">
-          <div style={{ height: 430, width: '90%' }}>
+          <div style={{ height: 420, width: '90%' }}>
             <DataGrid
               {...data}
               columnBufferPx={50}

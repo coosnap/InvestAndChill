@@ -11,8 +11,8 @@ export const columns = [
     valueGetter: (value, row) =>
       `${
         !row.marketcap?.toString()?.includes('.')
-          ? row.marketcap.toLocaleString() + '.0'
-          : row.marketcap.toLocaleString()
+          ? row.marketcap?.toLocaleString() + '.0'
+          : row.marketcap?.toLocaleString()
       }`,
   },
   {
@@ -24,10 +24,10 @@ export const columns = [
     valueGetter: (value, row) =>
       `${
         !row.pb?.toString()?.includes('.')
-          ? row.pb.toLocaleString() + '.00'
-          : row.pb.toString()?.split('.')[1]?.length === 1
-          ? row.pb.toLocaleString() + '0'
-          : row.pb.toLocaleString()
+          ? row?.pb?.toLocaleString() + '.00'
+          : row?.pb?.toString()?.split('.')[1]?.length === 1
+          ? row?.pb?.toLocaleString() + '0'
+          : row?.pb?.toLocaleString()
       }`,
   },
   {
@@ -39,10 +39,10 @@ export const columns = [
     valueGetter: (value, row) =>
       `${
         !row.pe?.toString()?.includes('.')
-          ? row.pe.toLocaleString() + '.00'
-          : row.pe.toString()?.split('.')[1]?.length === 1
-          ? row.pe.toLocaleString() + '0'
-          : row.pe.toLocaleString()
+          ? row?.pe?.toLocaleString() + '.00'
+          : row?.pe?.toString()?.split('.')[1]?.length === 1
+          ? row?.pe?.toLocaleString() + '0'
+          : row?.pe?.toLocaleString()
       }`,
   },
   {
@@ -54,8 +54,8 @@ export const columns = [
     valueGetter: (value, row) =>
       `${
         !row.roe?.toString()?.includes('.')
-          ? row.roe.toLocaleString() + '.0'
-          : row.roe.toLocaleString()
+          ? row?.roe?.toLocaleString() + '.0'
+          : row?.roe?.toLocaleString()
       }`,
   },
   {
@@ -66,10 +66,10 @@ export const columns = [
     valueGetter: (value, row) =>
       `${
         !row.evebitda?.toString()?.includes('.')
-          ? row.evebitda.toLocaleString() + '.00'
-          : row.evebitda.toString()?.split('.')[1]?.length === 1
-          ? row.evebitda.toLocaleString() + '0'
-          : row.evebitda.toLocaleString()
+          ? row?.evebitda?.toLocaleString() + '.00'
+          : row?.evebitda?.toString()?.split('.')[1]?.length === 1
+          ? row?.evebitda?.toLocaleString() + '0'
+          : row?.evebitda?.toLocaleString()
       }`,
   },
   {
@@ -81,8 +81,8 @@ export const columns = [
     valueGetter: (value, row) =>
       `${
         !row.divyld?.toString()?.includes('.')
-          ? row.divyld.toLocaleString() + '.0'
-          : row.divyld.toLocaleString()
+          ? row?.divyld?.toLocaleString() + '.0'
+          : row?.divyld?.toLocaleString()
       }`,
   },
 ];
@@ -98,8 +98,8 @@ export const columns0 = [
     valueGetter: (value, row) =>
       `${
         !row.pi77?.toString()?.includes('.')
-          ? row.pi77.toLocaleString() + '.0'
-          : row.pi77.toLocaleString()
+          ? row?.pi77?.toLocaleString() + '.0'
+          : row?.pi77?.toLocaleString()
       }`,
   },
   {
@@ -111,8 +111,8 @@ export const columns0 = [
     valueGetter: (value, row) =>
       `${
         !row.pi78?.toString()?.includes('.')
-          ? row.pi78.toLocaleString() + '.0'
-          : row.pi78.toLocaleString()
+          ? row?.pi78?.toLocaleString() + '.0'
+          : row?.pi78?.toLocaleString()
       }`,
   },
 ];
@@ -128,8 +128,8 @@ export const columns1 = [
     valueGetter: (value, row) =>
       `${
         !row.pi75?.toString()?.includes('.')
-          ? row.pi75.toLocaleString() + '.0'
-          : row.pi75.toLocaleString()
+          ? row?.pi75?.toLocaleString() + '.0'
+          : row?.pi75?.toLocaleString()
       }`,
   },
   // {
@@ -153,8 +153,8 @@ export const columns2 = [
     valueGetter: (value, row) =>
       `${
         !row.pi68?.toString()?.includes('.')
-          ? row.pi68.toLocaleString() + '.0'
-          : row.pi68.toLocaleString()
+          ? row?.pi68?.toLocaleString() + '.0'
+          : row?.pi68?.toLocaleString()
       }`,
   },
   {
@@ -166,8 +166,8 @@ export const columns2 = [
     valueGetter: (value, row) =>
       `${
         !row.pi69?.toString()?.includes('.')
-          ? row.pi69.toLocaleString() + '.0'
-          : row.pi69.toLocaleString()
+          ? row?.pi69?.toLocaleString() + '.0'
+          : row?.pi69?.toLocaleString()
       }`,
   },
 ];
@@ -183,8 +183,8 @@ export const columns3 = [
     valueGetter: (value, row) =>
       `${
         !row.pi70?.toString()?.includes('.')
-          ? row.pi70.toLocaleString() + '.0'
-          : row.pi70.toLocaleString()
+          ? row?.pi70?.toLocaleString() + '.0'
+          : row?.pi70?.toLocaleString()
       }`,
   },
   {
@@ -196,8 +196,8 @@ export const columns3 = [
     valueGetter: (value, row) =>
       `${
         !row.pi73?.toString()?.includes('.')
-          ? row.pi73.toLocaleString() + '.0'
-          : row.pi73.toLocaleString()
+          ? row?.pi73?.toLocaleString() + '.0'
+          : row?.pi73?.toLocaleString()
       }`,
   },
 ];
@@ -213,8 +213,8 @@ export const columns4 = [
     valueGetter: (value, row) =>
       `${
         !row.pi793?.toString()?.includes('.')
-          ? row.pi793.toLocaleString() + '.0'
-          : row.pi793.toLocaleString()
+          ? row?.pi793?.toLocaleString() + '.0'
+          : row?.pi793?.toLocaleString()
       }`,
   },
 ];

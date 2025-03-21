@@ -14,7 +14,7 @@ export const SortPopupComponent = (props) => {
   const [dataChooseSort, setDataChooseSort] = useState('');
   const [anchorEl, setAnchorEl] = useState(null);
   const [anchorElPopover, setAnchorElPopover] = useState(null);
-  const [openDialog, setOpenDialog] = useState(true);
+  const [openDialog, setOpenDialog] = useState(false);
 
   const [sortValue, setSortValue] = useRecoilState(SortValue);
 

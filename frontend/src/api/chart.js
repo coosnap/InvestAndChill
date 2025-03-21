@@ -91,7 +91,10 @@ export async function getTitle(code) {
 }
 
 export async function getIncreaseCapacity(condition, str, patternFilter) {
-  let marketcapStr = `&marketcapmin=${patternFilter.marketcapMin}&marketcapmax=${patternFilter.marketcapMax}`;
+  let marketcapStr =
+    patternFilter[0] &&
+    patternFilter[1] &&
+    `&marketcapmin=${patternFilter[0]}&marketcapmax=${patternFilter[1]}`;
   const response = await axiosInstance.get(
     `${import.meta.env.VITE_REACT_APP_API}/api/filter/giaTangCongSuat${
       condition
@@ -101,7 +104,7 @@ export async function getIncreaseCapacity(condition, str, patternFilter) {
           ? '?year=' + condition.year.$y
           : '?quarter=' + condition.quarter
         : ''
-    }${str}${marketcapStr}`
+    }${str}${marketcapStr || ''}`
   );
   if (response.status === 200) {
     return response.data;
@@ -109,7 +112,11 @@ export async function getIncreaseCapacity(condition, str, patternFilter) {
   return;
 }
 
-export async function getFollowPreSales(condition) {
+export async function getFollowPreSales(condition, str, patternFilter) {
+  let marketcapStr =
+    patternFilter[0] &&
+    patternFilter[1] &&
+    `&marketcapmin=${patternFilter[0]}&marketcapmax=${patternFilter[1]}`;
   const response = await axiosInstance.get(
     `${import.meta.env.VITE_REACT_APP_API}/api/filter/theoDoiPreSales${
       condition
@@ -119,7 +126,7 @@ export async function getFollowPreSales(condition) {
           ? '?year=' + condition.year.$y
           : '?quarter=' + condition.quarter
         : ''
-    }`
+    }${str}${marketcapStr || ''}`
   );
   if (response.status === 200) {
     return response.data;
@@ -127,7 +134,11 @@ export async function getFollowPreSales(condition) {
   return;
 }
 
-export async function getOweALot(condition) {
+export async function getOweALot(condition, str, patternFilter) {
+  let marketcapStr =
+    patternFilter[0] &&
+    patternFilter[1] &&
+    `&marketcapmin=${patternFilter[0]}&marketcapmax=${patternFilter[1]}`;
   const response = await axiosInstance.get(
     `${import.meta.env.VITE_REACT_APP_API}/api/filter/noNhieuNhungSomChiTra${
       condition
@@ -137,7 +148,7 @@ export async function getOweALot(condition) {
           ? '?year=' + condition.year.$y
           : '?quarter=' + condition.quarter
         : ''
-    }`
+    }${str}${marketcapStr || ''}`
   );
   if (response.status === 200) {
     return response.data;
@@ -145,7 +156,11 @@ export async function getOweALot(condition) {
   return;
 }
 
-export async function getDepreciationHandling(condition) {
+export async function getDepreciationHandling(condition, str, patternFilter) {
+  let marketcapStr =
+    patternFilter[0] &&
+    patternFilter[1] &&
+    `&marketcapmin=${patternFilter[0]}&marketcapmax=${patternFilter[1]}`;
   const response = await axiosInstance.get(
     `${import.meta.env.VITE_REACT_APP_API}/api/filter/xuLyKhauHaoNang${
       condition
@@ -155,7 +170,7 @@ export async function getDepreciationHandling(condition) {
           ? '?year=' + condition.year.$y
           : '?quarter=' + condition.quarter
         : ''
-    }`
+    }${str}${marketcapStr || ''}`
   );
   if (response.status === 200) {
     return response.data;
@@ -163,7 +178,11 @@ export async function getDepreciationHandling(condition) {
   return;
 }
 
-export async function getExploitationBelowCapacity(condition) {
+export async function getExploitationBelowCapacity(condition, str, patternFilter) {
+  let marketcapStr =
+    patternFilter[0] &&
+    patternFilter[1] &&
+    `&marketcapmin=${patternFilter[0]}&marketcapmax=${patternFilter[1]}`;
   const response = await axiosInstance.get(
     `${import.meta.env.VITE_REACT_APP_API}/api/filter/khaiThacDuoiCongSuat${
       condition
@@ -173,7 +192,7 @@ export async function getExploitationBelowCapacity(condition) {
           ? '?year=' + condition.year.$y
           : '?quarter=' + condition.quarter
         : ''
-    }`
+    }${str}${marketcapStr || ''}`
   );
   if (response.status === 200) {
     return response.data;

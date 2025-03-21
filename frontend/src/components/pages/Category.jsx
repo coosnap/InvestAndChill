@@ -78,7 +78,9 @@ function ListCompany() {
                         </div>
                         <div className="ml-4">
                           <h6 className="font-semibold">{e.symbol}</h6>
-                          <p>{e.companyName}</p>
+                          <p className="max-w-[350px] overflow-hidden text-ellipsis text-nowrap">
+                            {e.companyName}
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -133,7 +135,9 @@ function ListCompany() {
                         </div>
                         <div className="ml-4">
                           <h6 className="font-semibold">{e.symbol}</h6>
-                          <p>{e.companyName}</p>
+                          <p className="max-w-[350px] overflow-hidden text-ellipsis text-nowrap">
+                            {e.companyName}
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -188,7 +192,9 @@ function ListCompany() {
                         </div>
                         <div className="ml-4">
                           <h6 className="font-semibold">{e.symbol}</h6>
-                          <p>{e.companyName}</p>
+                          <p className="max-w-[350px] overflow-hidden text-ellipsis text-nowrap">
+                            {e.companyName}
+                          </p>
                         </div>
                       </div>
                     </div>

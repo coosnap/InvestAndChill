@@ -24,11 +24,3 @@ export const ChartFilter = atom({
     netcashmcMax: null,
   },
 });
-
-export const PatternFilter = atom({
-  key: 'PatternFilter',
-  default: {
-    marketcapMin: null,
-    marketcapMax: null,
-  },
-});
