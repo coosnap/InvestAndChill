@@ -3,34 +3,24 @@ import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import SwapVertIcon from '@mui/icons-material/SwapVert';
-import { Dialog, Popover, TextField } from '@mui/material';
+import { Popover, TextField } from '@mui/material';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import SortItem from './sort-item';
 
-export const SortPopupComponent = (props) => {
+const SortPopupComponent = (props) => {
   const { columns, tableData, setStringCondition } = props;
   const [searchValue, setSearchValue] = useState('');
   const [dataChooseSort, setDataChooseSort] = useState('');
-  const [anchorEl, setAnchorEl] = useState(null);
   const [anchorElPopover, setAnchorElPopover] = useState(null);
   const [openDialog, setOpenDialog] = useState(false);
 
   const [sortValue, setSortValue] = useRecoilState(SortValue);
-
-  const open = Boolean(anchorEl);
-  const id = open ? 'simple-popper' : undefined;
-
   const openPopover = Boolean(anchorElPopover);
   const idPopover = openPopover ? 'simple-popover' : undefined;
 
   const dragItem = useRef(null);
   const draggedOverItem = useRef(null);
-
-  const handleClick = (event) => {
-    setAnchorEl(anchorEl ? null : event.currentTarget);
-    setOpenDialog(!openDialog);
-  };
 
   const handleClickPopover = (event) => {
     setAnchorElPopover(anchorElPopover ? null : event.currentTarget);
@@ -76,7 +66,8 @@ export const SortPopupComponent = (props) => {
   }, [sortValue]);
 
   const handleChooseSortItem = (item) => {
-    setSortValue([...sortValue, { field: item.field, headerName: item.headerName, adesc: 'asc' }]);
+    let temp = [...sortValue, { field: item.field, headerName: item.headerName, adesc: 'asc' }];
+    setSortValue(temp);
     setAnchorElPopover(null);
     setSearchValue('');
   };
@@ -92,35 +83,20 @@ export const SortPopupComponent = (props) => {
   };
 
   return (
-    <div>
+    <div className="relative">
       <button
-        aria-describedby={id}
         type="button"
-        onClick={handleClick}
+        onClick={() => setOpenDialog(!openDialog)}
         className="border border-gray rounded-full mb-2 p-1"
         disabled={tableData.length === 0}
       >
         <SwapVertIcon />
       </button>
-      <Dialog
-        id={id}
-        open={openDialog}
-        anchorel={anchorEl}
-        hideBackdrop
-        sx={{
-          '& .MuiDialog-container': {
-            justifyContent: 'flex-start',
-            alignItems: 'flex-start',
-          },
-
-          '& .MuiPaper-root': {
-            position: 'absolute',
-            top: '115px',
-            right: 0,
-            boxShadow: 'none',
-            backgroundColor: 'rgba(255, 248, 220, 0.7)',
-          },
-        }}
+      <div
+        className={`dialog-popup absolute top-8 -right-0 z-50 shadow-none ${
+          openDialog ? 'visible' : 'invisible'
+        }`}
+        style={{ backgroundColor: 'rgba(255, 248, 220, 0.8)' }}
       >
         <div className="rounded">
           <div className="pt-3">
@@ -140,11 +116,7 @@ export const SortPopupComponent = (props) => {
             ))}
           </div>
           <div className="flex flex-col ml-4 gap-2">
-            <button
-              className="flex items-center text-sm w-[92px]"
-              aria-describedby={id}
-              onClick={handleClickPopover}
-            >
+            <button className="flex items-center text-sm w-[92px]" onClick={handleClickPopover}>
               <AddIcon fontSize="small" />
               <span className="ml-1">Add sort</span>
             </button>
@@ -161,11 +133,11 @@ export const SortPopupComponent = (props) => {
                 '& .MuiPopover-paper': {
                   position: 'relative',
                   top: '148px !important',
-                  left: '57% !important',
+                  left: '54% !important',
                   boxShadow: 'none',
                   backgroundColor: 'rgba(255, 248, 220, 0.7)',
                   maxHeight: '300px',
-                  maxWidth: '300px',
+                  maxWidth: '280px',
                 },
               }}
             >
@@ -191,16 +163,15 @@ export const SortPopupComponent = (props) => {
                 </div>
               </div>
             </Popover>
-            <button className="flex items-center text-sm w-[92px]" onClick={handleRemoveAllSort}>
+            <button className="flex items-center text-sm w-[100px]" onClick={handleRemoveAllSort}>
               <DeleteIcon fontSize="small" />
               <span className="ml-1">Delete sort</span>
             </button>
           </div>
-          <div className="flex justify-end mr-4 pb-4 cursor-pointer" onClick={handleClick}>
-            Close
-          </div>
         </div>
-      </Dialog>
+      </div>
     </div>
   );
 };
+
+export default SortPopupComponent;

@@ -7,7 +7,7 @@ export const DataGridComponent = (props) => {
   const paginationModel = { page: 0, pageSize: 100 };
 
   return (
-    <div className="h-[510px]">
+    <div className="h-[510px] min-w-[calc(100vw-390px)]">
       <DataGrid
         rows={tableData}
         columns={columns}

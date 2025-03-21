@@ -4,12 +4,11 @@ import { FormControl, MenuItem, Select } from '@mui/material';
 import { useCallback, useState } from 'react';
 import { useRecoilState } from 'recoil';
 
-export default function SortItem(props) {
+function SortItem(props) {
   const { item, handleRemove, columns } = props;
 
   const [fieldValue, setFieldValue] = useState(item.field);
   const [itemValue, setItemValue] = useState(item.adesc);
-
   const [sortValue, setSortValue] = useRecoilState(SortValue);
 
   const handleChangeHeaderName = (event) => {
@@ -217,3 +216,5 @@ export default function SortItem(props) {
     </div>
   );
 }
+
+export default SortItem;

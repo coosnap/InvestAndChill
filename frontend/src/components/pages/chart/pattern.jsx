@@ -15,11 +15,12 @@ import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import dayjs from 'dayjs';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { DataGridComponent } from './component/data-grid';
 import FilterItem from './component/filter-item';
-import { SortPopupComponent } from './component/sort-popup';
+import SortPopupComponent from './component/sort-popup';
 import { columns0, columns1, columns2, columns3, columns4 } from './customPT';
+import Loader from '@/components/common/Loader';
 
 export const Pattern = () => {
   const [value, setValue] = useState(0);
@@ -28,6 +29,7 @@ export const Pattern = () => {
   const [stringCondition, setStringCondition] = useState('');
   const [valueMinMax, setValueMinMax] = useState({});
   const [valueSlider, setValueSlider] = useState([0, 100]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const currentYear = dayjs();
 
@@ -42,6 +44,7 @@ export const Pattern = () => {
   };
 
   const getDataTable = async () => {
+    setIsLoading(true);
     let result = [];
     let temp = [];
     if (value === 0) {
@@ -86,9 +89,11 @@ export const Pattern = () => {
     }
     if (temp.message) {
       setTableData([]);
+      setIsLoading(false);
       return;
     } else {
       setTableData(temp);
+      setIsLoading(false);
     }
   };
 
@@ -140,6 +145,7 @@ export const Pattern = () => {
   const FilterComponent = () => {
     return (
       <div className="flex items-end gap-4 mb-4">
+        {isLoading && <Loader />}
         <FormControl sx={{ width: '6rem' }} size="small">
           <InputLabel
             id="quarter-select-label"
@@ -193,6 +199,26 @@ export const Pattern = () => {
     );
   };
 
+  const columnFilter0 = useMemo(() => {
+    return columns0.filter((e) => e.field !== 'quarter' && e.field !== 'year');
+  }, [columns0]);
+
+  const columnFilter1 = useMemo(() => {
+    return columns1.filter((e) => e.field !== 'quarter' && e.field !== 'year');
+  }, [columns1]);
+
+  const columnFilter2 = useMemo(() => {
+    return columns2.filter((e) => e.field !== 'quarter' && e.field !== 'year');
+  }, [columns2]);
+
+  const columnFilter3 = useMemo(() => {
+    return columns3.filter((e) => e.field !== 'quarter' && e.field !== 'year');
+  }, [columns3]);
+
+  const columnFilter4 = useMemo(() => {
+    return columns4.filter((e) => e.field !== 'quarter' && e.field !== 'year');
+  }, [columns4]);
+
   return (
     <Box
       sx={{
@@ -222,7 +248,7 @@ export const Pattern = () => {
           <FilterComponent />
           <div className="flex flex-1 justify-end">
             <SortPopupComponent
-              columns={columns0.filter((e) => e.field !== 'quarter' && e.field !== 'year')}
+              columns={columnFilter0}
               tableData={tableData}
               setStringCondition={setStringCondition}
             />
@@ -231,19 +257,55 @@ export const Pattern = () => {
         <DataGridComponent tableData={tableData} columns={columns0} />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <FilterComponent />
+        <div className="flex items-center gap-4">
+          <FilterComponent />
+          <div className="flex flex-1 justify-end">
+            <SortPopupComponent
+              columns={columnFilter1}
+              tableData={tableData}
+              setStringCondition={setStringCondition}
+            />
+          </div>
+        </div>
         <DataGridComponent tableData={tableData} columns={columns1} />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <FilterComponent />
+        <div className="flex items-center gap-4">
+          <FilterComponent />
+          <div className="flex flex-1 justify-end">
+            <SortPopupComponent
+              columns={columnFilter2}
+              tableData={tableData}
+              setStringCondition={setStringCondition}
+            />
+          </div>
+        </div>
         <DataGridComponent tableData={tableData} columns={columns2} />
       </TabPanel>
       <TabPanel value={value} index={3}>
-        <FilterComponent />
+        <div className="flex items-center gap-4">
+          <FilterComponent />
+          <div className="flex flex-1 justify-end">
+            <SortPopupComponent
+              columns={columnFilter3}
+              tableData={tableData}
+              setStringCondition={setStringCondition}
+            />
+          </div>
+        </div>
         <DataGridComponent tableData={tableData} columns={columns3} />
       </TabPanel>
       <TabPanel value={value} index={4}>
-        <FilterComponent />
+        <div className="flex items-center gap-4">
+          <FilterComponent />
+          <div className="flex flex-1 justify-end">
+            <SortPopupComponent
+              columns={columnFilter4}
+              tableData={tableData}
+              setStringCondition={setStringCondition}
+            />
+          </div>
+        </div>
         <DataGridComponent tableData={tableData} columns={columns4} />
       </TabPanel>
     </Box>

@@ -254,7 +254,7 @@ function Header() {
   };
 
   return (
-    <div className="navbar flex items-center bg-fourth py-3 sm:px-8 vm:px-2">
+    <div className="navbar flex items-center bg-fourth pt-1 pb-2 sm:px-8 vm:px-2">
       <div className="flex flex-1">
         <a
           href="/invest"
