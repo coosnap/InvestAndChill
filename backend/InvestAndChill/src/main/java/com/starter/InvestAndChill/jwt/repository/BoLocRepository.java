@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -104,8 +105,18 @@ public class BoLocRepository {
 		return list;
 	}
 	
-	public List<FilterGiaTangCongSuatDTO> findGiaTangCongSuat(String year,String quarter,String orderQuery) {
+	public List<FilterGiaTangCongSuatDTO> findGiaTangCongSuat(String year,String quarter,String orderQuery, String marketcapMin, String marketcapMax) {
 		String sql = queryLoader.getQuery("giaTangCongSuat");
+		
+		Double markCapMin = Optional.ofNullable(marketcapMin).map(Double::valueOf).orElse(null);
+		Double markCapMax = Optional.ofNullable(marketcapMax).map(Double::valueOf).orElse(null);
+		if (markCapMin != null) {
+			sql += " and marketcap >=  " + markCapMin;
+		}
+		if (markCapMax != null) {
+			sql += " and marketcap <=  " + markCapMax;
+		}
+		
 		if (!orderQuery.isEmpty()) {
 			sql += orderQuery;
 		}
@@ -115,8 +126,18 @@ public class BoLocRepository {
 		return namedParameterJdbcTemplate.query(sql, params, new FilterGiaTangCongSuatDTORowMapper());
 	}
 	
-	public List<FilterTheoDoiPreSalesDTO> findTheoDoiPreSales(String year,String quarter,String orderQuery) {
+	public List<FilterTheoDoiPreSalesDTO> findTheoDoiPreSales(String year,String quarter,String orderQuery,String marketcapMin, String marketcapMax) {
 		String sql = queryLoader.getQuery("theoDoiPreSales");
+		
+		Double markCapMin = Optional.ofNullable(marketcapMin).map(Double::valueOf).orElse(null);
+		Double markCapMax = Optional.ofNullable(marketcapMax).map(Double::valueOf).orElse(null);
+		if (markCapMin != null) {
+			sql += " and marketcap >=  " + markCapMin;
+		}
+		if (markCapMax != null) {
+			sql += " and marketcap <=  " + markCapMax;
+		}
+		
 		if (!orderQuery.isEmpty()) {
 			sql += orderQuery;
 		}
@@ -126,8 +147,18 @@ public class BoLocRepository {
 		return namedParameterJdbcTemplate.query(sql, params, new FilterTheoDoiPreSalesDTORowMapper());
 	}
 	
-	public List<FilterNoNhieuSomChiTraDTO> findNoNhieuSomChiTra(String year,String quarter,String orderQuery) {
+	public List<FilterNoNhieuSomChiTraDTO> findNoNhieuSomChiTra(String year,String quarter,String orderQuery,String marketcapMin, String marketcapMax) {
 		String sql = queryLoader.getQuery("noNhieuSomChiTra");
+		
+		Double markCapMin = Optional.ofNullable(marketcapMin).map(Double::valueOf).orElse(null);
+		Double markCapMax = Optional.ofNullable(marketcapMax).map(Double::valueOf).orElse(null);
+		if (markCapMin != null) {
+			sql += " and marketcap >=  " + markCapMin;
+		}
+		if (markCapMax != null) {
+			sql += " and marketcap <=  " + markCapMax;
+		}
+		
 		if (!orderQuery.isEmpty()) {
 			sql += orderQuery;
 		}
@@ -137,8 +168,18 @@ public class BoLocRepository {
 		return namedParameterJdbcTemplate.query(sql, params, new FilterNoNhieuSomChiTraDTORowMapper());
 	}
 	
-	public List<FilterXuLyKhauHaoNangDTO> findXuLyKhauHaoNang(String year,String quarter,String orderQuery) {
+	public List<FilterXuLyKhauHaoNangDTO> findXuLyKhauHaoNang(String year,String quarter,String orderQuery,String marketcapMin, String marketcapMax) {
 		String sql = queryLoader.getQuery("xuLyKhauHaoNang");
+		
+		Double markCapMin = Optional.ofNullable(marketcapMin).map(Double::valueOf).orElse(null);
+		Double markCapMax = Optional.ofNullable(marketcapMax).map(Double::valueOf).orElse(null);
+		if (markCapMin != null) {
+			sql += " and marketcap >=  " + markCapMin;
+		}
+		if (markCapMax != null) {
+			sql += " and marketcap <=  " + markCapMax;
+		}
+		
 		if (!orderQuery.isEmpty()) {
 			sql += orderQuery;
 		}
@@ -149,8 +190,16 @@ public class BoLocRepository {
 	}
 	
 	public List<FilterKhaiThacDuoiCongSuatDTO> findKhaiThacDuoiCongSuat(String yearm1,String quarterm1,String yearm2,String quarterm2,String yearm3,String quarterm3,String yearm4,String quarterm4,
-																		String orderQuery) {
+																		String orderQuery,String marketcapMin, String marketcapMax) {
 		String sql = queryLoader.getQuery("khaiThacDuoiCongSuat");
+		Double markCapMin = Optional.ofNullable(marketcapMin).map(Double::valueOf).orElse(null);
+		Double markCapMax = Optional.ofNullable(marketcapMax).map(Double::valueOf).orElse(null);
+		if (markCapMin != null) {
+			sql += " and marketcap >=  " + markCapMin;
+		}
+		if (markCapMax != null) {
+			sql += " and marketcap <=  " + markCapMax;
+		}
 		if (!orderQuery.isEmpty()) {
 			sql += orderQuery;
 		}

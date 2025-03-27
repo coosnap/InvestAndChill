@@ -5,11 +5,11 @@ import com.starter.InvestAndChill.jwt.models.ReportKey;
 public class FilterResponse{
 	protected ReportKey id;
 
-	public Double getMarketcap() {
+	public Integer getMarketcap() {
 		return marketcap;
 	}
 
-	public void setMarketcap(Double marketcap) {
+	public void setMarketcap(Integer marketcap) {
 		this.marketcap = marketcap;
 	}
 
@@ -61,7 +61,7 @@ public class FilterResponse{
 		this.id = id;
 	}
 	
-	protected Double marketcap;
+	protected Integer marketcap;
 	protected Double roe;
 	protected Double pe;
 	protected Double pb;

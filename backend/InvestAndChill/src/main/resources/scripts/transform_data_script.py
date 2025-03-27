@@ -360,11 +360,15 @@ def phi_tai_chinh_calculate_data(rs: List[Dict], combine_data: List[Dict]) -> Li
             item['p_i_51'] = item['p_b_52'] - i51_2 if item['p_b_52'] is not None and i51_2 is not None else None
 
             item['p_i_52'] = (item['p_i_39'] or 0) + (item['p_i_50'] or 0) + (item['p_i_51'] or 0)
+            # item['p_i_52'] = sum(v for v in [item['p_i_39'], item['p_i_50'], item['p_i_51']] if v and v > 0) 
 
-            item['p_i_53'] = item['p_i_33'] - item['p_i_52'] if item['p_i_33'] is not None and item['p_i_52'] is not None else None
 
-            # item['p_i_54'] = extract_sum_previous_quarters(item, combine_data, 'p_i_33', 20)
-            # item['p_i_55'] = extract_sum_previous_quarters(item, combine_data, 'p_i_53', 20)
+            # item['p_i_53'] = item['p_i_33'] - item['p_i_52'] if item['p_i_33'] is not None and item['p_i_52'] is not None else None
+            item['p_i_53'] = (item['p_i_33'] - item['p_i_52']) if (item['p_i_33'] is not None and 
+                                                       item['p_i_52'] is not None and item['p_i_52'] > 0) else None # p_i_52-CAPEX cần là dương thì mới trừ còn nếu là âm (thanh lý or lỗi dữ liệu) thì sẽ thành cộng gây sai sót
+
+            # item['p_i_54'] = extract_sum_previous_quarters(item, combine_data, 'p_i_33', 20) # tinh o backend
+            # item['p_i_55'] = extract_sum_previous_quarters(item, combine_data, 'p_i_53', 20) # tinh o backend
 
             item['p_i_56'] = extract_sum_previous_quarters(item, combine_data, 'p_i_7')
             item['p_i_57'] = item['p_i_56'] / item['p_i_1'] if item['p_i_56'] is not None and item['p_i_1'] != 0 and item['p_i_1'] is not None else None
@@ -500,8 +504,12 @@ def phi_tai_chinh_calculate_data(rs: List[Dict], combine_data: List[Dict]) -> Li
             item['p_i_51'] = i_51_2 - i_51_3 if i_51_2 is not None and i_51_3 is not None else None
 
             item['p_i_52'] = (item['p_i_39'] or 0) + (item['p_i_50'] or 0) + (item['p_i_51'] or 0)
+            # item['p_i_52'] = sum(v for v in [item['p_i_39'], item['p_i_50'], item['p_i_51']] if v and v > 0) 
 
-            item['p_i_53'] = item['p_i_33'] - item['p_i_52'] if item['p_i_33'] is not None and item['p_i_52'] is not None else None
+            # item['p_i_53'] = item['p_i_33'] - item['p_i_52'] if item['p_i_33'] is not None and item['p_i_52'] is not None else None
+            item['p_i_53'] = (item['p_i_33'] - item['p_i_52']) if (item['p_i_33'] is not None and 
+                                                       item['p_i_52'] is not None and item['p_i_52'] > 0) else None # p_i_52-CAPEX cần là dương thì mới trừ còn nếu là âm (thanh lý or lỗi dữ liệu) thì sẽ thành cộng gây sai sót
+
 
             # item['p_i_54'] = extract_sum_previous_years(item, combine_data, 'p_i_33', 9)
             # item['p_i_55'] = extract_sum_previous_years(item, combine_data, 'p_i_53', 9)
@@ -544,7 +552,7 @@ def ngan_hang_calculate_data(rs: List[Dict], combine_data: List[Dict]):
             item['b_i_13'] = (item['b_b_52'] or 0) + (item['b_b_55'] or 0) + (item['b_b_57'] or 0) + (item['b_b_58'] or 0)
             item['b_i_15'] = (item['b_i_1'] or 0) + (item['b_b_3'] or 0) + (item['b_b_13'] or 0) + (item['b_i_2'] or 0)
             item['b_i_17'] = (item['b_f_121'] or 0) + (item['b_f_124'] or 0) + (item['b_f_125'] or 0)
-            item['b_i_18'] = (item['b_b_13'] or 0) + (item['b_f_6'] or 0) + (item['b_f_97'] or 0) + (item['b_f_101'] or 0)
+            item['b_i_18'] = (item['b_b_13'] or 0) + (item['b_f_6'] or 0) + (item['b_f_97'] or 0) + (item['b_f_112'] or 0)
             item['b_i_19'] = (item['b_b_64'] or 0) - (item['b_b_76'] or 0)
 
             i20_1 = extract_sum_previous_quarters(item, combine_data, 'b_i_19') or 0
@@ -608,7 +616,7 @@ def ngan_hang_calculate_data(rs: List[Dict], combine_data: List[Dict]):
             item['b_i_13'] = (item['b_b_52'] or 0) + (item['b_b_55'] or 0) + (item['b_b_57'] or 0) + (item['b_b_58'] or 0)
             item['b_i_15'] = (item['b_i_1'] or 0) + (item['b_b_3'] or 0) + (item['b_b_13'] or 0) + (item['b_i_2'] or 0)
             item['b_i_17'] = (item['b_f_121'] or 0) + (item['b_f_124'] or 0) + (item['b_f_125'] or 0)
-            item['b_i_18'] = (item['b_b_13'] or 0) + (item['b_f_6'] or 0) + (item['b_f_97'] or 0) + (item['b_f_101'] or 0)
+            item['b_i_18'] = (item['b_b_13'] or 0) + (item['b_f_6'] or 0) + (item['b_f_97'] or 0) + (item['b_f_112'] or 0)
             item['b_i_19'] = (item['b_b_64'] or 0) - (item['b_b_76'] or 0)
 
             i20_1 = extract_sum_previous_years(item, combine_data, 'b_i_19') or 0

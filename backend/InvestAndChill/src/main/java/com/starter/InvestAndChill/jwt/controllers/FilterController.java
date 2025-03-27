@@ -62,7 +62,8 @@ public class FilterController {
 	
 	@GetMapping("/giaTangCongSuat")
 	public ResponseEntity<?> filterGiaTangCongSuat(@RequestParam(required = false,name = "quarter") String quarter,@RequestParam(required = false,name = "year") String year,
-			@RequestParam(required = false,name = "sort") String[] sort) {
+			@RequestParam(required = false,name = "sort") String[] sort,
+			@RequestParam(required = false,name = "marketcapmin") String marketcapMin,@RequestParam(required = false,name = "marketcapmax") String marketcapMax) {
 		List<FilterGiaTangCongSuatDTO> listfilter = new ArrayList<FilterGiaTangCongSuatDTO>();
 		String currentYear = "";
 		String currentQuarter = "";
@@ -75,7 +76,7 @@ public class FilterController {
 			currentQuarter = Constants.currentQuarter;
 		}
 		
-		listfilter =  boLocRepository.findGiaTangCongSuat(currentYear, currentQuarter, CalculatorUtils.convertSortToQueryString(sort));
+		listfilter =  boLocRepository.findGiaTangCongSuat(currentYear, currentQuarter, CalculatorUtils.convertSortToQueryString(sort),marketcapMin,marketcapMax);
 		
 		if (listfilter.isEmpty()) {
 			return new ResponseEntity<>(new MessageResponse("Data is empty"), HttpStatus.OK);
@@ -89,7 +90,7 @@ public class FilterController {
 			response.setId(new ReportKey(report.getStockCode(),report.getQuarter(),report.getYear()));	
 			response.setDivyld(RoundNumber.lamTron(report.getDivyld()));
 			response.setEvebitda(RoundNumber.lamTronLan(report.getEvebitda()));
-			response.setMarketcap(RoundNumber.lamTronLan(report.getMarketcap()));
+			response.setMarketcap(report.getMarketcap().intValue());
 			response.setPb(RoundNumber.lamTronLan(report.getPb()));
 			response.setPe(RoundNumber.lamTronLan(report.getPe()));
 			response.setRoe(RoundNumber.lamTronPhanTram(report.getRoe()));
@@ -103,7 +104,8 @@ public class FilterController {
 	
 	@GetMapping("/theoDoiPreSales")
 	public ResponseEntity<?> filterTheoDoiPreSales(@RequestParam(required = false,name = "quarter") String quarter,@RequestParam(required = false,name = "year") String year,
-			@RequestParam(required = false,name = "sort") String[] sort) {
+			@RequestParam(required = false,name = "sort") String[] sort,
+			@RequestParam(required = false,name = "marketcapmin") String marketcapMin,@RequestParam(required = false,name = "marketcapmax") String marketcapMax) {
 		List<FilterTheoDoiPreSalesDTO> listfilter = new ArrayList<FilterTheoDoiPreSalesDTO>();
 		
 		String currentYear = "";
@@ -117,7 +119,7 @@ public class FilterController {
 			currentQuarter = Constants.currentQuarter;
 		}
 		
-		listfilter =  boLocRepository.findTheoDoiPreSales(currentYear, currentQuarter,CalculatorUtils.convertSortToQueryString(sort));
+		listfilter =  boLocRepository.findTheoDoiPreSales(currentYear, currentQuarter,CalculatorUtils.convertSortToQueryString(sort),marketcapMin,marketcapMax);
 		
 		if (listfilter.isEmpty()) {
 			return new ResponseEntity<>(new MessageResponse("Data is empty"), HttpStatus.OK);
@@ -132,7 +134,7 @@ public class FilterController {
 			response.setId(new ReportKey(report.getStockCode(),report.getQuarter(),report.getYear()));	
 			response.setDivyld(RoundNumber.lamTron(report.getDivyld()));
 			response.setEvebitda(RoundNumber.lamTronLan(report.getEvebitda()));
-			response.setMarketcap(RoundNumber.lamTron(report.getMarketcap()));
+			response.setMarketcap(report.getMarketcap().intValue());
 			response.setPb(RoundNumber.lamTronLan(report.getPb()));
 			response.setPe(RoundNumber.lamTronLan(report.getPe()));
 			response.setRoe(RoundNumber.lamTronPhanTram(report.getRoe()));
@@ -145,7 +147,8 @@ public class FilterController {
 	
 	@GetMapping("/noNhieuNhungSomChiTra")
 	public ResponseEntity<?> filterNoNhieuNhungSomChiTra(@RequestParam(required = false,name = "quarter") String quarter,@RequestParam(required = false,name = "year") String year,
-			@RequestParam(required = false,name = "sort") String[] sort) {
+			@RequestParam(required = false,name = "sort") String[] sort,
+			@RequestParam(required = false,name = "marketcapmin") String marketcapMin,@RequestParam(required = false,name = "marketcapmax") String marketcapMax) {
 		List<FilterNoNhieuSomChiTraDTO> listfilter = new ArrayList<FilterNoNhieuSomChiTraDTO>();
 		
 		String currentYear = "";
@@ -159,7 +162,7 @@ public class FilterController {
 			currentQuarter = Constants.currentQuarter;
 		}
 		
-		listfilter =  boLocRepository.findNoNhieuSomChiTra(currentYear, currentQuarter,CalculatorUtils.convertSortToQueryString(sort));
+		listfilter =  boLocRepository.findNoNhieuSomChiTra(currentYear, currentQuarter,CalculatorUtils.convertSortToQueryString(sort),marketcapMin,marketcapMax);
 		
 		if (listfilter.isEmpty()) {
 			return new ResponseEntity<>(new MessageResponse("Data is empty"), HttpStatus.OK);
@@ -174,7 +177,7 @@ public class FilterController {
 			response.setId(new ReportKey(report.getStockCode(),report.getQuarter(),report.getYear()));	
 			response.setDivyld(RoundNumber.lamTron(report.getDivyld()));
 			response.setEvebitda(RoundNumber.lamTronLan(report.getEvebitda()));
-			response.setMarketcap(RoundNumber.lamTron(report.getMarketcap()));
+			response.setMarketcap(report.getMarketcap().intValue());
 			response.setPb(RoundNumber.lamTronLan(report.getPb()));
 			response.setPe(RoundNumber.lamTronLan(report.getPe()));
 			response.setRoe(RoundNumber.lamTronPhanTram(report.getRoe()));
@@ -189,7 +192,8 @@ public class FilterController {
 	
 	@GetMapping("/xuLyKhauHaoNang")
 	public ResponseEntity<?> filterxuLyKhauHaoNang(@RequestParam(required = false,name = "sort") String[] sort,
-			@RequestParam(required = false,name = "quarter") String quarter,@RequestParam(required = false,name = "year") String year) {
+			@RequestParam(required = false,name = "quarter") String quarter,@RequestParam(required = false,name = "year") String year,
+			@RequestParam(required = false,name = "marketcapmin") String marketcapMin,@RequestParam(required = false,name = "marketcapmax") String marketcapMax) {
 		List<FilterXuLyKhauHaoNangDTO> listfilter = new ArrayList<FilterXuLyKhauHaoNangDTO>();
 		
 		String currentYear = "";
@@ -203,7 +207,7 @@ public class FilterController {
 			currentQuarter = Constants.currentQuarter;
 		}
 		
-		listfilter =  boLocRepository.findXuLyKhauHaoNang(currentYear, currentQuarter,CalculatorUtils.convertSortToQueryString(sort));
+		listfilter =  boLocRepository.findXuLyKhauHaoNang(currentYear, currentQuarter,CalculatorUtils.convertSortToQueryString(sort),marketcapMin,marketcapMax);
 		
 		if (listfilter.isEmpty()) {
 			return new ResponseEntity<>(new MessageResponse("Data is empty"), HttpStatus.OK);
@@ -218,7 +222,7 @@ public class FilterController {
 			response.setId(new ReportKey(report.getStockCode(),report.getQuarter(),report.getYear()));	
 			response.setDivyld(RoundNumber.lamTron(report.getDivyld()));
 			response.setEvebitda(RoundNumber.lamTronLan(report.getEvebitda()));
-			response.setMarketcap(RoundNumber.lamTron(report.getMarketcap()));
+			response.setMarketcap(report.getMarketcap().intValue());
 			response.setPb(RoundNumber.lamTronLan(report.getPb()));
 			response.setPe(RoundNumber.lamTronLan(report.getPe()));
 			response.setRoe(RoundNumber.lamTronPhanTram(report.getRoe()));
@@ -233,7 +237,8 @@ public class FilterController {
 	
 	@GetMapping("/khaiThacDuoiCongSuat")
 	public ResponseEntity<?> filterKhaiThacDuoiCongSuat(@RequestParam(required = false,name = "sort") String[] sort,
-			@RequestParam(required = false,name = "quarter") String quarter,@RequestParam(required = false,name = "year") String year) {
+			@RequestParam(required = false,name = "quarter") String quarter,@RequestParam(required = false,name = "year") String year,
+			@RequestParam(required = false,name = "marketcapmin") String marketcapMin,@RequestParam(required = false,name = "marketcapmax") String marketcapMax) {
 		List<FilterKhaiThacDuoiCongSuatDTO> listfilter = new ArrayList<FilterKhaiThacDuoiCongSuatDTO>();
 		
 		String currentYear = "";
@@ -264,7 +269,7 @@ public class FilterController {
 		listfilter =  boLocRepository.findKhaiThacDuoiCongSuat(firstEntry1.getKey().toString(), firstEntry1.getValue().toString(),
 				firstEntry2.getKey().toString(), firstEntry2.getValue().toString(),
 				firstEntry3.getKey().toString(), firstEntry3.getValue().toString(),
-				firstEntry4.getKey().toString(), firstEntry4.getValue().toString(),CalculatorUtils.convertSortToQueryString(sort));
+				firstEntry4.getKey().toString(), firstEntry4.getValue().toString(),CalculatorUtils.convertSortToQueryString(sort),marketcapMin,marketcapMax);
 		
 		if (listfilter.isEmpty()) {
 			return new ResponseEntity<>(new MessageResponse("Data is empty"), HttpStatus.OK);
@@ -278,7 +283,7 @@ public class FilterController {
 			response.setId(new ReportKey(report.getStockCode(),currentQuarter,currentYear));	
 			response.setDivyld(RoundNumber.lamTron(report.getDivyld()));
 			response.setEvebitda(RoundNumber.lamTronLan(report.getEvebitda()));
-			response.setMarketcap(RoundNumber.lamTron(report.getMarketcap()));
+			response.setMarketcap(report.getMarketcap().intValue());
 			response.setPb(RoundNumber.lamTronLan(report.getPb()));
 			response.setPe(RoundNumber.lamTronLan(report.getPe()));
 			response.setRoe(RoundNumber.lamTronPhanTram(report.getRoe()));
