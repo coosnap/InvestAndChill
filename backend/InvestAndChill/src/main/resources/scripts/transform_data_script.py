@@ -364,8 +364,11 @@ def phi_tai_chinh_calculate_data(rs: List[Dict], combine_data: List[Dict]) -> Li
 
 
             # item['p_i_53'] = item['p_i_33'] - item['p_i_52'] if item['p_i_33'] is not None and item['p_i_52'] is not None else None
-            item['p_i_53'] = (item['p_i_33'] - item['p_i_52']) if (item['p_i_33'] is not None and 
-                                                       item['p_i_52'] is not None and item['p_i_52'] > 0) else None # p_i_52-CAPEX cần là dương thì mới trừ còn nếu là âm (thanh lý or lỗi dữ liệu) thì sẽ thành cộng gây sai sót
+            item['p_i_53'] = (
+                None if item['p_i_33'] is None else
+                item['p_i_33'] if item['p_i_52'] is None or item['p_i_52'] <= 0 else
+                item['p_i_33'] - item['p_i_52']
+            ) # p_i_52-CAPEX cần là dương thì mới trừ còn nếu là âm (thanh lý or lỗi dữ liệu) thì sẽ thành cộng gây sai sót
 
             # item['p_i_54'] = extract_sum_previous_quarters(item, combine_data, 'p_i_33', 20) # tinh o backend
             # item['p_i_55'] = extract_sum_previous_quarters(item, combine_data, 'p_i_53', 20) # tinh o backend
@@ -507,9 +510,11 @@ def phi_tai_chinh_calculate_data(rs: List[Dict], combine_data: List[Dict]) -> Li
             # item['p_i_52'] = sum(v for v in [item['p_i_39'], item['p_i_50'], item['p_i_51']] if v and v > 0) 
 
             # item['p_i_53'] = item['p_i_33'] - item['p_i_52'] if item['p_i_33'] is not None and item['p_i_52'] is not None else None
-            item['p_i_53'] = (item['p_i_33'] - item['p_i_52']) if (item['p_i_33'] is not None and 
-                                                       item['p_i_52'] is not None and item['p_i_52'] > 0) else None # p_i_52-CAPEX cần là dương thì mới trừ còn nếu là âm (thanh lý or lỗi dữ liệu) thì sẽ thành cộng gây sai sót
-
+            item['p_i_53'] = (
+                None if item['p_i_33'] is None else
+                item['p_i_33'] if item['p_i_52'] is None or item['p_i_52'] <= 0 else
+                item['p_i_33'] - item['p_i_52']
+            ) # p_i_52-CAPEX cần là dương thì mới trừ còn nếu là âm (thanh lý or lỗi dữ liệu) thì sẽ thành cộng gây sai sót
 
             # item['p_i_54'] = extract_sum_previous_years(item, combine_data, 'p_i_33', 9)
             # item['p_i_55'] = extract_sum_previous_years(item, combine_data, 'p_i_53', 9)
