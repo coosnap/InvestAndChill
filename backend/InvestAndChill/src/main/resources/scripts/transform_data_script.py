@@ -25,7 +25,7 @@ from sqlalchemy import VARCHAR, MetaData, inspect, create_engine, text, Column, 
 db_config = {
     'username': 'postgres',
     'password': 'investchill123',
-    'host': 'localhost',
+    'host': '103.1.239.154',
     'port': '5432',
     'database': 'investnchilldb'
 }
