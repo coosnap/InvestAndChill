@@ -13,10 +13,9 @@ export async function signIn(data) {
     body: JSON.stringify(authData),
   });
   if (response.ok) {
-    const responseBody = await response.json();
-    return responseBody;
+    return await response.json();
   }
-  return;
+  return null;
 }
 
 export async function signUp(data) {
@@ -26,6 +25,7 @@ export async function signUp(data) {
     password: data.password,
     role: ['user'],
   };
+
   const response = await fetch(`${import.meta.env.VITE_REACT_APP_API}/api/auth/signup`, {
     method: 'POST',
     headers: {
@@ -40,7 +40,7 @@ export async function signUp(data) {
 }
 
 export async function refreshTokenAPI(refreshToken) {
-  const response = await axiosInstance.post('/api/auth/refreshtoken', { refreshToken });
+  const response = await axiosInstance.post('/api/auth/refreshtoken', {refreshToken});
   console.log('response', response);
   if (response.status === 200) {
     return response;

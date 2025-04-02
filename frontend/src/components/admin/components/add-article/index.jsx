@@ -4,16 +4,16 @@ import {
   insertArticle,
   updateArticle,
 } from '@/api/article';
-import { getStockAll } from '@/api/stock';
+import {getStockAll} from '@/api/stock';
 import Loader from '@/components/common/Loader';
-import { TabDefault } from '@/store/common';
-import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
+import {TabDefault} from '@/store/common';
+import {Button, FormControl, InputLabel, MenuItem, Select, TextField} from '@mui/material';
 import JoditEditor from 'jodit-react';
-import { useEffect, useRef, useState } from 'react';
-import { useSetRecoilState } from 'recoil';
+import {useEffect, useRef, useState} from 'react';
+import {useSetRecoilState} from 'recoil';
 
-import { useParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import {useParams} from 'react-router-dom';
+import {toast} from 'react-toastify';
 import './style.scss';
 
 export const AddArticleEditor = () => {
@@ -116,7 +116,7 @@ export const AddArticleEditor = () => {
     };
     if (articleId) {
       try {
-        let result = await updateArticle({ ...formData, id: articleId });
+        let result = await updateArticle({...formData, id: articleId});
         if (result) {
           await saveTypeAndStock(article);
         }
@@ -125,7 +125,7 @@ export const AddArticleEditor = () => {
         setIsLoading(false);
       }
     } else {
-      let data = { ...article, content: content };
+      let data = {...article, content: content};
       try {
         let result = await insertArticle(data);
         if (result) {
@@ -172,26 +172,26 @@ export const AddArticleEditor = () => {
   }, []);
 
   const sizeData = [
-    { id: 'A', symbol: 'A. Overview' },
-    { id: 'A1', symbol: '1. Biz Model' },
-    { id: 'A1a', symbol: 'a. Biz Model' },
-    { id: 'A1b', symbol: 'b. Market Size n Position' },
-    { id: 'A2', symbol: '2. Industry View' },
-    { id: 'A2a', symbol: 'a. Đặc tính' },
-    { id: 'A2b', symbol: 'b. Mức độ cạnh tranh' },
-    { id: 'A2c', symbol: 'c. Wining Model' },
-    { id: 'A3', symbol: '3. Competitive Analysis' },
-    { id: 'A3a', symbol: 'a. Phân tích - Chứng minh' },
-    { id: 'A3b', symbol: 'b. Company Adventure' },
-    { id: 'A3c', symbol: 'c. View Fact' },
-    { id: 'A4', symbol: '4. Expand Scale' },
-    { id: 'A4a', symbol: 'a. Tập trung lợi thế/knowhow sẵn có' },
-    { id: 'A4b', symbol: 'b. Mở rộng chuỗi giá trị' },
-    { id: 'A5', symbol: '5. Governance Analysis' },
-    { id: 'A6', symbol: '6. Đánh giá triển vọng' },
-    { id: 'A7', symbol: '7. Rủi ro' },
-    { id: 'B', symbol: 'B. Cập nhật Đánh giá DN' },
-    { id: 'C', symbol: 'C. Cập nhật Đánh giá Ngành' },
+    {id: 'A', symbol: 'A. Overview'},
+    {id: 'A1', symbol: '1. Biz Model'},
+    {id: 'A1a', symbol: 'a. Biz Model'},
+    {id: 'A1b', symbol: 'b. Market Size n Position'},
+    {id: 'A2', symbol: '2. Industry View'},
+    {id: 'A2a', symbol: 'a. Đặc tính'},
+    {id: 'A2b', symbol: 'b. Mức độ cạnh tranh'},
+    {id: 'A2c', symbol: 'c. Wining Model'},
+    {id: 'A3', symbol: '3. Competitive Analysis'},
+    {id: 'A3a', symbol: 'a. Phân tích - Chứng minh'},
+    {id: 'A3b', symbol: 'b. Company Adventure'},
+    {id: 'A3c', symbol: 'c. View Fact'},
+    {id: 'A4', symbol: '4. Expand Scale'},
+    {id: 'A4a', symbol: 'a. Tập trung lợi thế/knowhow sẵn có'},
+    {id: 'A4b', symbol: 'b. Mở rộng chuỗi giá trị'},
+    {id: 'A5', symbol: '5. Governance Analysis'},
+    {id: 'A6', symbol: '6. Đánh giá triển vọng'},
+    {id: 'A7', symbol: '7. Rủi ro'},
+    {id: 'B', symbol: 'B. Cập nhật Đánh giá DN'},
+    {id: 'C', symbol: 'C. Cập nhật Đánh giá Ngành'},
   ];
 
   const imageHandler = async (e) => {
@@ -267,7 +267,7 @@ export const AddArticleEditor = () => {
 
   return (
     <div className="mt-8 flex justify-center pb-8">
-      {isLoading && <Loader />}
+      {isLoading && <Loader/>}
       <div className="min-w-[362px] w-[362px] mr-8">
         <div className="flex gap-4 mb-4">
           <div>
@@ -279,7 +279,7 @@ export const AddArticleEditor = () => {
                 className="bg-white min-w-[150px]"
                 value={article.stockId || ''}
                 label="Stoke"
-                onChange={(e) => setArticle((prev) => ({ ...prev, stockId: e.target.value }))}
+                onChange={(e) => setArticle((prev) => ({...prev, stockId: e.target.value}))}
               >
                 {stokes &&
                   stokes.map((e) => (
@@ -299,7 +299,7 @@ export const AddArticleEditor = () => {
                 className="bg-white w-[196px]"
                 value={article.label || ''}
                 label="Label"
-                onChange={(e) => setArticle((prev) => ({ ...prev, label: e.target.value }))}
+                onChange={(e) => setArticle((prev) => ({...prev, label: e.target.value}))}
               >
                 {sizeData.map((e) => (
                   <MenuItem
@@ -324,11 +324,11 @@ export const AddArticleEditor = () => {
             placeholder="Tiêu đề"
             type="text"
             size="small"
-            onChange={(e) => setArticle((prev) => ({ ...prev, title: e.target.value }))}
+            onChange={(e) => setArticle((prev) => ({...prev, title: e.target.value}))}
           />
           <Button
             variant="contained"
-            sx={{ width: '190px' }}
+            sx={{width: '190px'}}
             size="small"
             onClick={() => setOpenUploadFile(true)}
           >
@@ -343,7 +343,7 @@ export const AddArticleEditor = () => {
             placeholder="Url"
             type="text"
             size="small"
-            onChange={(e) => setArticle((prev) => ({ ...prev, url: e.target.value }))}
+            onChange={(e) => setArticle((prev) => ({...prev, url: e.target.value}))}
           />
         </div>
         <div className="text-editor">
@@ -365,7 +365,7 @@ export const AddArticleEditor = () => {
         </div>
       </div>
       <div className="min-w-[1000px] w-[1000px] max-h-[500px] p-6 box-border border bg-second overflow-y-auto">
-        <div dangerouslySetInnerHTML={{ __html: content }} />
+        <div dangerouslySetInnerHTML={{__html: content}}/>
       </div>
       {openUploadFile && (
         <>
@@ -375,13 +375,13 @@ export const AddArticleEditor = () => {
               <div className="flex justify-center">
                 <Button variant="contained" component="label" className="w-[190px]">
                   Upload File
-                  <input type="file" hidden accept="image/*" onChange={imageHandler} />
+                  <input type="file" hidden accept="image/*" onChange={imageHandler}/>
                 </Button>
               </div>
               <div className="flex items-center">
                 <TextField
                   value={pathImage || ''}
-                  sx={{ height: '40px', marginRight: '8px' }}
+                  sx={{height: '40px', marginRight: '8px'}}
                   className="w-full bg-white"
                   placeholder="Image Url"
                   type="text"
@@ -396,7 +396,7 @@ export const AddArticleEditor = () => {
               </div>
             </div>
             <div className="flex justify-center mt-6">
-              <img width={400} src={pathImage || ''} alt="image" />
+              <img width={400} src={pathImage || ''} alt="image"/>
             </div>
             <div className="absolute right-4 bottom-4">
               <Button
