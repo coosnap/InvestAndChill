@@ -70,7 +70,8 @@ p_b_98,
 p_c_49,
 p_c_57,
 p_c_65,
-p_i_57
+p_i_57,
+p_i_83
 FROM phi_tai_chinh_report ptcr 
 WHERE quarter is not null ;
 
@@ -146,6 +147,7 @@ p_b_98,
 p_c_49,
 p_c_57,
 p_c_65,
-p_i_57
+p_i_57,
+p_i_83
 FROM phi_tai_chinh_report ptcr 
 WHERE quarter is null;
