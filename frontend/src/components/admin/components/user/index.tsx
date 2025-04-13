@@ -1,9 +1,9 @@
-import { getUserAll, upgradeUser } from '@/api/user';
+import {getUserAll, upgradeUser} from '@/api/user';
 import Modal from '@/components/common/Modal';
-import { Button } from '@/components/ui/button';
-import { Calendar } from '@/components/ui/calendar';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Switch } from '@/components/ui/switch';
+import {Button} from '@/components/ui/button';
+import {Calendar} from '@/components/ui/calendar';
+import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
+import {Switch} from '@/components/ui/switch';
 import {
   Table,
   TableBody,
@@ -12,23 +12,24 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { cn } from '@/lib/utils';
-import { UserAll } from '@/store/user';
-import { format } from 'date-fns';
-import { Calendar as CalendarIcon } from 'lucide-react';
-import { useEffect, useState } from 'react';
-import { useRecoilState } from 'recoil';
+import {cn} from '@/lib/utils';
+import {UserAll} from '@/store/user';
+import {format} from 'date-fns';
+import {Calendar as CalendarIcon} from 'lucide-react';
+import {useEffect, useState} from 'react';
+import {useRecoilState} from 'recoil';
 
 import './style.scss';
+import {IUser, User} from "@/models/user";
 
 export default function UserAdmin() {
   const [users, setUsers] = useRecoilState(UserAll);
   const [showModal, setShowModal] = useState(false);
-  const [messageDialog, setMessageDialog] = useState({ status: '', message: '' });
+  const [messageDialog, setMessageDialog] = useState({status: '', message: ''});
 
   async function getData() {
-    let result = await getUserAll();
-    setUsers(result);
+    const users = await getUserAll();
+    setUsers(users.map((user: IUser) => new User(user)));
   }
 
   useEffect(() => {
@@ -38,7 +39,7 @@ export default function UserAdmin() {
   function onCheckedChange(id) {
     let result = [];
     users.map((e) => {
-      let data = { ...e };
+      let data = {...e};
       if (e.id === id) data.isVip = !data.isVip;
       result.push(data);
     });
@@ -55,10 +56,10 @@ export default function UserAdmin() {
     };
     try {
       await upgradeUser(formData);
-      setMessageDialog((prev) => ({ ...prev, status: 'Success', message: 'Update Successfully!' }));
+      setMessageDialog((prev) => ({...prev, status: 'Success', message: 'Update Successfully!'}));
       setShowModal(true);
     } catch (error) {
-      setMessageDialog((prev) => ({ ...prev, status: 'Error', message: 'Update Fail!' }));
+      setMessageDialog((prev) => ({...prev, status: 'Error', message: 'Update Fail!'}));
       setShowModal(true);
     }
   }
@@ -66,11 +67,10 @@ export default function UserAdmin() {
   function handleSelectDate(action, date, id) {
     let dateFormat = format(date, 'dd-MM-yyyy HH:mm:ss');
     if (action === 'to') {
-      setUsers((prev) => prev.map((e) => (e.id === id ? { ...e, toDate: dateFormat } : e)));
+      setUsers((prev) => prev.map((e) => (e.id === id ? {...e, toDate: dateFormat} : e)));
     } else {
-      setUsers((prev) => prev.map((e) => (e.id === id ? { ...e, fromDate: dateFormat } : e)));
+      setUsers((prev) => prev.map((e) => (e.id === id ? {...e, fromDate: dateFormat} : e)));
     }
-    return;
   }
 
   return (
@@ -89,7 +89,7 @@ export default function UserAdmin() {
             <TableRow key={user.id}>
               <TableCell className="text-center">{user.username}</TableCell>
               <TableCell className="text-center">
-                <Switch checked={user.isVip} onCheckedChange={() => onCheckedChange(user.id)} />
+                <Switch checked={user.isVip} onCheckedChange={() => onCheckedChange(user.id)}/>
               </TableCell>
               <TableCell className="flex justify-center">
                 <div className="flex flex-col mr-4">
@@ -104,7 +104,7 @@ export default function UserAdmin() {
                         )}
                         disabled={!user.isVip}
                       >
-                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        <CalendarIcon className="mr-2 h-4 w-4"/>
                         {user.fromDate ? user.fromDate : <span>Pick a date</span>}
                       </Button>
                     </PopoverTrigger>
@@ -131,7 +131,7 @@ export default function UserAdmin() {
                         )}
                         disabled={!user.isVip}
                       >
-                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        <CalendarIcon className="mr-2 h-4 w-4"/>
                         {user.toDate ? user.toDate : <span>Pick a date</span>}
                       </Button>
                     </PopoverTrigger>

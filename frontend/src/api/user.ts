@@ -1,3 +1,5 @@
+import {getAPIUrl} from "./api";
+
 export async function getUserDetail(id) {
   const response = await fetch(`${import.meta.env.VITE_REACT_APP_API}/api/auth/${id}`, {
     method: 'GET',
@@ -20,24 +22,21 @@ export async function updateUser(data) {
     },
     body: JSON.stringify(data)
   });
-  if (response.ok) {
-    return true;
-  }
-  return false;
+  return response.ok;
+
 }
 
 export async function getUserAll() {
-  const response = await fetch(`${import.meta.env.VITE_REACT_APP_API}/api/auth/all`, {
+  const response = await fetch(getAPIUrl('api/auth/all'), {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
     }
   });
   if (response.ok) {
-    const responseBody = await response.json();
-    return responseBody;
+    return await response.json();
   }
-  return;
+  return null;
 }
 
 export async function upgradeUser(data) {

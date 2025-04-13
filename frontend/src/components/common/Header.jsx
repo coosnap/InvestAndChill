@@ -1,8 +1,8 @@
-import { changePassword, getUserDetail, updateUser } from '@/api/user';
-import { Button } from '@/components/ui/button';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
+import {changePassword, getUserDetail, updateUser} from '@/api/user';
+import {Button} from '@/components/ui/button';
+import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
+import {zodResolver} from '@hookform/resolvers/zod';
+import {Visibility, VisibilityOff} from '@mui/icons-material';
 import AccountBoxRoundedIcon from '@mui/icons-material/AccountBoxRounded';
 import KeyboardDoubleArrowUpIcon from '@mui/icons-material/KeyboardDoubleArrowUp';
 import {
@@ -14,22 +14,22 @@ import {
   InputAdornment,
   TextField,
 } from '@mui/material';
-import { useEffect, useState } from 'react';
-import { useCookies } from 'react-cookie';
-import { Controller, useForm } from 'react-hook-form';
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { z } from 'zod';
-import { Label } from '../ui/label';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
+import {useEffect, useState} from 'react';
+import {useCookies} from 'react-cookie';
+import {Controller, useForm} from 'react-hook-form';
+import {useLocation, useNavigate, useSearchParams} from 'react-router-dom';
+import {toast} from 'react-toastify';
+import {z} from 'zod';
+import {Label} from '../ui/label';
+import {Tabs, TabsContent, TabsList, TabsTrigger} from '../ui/tabs';
 
 const passwordSchema = z
   .object({
-    oldPassword: z.string().min(1, { message: 'Vui lòng điền mật khẩu' }),
-    newPassword: z.string().min(1, { message: 'Vui lòng điền mật khẩu mới' }),
-    confirmPassword: z.string().min(1, { message: 'Vui lòng điền mật khẩu xác nhận' }),
+    oldPassword: z.string().min(1, {message: 'Vui lòng điền mật khẩu'}),
+    newPassword: z.string().min(1, {message: 'Vui lòng điền mật khẩu mới'}),
+    confirmPassword: z.string().min(1, {message: 'Vui lòng điền mật khẩu xác nhận'}),
   })
-  .superRefine(({ newPassword, confirmPassword }, ctx) => {
+  .superRefine(({newPassword, confirmPassword}, ctx) => {
     if (newPassword !== confirmPassword) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
@@ -44,10 +44,10 @@ const infoSchema = z.object({
   phoneNumber: z.string().regex(phoneRegex, 'Chưa đúng định dạng số điện thoại'),
   username: z
     .string()
-    .min(1, { message: 'Vui lòng điền tên người dùng' })
+    .min(1, {message: 'Vui lòng điền tên người dùng'})
     .email('Chưa đúng định dạng Email'),
   fullName: z.string(),
-  password: z.string().min(1, { message: 'Vui lòng điền mật khẩu' }),
+  password: z.string().min(1, {message: 'Vui lòng điền mật khẩu'}),
 });
 
 function stringToSlug(str) {
@@ -73,7 +73,7 @@ function Header() {
   const [inputValue, setInputValue] = useState(initialValue);
 
   const navigate = useNavigate();
-  const { pathname } = useLocation();
+  const {pathname} = useLocation();
   const [cookies, setCookie] = useCookies(['access_token', 'usrId']);
 
   const [userInfo, setUserInfo] = useState({});
@@ -90,7 +90,7 @@ function Header() {
 
   useEffect(() => {
     if (inputValue) {
-      setSearchParams({ code: inputValue, tab: tabName });
+      setSearchParams({code: inputValue, tab: tabName});
     } else {
       setSearchParams({});
     }
@@ -99,7 +99,7 @@ function Header() {
   const {
     handleSubmit,
     control,
-    formState: { errors },
+    formState: {errors},
   } = useForm({
     mode: 'all',
     defaultValues: {
@@ -113,7 +113,7 @@ function Header() {
   const {
     handleSubmit: handleSubmitInfo,
     control: controlInfo,
-    formState: { errors: errorInfo },
+    formState: {errors: errorInfo},
     reset,
   } = useForm({
     mode: 'all',
@@ -145,7 +145,7 @@ function Header() {
             username: result.username || '',
             fullName: result.fullName || '',
           };
-          reset({ ...defaultValues });
+          reset({...defaultValues});
         }
       }
       setOpen(true);
@@ -254,19 +254,17 @@ function Header() {
   };
 
   return (
-    <div className="navbar flex items-center bg-fourth pt-1 pb-2 sm:px-8 vm:px-2">
+    <header className="navbar flex items-center bg-fourth pt-1 pb-2 sm:px-8 vm:px-2">
       <div className="flex flex-1">
-        <a
-          href="/invest"
-          className="flex items-center text-3xl tracking-tighter font-semibold text-[#DA5800]"
-        >
+        <a href="/invest"
+           className="flex items-center text-3xl tracking-tighter font-semibold text-[#DA5800]">
           {/* <img src="/logo.jpg" width={48} height={48} /> */}
           <h5 className="text-white">InvestNChill.com</h5>
         </a>
         {pathname.includes('/data') && (
           <div className="ml-4 mt-1 flex items-center gap-6">
             <TextField
-              sx={{ '& > .MuiOutlinedInput-root': { backgroundColor: 'white' } }}
+              sx={{'& > .MuiOutlinedInput-root': {backgroundColor: 'white'}}}
               variant="outlined"
               size="small"
               placeholder="Tìm kiếm"
@@ -275,7 +273,7 @@ function Header() {
               onKeyDown={(e) => {
                 if (e.keyCode == 13) {
                   setInputValue(e.target.value?.toUpperCase());
-                  navigate('/data/chart', { code: inputValue, tab: tabName });
+                  navigate('/data/chart', {code: inputValue, tab: tabName});
                 }
               }}
             />
@@ -289,13 +287,13 @@ function Header() {
         )}
       </div>
       <Popover open={showPop} onOpenChange={setShowPop}>
-        <a href="/product" className="flex items-center text-white mr-2">
-          <KeyboardDoubleArrowUpIcon />
+        <a href="/pricing" className="flex items-center text-white mr-2">
+          <KeyboardDoubleArrowUpIcon/>
           <span>Sản phẩm</span>
         </a>
         <PopoverTrigger asChild>
           <button>
-            <AccountBoxRoundedIcon fontSize="large" sx={{ color: '#E9E9E9' }} />
+            <AccountBoxRoundedIcon fontSize="large" sx={{color: '#E9E9E9'}}/>
           </button>
         </PopoverTrigger>
         <PopoverContent className="w-80 bg-white">
@@ -329,7 +327,7 @@ function Header() {
         }}
         open={open}
       >
-        <DialogTitle variant="h5" sx={{ fontWeight: 'bold', textAlign: 'center' }}>
+        <DialogTitle variant="h5" sx={{fontWeight: 'bold', textAlign: 'center'}}>
           Update User
         </DialogTitle>
         <DialogContent>
@@ -354,7 +352,7 @@ function Header() {
                       <Controller
                         name="phoneNumber"
                         control={controlInfo}
-                        render={({ field: { onChange, value } }) => (
+                        render={({field: {onChange, value}}) => (
                           <TextField
                             required
                             name="phoneNumber"
@@ -377,7 +375,7 @@ function Header() {
                       <Controller
                         name="username"
                         control={controlInfo}
-                        render={({ field: { onChange, value } }) => (
+                        render={({field: {onChange, value}}) => (
                           <TextField
                             required
                             name="username"
@@ -400,7 +398,7 @@ function Header() {
                       <Controller
                         name="fullName"
                         control={controlInfo}
-                        render={({ field: { onChange, value } }) => (
+                        render={({field: {onChange, value}}) => (
                           <TextField
                             required
                             name="fullName"
@@ -423,7 +421,7 @@ function Header() {
                       <Controller
                         name="password"
                         control={controlInfo}
-                        render={({ field: { onChange, value } }) => (
+                        render={({field: {onChange, value}}) => (
                           <TextField
                             required
                             name="password"
@@ -448,7 +446,7 @@ function Header() {
                                     }
                                     edge="end"
                                   >
-                                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                                    {showPassword ? <Visibility/> : <VisibilityOff/>}
                                   </IconButton>
                                 </InputAdornment>
                               ),
@@ -477,7 +475,7 @@ function Header() {
                     <Controller
                       name="oldPassword"
                       control={control}
-                      render={({ field }) => (
+                      render={({field}) => (
                         <TextField
                           required
                           name="oldPassword"
@@ -494,11 +492,11 @@ function Header() {
                                 <IconButton
                                   aria-label="toggle password visibility"
                                   onClick={() =>
-                                    setShowPassword((prev) => ({ ...prev, old: !showPassword.old }))
+                                    setShowPassword((prev) => ({...prev, old: !showPassword.old}))
                                   }
                                   edge="end"
                                 >
-                                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                                  {showPassword ? <Visibility/> : <VisibilityOff/>}
                                 </IconButton>
                               </InputAdornment>
                             ),
@@ -518,7 +516,7 @@ function Header() {
                     <Controller
                       name="newPassword"
                       control={control}
-                      render={({ field }) => (
+                      render={({field}) => (
                         <TextField
                           required
                           name="newPassword"
@@ -535,11 +533,11 @@ function Header() {
                                 <IconButton
                                   aria-label="toggle password visibility"
                                   onClick={() =>
-                                    setShowPassword((prev) => ({ ...prev, new: !showPassword.new }))
+                                    setShowPassword((prev) => ({...prev, new: !showPassword.new}))
                                   }
                                   edge="end"
                                 >
-                                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                                  {showPassword ? <Visibility/> : <VisibilityOff/>}
                                 </IconButton>
                               </InputAdornment>
                             ),
@@ -557,7 +555,7 @@ function Header() {
                     <Controller
                       name="confirmPassword"
                       control={control}
-                      render={({ field }) => (
+                      render={({field}) => (
                         <TextField
                           required
                           name="confirmPassword"
@@ -581,7 +579,7 @@ function Header() {
                                   }
                                   edge="end"
                                 >
-                                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                                  {showPassword ? <Visibility/> : <VisibilityOff/>}
                                 </IconButton>
                               </InputAdornment>
                             ),
@@ -607,7 +605,7 @@ function Header() {
         </DialogContent>
         <DialogActions></DialogActions>
       </Dialog>
-    </div>
+    </header>
   );
 }
 

@@ -5,7 +5,7 @@ export async function getProductAll() {
   if (response.status === 200) {
     return response.data;
   }
-  return;
+  return null;
 }
 
 export async function updateProduct(id, data) {
@@ -13,5 +13,13 @@ export async function updateProduct(id, data) {
   if (response.status === 200) {
     return response.data;
   }
-  return;
+  return null;
+}
+
+export const getPriceDetail = async (id: number, data: any) => {
+  const response = await axiosInstance.get(`/api/product/${id}`, data);
+  if (response.status === 200) {
+    return response.data;
+  }
+  return null;
 }

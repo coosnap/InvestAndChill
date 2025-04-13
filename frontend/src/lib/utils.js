@@ -1,8 +1,15 @@
-import { clsx } from 'clsx';
-import { twMerge } from 'tailwind-merge';
+import {clsx} from 'clsx';
+import {twMerge} from 'tailwind-merge';
 
 export function cn(...inputs) {
   return twMerge(clsx(inputs));
+}
+
+export function currency(amount) {
+  return new Intl.NumberFormat("vi-VN", {
+    style: "currency",
+    currency: "VND",
+  }).format(amount);
 }
 
 export function formatDate(input) {
@@ -26,9 +33,9 @@ export function getCookie(cName) {
 }
 
 export function setCookie(name, value, days) {
-  var expires = '';
+  let expires = '';
   if (days) {
-    var date = new Date();
+    let date = new Date();
     date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
     expires = '; expires=' + date.toUTCString();
   }

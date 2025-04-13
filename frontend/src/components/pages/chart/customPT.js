@@ -1,7 +1,7 @@
 export const columns = [
-  { field: 'stockCode', headerName: 'Mã cổ phiếu', width: '100', sortable: false },
-  { field: 'year', headerName: 'Năm', width: '60', type: 'number', sortable: false },
-  { field: 'quarter', headerName: 'Quý', width: '60', type: 'number', sortable: false },
+  {field: 'stockCode', headerName: 'Mã cổ phiếu', width: '100', sortable: false},
+  {field: 'year', headerName: 'Năm', width: '60', type: 'number', sortable: false},
+  {field: 'quarter', headerName: 'Quý', width: '60', type: 'number', sortable: false},
   {
     field: 'marketcap',
     headerName: 'Vốn hóa',
@@ -26,8 +26,8 @@ export const columns = [
         !row.pb?.toString()?.includes('.')
           ? row?.pb?.toLocaleString() + '.00'
           : row?.pb?.toString()?.split('.')[1]?.length === 1
-          ? row?.pb?.toLocaleString() + '0'
-          : row?.pb?.toLocaleString()
+            ? row?.pb?.toLocaleString() + '0'
+            : row?.pb?.toLocaleString()
       }`,
   },
   {
@@ -41,8 +41,8 @@ export const columns = [
         !row.pe?.toString()?.includes('.')
           ? row?.pe?.toLocaleString() + '.00'
           : row?.pe?.toString()?.split('.')[1]?.length === 1
-          ? row?.pe?.toLocaleString() + '0'
-          : row?.pe?.toLocaleString()
+            ? row?.pe?.toLocaleString() + '0'
+            : row?.pe?.toLocaleString()
       }`,
   },
   {
@@ -68,8 +68,8 @@ export const columns = [
         !row.evebitda?.toString()?.includes('.')
           ? row?.evebitda?.toLocaleString() + '.00'
           : row?.evebitda?.toString()?.split('.')[1]?.length === 1
-          ? row?.evebitda?.toLocaleString() + '0'
-          : row?.evebitda?.toLocaleString()
+            ? row?.evebitda?.toLocaleString() + '0'
+            : row?.evebitda?.toLocaleString()
       }`,
   },
   {
