@@ -1,0 +1,71 @@
+CREATE MATERIALIZED VIEW view_filter AS
+
+WITH ranked_valuation AS (
+	SELECT DISTINCT ON (stock_code)
+    	stock_code, date, marketcap, pe, pb, evebitda, divyld, netcashmc
+	FROM valuation
+	ORDER BY stock_code, date desc
+),
+latest_quarters AS (
+    SELECT DISTINCT year, quarter
+    FROM phi_tai_chinh_report
+    WHERE quarter IS NOT NULL AND year IS NOT NULL
+    ORDER BY year DESC, quarter DESC
+    LIMIT 2
+),
+ranked_ptc_report AS (
+	SELECT DISTINCT ON (stock_code)
+	    p.stock_code, p.year || '-Q' || p.quarter AS year_quarter,
+	    p.p_i_79_1 AS dtyoy,
+	    p.p_i_84 as lnyoy,
+	    p.p_i_6 AS roe,
+	    p.p_i_24 AS roic
+	FROM phi_tai_chinh_report p
+	JOIN latest_quarters lq
+	  ON p.year = lq.year AND p.quarter = lq.quarter
+	WHERE p.quarter IS NOT NULL AND p.year IS NOT NULL
+	ORDER BY p.stock_code, p.year DESC, p.quarter DESC
+),
+ranked_bank_report AS (
+	SELECT DISTINCT ON (stock_code)
+	    b.stock_code, b.year || '-Q' || b.quarter AS year_quarter,
+	    b.b_i_37 AS dtyoy,
+	    b.b_i_38 as lnyoy,
+	    b.b_i_20 AS roe,
+	    NULL::numeric AS roic
+	FROM ngan_hang_report b
+	JOIN latest_quarters lq
+	  ON b.year = lq.year AND b.quarter = lq.quarter
+	WHERE b.quarter IS NOT NULL AND b.year IS NOT NULL
+	ORDER BY b.stock_code, b.year DESC, b.quarter DESC
+),
+ranked_ck_report AS (
+	SELECT DISTINCT ON (stock_code)
+	    c.stock_code, c.year || '-Q' || c.quarter AS year_quarter,
+	    c.c_i_59 AS dtyoy,
+	    c.c_i_60 as lnyoy,
+	    c.c_i_6 AS roe,
+	    NULL::numeric AS roic
+	FROM chung_khoan_report c
+	JOIN latest_quarters lq
+	  ON c.year = lq.year AND c.quarter = lq.quarter
+	WHERE c.quarter IS NOT NULL AND c.year IS NOT NULL
+	ORDER BY c.stock_code, c.year DESC, c.quarter desc
+),
+union_chisotaichinh as (
+	select *
+	from ranked_ptc_report
+	union all
+	select *
+	from ranked_bank_report
+	union all
+	select *
+	from ranked_ck_report
+)
+SELECT 
+    uc.stock_code, uc.year_quarter, uc.dtyoy, uc.lnyoy, uc.roe, uc.roic,
+	v.date, v.marketcap, v.pe, v.pb, v.evebitda , v.divyld, v.netcashmc
+FROM union_chisotaichinh AS uc
+LEFT JOIN ranked_valuation AS v
+  ON uc.stock_code = v.stock_code
+order by uc.year_quarter desc, uc.stock_code;
