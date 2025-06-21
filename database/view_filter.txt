@@ -6,6 +6,7 @@ WITH ranked_valuation AS (
 	FROM valuation
 	ORDER BY stock_code, date desc
 ),
+-- lay data 2 quy cuoi
 latest_quarters AS (
     SELECT DISTINCT year, quarter
     FROM phi_tai_chinh_report
@@ -13,6 +14,7 @@ latest_quarters AS (
     ORDER BY year DESC, quarter DESC
     LIMIT 2
 ),
+-- lay data cua phi_tai_chinh_report dua tren 2 quy cuoi
 ranked_ptc_report AS (
 	SELECT DISTINCT ON (stock_code)
 	    p.stock_code, p.year || '-Q' || p.quarter AS year_quarter,

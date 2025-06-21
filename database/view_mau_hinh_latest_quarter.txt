@@ -1,5 +1,5 @@
 CREATE MATERIALIZED VIEW view_mau_hinh_latest_quarter AS
-
+--lay data quy cuoi: 2025 - 1
 WITH latest_qy AS (
 			    SELECT year , quarter
 			    FROM phi_tai_chinh_report
@@ -7,6 +7,7 @@ WITH latest_qy AS (
 			    ORDER BY year DESC, quarter DESC
 			    LIMIT 1
 			), 
+-- lay data tren bang valuation moi nhat
 valuation_ranked AS (
 	SELECT distinct on (v.stock_code)
 			        v.stock_code, v.quarter, v.year, v.date,
@@ -14,7 +15,8 @@ valuation_ranked AS (
 			    FROM valuation v
 			    WHERE  v.year::int >= 2025
 			    order by v.stock_code, v.date desc )
-			    
+-- map valuation moi nhat nhung map voi phi_tai_chinh_report cua quy cuoi
+-- co the la valuation cua quy 2 - 2025 nhung map voi phi_tai_chinh_report cua quy 1 
 SELECT 
 			    ptcr.stock_code, ptcr.year, ptcr.quarter, ptcr.p_i_6 AS roe,
 			    vr.marketcap, vr.pe, vr.pb, vr.evebitda, vr.divyld,
