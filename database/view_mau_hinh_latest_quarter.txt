@@ -18,12 +18,15 @@ valuation_ranked AS (
 -- map valuation moi nhat nhung map voi phi_tai_chinh_report cua quy cuoi
 -- co the la valuation cua quy 2 - 2025 nhung map voi phi_tai_chinh_report cua quy 1 
 SELECT 
-			    ptcr.stock_code, ptcr.year, ptcr.quarter, ptcr.p_i_6 AS roe,
+			    ptcr.stock_code, ss.company_name ,ptcr.year, ptcr.quarter, ptcr.p_i_6 AS roe,
 			    vr.marketcap, vr.pe, vr.pb, vr.evebitda, vr.divyld,
 			    ptcr.p_i_77, ptcr.p_i_78, ptcr.p_i_75, ptcr.p_i_68, ptcr.p_i_69 ,
 			    ptcr.p_i_70, ptcr.p_i_73, p_i_79_3
 			FROM valuation_ranked vr
 			INNER JOIN phi_tai_chinh_report ptcr
-			    ON ptcr.stock_code = vr.stock_code, latest_qy
+			    ON ptcr.stock_code = vr.stock_code
+			LEFT JOIN stocksymbol ss
+				ON ss.symbol = vr.stock_code,	
+			latest_qy
 			where
 			 ptcr.quarter = latest_qy.quarter AND ptcr.year = latest_qy.year

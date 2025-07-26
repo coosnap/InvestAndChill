@@ -65,9 +65,11 @@ union_chisotaichinh as (
 	from ranked_ck_report
 )
 SELECT 
-    uc.stock_code, uc.year_quarter, uc.dtyoy, uc.lnyoy, uc.roe, uc.roic,
+    uc.stock_code, ss.company_name ,uc.year_quarter, uc.dtyoy, uc.lnyoy, uc.roe, uc.roic,
 	v.date, v.marketcap, v.pe, v.pb, v.evebitda , v.divyld, v.netcashmc
 FROM union_chisotaichinh AS uc
 LEFT JOIN ranked_valuation AS v
   ON uc.stock_code = v.stock_code
+LEFT JOIN stocksymbol ss
+  ON ss.symbol = uc.stock_code  
 order by uc.year_quarter desc, uc.stock_code;

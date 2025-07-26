@@ -20,10 +20,13 @@ ptc.p_i_68,
 ptc.p_i_69,
 ptc.p_i_70,
 ptc.p_i_73,
-ptc.p_i_79_3
-FROM ranked_data_ptc r left JOIN phi_tai_chinh_report ptc
-on r.stock_code = ptc.stock_code and r.quarter = ptc.quarter
-and r.year = ptc.year 
+ptc.p_i_79_3,
+ss.company_name
+FROM ranked_data_ptc r 
+	left JOIN phi_tai_chinh_report ptc 
+		on r.stock_code = ptc.stock_code and r.quarter = ptc.quarter and r.year = ptc.year 
+	LEFT JOIN stocksymbol ss
+		ON ss.symbol = r.stock_code
 WHERE row_num = 1
 ORDER BY year DESC, quarter DESC, date DESC ),
 
@@ -45,10 +48,13 @@ NULL::double precision as p_i_68,
 NULL::double precision as p_i_69,
 NULL::double precision as p_i_70,
 NULL::double precision as p_i_73,
-NULL::double precision as p_i_79_3
+NULL::double precision as p_i_79_3,
+ss.company_name
 FROM ranked_data_bank r left JOIN ngan_hang_report br
 on r.stock_code = br.stock_code and r.quarter = br.quarter
 and r.year = br.year 
+LEFT JOIN stocksymbol ss
+		ON ss.symbol = r.stock_code
 WHERE row_num = 1
 ORDER BY year DESC, quarter DESC, date DESC ),
 -- chung khoan
@@ -70,10 +76,13 @@ NULL::double precision as p_i_68,
 NULL::double precision as p_i_69,
 NULL::double precision as p_i_70,
 NULL::double precision as p_i_73,
-NULL::double precision as p_i_79_3
+NULL::double precision as p_i_79_3,
+ss.company_name
 FROM ranked_data_chungkhoan r left JOIN chung_khoan_report ckr
 on r.stock_code = ckr.stock_code and r.quarter = ckr.quarter
 and r.year = ckr.year 
+LEFT JOIN stocksymbol ss
+		ON ss.symbol = r.stock_code
 WHERE row_num = 1
 ORDER BY year DESC, quarter DESC, date DESC )
 
