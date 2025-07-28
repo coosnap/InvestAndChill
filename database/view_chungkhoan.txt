@@ -46,8 +46,10 @@ c_i_55,
 c_i_57,
 c_i_58,
 c_b_205,
-c_f_159
-FROM chung_khoan_report ckr 
+c_f_159,
+ss.company_name
+FROM chung_khoan_report ckr LEFT JOIN stocksymbol ss
+ON ss.symbol = ckr.stock_code
 WHERE quarter is not null ;
 
 CREATE OR REPLACE VIEW view_chung_khoan_nam AS
@@ -98,7 +100,9 @@ c_i_55,
 c_i_57,
 c_i_58,
 c_b_205,
-c_f_159
-FROM chung_khoan_report ckr 
+c_f_159,
+ss.company_name
+FROM chung_khoan_report ckr LEFT JOIN stocksymbol ss
+ON ss.symbol = ckr.stock_code
 WHERE quarter is null ;
 

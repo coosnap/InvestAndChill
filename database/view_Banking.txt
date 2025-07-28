@@ -54,8 +54,10 @@ b_f_130,
 b_f_131,
 b_f_132,
 b_f_133,
-b_f_134
-FROM ngan_hang_report nhr 
+b_f_134,
+ss.company_name
+FROM ngan_hang_report nhr LEFT JOIN stocksymbol ss
+ON ss.symbol = nhr.stock_code
 WHERE quarter is not null ;
 
 CREATE VIEW view_ngan_hang_nam AS
@@ -114,6 +116,8 @@ b_f_130,
 b_f_131,
 b_f_132,
 b_f_133,
-b_f_134
-FROM ngan_hang_report nhr 
+b_f_134,
+ss.company_name
+FROM ngan_hang_report nhr LEFT JOIN stocksymbol ss
+ON ss.symbol = nhr.stock_code
 WHERE quarter is null;

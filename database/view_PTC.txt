@@ -71,8 +71,10 @@ p_c_49,
 p_c_57,
 p_c_65,
 p_i_57,
-p_i_82
-FROM phi_tai_chinh_report ptcr 
+p_i_82,
+ss.company_name
+FROM phi_tai_chinh_report ptcr LEFT JOIN stocksymbol ss
+ON ss.symbol = ptcr.stock_code
 WHERE quarter is not null ;
 
 CREATE OR REPLACE VIEW view_phi_tai_chinh_nam AS
@@ -148,6 +150,8 @@ p_c_49,
 p_c_57,
 p_c_65,
 p_i_57,
-p_i_82
-FROM phi_tai_chinh_report ptcr 
+p_i_82,
+ss.company_name
+FROM phi_tai_chinh_report ptcr LEFT JOIN stocksymbol ss
+ON ss.symbol = ptcr.stock_code
 WHERE quarter is null;
