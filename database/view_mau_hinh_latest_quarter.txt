@@ -21,7 +21,7 @@ SELECT
 			    ptcr.stock_code, ss.company_name ,ptcr.year, ptcr.quarter, ptcr.p_i_6 AS roe,
 			    vr.marketcap, vr.pe, vr.pb, vr.evebitda, vr.divyld,
 			    ptcr.p_i_77, ptcr.p_i_78, ptcr.p_i_75, ptcr.p_i_68, ptcr.p_i_69 ,
-			    ptcr.p_i_70, ptcr.p_i_73, p_i_79_3
+			    ptcr.p_i_70, ptcr.p_i_73, p_i_79_3, p_i_24, p_i_117, p_i_118, p_i_119
 			FROM valuation_ranked vr
 			INNER JOIN phi_tai_chinh_report ptcr
 			    ON ptcr.stock_code = vr.stock_code

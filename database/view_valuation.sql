@@ -3,7 +3,7 @@
 CREATE MATERIALIZED VIEW view_valuation AS
 
 WITH ranked_data_ptc AS ( 
-	SELECT stock_code, date, quarter, year, marketcap, evebitda, pe, pb,  ps, divyld,
+	SELECT stock_code, date, quarter, year, ev, marketcap, evebitda, pe, pb,  ps, divyld,
 			ROW_NUMBER() OVER ( PARTITION BY stock_code, year, quarter  ORDER BY date DESC   ) AS row_num
 	FROM valuation 
 	where stock_code in (select distinct stock_code from phi_tai_chinh_report ptcr)
@@ -21,6 +21,10 @@ ptc.p_i_69,
 ptc.p_i_70,
 ptc.p_i_73,
 ptc.p_i_79_3,
+ptc.p_i_24,
+ptc.p_i_117,
+ptc.p_i_118,
+ptc.p_i_119,
 ss.company_name
 FROM ranked_data_ptc r 
 	left JOIN phi_tai_chinh_report ptc 
@@ -31,7 +35,7 @@ WHERE row_num = 1
 ORDER BY year DESC, quarter DESC, date DESC ),
 
 ranked_data_bank AS ( 
-	SELECT stock_code, date, quarter, year, marketcap, evebitda, pe, pb,  ps, divyld,
+	SELECT stock_code, date, quarter, year, ev, marketcap, evebitda, pe, pb,  ps, divyld,
 			ROW_NUMBER() OVER ( PARTITION BY stock_code, year, quarter  ORDER BY date DESC   ) AS row_num
 	FROM valuation 
 	where stock_code in (select distinct stock_code from ngan_hang_report br)
@@ -49,6 +53,10 @@ NULL::double precision as p_i_69,
 NULL::double precision as p_i_70,
 NULL::double precision as p_i_73,
 NULL::double precision as p_i_79_3,
+NULL::double precision as p_i_24,
+NULL::double precision as p_i_117,
+NULL::double precision as p_i_118,
+NULL::double precision as p_i_119,
 ss.company_name
 FROM ranked_data_bank r left JOIN ngan_hang_report br
 on r.stock_code = br.stock_code and r.quarter = br.quarter
@@ -59,7 +67,7 @@ WHERE row_num = 1
 ORDER BY year DESC, quarter DESC, date DESC ),
 -- chung khoan
 ranked_data_chungkhoan AS ( 
-	SELECT stock_code, date, quarter, year, marketcap, evebitda, pe, pb,  ps, divyld,
+	SELECT stock_code, date, quarter, year, ev, marketcap, evebitda, pe, pb,  ps, divyld,
 			ROW_NUMBER() OVER ( PARTITION BY stock_code, year, quarter  ORDER BY date DESC   ) AS row_num
 	FROM valuation 
 	where stock_code in (select distinct stock_code from chung_khoan_report ckr)
@@ -77,6 +85,10 @@ NULL::double precision as p_i_69,
 NULL::double precision as p_i_70,
 NULL::double precision as p_i_73,
 NULL::double precision as p_i_79_3,
+NULL::double precision as p_i_24,
+NULL::double precision as p_i_117,
+NULL::double precision as p_i_118,
+NULL::double precision as p_i_119,
 ss.company_name
 FROM ranked_data_chungkhoan r left JOIN chung_khoan_report ckr
 on r.stock_code = ckr.stock_code and r.quarter = ckr.quarter

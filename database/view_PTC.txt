@@ -72,6 +72,10 @@ p_c_57,
 p_c_65,
 p_i_57,
 p_i_82,
+p_b_91,
+p_i_92,
+p_i_93,
+p_i_75,
 ss.company_name
 FROM phi_tai_chinh_report ptcr LEFT JOIN stocksymbol ss
 ON ss.symbol = ptcr.stock_code
@@ -151,6 +155,10 @@ p_c_57,
 p_c_65,
 p_i_57,
 p_i_82,
+p_b_91,
+p_i_92,
+p_i_93,
+p_i_75,
 ss.company_name
 FROM phi_tai_chinh_report ptcr LEFT JOIN stocksymbol ss
 ON ss.symbol = ptcr.stock_code
