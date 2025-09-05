@@ -1,7 +1,7 @@
-import { useCookies } from 'react-cookie';
-import { Navigate } from 'react-router-dom';
+import {useCookies} from 'react-cookie';
+import {Navigate} from 'react-router-dom';
 
-const AdminRoute = ({ children }) => {
+const AdminRoute = ({children}) => {
   const cookie = useCookies(['roles']);
   if (
     cookie[0]?.roles?.includes('ROLE_MODERATOR_USER') ||
@@ -9,7 +9,7 @@ const AdminRoute = ({ children }) => {
     cookie[0]?.roles?.includes('ROLE_ADMIN')
   )
     return children;
-  return <Navigate to={'/'} />;
+  return <Navigate to={'/'}/>;
 };
 
 export default AdminRoute;

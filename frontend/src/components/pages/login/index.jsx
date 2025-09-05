@@ -1,5 +1,5 @@
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
+import {zodResolver} from '@hookform/resolvers/zod';
+import {Visibility, VisibilityOff} from '@mui/icons-material';
 import StickyNote2Icon from '@mui/icons-material/StickyNote2';
 import {
   Dialog,
@@ -9,18 +9,18 @@ import {
   InputAdornment,
   TextField,
 } from '@mui/material';
-import { useCallback, useEffect, useId, useRef, useState } from 'react';
-import { useCookies } from 'react-cookie';
-import { Controller, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-import { z } from 'zod';
-import { getArticleAll } from '../../../api/article';
-import { sendEmail, signIn, signUp } from '../../../api/auth';
+import {useCallback, useEffect, useId, useRef, useState} from 'react';
+import {useCookies} from 'react-cookie';
+import {Controller, useForm} from 'react-hook-form';
+import {useNavigate} from 'react-router-dom';
+import {z} from 'zod';
+import {getArticleAll} from '../../../api/article';
+import {sendEmail, signIn, signUp} from '../../../api/auth';
 import Loader from '../../common/Loader';
-import { Button } from '../../ui/button';
-import { Label } from '../../ui/label';
+import {Button} from '../../ui/button';
+import {Label} from '../../ui/label';
 
-import { Card, CardContent } from '@/components/ui/card';
+import {Card, CardContent} from '@/components/ui/card';
 import {
   Carousel,
   CarouselContent,
@@ -29,12 +29,12 @@ import {
   CarouselPrevious,
 } from '@/components/ui/carousel';
 import Autoplay from 'embla-carousel-autoplay';
-import { toast } from 'react-toastify';
+import {toast} from 'react-toastify';
 import './styles.scss';
 
 const loginSchema = z.object({
-  username: z.string().min(1, { message: 'Vui lòng điền tên đăng nhập' }),
-  password: z.string().min(1, { message: 'Vui lòng điền mật khẩu' }),
+  username: z.string().min(1, {message: 'Vui lòng điền tên đăng nhập'}),
+  password: z.string().min(1, {message: 'Vui lòng điền mật khẩu'}),
 });
 
 const passwordValidation = new RegExp(
@@ -43,13 +43,13 @@ const passwordValidation = new RegExp(
 
 const registerSchema = z
   .object({
-    username: z.string().email({ message: 'Vui lòng điền đúng định dạng email' }),
-    password: z.string().min(1, { message: 'Vui lòng điền mật khẩu' }).regex(passwordValidation, {
+    username: z.string().email({message: 'Vui lòng điền đúng định dạng email'}),
+    password: z.string().min(1, {message: 'Vui lòng điền mật khẩu'}).regex(passwordValidation, {
       message: 'Password phải bao gồm 8 ký tự, ký tự viết hoa và ký tự đặc biệt (#?!@$%^&*-)',
     }),
-    passwordConfirm: z.string().min(1, { message: 'Vui lòng xác nhận mật khẩu' }),
+    passwordConfirm: z.string().min(1, {message: 'Vui lòng xác nhận mật khẩu'}),
   })
-  .superRefine(({ passwordConfirm, password }, ctx) => {
+  .superRefine(({passwordConfirm, password}, ctx) => {
     if (passwordConfirm !== password) {
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
@@ -71,7 +71,7 @@ const registerSchema = z
 const forgotSchema = z.object({
   username: z
     .string()
-    .min(1, { message: 'Vui lòng điền email' })
+    .min(1, {message: 'Vui lòng điền email'})
     .email('Chưa đúng định dạng Email'),
 });
 
@@ -93,7 +93,7 @@ function Login() {
   const {
     handleSubmit,
     control,
-    formState: { errors },
+    formState: {errors},
   } = useForm({
     mode: 'all',
     defaultValues: {
@@ -106,7 +106,7 @@ function Login() {
   const {
     handleSubmit: handleSubmitRegister,
     control: controlRegister,
-    formState: { errors: errorsRegister },
+    formState: {errors: errorsRegister},
   } = useForm({
     mode: 'all',
     defaultValues: {
@@ -121,7 +121,7 @@ function Login() {
   const {
     handleSubmit: handleSubmitForgot,
     control: controlForgot,
-    formState: { errors: errorForgot },
+    formState: {errors: errorForgot},
   } = useForm({
     mode: 'all',
     defaultValues: {
@@ -198,10 +198,10 @@ function Login() {
             id: infoSignIn.id,
             usrNm: infoSignIn.username,
           },
-          { path: '/', expires: d }
+          {path: '/', expires: d}
         );
-        setCookie('access_token', infoSignIn.accessToken, { path: '/', expires: d });
-        setCookie('roles', infoSignIn.roles, { path: '/', expires: d });
+        setCookie('access_token', infoSignIn.accessToken, {path: '/', expires: d});
+        setCookie('roles', infoSignIn.roles, {path: '/', expires: d});
         // setIsLoading(false);
         infoSignIn.roles.includes('ROLE_ADMIN') ||
         infoSignIn.roles.includes('ROLE_MODERATOR_ARTICLE') ||
@@ -251,221 +251,225 @@ function Login() {
     }
   }, []);
 
-  const plugin = useRef(Autoplay({ delay: 15000, stopOnInteraction: true }));
+  const plugin = useRef(Autoplay({delay: 15000, stopOnInteraction: true}));
 
   function openArticleById(id) {
     let item = articleList.find((e) => e.id === id);
     setArticleId(item);
   }
 
-  if (isLoading) return <Loader />;
+  if (isLoading) return <Loader/>;
 
   return (
-    <div className="h-full w-screen bg-primary">
-      {/* {isLoading ? <Loader /> : ''} */}
-      <div className="vm:w-[90%] sm:w-[80%] flex sm:flex-row vm:flex-col mx-auto gap-4 pb-8">
-        <div className="vm:w-full sm:w-1/2 flex flex-col gap-4">
-          <div className="flex justify-center rounded-2xl bg-white gap-4 px-8 py-4">
-            {articleId.title ? (
-              <div className="w-full h-[350px] border bg-second overflow-y-auto rounded-md p-4">
-                <h6>{articleId.title}</h6>
-                <div dangerouslySetInnerHTML={{ __html: articleId.content }} />
-              </div>
-            ) : (
-              <Carousel
-                plugins={[plugin.current]}
-                opts={{
-                  align: 'start',
-                  loop: true,
-                }}
-                className="w-full"
-              >
-                <CarouselContent>
-                  {articleList &&
-                    articleList.length > 0 &&
-                    articleList.map((e, index) => (
-                      <CarouselItem key={index}>
-                        <div className="p-1">
-                          <Card>
-                            <CardContent className="h-[350px] flex items-center justify-center p-1">
-                              <div className="w-full h-full border bg-second overflow-y-auto rounded-md p-4">
-                                <h6>{e.title}</h6>
-                                <div dangerouslySetInnerHTML={{ __html: e.content }} />
-                              </div>
-                            </CardContent>
-                          </Card>
-                        </div>
-                      </CarouselItem>
-                    ))}
-                </CarouselContent>
-                <CarouselPrevious className="left-4 bg-white" />
-                <CarouselNext className="right-4 bg-white" />
-              </Carousel>
-            )}
-          </div>
-          <div className="py-4 px-8 bg-white rounded-2xl">
-            {articleList &&
-              articleList.length > 0 &&
-              articleList.map(
-                (e, i) =>
-                  i <= 4 && (
-                    <div
-                      className={`flex justify-between text-gray-900 text-sm mb-1 cursor-pointer pb-1`}
-                      key={e.id}
-                      onClick={() => openArticleById(e.id)}
-                    >
-                      <div className="truncate-single-line flex">
-                        <StickyNote2Icon color="primary" sx={{ marginRight: '8px' }} />
-                        <p>{e.title}</p>
-                      </div>
-                      <div className="flex-1 border-b border-dotted border-black mx-1 mb-2"></div>
-                      <div className="w-[72px] whitespace-nowrap">{e.createDate.split(' ')[0]}</div>
-                    </div>
-                  )
-              )}
-          </div>
-        </div>
-        <div className="vm:w-full sm:w-1/2 flex flex-col gap-4">
-          <div className="rounded-2xl bg-white shadow-2xl flex flex-col items-center justify-center py-4">
-            <div className="flex items-center justify-center text-3xl lg:text-2xl font-semibold text-gray-900">
-              Đăng nhập
-            </div>
-            <form key={id} onSubmit={handleSubmit(onSubmit)} className="px-8 w-full">
-              <div className="h-3"></div>
-              <Controller
-                name="username"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    required
-                    name="username"
-                    className="w-full z-0"
-                    size="small"
-                    label="Tên đăng nhập"
-                    type="text"
-                    error={!!errors?.username}
-                    helperText={errors?.username?.message}
-                    {...field}
-                  />
-                )}
-              />
-              <div className="h-5"></div>
-              <Controller
-                name="password"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    required
-                    name="password"
-                    className="w-full z-0"
-                    label="Mật khẩu"
-                    size="small"
-                    error={!!errors?.password}
-                    type={!showPassword ? 'password' : 'text'}
-                    helperText={errors?.password?.message}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={() => setShowPassword(!showPassword)}
-                            edge="end"
-                          >
-                            {showPassword ? <Visibility /> : <VisibilityOff />}
-                          </IconButton>
-                        </InputAdornment>
-                      ),
-                    }}
-                    {...field}
-                  />
-                )}
-              />
-              {validate.loginMessage ? (
-                <div className="text-center mt-2">
-                  <Label className="text-red-500">{validate.loginMessage}</Label>
+    <div className="login-screen">
+      <div className="h-full w-screen bg-primary mt-8">
+        {/* {isLoading ? <Loader /> : ''} */}
+        <div className="vm:w-[90%] sm:w-[80%] flex sm:flex-row vm:flex-col mx-auto gap-4 pb-8">
+
+          {/* article */}
+          <div className="vm:w-full sm:w-1/2 flex flex-col gap-4">
+            <div className="flex justify-center rounded-2xl bg-white gap-4 px-8 py-4">
+              {articleId.title ? (
+                <div className="w-full h-[350px] border bg-second overflow-y-auto rounded-md p-4">
+                  <h6>{articleId.title}</h6>
+                  <div dangerouslySetInnerHTML={{__html: articleId.content}}/>
                 </div>
-              ) : null}
-              <div className="flex items-center justify-between mt-2">
-                <div>
+              ) : (
+                <Carousel plugins={[plugin.current]}
+                          opts={{
+                            align: 'start',
+                            loop: true,
+                          }}
+                          className="w-full">
+                  <CarouselContent>
+                    {articleList &&
+                      articleList.length > 0 &&
+                      articleList.map((e, index) => (
+                        <CarouselItem key={index}>
+                          <div className="p-1">
+                            <Card>
+                              <CardContent className="h-[350px] flex items-center justify-center p-1">
+                                <div className="w-full h-full border bg-second overflow-y-auto rounded-md p-4">
+                                  <h6>{e.title}</h6>
+                                  <div dangerouslySetInnerHTML={{__html: e.content}}/>
+                                </div>
+                              </CardContent>
+                            </Card>
+                          </div>
+                        </CarouselItem>
+                      ))}
+                  </CarouselContent>
+                  <CarouselPrevious className="left-4 bg-white"/>
+                  <CarouselNext className="right-4 bg-white"/>
+                </Carousel>
+              )}
+            </div>
+            <div className="py-4 px-8 bg-white rounded-2xl">
+              {articleList &&
+                articleList.length > 0 &&
+                articleList.map(
+                  (article, i) =>
+                    i <= 4 && (
+                      <div className={`flex justify-between text-gray-900 text-sm mb-1 cursor-pointer pb-1`}
+                           key={article.id}
+                           onClick={() => openArticleById(article.id)}>
+                        <div className="truncate-single-line flex">
+                          <StickyNote2Icon color="primary" sx={{marginRight: '8px'}}/>
+                          <p>{article.title}</p>
+                        </div>
+                        <div className="flex-1 border-b border-dotted border-black mx-1 mb-2"></div>
+                        <div className="w-[72px] whitespace-nowrap">{article.createDate.split(' ')[0]}</div>
+                      </div>
+                    )
+                )}
+            </div>
+          </div>
+
+          {/* login */}
+          <div className="vm:w-full sm:w-1/2 flex flex-col gap-4">
+
+            <div className="rounded-2xl bg-white shadow-2xl flex flex-col items-center justify-center py-4">
+              <div className="flex items-center justify-center text-3xl lg:text-2xl font-semibold text-gray-900">
+                Đăng nhập
+              </div>
+              <form key={id} onSubmit={handleSubmit(onSubmit)} className="px-8 w-full">
+                <div className="h-3"></div>
+                <Controller
+                  name="username"
+                  control={control}
+                  render={({field}) => (
+                    <TextField
+                      required
+                      name="username"
+                      className="w-full z-0"
+                      size="small"
+                      label="Tên đăng nhập"
+                      type="text"
+                      error={!!errors?.username}
+                      helperText={errors?.username?.message}
+                      {...field}
+                    />
+                  )}
+                />
+                <div className="h-5"></div>
+                <Controller
+                  name="password"
+                  control={control}
+                  render={({field}) => (
+                    <TextField
+                      required
+                      name="password"
+                      className="w-full z-0"
+                      label="Mật khẩu"
+                      size="small"
+                      error={!!errors?.password}
+                      type={!showPassword ? 'password' : 'text'}
+                      helperText={errors?.password?.message}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={() => setShowPassword(!showPassword)}
+                              edge="end"
+                            >
+                              {showPassword ? <Visibility/> : <VisibilityOff/>}
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
+                      {...field}
+                    />
+                  )}
+                />
+                {validate.loginMessage ? (
+                  <div className="text-center mt-2">
+                    <Label className="text-red-500">{validate.loginMessage}</Label>
+                  </div>
+                ) : null}
+                <div className="flex items-center justify-between mt-2">
+                  <div>
                   <span
                     className="mt-4 lg:mt-2 font-semibold text-blue-500 hover:text-blue-300 underline cursor-pointer"
                     onClick={() => setOpenForgot(true)}
                   >
                     Quên mật khẩu
                   </span>
-                </div>
-                <div className="text-end">
+                  </div>
+                  <div className="text-end">
                   <span
                     className="mt-4 lg:mt-2 font-semibold text-blue-500 hover:text-blue-300 underline cursor-pointer"
                     onClick={() => setShowRegisterDialog(true)}
                   >
                     Đăng ký tài khoản
                   </span>
+                  </div>
                 </div>
-              </div>
-              <div className="w-full text-center">
-                <Button type="submit" variant="primary" className="mt-2">
-                  Đăng nhập
-                </Button>
-              </div>
-            </form>
-          </div>
-          <div className="flex-1">
-            <img style={{ width: '100%' }} src="/adv.jpg" alt="Advert" />
+                <div className="w-full text-center">
+                  <Button type="submit" variant="primary" className="mt-2">
+                    Đăng nhập
+                  </Button>
+                </div>
+              </form>
+            </div>
+
+            {/* advertisement */}
+            <div className="flex-1">
+              <img style={{width: '100%'}} src="/images/adv.jpg" alt="Advert"/>
+            </div>
           </div>
         </div>
-      </div>
 
-      <Dialog
-        sx={{
+        {/* register dialog */}
+        <Dialog sx={{
           '.MuiPaper-root': {
             maxWidth: '500px',
             width: '100%',
             minHeight: '180px',
           },
         }}
-        open={showRegisterDialog}
-      >
-        <DialogTitle variant="h5" sx={{ fontWeight: 'bold', textAlign: 'center' }}>
-          Đăng ký tài khoản
-        </DialogTitle>
-        <DialogContent>
-          <form className="py-2" onSubmit={handleSubmitRegister(onSubmitRegister)}>
-            <Controller
-              name="username"
-              control={controlRegister}
-              render={({ field }) => (
-                <TextField
-                  required
-                  name="username"
-                  className="w-full"
-                  label="Tên đăng nhập"
-                  type="text"
-                  size="small"
-                  error={!!errorsRegister?.username}
-                  helperText={errorsRegister?.username?.message}
-                  {...field}
-                />
-              )}
-            />
-            <div className="h-5"></div>
-            <Controller
-              name="fullName"
-              control={controlRegister}
-              render={({ field }) => (
-                <TextField
-                  name="fullName"
-                  className="w-full"
-                  label="Họ và Tên"
-                  type="text"
-                  size="small"
-                  error={!!errorsRegister?.fullName}
-                  helperText={errorsRegister?.fullName?.message}
-                  {...field}
-                />
-              )}
-            />
-            {/* <div className="flex gap-4">
+                open={showRegisterDialog}
+        >
+          <DialogTitle variant="h5" sx={{fontWeight: 'bold', textAlign: 'center'}}>
+            Đăng ký tài khoản
+          </DialogTitle>
+          <DialogContent>
+            <form className="py-2" onSubmit={handleSubmitRegister(onSubmitRegister)}>
+              <Controller
+                name="username"
+                control={controlRegister}
+                render={({field}) => (
+                  <TextField
+                    required
+                    name="username"
+                    className="w-full"
+                    label="Tên đăng nhập"
+                    type="text"
+                    size="small"
+                    error={!!errorsRegister?.username}
+                    helperText={errorsRegister?.username?.message}
+                    {...field}
+                  />
+                )}
+              />
+              <div className="h-5"></div>
+              <Controller
+                name="fullName"
+                control={controlRegister}
+                render={({field}) => (
+                  <TextField
+                    name="fullName"
+                    className="w-full"
+                    label="Họ và Tên"
+                    type="text"
+                    size="small"
+                    error={!!errorsRegister?.fullName}
+                    helperText={errorsRegister?.fullName?.message}
+                    {...field}
+                  />
+                )}
+              />
+              {/* <div className="flex gap-4">
                     <Controller
                       name="dateOfBirth"
                       control={controlRegister}
@@ -486,131 +490,132 @@ function Login() {
                       }}
                     />
                   </div> */}
-            <div className="h-5"></div>
-            <Controller
-              name="password"
-              control={controlRegister}
-              render={({ field }) => (
-                <TextField
-                  required
-                  name="password"
-                  className="w-full"
-                  label="Mật khẩu"
-                  size="small"
-                  error={!!errorsRegister?.password}
-                  type={!showPasswordRe ? 'password' : 'text'}
-                  helperText={errorsRegister?.password?.message}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={() => setShowPasswordRe(!showPasswordRe)}
-                          edge="end"
-                        >
-                          {showPasswordRe ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                  {...field}
-                />
-              )}
-            />
-            <div className="h-5"></div>
-            <Controller
-              name="passwordConfirm"
-              control={controlRegister}
-              render={({ field }) => (
-                <TextField
-                  required
-                  name="passwordConfirm"
-                  className="w-full"
-                  label="Xác nhận mật khẩu"
-                  size="small"
-                  error={!!errorsRegister?.passwordConfirm}
-                  type={!showPasswordConf ? 'password' : 'text'}
-                  helperText={errorsRegister?.passwordConfirm?.message}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={() => setShowPasswordConf(!showPasswordConf)}
-                          edge="end"
-                        >
-                          {showPasswordConf ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                  {...field}
-                />
-              )}
-            />
+              <div className="h-5"></div>
+              <Controller
+                name="password"
+                control={controlRegister}
+                render={({field}) => (
+                  <TextField
+                    required
+                    name="password"
+                    className="w-full"
+                    label="Mật khẩu"
+                    size="small"
+                    error={!!errorsRegister?.password}
+                    type={!showPasswordRe ? 'password' : 'text'}
+                    helperText={errorsRegister?.password?.message}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={() => setShowPasswordRe(!showPasswordRe)}
+                            edge="end"
+                          >
+                            {showPasswordRe ? <VisibilityOff/> : <Visibility/>}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                    {...field}
+                  />
+                )}
+              />
+              <div className="h-5"></div>
+              <Controller
+                name="passwordConfirm"
+                control={controlRegister}
+                render={({field}) => (
+                  <TextField
+                    required
+                    name="passwordConfirm"
+                    className="w-full"
+                    label="Xác nhận mật khẩu"
+                    size="small"
+                    error={!!errorsRegister?.passwordConfirm}
+                    type={!showPasswordConf ? 'password' : 'text'}
+                    helperText={errorsRegister?.passwordConfirm?.message}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={() => setShowPasswordConf(!showPasswordConf)}
+                            edge="end"
+                          >
+                            {showPasswordConf ? <VisibilityOff/> : <Visibility/>}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                    {...field}
+                  />
+                )}
+              />
 
-            <div className="flex justify-end gap-2 mt-6">
-              <Button variant="outline" onClick={() => setShowRegisterDialog(false)}>
-                Cancel
-              </Button>
-              <Button variant="primary" type="submit">
-                Save
-              </Button>
-            </div>
-          </form>
-        </DialogContent>
-      </Dialog>
+              <div className="flex justify-end gap-2 mt-6">
+                <Button variant="outline" onClick={() => setShowRegisterDialog(false)}>
+                  Cancel
+                </Button>
+                <Button variant="primary" type="submit">
+                  Save
+                </Button>
+              </div>
+            </form>
+          </DialogContent>
+        </Dialog>
 
-      <Dialog
-        sx={{
+        {/* forgot password dialog */}
+        <Dialog sx={{
           '.MuiPaper-root': {
             maxWidth: '500px',
             width: '100%',
             minHeight: '180px',
           },
         }}
-        open={openForgot}
-      >
-        <DialogTitle variant="h5" sx={{ fontWeight: 'bold', textAlign: 'center' }}>
-          Quên mật khẩu
-        </DialogTitle>
-        <DialogContent>
-          <form onSubmit={handleSubmitForgot(onSubmitForgot)}>
-            <div className="w-full">
-              <div className="mb-1">
-                <Label htmlFor="username">Email</Label>
+                open={openForgot}
+        >
+          <DialogTitle variant="h5" sx={{fontWeight: 'bold', textAlign: 'center'}}>
+            Quên mật khẩu
+          </DialogTitle>
+          <DialogContent>
+            <form onSubmit={handleSubmitForgot(onSubmitForgot)}>
+              <div className="w-full">
+                <div className="mb-1">
+                  <Label htmlFor="username">Email</Label>
+                </div>
+                <Controller
+                  name="username"
+                  control={controlForgot}
+                  render={({field}) => (
+                    <TextField
+                      required
+                      name="username"
+                      className="w-full"
+                      placeholder="Vui lòng nhập email"
+                      label=""
+                      size="small"
+                      type="text"
+                      error={!!errorForgot?.username}
+                      helperText={errorForgot?.username?.message}
+                      {...field}
+                    />
+                  )}
+                />
               </div>
-              <Controller
-                name="username"
-                control={controlForgot}
-                render={({ field }) => (
-                  <TextField
-                    required
-                    name="username"
-                    className="w-full"
-                    placeholder="Vui lòng nhập email"
-                    label=""
-                    size="small"
-                    type="text"
-                    error={!!errorForgot?.username}
-                    helperText={errorForgot?.username?.message}
-                    {...field}
-                  />
-                )}
-              />
-            </div>
 
-            <div className="flex justify-end gap-2 mt-6">
-              <Button variant="outline" onClick={() => setOpenForgot(false)}>
-                Cancel
-              </Button>
-              <Button variant="primary" type="submit">
-                Save
-              </Button>
-            </div>
-          </form>
-        </DialogContent>
-      </Dialog>
+              <div className="flex justify-end gap-2 mt-6">
+                <Button variant="outline" onClick={() => setOpenForgot(false)}>
+                  Cancel
+                </Button>
+                <Button variant="primary" type="submit">
+                  Save
+                </Button>
+              </div>
+            </form>
+          </DialogContent>
+        </Dialog>
+      </div>
     </div>
   );
 }

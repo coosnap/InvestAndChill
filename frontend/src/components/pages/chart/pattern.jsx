@@ -6,25 +6,25 @@ import {
   getMinMaxValue,
   getOweALot,
 } from '@/api/chart';
-import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import {FormControl, InputLabel, MenuItem, Select} from '@mui/material';
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import Typography from '@mui/material/Typography';
-import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import {DatePicker, LocalizationProvider} from '@mui/x-date-pickers';
+import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
+import {DemoContainer} from '@mui/x-date-pickers/internals/demo';
 import dayjs from 'dayjs';
-import { useEffect, useMemo, useState } from 'react';
-import { DataGridComponent } from './component/data-grid';
+import {useEffect, useMemo, useState} from 'react';
+import {DataGridComponent} from './component/data-grid';
 import FilterItem from './component/filter-item';
 import SortPopupComponent from './component/sort-popup';
-import { columns0, columns1, columns2, columns3, columns4 } from './customPT';
+import {columns0, columns1, columns2, columns3, columns4} from './customPT';
 import Loader from '@/components/common/Loader';
 
 export const Pattern = () => {
   const [value, setValue] = useState(0);
-  const [condition, setCondition] = useState({ quarter: '1', year: dayjs() });
+  const [condition, setCondition] = useState({quarter: '1', year: dayjs()});
   const [tableData, setTableData] = useState([]);
   const [stringCondition, setStringCondition] = useState('');
   const [valueMinMax, setValueMinMax] = useState({});
@@ -116,7 +116,7 @@ export const Pattern = () => {
   };
 
   const TabPanel = (props) => {
-    const { children, value, index, ...other } = props;
+    const {children, value, index, ...other} = props;
 
     return (
       <div
@@ -127,7 +127,7 @@ export const Pattern = () => {
         {...other}
       >
         {value === index && (
-          <Box sx={{ padding: 3, paddingTop: 0 }}>
+          <Box sx={{padding: 3, paddingTop: 0}}>
             <Typography>{children}</Typography>
           </Box>
         )}
@@ -145,8 +145,8 @@ export const Pattern = () => {
   const FilterComponent = () => {
     return (
       <div className="flex items-end gap-4 mb-4">
-        {isLoading && <Loader />}
-        <FormControl sx={{ width: '6rem' }} size="small">
+        {isLoading && <Loader/>}
+        <FormControl sx={{width: '6rem'}} size="small">
           <InputLabel
             id="quarter-select-label"
             sx={{
@@ -159,7 +159,7 @@ export const Pattern = () => {
             labelId="quarter-select-label"
             id="quarter-select"
             value={condition.quarter || ''}
-            onChange={(e) => setCondition((prev) => ({ ...prev, quarter: e.target.value }))}
+            onChange={(e) => setCondition((prev) => ({...prev, quarter: e.target.value}))}
           >
             <MenuItem value={1}>1</MenuItem>
             <MenuItem value={2}>2</MenuItem>
@@ -179,8 +179,8 @@ export const Pattern = () => {
                 width: '6rem',
               }}
               value={condition?.year ? dayjs(condition?.year) : dayjs()}
-              onChange={(newValue) => setCondition((prev) => ({ ...prev, year: newValue }))}
-              slotProps={{ textField: { size: 'small' } }}
+              onChange={(newValue) => setCondition((prev) => ({...prev, year: newValue}))}
+              slotProps={{textField: {size: 'small'}}}
             />
           </DemoContainer>
         </LocalizationProvider>
@@ -220,94 +220,96 @@ export const Pattern = () => {
   }, [columns4]);
 
   return (
-    <Box
-      sx={{
-        flexGrow: 1,
-        display: 'flex',
-        marginTop: '2rem',
-        marginLeft: '1rem',
-      }}
-    >
-      <Tabs
-        orientation="vertical"
-        variant="scrollable"
-        value={value}
-        onChange={handleChange}
+    <div className="pattern-screen">
+      <Box
         sx={{
-          '.MuiButtonBase-root': { textTransform: 'none', alignItems: 'start', textAlign: 'start' },
+          flexGrow: 1,
+          display: 'flex',
+          marginTop: '2rem',
+          marginLeft: '1rem',
         }}
       >
-        <Tab label="Gia tăng công suất" {...a11yProps(0)} />
-        <Tab label="Chiếm dụng vốn của khách hàng" {...a11yProps(1)} />
-        <Tab label="Dòng tiền trả nợ tốt" {...a11yProps(2)} />
-        <Tab label="Chi phí khấu hao nhiều" {...a11yProps(3)} />
-        <Tab label="Khai thác dưới công suất" {...a11yProps(4)} />
-      </Tabs>
-      <TabPanel value={value} index={0}>
-        <div className="flex items-center gap-4">
-          <FilterComponent />
-          <div className="flex flex-1 justify-end">
-            <SortPopupComponent
-              columns={columnFilter0}
-              tableData={tableData}
-              setStringCondition={setStringCondition}
-            />
+        <Tabs
+          orientation="vertical"
+          variant="scrollable"
+          value={value}
+          onChange={handleChange}
+          sx={{
+            '.MuiButtonBase-root': {textTransform: 'none', alignItems: 'start', textAlign: 'start'},
+          }}
+        >
+          <Tab label="Gia tăng công suất" {...a11yProps(0)} />
+          <Tab label="Chiếm dụng vốn của khách hàng" {...a11yProps(1)} />
+          <Tab label="Dòng tiền trả nợ tốt" {...a11yProps(2)} />
+          <Tab label="Chi phí khấu hao nhiều" {...a11yProps(3)} />
+          <Tab label="Khai thác dưới công suất" {...a11yProps(4)} />
+        </Tabs>
+        <TabPanel value={value} index={0}>
+          <div className="flex items-center gap-4">
+            <FilterComponent/>
+            <div className="flex flex-1 justify-end">
+              <SortPopupComponent
+                columns={columnFilter0}
+                tableData={tableData}
+                setStringCondition={setStringCondition}
+              />
+            </div>
           </div>
-        </div>
-        <DataGridComponent tableData={tableData} columns={columns0} />
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <div className="flex items-center gap-4">
-          <FilterComponent />
-          <div className="flex flex-1 justify-end">
-            <SortPopupComponent
-              columns={columnFilter1}
-              tableData={tableData}
-              setStringCondition={setStringCondition}
-            />
+          <DataGridComponent tableData={tableData} columns={columns0}/>
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          <div className="flex items-center gap-4">
+            <FilterComponent/>
+            <div className="flex flex-1 justify-end">
+              <SortPopupComponent
+                columns={columnFilter1}
+                tableData={tableData}
+                setStringCondition={setStringCondition}
+              />
+            </div>
           </div>
-        </div>
-        <DataGridComponent tableData={tableData} columns={columns1} />
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        <div className="flex items-center gap-4">
-          <FilterComponent />
-          <div className="flex flex-1 justify-end">
-            <SortPopupComponent
-              columns={columnFilter2}
-              tableData={tableData}
-              setStringCondition={setStringCondition}
-            />
+          <DataGridComponent tableData={tableData} columns={columns1}/>
+        </TabPanel>
+        <TabPanel value={value} index={2}>
+          <div className="flex items-center gap-4">
+            <FilterComponent/>
+            <div className="flex flex-1 justify-end">
+              <SortPopupComponent
+                columns={columnFilter2}
+                tableData={tableData}
+                setStringCondition={setStringCondition}
+              />
+            </div>
           </div>
-        </div>
-        <DataGridComponent tableData={tableData} columns={columns2} />
-      </TabPanel>
-      <TabPanel value={value} index={3}>
-        <div className="flex items-center gap-4">
-          <FilterComponent />
-          <div className="flex flex-1 justify-end">
-            <SortPopupComponent
-              columns={columnFilter3}
-              tableData={tableData}
-              setStringCondition={setStringCondition}
-            />
+          <DataGridComponent tableData={tableData} columns={columns2}/>
+        </TabPanel>
+        <TabPanel value={value} index={3}>
+          <div className="flex items-center gap-4">
+            <FilterComponent/>
+            <div className="flex flex-1 justify-end">
+              <SortPopupComponent
+                columns={columnFilter3}
+                tableData={tableData}
+                setStringCondition={setStringCondition}
+              />
+            </div>
           </div>
-        </div>
-        <DataGridComponent tableData={tableData} columns={columns3} />
-      </TabPanel>
-      <TabPanel value={value} index={4}>
-        <div className="flex items-center gap-4">
-          <FilterComponent />
-          <div className="flex flex-1 justify-end">
-            <SortPopupComponent
-              columns={columnFilter4}
-              tableData={tableData}
-              setStringCondition={setStringCondition}
-            />
+          <DataGridComponent tableData={tableData} columns={columns3}/>
+        </TabPanel>
+        <TabPanel value={value} index={4}>
+          <div className="flex items-center gap-4">
+            <FilterComponent/>
+            <div className="flex flex-1 justify-end">
+              <SortPopupComponent
+                columns={columnFilter4}
+                tableData={tableData}
+                setStringCondition={setStringCondition}
+              />
+            </div>
           </div>
-        </div>
-        <DataGridComponent tableData={tableData} columns={columns4} />
-      </TabPanel>
-    </Box>
+          <DataGridComponent tableData={tableData} columns={columns4}/>
+        </TabPanel>
+      </Box>
+    </div>
   );
 };
