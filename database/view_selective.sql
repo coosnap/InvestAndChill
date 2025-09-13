@@ -200,9 +200,11 @@ FROM union_chisotaichinh AS uc
 LEFT JOIN ranked_valuation AS v
   ON uc.stock_code = v.stock_code
 )
-select sr.*, ac.close, ac.ltm, ac.ytd
+select sr.*, ac.close, ac.ltm, ac.ytd, ss.company_name
 from semi_result as sr 
 left join ami_close ac
-on sr.stock_code = ac.stock_code and sr.date = ac.date
+	on sr.stock_code = ac.stock_code and sr.date = ac.date
+LEFT JOIN stocksymbol ss
+    ON sr.stock_code = ss.symbol
 ORDER BY sr.sector_inc, sr.year_quarter, sr.dtyoy
 ;
