@@ -1,21 +1,18 @@
 CREATE MATERIALIZED VIEW view_selective AS
---lay 4 quy gan nhat
 WITH sorted_quarters AS (
-		SELECT year, quarter
-		FROM sector_data
-		WHERE year IS NOT NULL AND quarter IS NOT NULL
-		GROUP BY year, quarter
-		ORDER BY year desc, quarter desc
-		LIMIT 4
+    SELECT year, quarter
+    FROM sector_data
+    WHERE year IS NOT NULL AND quarter IS NOT NULL
+    GROUP BY year, quarter
+    ORDER BY year desc, quarter desc
+    LIMIT 4
 ),
---Noi Year-quarter ( ki)
 labeled_quarters AS (
     SELECT 
         year, quarter,
         'q' || ROW_NUMBER() OVER (ORDER BY year, quarter) AS q_label
     FROM sorted_quarters
 ),
--- chuyen thanh bang ngang
 pivot_data AS (
     SELECT 
         sd.sector_inc,
@@ -27,7 +24,6 @@ pivot_data AS (
     JOIN labeled_quarters lq
         ON sd.year = lq.year AND sd.quarter = lq.quarter
 ),
--- chuyen thanh bang ngang
 row_sector_data as (
 	SELECT 
 	    sector_inc,
@@ -59,12 +55,17 @@ WHERE s.selection = 1
 order by s.symbol
 ),
 -- lấy định giá mới nhất cho mỗi mã
-ranked_valuation AS (
-    SELECT DISTINCT ON (v.stock_code)
-        m.*, v.date, v.marketcap, v.pe, v.pb, v.evebitda, v.divyld, v.netcashmc
+lastest_valuation as (
+SELECT DISTINCT ON (v.stock_code)
+        v.stock_code, v.date, v.marketcap, v.pe, v.pb, v.evebitda, v.divyld, v.netcashmc
     FROM valuation v
-    JOIN monitor_list m ON m.stock_code = v.stock_code
     ORDER BY v.stock_code, v.date DESC 
+),
+ranked_valuation AS (
+    SELECT m.*, lv.date, lv.marketcap, lv.pe, lv.pb, lv.evebitda, lv.divyld, lv.netcashmc
+    FROM monitor_list m
+    LEFT JOIN lastest_valuation lv ON m.stock_code = lv.stock_code
+    ORDER BY m.stock_code
 ),
 -- Xác định 2 quý gần nhất có dữ liệu
 latest_quarters AS (
@@ -74,14 +75,13 @@ latest_quarters AS (
     ORDER BY year DESC, quarter DESC
     LIMIT 2
 ),
-
 -- Lấy dữ liệu phi tài chính mới nhất trong 2 quý gần nhất cho mỗi stock_code
 ranked_ptc_report AS (
     SELECT DISTINCT ON (p.stock_code)
         p.stock_code,
         p.year || '-Q' || p.quarter AS year_quarter,
         p.p_i_1 as dt12m,
-        p.p_i_3 as lr12m,
+        p.p_i_3 as lr12m, -- đổi p_p_23 thành p_i_3
         p.p_m_6 as lrm12m,
         p.p_p_3 as dt,
         p.p_i_85 as dt12myoy,
@@ -107,7 +107,6 @@ ranked_ptc_report AS (
     WHERE p.quarter IS NOT NULL AND p.year IS NOT NULL
     ORDER BY p.stock_code, p.year DESC, p.quarter DESC
 ),
-
 -- Lấy dữ liệu ngân hàng mới nhất trong 2 quý gần nhất cho mỗi stock_code
 ranked_bank_report AS (
     SELECT DISTINCT ON (b.stock_code)
@@ -140,7 +139,6 @@ ranked_bank_report AS (
     WHERE b.quarter IS NOT NULL AND b.year IS NOT NULL
     ORDER BY b.stock_code, b.year DESC, b.quarter DESC
 ),
-
 -- Lấy dữ liệu chứng khoán mới nhất trong 2 quý gần nhất cho mỗi stock_code
 ranked_ck_report AS (
     SELECT DISTINCT ON (c.stock_code)
@@ -173,7 +171,6 @@ ranked_ck_report AS (
     WHERE c.quarter IS NOT NULL AND c.year IS NOT NULL
     ORDER BY c.stock_code, c.year DESC, c.quarter DESC
 ),
-
 -- UNION 3 bảng chỉ số tài chính (phi tài chính, ngân hàng, chứng khoán)
 union_chisotaichinh AS (
     SELECT * FROM ranked_ptc_report
@@ -183,9 +180,8 @@ union_chisotaichinh AS (
     SELECT * FROM ranked_ck_report
 ),
 semi_result as ( 
--- Kết quả cuối
 SELECT 
-    v.stock_code, v.sector_inc, v.sector2_inc,
+    uc.stock_code, v.sector_inc, v.sector2_inc,
     v.s_expgm__3, v.s_expgm__2, v.s_expgm__1, v.s_expgm_q0,
     v.s_nryoy__3, v.s_nryoy__2, v.s_nryoy__1, v.s_nryoy_q0,
     v.s_cpexg__3, v.s_cpexg__2, v.s_cpexg__1, v.s_cpexg_q0,
@@ -203,8 +199,8 @@ LEFT JOIN ranked_valuation AS v
 select sr.*, ac.close, ac.ltm, ac.ytd, ss.company_name
 from semi_result as sr 
 left join ami_close ac
-	on sr.stock_code = ac.stock_code and sr.date = ac.date
+on sr.stock_code = ac.stock_code and sr.date = ac.date
 LEFT JOIN stocksymbol ss
     ON sr.stock_code = ss.symbol
-ORDER BY sr.sector_inc, sr.year_quarter, sr.dtyoy
+ORDER BY sr.sector_inc, sr.stock_code
 ;
